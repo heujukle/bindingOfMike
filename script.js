@@ -21,8 +21,9 @@ let room1LO = [
 
 const room1 = new room(room1LO);
 
-console.log(determineValue(24, 'yo', 'yuh', 'ye', 'yet'))
-generateAreaLayout();
+console.log(Math.random())
+console.log(determineValueArray(78, [1, 2, 3, 4, 5]))
+generateAreaLayout(Math.random());
 
 let character = new player();
 entities.add(character);

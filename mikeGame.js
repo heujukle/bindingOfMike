@@ -1,5 +1,40 @@
 let fps = 60; //frames per second
 let lastUpdate = document.timeline.currentTime; //last time since frame update
+const rooms = [
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+]
 
 const structures = { //loads structures
     list: [],
@@ -106,38 +141,83 @@ function determineValue(input){ //will determine value to be returned of a rando
     input += ''
     const digits = input.length;
     const max = Number(createString(9, digits))
-    const intervals = Math.floor(max/(arguments.length - 1))
+    const intervals = Math.floor(max/(arguments.length - 1)) //interval between choices
     input = Number(input)
     console.log(digits, max, intervals)
     for(let i = 1; i < arguments.length; i++){
-        console.log("loop")
         if(i == 1){ //start
-            console.log("start")
-            if(input >= 0 && input <= intervals){
-                console.log('first')
+            if(input >= 0 && input <= intervals){  //checks if the number is greater than equal to 0
                 return arguments[i];
             }
         }
         else if(i + 1 == arguments.length){//finish
-            if(input > intervals * (i - 1)){
-                console.log('last')
+            if(input > intervals * (i - 1)){ //checks if the input is greater than the final interval
                 return arguments[i];
             }
         }
         else{//all else
-            console.log('else')
-            if(input > intervals * (i-1) && input <= intervals * i){
+            if(input > intervals * (i-1) && input <= intervals * i){ //checks if the input is in between the last interval and the current
                 return arguments[i];
             }
         }
     }
 }
 
-function generateAreaLayout(){
-   const seed = "" + Math.random()
-  console.log(seed)
-  determineValue(32, 'yo')
+function determineValueArray(input, options){ //will determine value to be returned of a random seed
+    input += ''
+    const digits = input.length;
+    const max = Number(createString(9, digits))
+    const intervals = Math.floor(max/(options.length)) //interval between choices
+    input = Number(input)
+    for(let i = 0; i < options.length; i++){
+        if(i == 0){ //start
+            if(input >= 0 && input <= intervals){  //checks if the number is greater than equal to 0
+                return options[i];
+            }
+        }
+        else if(i + 1 == options.length){//finish
+            if(input > intervals * i){ //checks if the input is greater than the final interval
+                return options[i];
+            }
+        }
+        else{//all else
+            if(input > intervals * i && input <= intervals * (i+1)){ //checks if the input is in between the last interval and the current
+                return options[i];
+            }
+        }
+    }
 }
+
+function generateAreaLayout(seed){
+    seed += ''
+    let roomBudget = 30;
+    function generateRoom(seed){ 
+        seed += ''
+        const layout = determineValueArray(seed[7] + seed[10], rooms).map(function(arr) {
+            return arr.slice();
+        });
+        console.log(layout)
+        const left = determineValue(seed[3], true, false) && roomBudget > 0 ? true : false;
+        if(left == true){
+            roomBudget -= 1
+        }
+        const right = determineValue(seed[4], true, false) && roomBudget > 0 ? true : false;
+        if(right == true){
+            roomBudget -= 1
+        }
+        const top = determineValue(seed[5], true, false) && roomBudget > 0 ? true : false;
+        if(top == true){
+            roomBudget -= 1
+        }
+        const bottom = determineValue(seed[6], true, false) && roomBudget > 0 ? true : false;
+        if(bottom == true){
+            roomBudget -= 1
+        }
+
+    }
+    generateRoom(Math.random())
+}
+
 class space{
     constructor(x, y, width, height){
         this.top = y
