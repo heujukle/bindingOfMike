@@ -21,6 +21,8 @@ let room1LO = [
 
 const room1 = new room(room1LO);
 
+// generateAreaLayout();
+
 let character = new player();
 entities.add(character);
 //end entities segement

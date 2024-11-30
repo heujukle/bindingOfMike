@@ -1,16 +1,16 @@
 let fps = 60; //frames per second
 let lastUpdate = document.timeline.currentTime; //last time since frame update
 
-const structures = {
+const structures = { //loads structures
     list: [],
-    add: function(entity){
+    add: function(entity){ //adds structures to the rendering
         entity.index = this.list.length;
         this.list.push(entity);
     },
-    remove: function(index){
+    remove: function(index){ ///removes structures from rendering
         this.list.splice(index, 1);
     },
-    draw: function (){
+    draw: function (){ //draws all items 
         for(let i = 0; i < this.list.length; i++){
             this.list[i].draw();
         }
@@ -93,7 +93,13 @@ function inSpace(cord){ //finds what square the cord [left, top] is in returns t
     }
 }
 
-
+function generateAreaLayout(){
+    for(let i = 10; i > 0; i--){
+        for(let j = i == 10 ? 10 : 19; j > 0; j++){
+        console.log(i, j)
+        }
+    }
+}
 class space{
     constructor(x, y, width, height){
         this.top = y
@@ -126,6 +132,12 @@ class wall {
         ctx.fillStyle = "#000000";
         ctx.fill();
         ctx.closePath();
+    }
+}
+
+class area{
+    constructor(layout){
+        this.layout = layout;
     }
 }
 
