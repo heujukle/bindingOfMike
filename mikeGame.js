@@ -289,6 +289,7 @@ class area{
     }
 
     generateAreaLayout(seed, map){
+        let end = false;
         console.log(this.map)
         seed += ''
         let roomBudget = 30;
@@ -308,6 +309,21 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+            }
+            else if(roomBudget < 5 && end == false){
+                end = true;
+                console.log('end made')
+                layout = [
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             }
@@ -340,7 +356,9 @@ class area{
                 layout[layout.length - 1][11] = 0;
                 roomBudget -= 1
             }
-            if(bottom == false && top == false && left == false && right == false && roomBudget > 0 && roomBudget == 30){
+            if(bottom == false && top == false && left == false && right == false && roomBudget > 0 && roomBudget > 5){
+                layout[4][0] = 0;
+                layout[5][0] = 0;
                 left = true;
                 roomBudget -= 1
             }
@@ -423,7 +441,7 @@ class area{
             // currentRoom.mappedLayout = currentRoom.convertLayout(currentRoom.layout)
             return currentRoom;
         }
-        generateRoom(Math.random(), '0,0')
+        generateRoom(Math.random(), '0,0', [])
     }
 }
 
@@ -502,6 +520,7 @@ class player {
         this.index = 0;
         this.directionList = [];
         this.fixedIncrement = 5;
+        this.speed = 10;
         this.pVelocityModifier = 10;
         this.health = 100;
     }
@@ -517,11 +536,11 @@ class player {
 
     updateMove(){
         if(this.directionList.indexOf('up') != -1){
-            this.y -= 5
+            this.y -= this.speed
             if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.y += this.fixedIncrement;
-                this.fixedIncrement = 5;
+                this.fixedIncrement = this.speed;
             }
             if(this.y < 0){
                 structures.resetList();
@@ -531,11 +550,11 @@ class player {
             }
         }
         if(this.directionList.indexOf('left') != -1){
-            this.x -= 5
+            this.x -= this.speed
             if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.x += this.fixedIncrement;
-                this.fixedIncrement = 5;
+                this.fixedIncrement = this.speed;
             }
             if(this.x < 0){
                 structures.resetList();
@@ -545,11 +564,11 @@ class player {
             }
         }
         if(this.directionList.indexOf('down') != -1){
-            this.y += 5
+            this.y += this.speed
             if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.y -= this.fixedIncrement;
-                this.fixedIncrement = 5;
+                this.fixedIncrement = this.speed;
             }
             if(this.y+this.height > window.innerHeight){
                 structures.resetList();
@@ -559,11 +578,11 @@ class player {
             }
         }
         if(this.directionList.indexOf('right') != -1){
-            this.x += 5
+            this.x += this.speed
             if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.x -= this.fixedIncrement;
-                this.fixedIncrement = 5;
+                this.fixedIncrement = this.speed;
             }
             if(this.x+this.width > window.innerWidth){
                 structures.resetList();
