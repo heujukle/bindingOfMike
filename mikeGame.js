@@ -197,7 +197,7 @@ function generateAreaLayout(seed){
             return arr.slice();
         });
         console.log(layout)
-        const left = determineValue(seed[3], true, false) && roomBudget > 0 ? true : false;
+        let left = determineValue(seed[3], true, false) && roomBudget > 0 ? true : false;
         if(left == true){
             roomBudget -= 1
         }
@@ -211,6 +211,10 @@ function generateAreaLayout(seed){
         }
         const bottom = determineValue(seed[6], true, false) && roomBudget > 0 ? true : false;
         if(bottom == true){
+            roomBudget -= 1
+        }
+        if(bottom == false && top == false && left == false && right == false && roomBudget > 0){
+            left = true
             roomBudget -= 1
         }
 
@@ -261,6 +265,10 @@ class area{
 class room{
     constructor(layout){
         this.layout = this.convertLayout(layout) //converts layout to a map
+        this.left = null;
+        this.right = null;
+        this.top = null;
+        this.bottom = null;
         console.log(this.layout)
     }
 
@@ -289,11 +297,13 @@ class room{
 
     roomLoad(){
         const keys = this.layout.keys().toArray();
-        console.log(keys);
         for(let i = 0; i < keys.length; i++){
-                this.layout.get(keys[i]).draw() //gets all the spaces in a single array thing
+            if(this.layout.get(keys[i]).type != 'space'){
+                this.layout.get(keys[i]).draw() 
                 structures.add(this.layout.get(keys[i]))
+            }
         }
+        console.log(structures.list)
         let filler = document.createElement('div')
         filler.classList.add('filler')
         const top = this.layout.get(keys[199]).top;
@@ -329,7 +339,7 @@ class player {
     updateMove(){
         if(this.directionList.indexOf('up') != -1){
             this.y -= 5
-            if(this.detectCollision('up')){
+            if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.y += this.fixedIncrement;
                 this.fixedIncrement = 5;
@@ -337,7 +347,7 @@ class player {
         }
         if(this.directionList.indexOf('left') != -1){
             this.x -= 5
-            if(this.detectCollision('left')){
+            if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.x += this.fixedIncrement;
                 this.fixedIncrement = 5;
@@ -345,7 +355,7 @@ class player {
         }
         if(this.directionList.indexOf('down') != -1){
             this.y += 5
-            if(this.detectCollision('down')){
+            if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.y -= this.fixedIncrement;
                 this.fixedIncrement = 5;
@@ -353,7 +363,7 @@ class player {
         }
         if(this.directionList.indexOf('right') != -1){
             this.x += 5
-            if(this.detectCollision('right')){
+            if(this.collision2(structures.list)){
                 console.log('fixed', this.fixedIncrement)
                 this.x -= this.fixedIncrement;
                 this.fixedIncrement = 5;
@@ -427,6 +437,28 @@ class player {
                     return false;
                 }
         }
+    }
+
+    collision2(target) {
+        const left = this.x;
+        const right = this.x + this.width;
+        const top = this.y;
+        const bottom = this.y + this.height;
+        
+        for (let i = 0; i < target.length; i++) {
+            const tleft = target[i].x;
+            const tright = target[i].x + target[i].width;
+            const ttop = target[i].y;
+            const tbottom = target[i].y + target[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                return true;
+                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+            }
+        }
+        return false;
     }
 }
 
