@@ -6,8 +6,8 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
@@ -17,8 +17,8 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
@@ -28,8 +28,8 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-        [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
@@ -49,8 +49,10 @@ const structures = { //loads structures
         for(let i = 0; i < this.list.length; i++){
             this.list[i].draw();
         }
-    }
-    
+    },
+    resetList: function(){
+        this.list = []
+    }, 
 }
 
 const entities = {
@@ -137,13 +139,11 @@ function createString(value, length){ //will craete a string with a certain numb
 }
 
 function determineValue(input){ //will determine value to be returned of a random seed
-    console.log(arguments.length)
     input += ''
     const digits = input.length;
     const max = Number(createString(9, digits))
     const intervals = Math.floor(max/(arguments.length - 1)) //interval between choices
     input = Number(input)
-    console.log(digits, max, intervals)
     for(let i = 1; i < arguments.length; i++){
         if(i == 1){ //start
             if(input >= 0 && input <= intervals){  //checks if the number is greater than equal to 0
@@ -188,40 +188,6 @@ function determineValueArray(input, options){ //will determine value to be retur
     }
 }
 
-function generateAreaLayout(seed){
-    seed += ''
-    let roomBudget = 30;
-    function generateRoom(seed){ 
-        seed += ''
-        const layout = determineValueArray(seed[7] + seed[10], rooms).map(function(arr) {
-            return arr.slice();
-        });
-        console.log(layout)
-        let left = determineValue(seed[3], true, false) && roomBudget > 0 ? true : false;
-        if(left == true){
-            roomBudget -= 1
-        }
-        const right = determineValue(seed[4], true, false) && roomBudget > 0 ? true : false;
-        if(right == true){
-            roomBudget -= 1
-        }
-        const top = determineValue(seed[5], true, false) && roomBudget > 0 ? true : false;
-        if(top == true){
-            roomBudget -= 1
-        }
-        const bottom = determineValue(seed[6], true, false) && roomBudget > 0 ? true : false;
-        if(bottom == true){
-            roomBudget -= 1
-        }
-        if(bottom == false && top == false && left == false && right == false && roomBudget > 0){
-            left = true
-            roomBudget -= 1
-        }
-
-    }
-    generateRoom(Math.random())
-}
-
 class space{
     constructor(x, y, width, height){
         this.top = y
@@ -257,19 +223,159 @@ class wall {
 }
 
 class area{
-    constructor(layout){
-        this.layout = layout;
+    constructor(){
+        this.map = new Map()
+        this.generateAreaLayout(Math.random(), this.map)
+    }
+
+    generateAreaLayout(seed, map){
+        console.log(this.map)
+        seed += ''
+        let roomBudget = 30;
+        function generateRoom(seed, cord, exclusion = []){ 
+            const cordArray = cord.split(',')
+            const x = parseInt(cordArray[0])
+            const y = parseInt(cordArray[1])
+            seed += ''
+            let layout;
+            if(roomBudget == 30){
+                layout = [
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+            }
+            else{
+                layout = determineValueArray(seed[7] + seed[10], rooms).map(function(arr) {
+                    return arr.slice();
+                });
+            }
+            let left = determineValue(seed[3], true, false) && roomBudget > 0 && exclusion.indexOf('left') == -1 ? true : false;
+            if(left == true){
+                layout[4][0] = 0;
+                layout[5][0] = 0;
+                roomBudget -= 1
+            }
+            let right = determineValue(seed[4], true, false) && roomBudget > 0 && exclusion.indexOf('right') == -1? true : false;
+            if(right == true){
+                layout[4][layout[4].length - 1] = 0;
+                layout[5][layout[4].length - 1] = 0;
+                roomBudget -= 1
+            }
+            let top = determineValue(seed[5], true, false) && roomBudget > 0 && exclusion.indexOf('top') == -1? true : false;
+            if(top == true){
+                layout[0][10] = 0;
+                layout[0][11] = 0;
+                roomBudget -= 1
+            }
+            let bottom = determineValue(seed[6], true, false) && roomBudget > 0 && exclusion.indexOf('bottom') == -1? true : false;
+            if(bottom == true){
+                layout[layout.length - 1][10] = 0;
+                layout[layout.length - 1][11] = 0;
+                roomBudget -= 1
+            }
+            if(bottom == false && top == false && left == false && right == false && roomBudget > 0 && roomBudget == 30){
+                left = true;
+                roomBudget -= 1
+            }
+            let leftRoom;
+            let rightRoom;
+            let topRoom;
+            let bottomRoom;
+
+            const currentRoom = new room(layout, `${x},${y}`)
+            map.set(`${x},${y}`, currentRoom)
+
+            if(left){
+                const leftCord = '' + (x - 1) + ',' + y
+                if(map.has(leftCord)){
+                    leftRoom = map.get(leftCord)
+                    currentRoom.left = leftRoom;
+                    leftRoom.right = currentRoom;
+                    leftRoom.layout[4][layout[4].length - 1] = 0;
+                    leftRoom.layout[5][layout[4].length - 1] = 0;
+                }
+                else{
+                    leftRoom = generateRoom(Math.random(), leftCord, ["right"])
+                    currentRoom.left = leftRoom;
+                    leftRoom.right = currentRoom;
+                    leftRoom.layout[4][layout[4].length - 1] = 0;
+                    leftRoom.layout[5][layout[4].length - 1] = 0;
+                }
+            }
+            if(right){
+                const rightCord = '' + (x + 1) + ',' + y
+                if(map.has(rightCord)){
+                    rightRoom = map.get(rightCord)
+                    currentRoom.right = rightRoom;
+                    rightRoom.left = currentRoom;
+                    rightRoom.layout[4][0] = 0;
+                    rightRoom.layout[5][0] = 0;
+                }
+                else{
+                    rightRoom = generateRoom(Math.random(), rightCord, ["left"])
+                    currentRoom.right = rightRoom;
+                    rightRoom.left = currentRoom;
+                    rightRoom.layout[4][0] = 0;
+                    rightRoom.layout[5][0] = 0;
+                }
+            }
+            if(top){
+                const topCord = '' + x + ',' + (y-1);
+                if(map.has(topCord)){
+                    topRoom = map.get(topCord)
+                    currentRoom.top = topRoom;
+                    topRoom.bottom = currentRoom;
+                    topRoom.layout[layout.length - 1][10] = 0;
+                    topRoom.layout[layout.length - 1][11] = 0;
+                }
+                else{
+                    topRoom = generateRoom(Math.random(), topCord, ['bottom'])
+                    currentRoom.top = topRoom;
+                    topRoom.bottom = currentRoom;
+                    topRoom.layout[layout.length - 1][10] = 0;
+                    topRoom.layout[layout.length - 1][11] = 0;
+                }
+            }
+            if(bottom){
+                const bottomCord = '' + x + ',' + (y+1)
+                if(map.has(bottomCord)){
+                    bottomRoom = map.get(bottomCord)
+                    currentRoom.bottom = bottomRoom;
+                    bottomRoom.top = currentRoom;
+                    bottomRoom.layout[0][10] = 0;
+                    bottomRoom.layout[0][11] = 0;
+                }
+                else{
+                    bottomRoom = generateRoom(Math.random(), bottomCord, ['top'])
+                    currentRoom.bottom = bottomRoom;
+                    bottomRoom.top = currentRoom;
+                    bottomRoom.layout[0][10] = 0;
+                    bottomRoom.layout[0][11] = 0;
+                }
+            }
+            // currentRoom.mappedLayout = currentRoom.convertLayout(currentRoom.layout)
+            return currentRoom;
+        }
+        generateRoom(Math.random(), '0,0')
     }
 }
 
 class room{
-    constructor(layout){
-        this.layout = this.convertLayout(layout) //converts layout to a map
+    constructor(layout, cords = '0,0'){
+        this.layout = layout 
+        this.mappedLayout = null//converts layout to a map
         this.left = null;
         this.right = null;
         this.top = null;
         this.bottom = null;
-        console.log(this.layout)
+        this.cords = cords;
     }
 
     convertLayout(layout){
@@ -296,20 +402,28 @@ class room{
     }
 
     roomLoad(){
-        const keys = this.layout.keys().toArray();
+        const keys = this.mappedLayout.keys().toArray();
         for(let i = 0; i < keys.length; i++){
-            if(this.layout.get(keys[i]).type != 'space'){
-                this.layout.get(keys[i]).draw() 
-                structures.add(this.layout.get(keys[i]))
+            if(this.mappedLayout.get(keys[i]).type != 'space'){
+                this.mappedLayout.get(keys[i]).draw() 
+                structures.add(this.mappedLayout.get(keys[i]))
             }
         }
-        console.log(structures.list)
-        let filler = document.createElement('div')
-        filler.classList.add('filler')
-        const top = this.layout.get(keys[199]).top;
-        filler.style.top = top + 'px'
-        filler.style.height = window.innerHeight - top + 'px'
-        document.getElementsByTagName('body')[0].appendChild(filler)
+    }
+
+    newRoomLoad(){
+        let x = 0 //x and y cordninates of spaces
+        let y = 0
+        for(let i = 0; i < this.layout.length; i++){
+            x = 0
+            for(let j = 0; j < this.layout[0].length; j++){
+                if(this.layout[i][j] == 1){
+                    structures.add(new wall(x, y, width, height));
+                }
+                x += width
+            }
+            y += height;
+        }
     }
 }
 
@@ -320,6 +434,7 @@ class player {
         this.x = Math.ceil(window.innerWidth / 2);
         this.y = Math.ceil(window.innerHeight / 2);
         this.room = 'spawn'
+        this.area = 'spawn'
         this.sections = []
         this.index = 0;
         this.directionList = [];
@@ -344,6 +459,11 @@ class player {
                 this.y += this.fixedIncrement;
                 this.fixedIncrement = 5;
             }
+            if(this.y < 0){
+                structures.resetList();
+                this.setRoom(this.room.top)
+                this.y = window.innerHeight;
+            }
         }
         if(this.directionList.indexOf('left') != -1){
             this.x -= 5
@@ -351,6 +471,11 @@ class player {
                 console.log('fixed', this.fixedIncrement)
                 this.x += this.fixedIncrement;
                 this.fixedIncrement = 5;
+            }
+            if(this.x < 0){
+                structures.resetList();
+                this.setRoom(this.room.left)
+                this.x = window.innerWidth;
             }
         }
         if(this.directionList.indexOf('down') != -1){
@@ -360,6 +485,11 @@ class player {
                 this.y -= this.fixedIncrement;
                 this.fixedIncrement = 5;
             }
+            if(this.y+this.height > window.innerHeight){
+                structures.resetList();
+                this.setRoom(this.room.bottom)
+                this.y = 0;
+            }
         }
         if(this.directionList.indexOf('right') != -1){
             this.x += 5
@@ -367,6 +497,11 @@ class player {
                 console.log('fixed', this.fixedIncrement)
                 this.x -= this.fixedIncrement;
                 this.fixedIncrement = 5;
+            }
+            if(this.x+this.width > window.innerWidth){
+                structures.resetList();
+                this.setRoom(this.room.right)
+                this.x = 0;
             }
         }
         if(this.directionList.indexOf('shoot') != -1){
@@ -393,9 +528,14 @@ class player {
 
     setRoom(room){
         this.room = room
-        this.room.roomLoad()
+        this.room.newRoomLoad()
+        console.log(this.room.cords)
     }
-
+    setArea(area){
+        console.log(area.map)
+        this.area = area;
+        this.setRoom(this.area.map.get('0,0'))
+    }
     detectCollision(direction){ //left, right, up, down
         let tl = this.room.layout.get(inSpace(getCorner("tl", this)));
         let tr = this.room.layout.get(inSpace(getCorner("tr", this)));

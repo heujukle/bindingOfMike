@@ -23,13 +23,13 @@ const room1 = new room(room1LO);
 
 console.log(Math.random())
 console.log(determineValueArray(78, [1, 2, 3, 4, 5]))
-generateAreaLayout(Math.random());
+const startingArea = new area()
 
 let character = new player();
 entities.add(character);
 //end entities segement
 
-character.setRoom(room1);
+character.setArea(startingArea);
 
 window.requestAnimationFrame(animate);
 
