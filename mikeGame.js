@@ -34,6 +34,28 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+     [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
+        [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'lt', 0, 1], 
+        [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, "lt", 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 'lt', 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 ]
 
 const structures = { //loads structures
@@ -76,6 +98,9 @@ const entities = {
             this.list[i].draw();
             }
         }
+    },
+    clear: function(){
+        this.list = [this.list[0]]
     }
     
 }
@@ -217,6 +242,41 @@ class wall {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#000000";
+        ctx.fill();
+        ctx.closePath();
+    }
+}
+
+class turret{
+    constructor(x, y, width, height, direction){
+        this.index;
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+        this.type = 'turret'
+        this.direction = direction;
+        this.tProjectile = null;
+        if(this.direction == "left"){
+            console.log('left')
+            this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#ff0000')
+            entities.add(this.tProjectile);
+        }
+        else if(direction == "up"){
+
+        }
+        else if(direction == "right"){
+
+        }
+        else if(direction == "down"){
+
+        }
+    }
+
+    draw(){
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "#4d4d4d";
         ctx.fill();
         ctx.closePath();
     }
@@ -420,6 +480,9 @@ class room{
                 if(this.layout[i][j] == 1){
                     structures.add(new wall(x, y, width, height));
                 }
+                else if(this.layout[i][j] == 'lt'){
+                    structures.add(new turret(x, y, width, height, 'left'));
+                }
                 x += width
             }
             y += height;
@@ -440,13 +503,14 @@ class player {
         this.directionList = [];
         this.fixedIncrement = 5;
         this.pVelocityModifier = 10;
+        this.health = 100;
     }
     
     draw(){
         this.updateMove()
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "#FF0000";
+        ctx.fillStyle = "#0000ff";
         ctx.fill();
         ctx.closePath();
     }
@@ -461,6 +525,7 @@ class player {
             }
             if(this.y < 0){
                 structures.resetList();
+                entities.clear();
                 this.setRoom(this.room.top)
                 this.y = window.innerHeight;
             }
@@ -474,6 +539,7 @@ class player {
             }
             if(this.x < 0){
                 structures.resetList();
+                entities.clear();
                 this.setRoom(this.room.left)
                 this.x = window.innerWidth;
             }
@@ -487,6 +553,7 @@ class player {
             }
             if(this.y+this.height > window.innerHeight){
                 structures.resetList();
+                entities.clear();
                 this.setRoom(this.room.bottom)
                 this.y = 0;
             }
@@ -500,6 +567,7 @@ class player {
             }
             if(this.x+this.width > window.innerWidth){
                 structures.resetList();
+                entities.clear();
                 this.setRoom(this.room.right)
                 this.x = 0;
             }
@@ -603,7 +671,7 @@ class player {
 }
 
 class projectile{
-    constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room){
+    constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5){
         this.room = room;
         this.index;
         this.x = startX;
@@ -616,14 +684,16 @@ class projectile{
         this.yVelocity = yVelocity;
         this.source = source;
         this.repeating = repeating;
+        this.color = color;
+        this.damage = damage;
     }
 
 
     draw(){
         this.x += this.xVelocity
         this.y += this.yVelocity
-        this.detectCollision();
-        if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0){
+        // this.detectCollision();
+        if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){
             if(this.repeating){
                 this.x = this.startX;
                 this.y = this.startY;
@@ -695,6 +765,27 @@ class projectile{
             }
         }
         return false;
+    }
+
+    entityCollision(){
+        const left = this.x;
+        const right = this.x + this.width;
+        const top = this.y;
+        const bottom = this.y + this.height;
+        if(this.source != "player"){
+            const tleft = character.x;
+            const tright = character.x + character.width;
+            const ttop = character.y;
+            const tbottom = character.y + character.height;
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                character.health -= this.damage;
+                console.log(character.health)
+                return true;
+            }
+            else{
+                return false
+            }
+        }
     }
 }
 
