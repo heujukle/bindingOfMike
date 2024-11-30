@@ -93,12 +93,50 @@ function inSpace(cord){ //finds what square the cord [left, top] is in returns t
     }
 }
 
-function generateAreaLayout(){
-    for(let i = 10; i > 0; i--){
-        for(let j = i == 10 ? 10 : 19; j > 0; j++){
-        console.log(i, j)
+function createString(value, length){ //will craete a string with a certain number of sigits
+    let result = ''
+    for(let i = 0; i < length; i++){
+        result += value
+    }
+    return result
+}
+
+function determineValue(input){ //will determine value to be returned of a random seed
+    console.log(arguments.length)
+    input += ''
+    const digits = input.length;
+    const max = Number(createString(9, digits))
+    const intervals = Math.floor(max/(arguments.length - 1))
+    input = Number(input)
+    console.log(digits, max, intervals)
+    for(let i = 1; i < arguments.length; i++){
+        console.log("loop")
+        if(i == 1){ //start
+            console.log("start")
+            if(input >= 0 && input <= intervals){
+                console.log('first')
+                return arguments[i];
+            }
+        }
+        else if(i + 1 == arguments.length){//finish
+            if(input > intervals * (i - 1)){
+                console.log('last')
+                return arguments[i];
+            }
+        }
+        else{//all else
+            console.log('else')
+            if(input > intervals * (i-1) && input <= intervals * i){
+                return arguments[i];
+            }
         }
     }
+}
+
+function generateAreaLayout(){
+   const seed = "" + Math.random()
+  console.log(seed)
+  determineValue(32, 'yo')
 }
 class space{
     constructor(x, y, width, height){
@@ -122,7 +160,6 @@ class wall {
         this.width = width
         this.height = height
         this.type = 'wall'
-        console.log(this.x, this.y, this.width, this.height)
     }
 
 

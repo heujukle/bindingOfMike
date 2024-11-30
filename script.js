@@ -21,7 +21,8 @@ let room1LO = [
 
 const room1 = new room(room1LO);
 
-// generateAreaLayout();
+console.log(determineValue(24, 'yo', 'yuh', 'ye', 'yet'))
+generateAreaLayout();
 
 let character = new player();
 entities.add(character);
