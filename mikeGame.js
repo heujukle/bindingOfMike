@@ -502,20 +502,23 @@ class projectile{
     }
 
     detectCollision(){
-        let tl = getCorner("tl", this);
-        let tr = getCorner("tr", this);
-        let bl = getCorner("bl", this);
-        let br = getCorner("br", this);
-        let mr = getCorner("mr", this);
-        let ml = getCorner("ml", this);
-        let mt = getCorner("mt", this);
-        let mb = getCorner("mb", this);
+    //     let tl = getCorner("tl", this);
+    //     let tr = getCorner("tr", this);
+    //     let bl = getCorner("bl", this);
+    //     let br = getCorner("br", this);
+    //     let mr = getCorner("mr", this);
+    //     let ml = getCorner("ml", this);
+    //     let mt = getCorner("mt", this);
+    //     let mb = getCorner("mb", this);
 
-       if(this.detectStructures([tl, tr, bl, br, mr, ml, mt, mb]) == true){
-        console.log("horray")
-        entities.remove(this.index);
-       }
+    //    if(this.detectStructures([tl, tr, bl, br, mr, ml, mt, mb]) == true){
+    //     console.log("horray")
+    //     entities.remove(this.index);
+    //    }
 
+        if(this.collision2(structures.list)){
+            entities.remove(this.index);
+        }
     }
 
     detectStructures(points){
@@ -530,6 +533,28 @@ class projectile{
             }
         }
         }
+    }
+
+    collision2(target) {
+        const left = this.x;
+        const right = this.x + this.width;
+        const top = this.y;
+        const bottom = this.y + this.height;
+        
+        for (let i = 0; i < target.length; i++) {
+            const tleft = target[i].x;
+            const tright = target[i].x + target[i].width;
+            const ttop = target[i].y;
+            const tbottom = target[i].y + target[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                return true;
+                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+            }
+        }
+        return false;
     }
 }
 
