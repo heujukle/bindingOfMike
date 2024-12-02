@@ -1,4 +1,4 @@
-let fps = 60; //frames per second
+let fps = 120; //frames per second
 let lastUpdate = document.timeline.currentTime; //last time since frame update
 const rooms = [
     [
@@ -520,7 +520,7 @@ class player {
         this.index = 0;
         this.directionList = [];
         this.fixedIncrement = 5;
-        this.speed = 10;
+        this.speed = 5;
         this.pVelocityModifier = 10;
         this.health = 100;
     }
