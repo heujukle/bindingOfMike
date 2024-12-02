@@ -1,4 +1,4 @@
-let fps = 120; //frames per second
+let fps = 60; //frames per second
 let lastUpdate = document.timeline.currentTime; //last time since frame update
 const rooms = [
     [
@@ -60,9 +60,16 @@ const rooms = [
 let menu = false;
 let fConsole = document.getElementById('console');
 
+document.addEventListener('error', (e) => {
+    fConsole.classList.add('visible')
+    println(e)
+})
+
 function println(input){
     fConsole.innerHTML += input + '<br>'
 }
+
+
 const structures = { //loads structures
     list: [],
     add: function(entity){ //adds structures to the rendering
@@ -83,6 +90,34 @@ const structures = { //loads structures
 }
 
 const entities = {
+    list: [],
+    add: function(entity){
+        if(this.list.indexOf(null) != -1){
+            entity.index = this.list.indexOf(null)
+            this.list[this.list.indexOf(null)] = entity;
+        }
+        else{
+            entity.index = this.list.length;
+            this.list.push(entity)
+        }
+    },
+    remove: function(index){
+        this.list[index] = null;
+    },
+    draw: function (){
+        for(let i = 0; i < this.list.length; i++){
+            if(this.list[i]){
+            this.list[i].draw();
+            }
+        }
+    },
+    clear: function(){
+        this.list = [this.list[0]]
+    }
+    
+}
+
+const damageInstances = {
     list: [],
     add: function(entity){
         if(this.list.indexOf(null) != -1){
@@ -292,7 +327,7 @@ class turret{
         if(this.direction == "left"){
             console.log('left')
             this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#ff0000')
-            entities.add(this.tProjectile);
+            damageInstances.add(this.tProjectile);
         }
         else if(direction == "up"){
 
@@ -727,25 +762,25 @@ class player {
             let xVelocity = ((135 - 45) - degrees) / this.pVelocityModifier * -2
             let yVelocity = 90 / this.pVelocityModifier * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
         }
         else if(degrees >= 135 && degrees < 225){
             let yVelocity = ((225 - 45) - degrees) / this.pVelocityModifier * -2
             let xVelocity = 90 / this.pVelocityModifier
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
         }
         else if(degrees >= 225 && degrees < 315){
             let xVelocity = ((315 - 45) - degrees) / this.pVelocityModifier * 2
             let yVelocity = 90 / this.pVelocityModifier
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
         }
         else{
             let yVelocity = (circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
             let xVelocity = 90 / this.pVelocityModifier * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
         }
     }
 }
@@ -780,7 +815,7 @@ class projectile{
             }
             else{
                 console.log('reset')
-                entities.remove(this.index)
+                damageInstances.remove(this.index)
                 return;
             }
         }
@@ -870,11 +905,12 @@ class projectile{
 }
 
 function animate() {
-    if (document.timeline.currentTime - lastUpdate > 1000 / fps) {
+    if (document.timeline.currentTime - lastUpdate > 1000 / fps && !menu) {
       lastUpdate = document.timeline.currentTime;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       structures.draw();
       entities.draw();
+      damageInstances.draw();
     } 
     window.requestAnimationFrame(animate);
 }

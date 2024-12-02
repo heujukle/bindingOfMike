@@ -73,6 +73,14 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
     if(e.key === 'c'){
-        document.getElementById('console').classList.toggle('visible')
+        menu = !menu;
+        document.getElementById('console').classList.toggle('visible');
+        if(menu == true){
+        println('Player cords:' + character.x + "," + character.y)
+        println('Structure:' + structures.list.length)
+        println('entities:' + entities.list.length)
+        println('damageInstances:' + damageInstances.list.length)
+        println('')
+        }
     }
 })
