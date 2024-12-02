@@ -80,6 +80,7 @@ document.addEventListener('keydown', (e) => {
         println('Structure:' + structures.list.length)
         println('entities:' + entities.list.length)
         println('damageInstances:' + damageInstances.list.length)
+        println('area:' + character.area.map.keys().toArray().length)
         println('')
         }
     }

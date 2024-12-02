@@ -140,7 +140,7 @@ const damageInstances = {
         }
     },
     clear: function(){
-        this.list = [this.list[0]]
+        this.list = []
     }
     
 }
@@ -612,6 +612,7 @@ class player {
             if(this.y < 0){
                 structures.resetList();
                 entities.clear();
+                damageInstances.clear();
                 this.setRoom(this.room.top)
                 this.y = window.innerHeight;
             }
@@ -626,6 +627,7 @@ class player {
             if(this.x < 0){
                 structures.resetList();
                 entities.clear();
+                damageInstances.clear();
                 this.setRoom(this.room.left)
                 this.x = window.innerWidth;
             }
@@ -640,6 +642,7 @@ class player {
             if(this.y+this.height > window.innerHeight){
                 structures.resetList();
                 entities.clear();
+                damageInstances.clear();
                 this.setRoom(this.room.bottom)
                 this.y = 0;
             }
@@ -654,6 +657,7 @@ class player {
             if(this.x+this.width > window.innerWidth){
                 structures.resetList();
                 entities.clear();
+                damageInstances.clear();
                 this.setRoom(this.room.right)
                 this.x = 0;
             }
