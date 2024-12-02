@@ -57,7 +57,12 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 ]
+let menu = false;
+let fConsole = document.getElementById('console');
 
+function println(input){
+    fConsole.innerHTML += input + '<br>'
+}
 const structures = { //loads structures
     list: [],
     add: function(entity){ //adds structures to the rendering
@@ -713,6 +718,35 @@ class player {
             }
         }
         return false;
+    }
+
+    shoot(degrees){
+        let centerX = character.x + character.width / 2
+        let centerY = character.y + character.height / 2
+        if(degrees >= 45 && degrees < 135){
+            let xVelocity = ((135 - 45) - degrees) / this.pVelocityModifier * -2
+            let yVelocity = 90 / this.pVelocityModifier * -1
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+        }
+        else if(degrees >= 135 && degrees < 225){
+            let yVelocity = ((225 - 45) - degrees) / this.pVelocityModifier * -2
+            let xVelocity = 90 / this.pVelocityModifier
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+        }
+        else if(degrees >= 225 && degrees < 315){
+            let xVelocity = ((315 - 45) - degrees) / this.pVelocityModifier * 2
+            let yVelocity = 90 / this.pVelocityModifier
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+        }
+        else{
+            let yVelocity = (circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
+            let xVelocity = 90 / this.pVelocityModifier * -1
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+        }
     }
 }
 

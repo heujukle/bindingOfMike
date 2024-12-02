@@ -7,20 +7,6 @@ const ctx = canvas.getContext("2d");
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
-let room1LO = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], 
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
-
-const room1 = new room(room1LO);
-
 const startingArea = new area()
 
 let character = new player();
@@ -75,34 +61,18 @@ document.addEventListener('keyup', (e) => {
 })
 
 document.addEventListener('click', (e) => {
+    println('shoot')
     character.directionList.push('shoot')
     character.directionList.push(function(){
         let centerX = character.x + character.width / 2
         let centerY = character.y + character.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
-        if(degrees >= 45 && degrees < 135){
-            let xVelocity = ((135 - 45) - degrees) / character.pVelocityModifier * -2
-            let yVelocity = 90 / character.pVelocityModifier * -1
-            console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
-        }
-        else if(degrees >= 135 && degrees < 225){
-            let yVelocity = ((225 - 45) - degrees) / character.pVelocityModifier * -2
-            let xVelocity = 90 / character.pVelocityModifier
-            console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
-        }
-        else if(degrees >= 225 && degrees < 315){
-            let xVelocity = ((315 - 45) - degrees) / character.pVelocityModifier * 2
-            let yVelocity = 90 / character.pVelocityModifier
-            console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
-        }
-        else{
-            let yVelocity = (circularSub((405 - 45), degrees)) / character.pVelocityModifier * 2
-            let xVelocity = 90 / character.pVelocityModifier * -1
-            console.log("xv:", xVelocity, 'yv', yVelocity)
-            entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
-        }
+        character.shoot(degrees)
     })
+})
+
+document.addEventListener('keydown', (e) => {
+    if(e.key === 'c'){
+        document.getElementById('console').classList.toggle('visible')
+    }
 })
