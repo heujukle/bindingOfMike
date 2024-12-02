@@ -213,6 +213,33 @@ function determineValueArray(input, options){ //will determine value to be retur
     }
 }
 
+function findDegrees(x1, y1, x2, y2){
+    console.log("shoot")
+    let x = x1 - x2;
+    let y = y1 - y2;
+    let radians = Math.atan(x/y);
+    let degrees = toDegrees(radians);
+    if(x1 < x2 && y1 > y2){
+        console.log('1')
+        degrees = Math.abs(degrees) + 270;
+    }
+    else if(x1 > x2 && y1 > y2){
+        console.log('2')
+        degrees = 90 -Math.abs(degrees) + 180;
+
+
+    }
+    else if(x1 > x2 && y1 < y2){
+        console.log('3')
+        degrees = Math.abs(degrees) + 90;
+    }
+    else{
+        console.log('4')
+        degrees = 90 - Math.abs(degrees);
+    }
+    return degrees;
+}
+
 class space{
     constructor(x, y, width, height){
         this.top = y

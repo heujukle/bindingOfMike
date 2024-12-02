@@ -79,29 +79,7 @@ document.addEventListener('click', (e) => {
     character.directionList.push(function(){
         let centerX = character.x + character.width / 2
         let centerY = character.y + character.height / 2
-        console.log("shoot")
-        let x = e.x - centerX;
-        let y = e.y - centerY;
-        let radians = Math.atan(x/y);
-        let degrees = toDegrees(radians);
-        if(e.x < character.x && e.y > character.y){
-            console.log('1')
-            degrees = Math.abs(degrees) + 270;
-        }
-        else if(e.x > character.x && e.y > character.y){
-            console.log('2')
-            degrees = 90 -Math.abs(degrees) + 180;
-
-
-        }
-        else if(e.x > character.x && e.y < character.y){
-            console.log('3')
-            degrees = Math.abs(degrees) + 90;
-        }
-        else{
-            console.log('4')
-            degrees = 90 - Math.abs(degrees);
-        }
+        let degrees = findDegrees(e.x, e.y, centerX, centerY)
         if(degrees >= 45 && degrees < 135){
             let xVelocity = ((135 - 45) - degrees) / character.pVelocityModifier * -2
             let yVelocity = 90 / character.pVelocityModifier * -1
@@ -126,6 +104,5 @@ document.addEventListener('click', (e) => {
             console.log("xv:", xVelocity, 'yv', yVelocity)
             entities.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
         }
-        console.log('x:', x, " y:", y, " radians:", radians, ' degrees:', degrees)
     })
 })
