@@ -2,14 +2,21 @@
 <html lang='en'>
 
 <meta charset="utf-8">  
-<title>Favorite Things</title>
+<title>NAME YOURSELF</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 <meta name='viewport' content='width=device-width, intial-scale=1.0'>
 </head>
 <body>
-<div id = 'console'></div>
+<div id = 'console' class="invisible"></div>
+<div id = 'start'>
+    <div id="panel">
+        <h1><input id="name"></input> Game</h1>
+        <div id="playStart"><h3>PLAY</h3></div>
+    </div>
+</div>
 <canvas id="screen"></canvas>
 <script defer src='mikeGame.js'></script>
-<script defer src='script.js'></script>
+<script defer src='menu.js'></script>
+<script id='game' defer></script>
 </body>
 </html>

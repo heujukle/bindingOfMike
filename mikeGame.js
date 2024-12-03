@@ -1,4 +1,4 @@
-let fps = 60; //frames per second
+let fps = 120; //frames per second
 let lastUpdate = document.timeline.currentTime; //last time since frame update
 const rooms = [
     [
@@ -57,7 +57,7 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 ]
-let menu = false;
+let menu = true;
 let fConsole = document.getElementById('console');
 
 document.addEventListener('error', (e) => {

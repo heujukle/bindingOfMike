@@ -74,13 +74,14 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
     if(e.key === 'c'){
         menu = !menu;
-        document.getElementById('console').classList.toggle('visible');
+        document.getElementById('console').classList.toggle('invisible');
         if(menu == true){
         println('Player cords:' + character.x + "," + character.y)
         println('Structure:' + structures.list.length)
         println('entities:' + entities.list.length)
         println('damageInstances:' + damageInstances.list.length)
-        println('area:' + character.area.map.keys().toArray().length)
+        console.log(damageInstances.list)
+        println('area:' + character.area.map.keys().length)
         println('')
         }
     }
