@@ -594,7 +594,7 @@ class player {
         this.speed = 5;
         this.pVelocityModifier = 10;
         this.health = 100;
-        this.selectedItem = 'shoot'
+        this.selectedItem = 'melee'
     }
     
     draw(){
@@ -801,7 +801,10 @@ class player {
     }
 
     sword = (e) => {
-
+        console.log("run")
+        let centerX = character.x + character.width / 2
+        let centerY = character.y + character.height / 2
+        damageInstances.add(new melee(centerX, centerY, 45, this, 45))
     }
 }
 
@@ -921,6 +924,25 @@ class projectile{
                 return false
             }
         }
+    }
+}
+
+class melee{
+    constructor(x, y, span, source, startingAngle){
+        this.x = x
+        this.y = y
+        this.span = span
+        this.source = source
+        this.startingAngle = startingAngle
+    }
+
+    draw(){
+        ctx.beginPath();
+        ctx.rotate((45 * Math.PI) / 180);
+        ctx.fillStyle = "gray";
+        ctx.fillRect(this.x, this.y, 80, 20);
+        ctx.rotate((315 * Math.PI) / 180);
+        ctx.closePath()
     }
 }
 
