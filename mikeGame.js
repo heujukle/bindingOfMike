@@ -577,6 +577,10 @@ class room{
 
 class player {
     constructor(){
+        this.usableItemList = new Map([
+            ['shoot', this.sendProjectile],
+            ['melee', this.sword]
+        ])
         this.width = 50
         this.height = 50
         this.x = Math.ceil(window.innerWidth / 2);
@@ -590,6 +594,7 @@ class player {
         this.speed = 5;
         this.pVelocityModifier = 10;
         this.health = 100;
+        this.selectedItem = 'shoot'
     }
     
     draw(){
@@ -786,6 +791,17 @@ class player {
             console.log("xv:", xVelocity, 'yv', yVelocity)
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
         }
+    }
+
+    sendProjectile = (e) =>{
+        let centerX = character.x + character.width / 2
+        let centerY = character.y + character.height / 2
+        let degrees = findDegrees(e.x, e.y, centerX, centerY)
+        this.shoot(degrees)
+    }
+
+    sword = (e) => {
+
     }
 }
 

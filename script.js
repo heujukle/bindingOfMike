@@ -62,14 +62,9 @@ document.addEventListener('keyup', (e) => {
 
 document.addEventListener('click', (e) => {
     println('shoot')
-    character.directionList.push('shoot')
-    character.directionList.push(function(){
-        let centerX = character.x + character.width / 2
-        let centerY = character.y + character.height / 2
-        let degrees = findDegrees(e.x, e.y, centerX, centerY)
-        character.shoot(degrees)
+    character.usableItemList.get(character.selectedItem)(e);
     })
-})
+
 
 document.addEventListener('keydown', (e) => {
     if(e.key === 'c'){
