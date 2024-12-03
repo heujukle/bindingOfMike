@@ -128,6 +128,7 @@ const damageInstances = {
             entity.index = this.list.length;
             this.list.push(entity)
         }
+        return entity.index;
     },
     remove: function(index){
         this.list[index] = null;
@@ -595,6 +596,7 @@ class player {
         this.pVelocityModifier = 10;
         this.health = 100;
         this.selectedItem = 'melee'
+        this.melee = new melee(this)
     }
     
     draw(){
@@ -794,17 +796,19 @@ class player {
     }
 
     sendProjectile = (e) =>{
-        let centerX = character.x + character.width / 2
-        let centerY = character.y + character.height / 2
+        let centerX = this.x + this.width / 2
+        let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
         this.shoot(degrees)
     }
 
     sword = (e) => {
         console.log("run")
-        let centerX = character.x + character.width / 2
-        let centerY = character.y + character.height / 2
-        damageInstances.add(new melee(centerX, centerY, 45, this, 45))
+        let centerX = this.x + this.width / 2
+        let centerY = this.y + this.height / 2
+        let degrees = findDegrees(e.x, e.y, centerX, centerY)
+        this.melee.setValues(90, degrees - 45)
+        damageInstances.add(this.melee)
     }
 }
 
@@ -928,21 +932,50 @@ class projectile{
 }
 
 class melee{
-    constructor(x, y, span, source, startingAngle){
-        this.x = x
-        this.y = y
-        this.span = span
+    constructor(source){
+        this.span;
         this.source = source
-        this.startingAngle = startingAngle
+        this.x = source.x + source.width/2
+        this.y = source.y + source.height/2
+        this.width = 25;
+        this.height = 50;
+        this.animating = true;
+        this.index;
+        this.target;
+        this.currentAngle;
+    }
+
+    setValues(span, currentAngle){
+        this.span = span;
+        this.currentAngle = currentAngle;
+        this.target = span + currentAngle;
+    }
+
+    animate(){
+        if(this.currentAngle >= 0 && this.currentAngle < 90){
+
+        }
+        else if(this.currentAngle >= 90 && this.currentAngle < 180){
+
+        }
+        else if(this.currentAngle >= 180 && this.currentAngle < 270){
+
+        }
+        else{
+
+        }
     }
 
     draw(){
+        this.x = this.source.x + this.source.width/2
+        this.y = this.source.y + this.source.height/2
+        ctx.lineWidth = 15;
         ctx.beginPath();
-        ctx.rotate((45 * Math.PI) / 180);
-        ctx.fillStyle = "gray";
-        ctx.fillRect(this.x, this.y, 80, 20);
-        ctx.rotate((315 * Math.PI) / 180);
+        ctx.moveTo(this.x, this.y)
+        ctx.lineTo(this.source.x - 25, this.source.y - 50)
+        ctx.stroke()
         ctx.closePath()
+        ctx.lineWidth = 1;
     }
 }
 
