@@ -1002,6 +1002,7 @@ class melee{
                 console.log(i)
                 console.log('tdegrees', targetDegrees, 'd', distance)
                 console.log('currentAngle', this.currentAngle)
+                console.log(other)
                 console.log()
                 return true;
             }
