@@ -255,30 +255,31 @@ function determineValueArray(input, options){ //will determine value to be retur
 }
 
 function findDegrees(x1, y1, x2, y2){
-    console.log("shoot")
     let x = x1 - x2;
     let y = y1 - y2;
     let radians = Math.atan(x/y);
     let degrees = toDegrees(radians);
     if(x1 < x2 && y1 > y2){
-        console.log('1')
         degrees = Math.abs(degrees) + 270;
     }
     else if(x1 > x2 && y1 > y2){
-        console.log('2')
         degrees = 90 -Math.abs(degrees) + 180;
 
 
     }
     else if(x1 > x2 && y1 < y2){
-        console.log('3')
         degrees = Math.abs(degrees) + 90;
     }
     else{
-        console.log('4')
         degrees = 90 - Math.abs(degrees);
     }
     return degrees;
+}
+
+function findDistance(x1, y1, x2, y2){
+    let x = x1 - x2;
+    let y = y1 - y2;
+    return Math.sqrt(x * x + y * y)
 }
 
 class space{
@@ -376,7 +377,7 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             }
@@ -803,7 +804,7 @@ class player {
         let centerX = this.x + this.width / 2
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
-        this.melee.setValues(120, degrees)
+        this.melee.setValues(90, degrees)
         damageInstances.add(this.melee)
     }
 }
@@ -961,7 +962,7 @@ class melee{
         ctx.beginPath();
         ctx.save()
         ctx.translate(this.x, this.y)
-        ctx.rotate((this.currentAngle * Math.PI) / 180)
+        ctx.rotate(((this.currentAngle * Math.PI) / 180) + 120)
         ctx.translate(-this.x, -this.y)
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#0000ff";
@@ -969,9 +970,42 @@ class melee{
         ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;
-            if(detectRectangleCollision(this, structures.list[0])){
-                console.log('I love stealing code')
+        for(let i = 0; i < structures.list.length; i++){
+            if(this.detectCollision(structures.list[i])){
+                console.log('I love writing code')
             }
+        }
+    }
+
+    detectCollision(other){
+        let topRight = {
+            x: other.x + other.width,
+            y: other.y
+        }
+        let topLeft = {
+            x: other.x,
+            y: other.y
+        }
+        let bottomRight = {
+            x: other.x + other.width,
+            y: other.y + other.height
+        }
+        let bottomLeft = {
+            x: other.x,
+            y: other.y + other.height
+        }
+        let corners = [topLeft, topRight, bottomRight, bottomLeft];
+        for(let i = 0; i < corners.length; i++){
+            let targetDegrees = findDegrees(corners[i].x, corners[i].y, this.x, this.y)
+            let distance = findDistance(corners[i].x, corners[i].y, this.x, this.y)
+            if(this.currentAngle >= targetDegrees - 5 && this.currentAngle <= targetDegrees + 5 && distance < this.height){
+                console.log(i)
+                console.log('tdegrees', targetDegrees, 'd', distance)
+                console.log('currentAngle', this.currentAngle)
+                console.log()
+                return true;
+            }
+        }
     }
 }
 
