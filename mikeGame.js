@@ -186,10 +186,10 @@ function getPoints(num, object){ //returns an array of points to text for collis
     let x = object.x
     let y = object.y
     for(let i = 0; i < num; i++){ 
-        result.push(new point(x, object.y)) //top
-        result.push(new point(x, object.y + object.height)) //bottom
-        result.push(new point(object.x, y)) //left
-        result.push(new point(object.x + object.width, y)) //right
+        result.push(new point(x, object.y)) //top, starts top left
+        result.push(new point(object.x + object.width - x, object.y + object.height)) //bottom, starts bottom right
+        result.push(new point(object.x, object.y + object.height - y)) //left, starts bottom left
+        result.push(new point(object.x + object.width, y)) //right, starts top right
         x += xInc;
         y += yinc;
     }
