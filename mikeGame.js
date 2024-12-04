@@ -962,7 +962,7 @@ class melee{
         ctx.beginPath();
         ctx.save()
         ctx.translate(this.x, this.y)
-        ctx.rotate(((this.currentAngle * Math.PI) / 180) + 120)
+        ctx.rotate(((this.currentAngle * Math.PI) / 180) + 90)
         ctx.translate(-this.x, -this.y)
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#0000ff";
