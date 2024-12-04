@@ -179,6 +179,23 @@ function getCorner(target, entity){ //takes finds the corner cord of the player,
     }
 }
 
+function getPoints(num, object){ //returns an array of points to text for collision, needs some work on corners
+    let xInc = object.width/num;
+    let yinc = object.height/num;
+    let result = []
+    let x = object.x
+    let y = object.y
+    for(let i = 0; i < num; i++){ 
+        result.push(new point(x, object.y)) //top
+        result.push(new point(x, object.y + object.height)) //bottom
+        result.push(new point(object.x, y)) //left
+        result.push(new point(object.x + object.width, y)) //right
+        x += xInc;
+        y += yinc;
+    }
+    return result;
+}
+
 function inSpace(cord){ //finds what square the cord [left, top] is in returns the cords of the space
     let y = 0
     let x = 0
@@ -804,8 +821,11 @@ class player {
         let centerX = this.x + this.width / 2
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
-        this.melee.setValues(90, degrees)
-        damageInstances.add(this.melee)
+        if(this.melee.animating == false){
+            this.melee.animating = true;
+            this.melee.setValues(90, degrees)
+            damageInstances.add(this.melee)
+        }
     }
 }
 
@@ -940,18 +960,21 @@ class melee{
         this.target;
         this.currentAngle;
         this.step = 5; //how many pixels the sword moves
+        this.animating = false;
+        this.hitList = []
     }
 
-    setValues(span, currentAngle){
-        this.span = span;
-        this.currentAngle = currentAngle - this.step;
-        this.target = span + currentAngle;
+    setValues(span, mouseAngle){
+            this.span = span;
+            this.currentAngle = mouseAngle - this.span/2;
+            this.target = span + this.currentAngle;
     }
 
     animate(){ //should change the degrees for this frame
         this.currentAngle = this.currentAngle + this.step;
         if(this.currentAngle > this.target){
             damageInstances.remove(this.index);
+            this.animating = false;
         }
     }
 
@@ -978,35 +1001,43 @@ class melee{
     }
 
     detectCollision(other){
-        let topRight = {
-            x: other.x + other.width,
-            y: other.y
+        let points = [];
+        if(!(other.points)){
+            let topRight = {
+                x: other.x + other.width,
+                y: other.y
+            }
+            let topLeft = {
+                x: other.x,
+                y: other.y
+            }
+            let bottomRight = {
+                x: other.x + other.width,
+                y: other.y + other.height
+            }
+            let bottomLeft = {
+                x: other.x,
+                y: other.y + other.height
+            }
+            points = [topLeft, topRight, bottomRight, bottomLeft];
         }
-        let topLeft = {
-            x: other.x,
-            y: other.y
+        else{
+            points = other.points;
         }
-        let bottomRight = {
-            x: other.x + other.width,
-            y: other.y + other.height
-        }
-        let bottomLeft = {
-            x: other.x,
-            y: other.y + other.height
-        }
-        let corners = [topLeft, topRight, bottomRight, bottomLeft];
-        for(let i = 0; i < corners.length; i++){
-            let targetDegrees = findDegrees(corners[i].x, corners[i].y, this.x, this.y)
-            let distance = findDistance(corners[i].x, corners[i].y, this.x, this.y)
+        for(let i = 0; i < points.length; i++){
+            let targetDegrees = findDegrees(points[i].x, points[i].y, this.x, this.y)
+            let distance = findDistance(points[i].x, points[i].y, this.x, this.y)
             if(this.currentAngle >= targetDegrees - 5 && this.currentAngle <= targetDegrees + 5 && distance < this.height){
-                console.log(i)
-                console.log('tdegrees', targetDegrees, 'd', distance)
-                console.log('currentAngle', this.currentAngle)
-                console.log(other)
-                console.log()
                 return true;
             }
         }
+    }
+}
+
+class point{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
     }
 }
 
