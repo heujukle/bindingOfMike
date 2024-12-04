@@ -612,7 +612,6 @@ class player {
         if(this.directionList.indexOf('up') != -1){
             this.y -= this.speed
             if(this.collision2(structures.list)){
-                console.log('fixed', this.fixedIncrement)
                 this.y += this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -627,7 +626,6 @@ class player {
         if(this.directionList.indexOf('left') != -1){
             this.x -= this.speed
             if(this.collision2(structures.list)){
-                console.log('fixed', this.fixedIncrement)
                 this.x += this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -642,7 +640,6 @@ class player {
         if(this.directionList.indexOf('down') != -1){
             this.y += this.speed
             if(this.collision2(structures.list)){
-                console.log('fixed', this.fixedIncrement)
                 this.y -= this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -657,7 +654,6 @@ class player {
         if(this.directionList.indexOf('right') != -1){
             this.x += this.speed
             if(this.collision2(structures.list)){
-                console.log('fixed', this.fixedIncrement)
                 this.x -= this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -953,7 +949,6 @@ class melee{
 
     animate(){ //should change the degrees for this frame
         this.currentAngle = this.currentAngle + this.step;
-        console.log(this.currentAngle)
         if(this.currentAngle > this.target){
             damageInstances.remove(this.index);
         }
@@ -974,6 +969,9 @@ class melee{
         ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;
+            if(detectRectangleCollision(this, structures.list[0])){
+                console.log('I love stealing code')
+            }
     }
 }
 
