@@ -807,7 +807,7 @@ class player {
         let centerX = this.x + this.width / 2
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
-        this.melee.setValues(90, degrees - 45)
+        this.melee.setValues(120, degrees)
         damageInstances.add(this.melee)
     }
 }
@@ -935,45 +935,43 @@ class melee{
     constructor(source){
         this.span;
         this.source = source
-        this.x = source.x + source.width/2
-        this.y = source.y + source.height/2
+        this.x;
+        this.y;
         this.width = 25;
-        this.height = 50;
-        this.animating = true;
+        this.height = 100;
         this.index;
         this.target;
         this.currentAngle;
+        this.step = 5; //how many pixels the sword moves
     }
 
     setValues(span, currentAngle){
         this.span = span;
-        this.currentAngle = currentAngle;
+        this.currentAngle = currentAngle - this.step;
         this.target = span + currentAngle;
     }
 
-    animate(){
-        if(this.currentAngle >= 0 && this.currentAngle < 90){
-
-        }
-        else if(this.currentAngle >= 90 && this.currentAngle < 180){
-
-        }
-        else if(this.currentAngle >= 180 && this.currentAngle < 270){
-
-        }
-        else{
-
+    animate(){ //should change the degrees for this frame
+        this.currentAngle = this.currentAngle + this.step;
+        console.log(this.currentAngle)
+        if(this.currentAngle > this.target){
+            damageInstances.remove(this.index);
         }
     }
 
     draw(){
         this.x = this.source.x + this.source.width/2
         this.y = this.source.y + this.source.height/2
-        ctx.lineWidth = 15;
+        this.animate();
         ctx.beginPath();
-        ctx.moveTo(this.x, this.y)
-        ctx.lineTo(this.source.x - 25, this.source.y - 50)
-        ctx.stroke()
+        ctx.save()
+        ctx.translate(this.x, this.y)
+        ctx.rotate((this.currentAngle * Math.PI) / 180)
+        ctx.translate(-this.x, -this.y)
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "#0000ff";
+        ctx.fill();
+        ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;
     }
