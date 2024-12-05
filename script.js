@@ -10,7 +10,7 @@ canvas.width = window.innerWidth;
 const startingArea = new area()
 
 let character = new player();
-entities.add(character);
+
 //end entities segement
 
 character.setArea(startingArea);

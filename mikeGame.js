@@ -79,11 +79,11 @@ const createTurret = (x, y, width, height, key) => {
     structures.add(new turret(x, y, width, height, key))
 }
 
-const createDummy = (x, y, width, height) => {
+const createDummy = (x, y, width, height) => { //function to make dummys
     entities.add(new dummy(x, y, width, height))
 }
 
-const tiles = new Map([
+const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
         return;
     }],
@@ -111,7 +111,7 @@ const structures = { //loads structures
     }, 
 }
 
-const entities = {
+const entities = { // loads entities
     list: [],
     add: function(entity){
         if(this.list.indexOf(null) != -1){
@@ -134,7 +134,7 @@ const entities = {
         }
     },
     clear: function(){
-        this.list = [this.list[0]]
+        this.list = []
     }
     
 }
@@ -203,17 +203,13 @@ function getCorner(target, entity){ //takes finds the corner cord of the player,
 
 function getPoints(num, object){ //returns an array of points to text for collision, needs some work on corners
     let xInc = object.width/num;
-    let yinc = object.height/num;
+    let yInc = object.height/num;
     let result = []
-    let x = object.x
-    let y = object.y
     for(let i = 0; i < num; i++){ 
-        result.push(new point(x, object.y)) //top, starts top left
-        result.push(new point(object.x + object.width - x, object.y + object.height)) //bottom, starts bottom right
-        result.push(new point(object.x, object.y + object.height - y)) //left, starts bottom left
-        result.push(new point(object.x + object.width, y)) //right, starts top right
-        x += xInc;
-        y += yinc;
+        result.push(new point(object.x + xInc * i, object.y)) //top, starts top left
+        result.push(new point(object.x + object.width - xInc * i, object.y + object.height)) //bottom, starts bottom right
+        result.push(new point(object.x, object.y + object.height - yInc * i)) //left, starts bottom left
+        result.push(new point(object.x + object.width, object.y + yInc * i)) //right, starts top right
     }
     return result;
 }
@@ -416,7 +412,7 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
+                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             }
@@ -648,7 +644,7 @@ class player {
     updateMove(){
         if(this.directionList.indexOf('up') != -1){
             this.y -= this.speed
-            if(this.collision2(structures.list)){
+            if(this.collision2(structures.list) || this.collision2(entities.list)){
                 this.y += this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -662,7 +658,7 @@ class player {
         }
         if(this.directionList.indexOf('left') != -1){
             this.x -= this.speed
-            if(this.collision2(structures.list)){
+            if(this.collision2(structures.list) || this.collision2(entities.list)){
                 this.x += this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -676,7 +672,7 @@ class player {
         }
         if(this.directionList.indexOf('down') != -1){
             this.y += this.speed
-            if(this.collision2(structures.list)){
+            if(this.collision2(structures.list) || this.collision2(entities.list)){
                 this.y -= this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -690,7 +686,7 @@ class player {
         }
         if(this.directionList.indexOf('right') != -1){
             this.x += this.speed
-            if(this.collision2(structures.list)){
+            if(this.collision2(structures.list) || this.collision2(entities.list)){
                 this.x -= this.fixedIncrement;
                 this.fixedIncrement = this.speed;
             }
@@ -993,6 +989,7 @@ class melee{
         this.currentAngle = this.currentAngle + this.step;
         if(this.currentAngle > this.target){
             damageInstances.remove(this.index);
+            this.hitList = []
             this.animating = false;
         }
     }
@@ -1012,8 +1009,8 @@ class melee{
         ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;
-        for(let i = 0; i < structures.list.length; i++){
-            if(this.detectCollision(structures.list[i])){
+        for(let i = 0; i < entities.list.length; i++){
+            if(this.detectCollision(entities.list[i])){
                 console.log('I love writing code')
             }
         }
@@ -1041,12 +1038,17 @@ class melee{
             points = [topLeft, topRight, bottomRight, bottomLeft];
         }
         else{
+            console.log('points')
             points = other.points;
         }
         for(let i = 0; i < points.length; i++){
             let targetDegrees = findDegrees(points[i].x, points[i].y, this.x, this.y)
             let distance = findDistance(points[i].x, points[i].y, this.x, this.y)
-            if(this.currentAngle >= targetDegrees - 5 && this.currentAngle <= targetDegrees + 5 && distance < this.height){
+            if(this.currentAngle >= targetDegrees - 5 && this.currentAngle <= targetDegrees + 5 && distance < this.height){ //checks if the sword is facing the point and reaches the point
+                if(this.hitList.indexOf(other) == -1){
+                    other.onDamage()
+                    this.hitList.push(other)
+                }
                 return true;
             }
         }
@@ -1062,12 +1064,32 @@ class point{
 
 class dummy{
     constructor(x, y, width, height){
-        this.x = x
-        this.y = y
-        this.width = width
-        this.height = height
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.points = getPoints(2, this)
+        this.color = "#ff00ff"
+        this.defaultColor = "#ff00ff"
+        this.timeSinceDamage = 0;
+        console.log(this.points)
     }
 
+    onDamage(){
+        this.color = '#ff0000'
+        this.timeSinceDamage =  document.timeline.currentTime;
+    }
+
+    draw(){
+        if(document.timeline.currentTime - this.timeSinceDamage > 250){
+            this.color = this.defaultColor;
+        }
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+    }
 }
 
 function animate() {
@@ -1076,6 +1098,7 @@ function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       structures.draw();
       entities.draw();
+      character.draw();
       damageInstances.draw();
     } 
     window.requestAnimationFrame(animate);
