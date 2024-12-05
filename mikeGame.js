@@ -57,6 +57,7 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 ]
+
 let menu = true;
 let fConsole = document.getElementById('console');
 
@@ -69,6 +70,27 @@ function println(input){
     fConsole.innerHTML += input + '<br>'
 }
 
+const createWall = (x, y, width, height)  => {
+    structures.add(new wall(x, y, width, height))
+}
+
+const createTurret = (x, y, width, height, key) => {
+    console.log('turret')
+    structures.add(new turret(x, y, width, height, key))
+}
+
+const createDummy = (x, y, width, height) => {
+    entities.add(new dummy(x, y, width, height))
+}
+
+const tiles = new Map([
+    [0, function(){
+        return;
+    }],
+    [1, createWall],
+    ['lt', createTurret],
+    ['d', createDummy]
+])
 
 const structures = { //loads structures
     list: [],
@@ -343,18 +365,18 @@ class turret{
         this.type = 'turret'
         this.direction = direction;
         this.tProjectile = null;
-        if(this.direction == "left"){
-            console.log('left')
+        if(this.direction == "lt"){
+            console.log('lt')
             this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#ff0000')
             damageInstances.add(this.tProjectile);
         }
-        else if(direction == "up"){
+        else if(direction == "ut"){
 
         }
-        else if(direction == "right"){
+        else if(direction == "rt"){
 
         }
-        else if(direction == "down"){
+        else if(direction == "dt"){
 
         }
     }
@@ -542,7 +564,7 @@ class room{
         this.cords = cords;
     }
 
-    convertLayout(layout){
+    convertLayout(layout){ //unused
         let result = new Map() //
         let x = 0 //x and y cordninates of spaces
         let y = 0
@@ -581,11 +603,8 @@ class room{
         for(let i = 0; i < this.layout.length; i++){
             x = 0
             for(let j = 0; j < this.layout[0].length; j++){
-                if(this.layout[i][j] == 1){
-                    structures.add(new wall(x, y, width, height));
-                }
-                else if(this.layout[i][j] == 'lt'){
-                    structures.add(new turret(x, y, width, height, 'left'));
+                if(tiles.has(this.layout[i][j])){
+                    tiles.get(this.layout[i][j])(x, y, width, height, this.layout[i][j])
                 }
                 x += width
             }
@@ -1039,6 +1058,16 @@ class point{
         this.x = x;
         this.y = y;
     }
+}
+
+class dummy{
+    constructor(x, y, width, height){
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+    }
+
 }
 
 function animate() {
