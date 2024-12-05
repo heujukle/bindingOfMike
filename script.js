@@ -81,3 +81,13 @@ document.addEventListener('keydown', (e) => {
         }
     }
 })
+
+document.addEventListener('wheel', (e) => {
+    if (e.deltaY > 0) {
+        // Scrolling down
+        character.hotBarChange('down')
+      } else {
+        // Scrolling up
+        character.hotBarChange('up')
+      }
+})

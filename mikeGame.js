@@ -621,17 +621,29 @@ class player {
         this.y = Math.ceil(window.innerHeight / 2);
         this.room = 'spawn'
         this.area = 'spawn'
-        this.sections = []
         this.index = 0;
         this.directionList = [];
         this.fixedIncrement = 5;
         this.speed = 5;
         this.pVelocityModifier = 10;
+        this.pDamage = 10;
         this.health = 100;
+        this.hotbar = ['melee', 'shoot']
         this.selectedItem = 'melee'
-        this.melee = new melee(this)
+        this.melee = new melee(this, 5, 25, 100)
     }
     
+    hotBarChange(direction){
+        if(direction == 'up'){
+          let index = this.hotbar.indexOf(this.selectedItem) + 1 >= this.hotbar.length ? 0 : this.hotbar.indexOf(this.selectedItem) + 1
+          this.selectedItem = this.hotbar[index];
+        }
+        else{
+          let index = this.hotbar.indexOf(this.selectedItem) - 1 < 0 ? 0 : this.hotbar.indexOf(this.selectedItem) - 1
+          this.selectedItem = this.hotbar[index];
+        }
+    }
+
     draw(){
         this.updateMove()
         ctx.beginPath();
@@ -802,25 +814,25 @@ class player {
             let xVelocity = ((135 - 45) - degrees) / this.pVelocityModifier * -2
             let yVelocity = 90 / this.pVelocityModifier * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
         }
         else if(degrees >= 135 && degrees < 225){
             let yVelocity = ((225 - 45) - degrees) / this.pVelocityModifier * -2
             let xVelocity = 90 / this.pVelocityModifier
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
         }
         else if(degrees >= 225 && degrees < 315){
             let xVelocity = ((315 - 45) - degrees) / this.pVelocityModifier * 2
             let yVelocity = 90 / this.pVelocityModifier
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
         }
         else{
             let yVelocity = (circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
             let xVelocity = 90 / this.pVelocityModifier * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player'))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
         }
     }
 
@@ -960,17 +972,34 @@ class projectile{
                 return false
             }
         }
+        else{
+            for(let i = 0; i < entities.list.length; i++){
+                const tleft = entities.list[i].x;
+                const tright = entities.list[i].x + entities.list[i].width;
+                const ttop = entities.list[i].y;
+                const tbottom = entities.list[i].y + entities.list[i].height;
+                if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                    entities.list[i].health -= this.damage;
+                    entities.list[i].onDamage()
+                    return true;
+                }
+                else{
+                    return false
+                }
+            }
+        }
     }
 }
 
 class melee{
-    constructor(source){
+    constructor(source, damage, width, height){
         this.span;
         this.source = source
         this.x;
         this.y;
-        this.width = 25;
-        this.height = 100;
+        this.width = width;
+        this.height = height;
+        this.damage = damage;
         this.index;
         this.target;
         this.currentAngle;
@@ -1044,7 +1073,7 @@ class melee{
         for(let i = 0; i < points.length; i++){
             let targetDegrees = findDegrees(points[i].x, points[i].y, this.x, this.y)
             let distance = findDistance(points[i].x, points[i].y, this.x, this.y)
-            if(this.currentAngle >= targetDegrees - 5 && this.currentAngle <= targetDegrees + 5 && distance < this.height){ //checks if the sword is facing the point and reaches the point
+            if(this.currentAngle >= targetDegrees - this.width/2 && this.currentAngle <= targetDegrees + this.width/2 && distance < this.height){ //checks if the sword is facing the point and reaches the point
                 if(this.hitList.indexOf(other) == -1){
                     other.onDamage()
                     this.hitList.push(other)
@@ -1068,9 +1097,9 @@ class dummy{
         this.y = y;
         this.width = width;
         this.height = height;
-        this.points = getPoints(2, this)
-        this.color = "#ff00ff"
-        this.defaultColor = "#ff00ff"
+        this.points = getPoints(3, this)
+        this.color = "#ab5901"
+        this.defaultColor = "#ab5901"
         this.timeSinceDamage = 0;
         console.log(this.points)
     }
