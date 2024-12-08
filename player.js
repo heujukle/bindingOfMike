@@ -125,7 +125,7 @@ class player {
         this.updateMove()
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "#0000ff";
+        ctx.fillStyle = this.iFrames > 0 ? "#66ccff" : "#0000ff";
         ctx.fill();
         ctx.closePath();
     }
@@ -135,7 +135,7 @@ class player {
             console.log('DAMAGE')
             this.health -= damage
             this.directionList = this.directionList.concat(knockBackArray)
-            this.iFrames = 5;
+            this.iFrames = 10;
         }
     }
 

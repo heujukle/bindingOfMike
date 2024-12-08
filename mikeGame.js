@@ -144,16 +144,20 @@ const entities = { // loads entities
     clear: function(){
         this.list = []
     },
-    check: function(entity){ //true means no check
+    check: function(entity, original){ //true means check
+            if(original.iframes == 0){
+                return true;
+            }
             if(entity === null){
                 return false;
             }
-            if(entity.behavior == 'static'){
+            if(entity.behavior == 'static'){ 
                 return true;
             }
-            if(entity.target.iFrames == 0){
-                return false;
+            if(entity.target.iFrames == 0){ 
+                return true;
             }
+            return false;
     }
     
 }
@@ -353,7 +357,7 @@ function collision2(entitiy, target) {
     const bottom = entitiy.y + entitiy.height;
     
     for (let i = 0; i < targetList.length; i++) {
-        if((!(targetList[i] === entitiy) || target.check(targetList[i])) && targetList[i] != null){ //check for entities returns if it is static
+        if(((targetList[i] !== entitiy) && target.check(targetList[i], entitiy)) && targetList[i] != null){ //check for entities returns if it is static
             const tleft = targetList[i].x;
             const tright = targetList[i].x + targetList[i].width;
             const ttop = targetList[i].y;
