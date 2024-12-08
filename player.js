@@ -105,7 +105,7 @@ class player {
         this.health = 100;
         this.hotbar = ['melee', 'shoot']
         this.selectedItem = 'melee'
-        this.melee = new melee(this, 10, 25, 100)
+        this.melee = new melee(this, 10, 100, 300)
         this.iFrames = 0;
     }
     

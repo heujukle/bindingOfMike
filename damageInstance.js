@@ -122,7 +122,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height){
+    constructor(source, damage, width, height, sprite = document.getElementById('sword')){
         this.span;
         this.source = source
         this.x;
@@ -136,6 +136,7 @@ class melee{
         this.step = 5; //how many pixels the sword moves
         this.animating = false;
         this.hitList = []
+        this.sprite = sprite;
     }
 
     setValues(span, mouseAngle){
@@ -162,9 +163,10 @@ class melee{
         ctx.translate(this.x, this.y)
         ctx.rotate(((this.currentAngle * Math.PI) / 180) + 90)
         ctx.translate(-this.x, -this.y)
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "#0000ff";
-        ctx.fill();
+        ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height)
+        // ctx.rect(this.x, this.y, this.width, this.height);
+        // ctx.fillStyle = "#0000ff";
+        // ctx.fill();
         ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;

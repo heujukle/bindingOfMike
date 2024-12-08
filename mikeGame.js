@@ -55,12 +55,34 @@ const rooms = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 'lt', 0, 0, 0, 0, 0, 0, 0, 1], 
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 'z', 0, 0, 0, 0, 0, 'z', 0, 0, 0, 0, 0, 0, 'lt', 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'z', 0, 1], 
+        [1, 0, 'z', 1, 0, 0, 0, 0, 0, 0, 'z', 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 'z', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'lt', 0, 1, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 'z', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+        [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+            [1, 0, 0, 'z', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'z', 0, 0, 'z', 0, 1], 
+            [1, 0, 'z', 0, 0, 0, 0, 0, 'z', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], 
+            [1, 0, 'z', 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1], 
+            [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], 
+            [1, 0, 0, 0, 0, 'z', 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1], 
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 'z', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'z', 0, 1], 
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
 ]
 
 let menu = true;
 let fConsole = document.getElementById('console');
-let zombieSpeed = 2;
+let zombieSpeed = 4;
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')
@@ -84,7 +106,7 @@ const createDummy = (x, y, width, height) => { //function to make dummys
 }
 
 const createZombie = (x, y, width, height) => { //function to make dummys
-    entities.add(new zombie(x, y, width, height, character, zombieSpeed))
+    entities.add(new zombie(x, y, 30, 30, character, zombieSpeed))
 }
 
 const tiles = new Map([ //holds all the possible tiles and functions to build them
@@ -115,7 +137,7 @@ const structures = { //loads structures
         this.list = []
     }, 
     check: function(){
-        return false;
+        return true;
     }
 }
 
@@ -186,6 +208,11 @@ const damageInstances = {
         }
     },
     clear: function(){
+        for(let i = 0; i < this.list.length; i++){
+            if(this.list[i]){
+            this.list[i].animating = false;
+            }
+        }
         this.list = []
     }
     
