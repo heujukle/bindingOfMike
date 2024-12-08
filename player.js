@@ -136,12 +136,12 @@ class player {
         ctx.closePath();
     }
 
-    onDamage(damage = 5, knockBackArray){
+    onDamage(damage = 5, knockBackArray = []){
         if(this.iFrames == 0){
             console.log('DAMAGE')
             this.health -= damage
             this.directionList = this.directionList.concat(knockBackArray)
-            this.iFrames = 15;
+            this.iFrames = 30;
         }
     }
 

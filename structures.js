@@ -53,7 +53,8 @@ class turret{
 
         }
         else if(direction == "rt"){
-
+            this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, 'turret', true, character.room, '#ff0000')
+            damageInstances.add(this.tProjectile);
         }
         else if(direction == "dt"){
 

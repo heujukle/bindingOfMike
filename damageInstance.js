@@ -92,7 +92,7 @@ class projectile{
             const ttop = character.y;
             const tbottom = character.y + character.height;
             if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
-                character.health -= this.damage;
+                character.onDamage(this.damage);
                 console.log(character.health)
                 return true;
             }
