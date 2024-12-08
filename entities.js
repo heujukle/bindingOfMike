@@ -8,6 +8,7 @@ class dummy{
         this.color = "#ab5901"
         this.defaultColor = "#ab5901"
         this.timeSinceDamage = 0;
+        this.behavior = 'static'
         console.log(this.points)
     }
 
@@ -25,5 +26,100 @@ class dummy{
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
+    }
+}
+
+class zombie{
+    constructor(x, y, width, height, target, speed){
+        this.x = x;
+        this.y = y;
+        this.behavior = 'dynamic'
+        this.width = width;
+        this.height = height;
+        this.points = getPoints(3, this)
+        this.color = "#ab5901"
+        this.defaultColor = "#ab5901"
+        this.timeSinceDamage = 0;
+        this.action = this.pursuit
+        this.target = target
+        this.speed = speed
+        this.index;
+        this.health = 25;
+        console.log(this.target)
+    }
+
+    onDamage(damage = 5){
+        this.color = '#ff0000'
+        this.timeSinceDamage =  document.timeline.currentTime;
+        this.health -= damage
+    }
+
+    draw(){
+        if(this.health < 0){
+            entities.remove(this.index)
+            return;
+        }
+        this.action()
+        this.points = getPoints(3, this)
+        if(document.timeline.currentTime - this.timeSinceDamage > 200){
+            this.color = this.defaultColor;
+        }
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    pursuit(){
+        let damageThisTime = false
+        if(this.target.x > this.x){
+            moveEntitiy(this, this.speed, 0)
+            if(this.collision2([this.target]) && !damageThisTime){
+                this.target.onDamage(5, ["forceRight", "forceRight", "forceRight"])
+            }
+        }
+        else{
+            moveEntitiy(this, -this.speed, 0)
+            if(this.collision2([this.target]) && !damageThisTime){
+                this.target.onDamage(5, ["forceLeft", "forceLeft", "forceLeft"])
+            }
+        }
+        if(this.target.y > this.y){
+            moveEntitiy(this, 0, this.speed)
+            if(this.collision2([this.target]) && !damageThisTime){
+                this.target.onDamage(5, ['forceDown', 'forceDown', 'forceDown'])
+            }
+        }
+        else{
+            moveEntitiy(this, 0, -this.speed)
+            if(this.collision2([this.target]) && !damageThisTime){
+                this.target.onDamage(5, ['forceUp', 'forceUp', 'forceUp'])
+            }
+        }
+    }
+
+    collision2(target) {
+        const left = this.x;
+        const right = this.x + this.width;
+        const top = this.y;
+        const bottom = this.y + this.height;
+        
+        for (let i = 0; i < target.length; i++) {
+            if(!(target[i] === this)){
+            const tleft = target[i].x;
+            const tright = target[i].x + target[i].width;
+            const ttop = target[i].y;
+            const tbottom = target[i].y + target[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                return true;
+                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+            }
+        }
+    }
+        return false;
     }
 }

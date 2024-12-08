@@ -60,6 +60,7 @@ const rooms = [
 
 let menu = true;
 let fConsole = document.getElementById('console');
+let zombieSpeed = 2;
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')
@@ -75,12 +76,15 @@ const createWall = (x, y, width, height)  => {
 }
 
 const createTurret = (x, y, width, height, key) => {
-    console.log('turret')
     structures.add(new turret(x, y, width, height, key))
 }
 
 const createDummy = (x, y, width, height) => { //function to make dummys
     entities.add(new dummy(x, y, width, height))
+}
+
+const createZombie = (x, y, width, height) => { //function to make dummys
+    entities.add(new zombie(x, y, width, height, character, zombieSpeed))
 }
 
 const tiles = new Map([ //holds all the possible tiles and functions to build them
@@ -89,7 +93,8 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     }],
     [1, createWall],
     ['lt', createTurret],
-    ['d', createDummy]
+    ['d', createDummy],
+    ['z', createZombie]
 ])
 
 const structures = { //loads structures
@@ -109,6 +114,9 @@ const structures = { //loads structures
     resetList: function(){
         this.list = []
     }, 
+    check: function(){
+        return false;
+    }
 }
 
 const entities = { // loads entities
@@ -135,6 +143,17 @@ const entities = { // loads entities
     },
     clear: function(){
         this.list = []
+    },
+    check: function(entity){ //true means no check
+            if(entity === null){
+                return false;
+            }
+            if(entity.behavior == 'static'){
+                return true;
+            }
+            if(entity.target.iFrames == 0){
+                return false;
+            }
     }
     
 }
@@ -315,6 +334,40 @@ function findDistance(x1, y1, x2, y2){
     let x = x1 - x2;
     let y = y1 - y2;
     return Math.sqrt(x * x + y * y)
+}
+
+function moveEntitiy(entitiy, xChange, yChange){
+    entitiy.x += xChange
+    entitiy.y += yChange
+    if(collision2(entitiy, structures) || collision2(entitiy, entities)){
+        entitiy.y -= yChange;
+        entitiy.x -= xChange;
+    }
+}
+
+function collision2(entitiy, target) {
+    let targetList = target.list
+    const left = entitiy.x;
+    const right = entitiy.x + entitiy.width;
+    const top = entitiy.y;
+    const bottom = entitiy.y + entitiy.height;
+    
+    for (let i = 0; i < targetList.length; i++) {
+        if((!(targetList[i] === entitiy) || target.check(targetList[i])) && targetList[i] != null){ //check for entities returns if it is static
+            const tleft = targetList[i].x;
+            const tright = targetList[i].x + targetList[i].width;
+            const ttop = targetList[i].y;
+            const tbottom = targetList[i].y + targetList[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                return true;
+                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+                }
+            }
+        }
+    return false;
 }
 
 class point{

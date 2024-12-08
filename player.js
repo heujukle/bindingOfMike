@@ -4,6 +4,92 @@ class player {
             ['shoot', this.sendProjectile],
             ['melee', this.sword]
         ])
+        this.actions = new Map([
+            ['up', function(player){
+                moveEntitiy(player, 0, -player.speed)
+                if(player.y < 0){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.top)
+                    player.y = window.innerHeight;
+                }
+            }],
+            ['down', function(player){
+                moveEntitiy(player, 0, player.speed)
+                if(player.y+player.height > window.innerHeight){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.bottom)
+                    player.y = 0;
+                }
+            }],
+            ['left', function(player){
+                moveEntitiy(player, -player.speed, 0)
+                if(player.x < 0){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.left)
+                    player.x = window.innerWidth;
+                }
+            }],
+            ['right', function(player){
+                moveEntitiy(player, player.speed, 0)
+                if(player.x+player.width > window.innerWidth){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.right)
+                    player.x = 0;
+                }
+            }],
+            ['forceLeft', function(player){
+                moveEntitiy(player, -player.speed, 0)
+                if(player.x < 0){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.left)
+                    player.x = window.innerWidth;
+                }
+                player.directionList.splice(player.directionList.indexOf("forceLeft"), 1)
+            }],
+            ['forceRight', function(player){
+                moveEntitiy(player, player.speed, 0)
+                if(player.x+player.width > window.innerWidth){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.right)
+                    player.x = 0;
+                }
+                player.directionList.splice(player.directionList.indexOf("forceRight"), 1)
+            }],
+            ['forceUp', function(player){
+                moveEntitiy(player, 0, -player.speed)
+                if(player.y < 0){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.top)
+                    player.y = window.innerHeight;
+                }
+                player.directionList.splice(player.directionList.indexOf("forceUp"), 1)
+            }],
+            ['forceDown', function(player){
+                moveEntitiy(player, 0, player.speed)
+                if(player.y+player.height > window.innerHeight){
+                    structures.resetList();
+                    entities.clear();
+                    damageInstances.clear();
+                    player.setRoom(player.room.bottom)
+                    player.y = 0;
+                }
+                player.directionList.splice(player.directionList.indexOf("forceDown"), 1)
+            }],
+        ])
         this.width = 50
         this.height = 50
         this.x = Math.ceil(window.innerWidth / 2);
@@ -19,7 +105,8 @@ class player {
         this.health = 100;
         this.hotbar = ['melee', 'shoot']
         this.selectedItem = 'melee'
-        this.melee = new melee(this, 5, 25, 100)
+        this.melee = new melee(this, 10, 25, 100)
+        this.iFrames = 0;
     }
     
     hotBarChange(direction){
@@ -34,6 +121,7 @@ class player {
     }
 
     draw(){
+        this.iFrames = this.iFrames - 1 >= 0 ? this.iFrames - 1 : 0
         this.updateMove()
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
@@ -42,66 +130,18 @@ class player {
         ctx.closePath();
     }
 
+    onDamage(damage = 5, knockBackArray){
+        if(this.iFrames == 0){
+            console.log('DAMAGE')
+            this.health -= damage
+            this.directionList = this.directionList.concat(knockBackArray)
+            this.iFrames = 5;
+        }
+    }
+
     updateMove(){
-        if(this.directionList.indexOf('up') != -1){
-            this.y -= this.speed
-            if(this.collision2(structures.list) || this.collision2(entities.list)){
-                this.y += this.fixedIncrement;
-                this.fixedIncrement = this.speed;
-            }
-            if(this.y < 0){
-                structures.resetList();
-                entities.clear();
-                damageInstances.clear();
-                this.setRoom(this.room.top)
-                this.y = window.innerHeight;
-            }
-        }
-        if(this.directionList.indexOf('left') != -1){
-            this.x -= this.speed
-            if(this.collision2(structures.list) || this.collision2(entities.list)){
-                this.x += this.fixedIncrement;
-                this.fixedIncrement = this.speed;
-            }
-            if(this.x < 0){
-                structures.resetList();
-                entities.clear();
-                damageInstances.clear();
-                this.setRoom(this.room.left)
-                this.x = window.innerWidth;
-            }
-        }
-        if(this.directionList.indexOf('down') != -1){
-            this.y += this.speed
-            if(this.collision2(structures.list) || this.collision2(entities.list)){
-                this.y -= this.fixedIncrement;
-                this.fixedIncrement = this.speed;
-            }
-            if(this.y+this.height > window.innerHeight){
-                structures.resetList();
-                entities.clear();
-                damageInstances.clear();
-                this.setRoom(this.room.bottom)
-                this.y = 0;
-            }
-        }
-        if(this.directionList.indexOf('right') != -1){
-            this.x += this.speed
-            if(this.collision2(structures.list) || this.collision2(entities.list)){
-                this.x -= this.fixedIncrement;
-                this.fixedIncrement = this.speed;
-            }
-            if(this.x+this.width > window.innerWidth){
-                structures.resetList();
-                entities.clear();
-                damageInstances.clear();
-                this.setRoom(this.room.right)
-                this.x = 0;
-            }
-        }
-        if(this.directionList.indexOf('shoot') != -1){
-            this.directionList[this.directionList.indexOf('shoot') + 1]();
-            this.directionList.splice(this.directionList.indexOf('shoot'), 2)
+        for(let i = 0; i < this.directionList.length; i++){
+            this.actions.get(this.directionList[i])(this)
         }
     }
 
@@ -172,28 +212,6 @@ class player {
                     return false;
                 }
         }
-    }
-
-    collision2(target) {
-        const left = this.x;
-        const right = this.x + this.width;
-        const top = this.y;
-        const bottom = this.y + this.height;
-        
-        for (let i = 0; i < target.length; i++) {
-            const tleft = target[i].x;
-            const tright = target[i].x + target[i].width;
-            const ttop = target[i].y;
-            const tbottom = target[i].y + target[i].height;
-            
-            // Check if the rectangles are overlapping
-            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
-                // Collision detected
-                return true;
-                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
-            }
-        }
-        return false;
     }
 
     shoot(degrees){

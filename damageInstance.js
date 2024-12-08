@@ -40,20 +40,6 @@ class projectile{
     }
 
     detectCollision(){
-    //     let tl = getCorner("tl", this);
-    //     let tr = getCorner("tr", this);
-    //     let bl = getCorner("bl", this);
-    //     let br = getCorner("br", this);
-    //     let mr = getCorner("mr", this);
-    //     let ml = getCorner("ml", this);
-    //     let mt = getCorner("mt", this);
-    //     let mb = getCorner("mb", this);
-
-    //    if(this.detectStructures([tl, tr, bl, br, mr, ml, mt, mb]) == true){
-    //     console.log("horray")
-    //     entities.remove(this.index);
-    //    }
-
         if(this.collision2(structures.list)){
             entities.remove(this.index);
         }
@@ -116,21 +102,23 @@ class projectile{
         }
         else{
             for(let i = 0; i < entities.list.length; i++){
+                if(entities.list[i] == null){
+                    continue;
+                }
                 const tleft = entities.list[i].x;
                 const tright = entities.list[i].x + entities.list[i].width;
                 const ttop = entities.list[i].y;
                 const tbottom = entities.list[i].y + entities.list[i].height;
                 if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
                     entities.list[i].health -= this.damage;
-                    entities.list[i].onDamage()
+                    entities.list[i].onDamage(this.damage)
                     return true;
-                }
-                else{
-                    return false
                 }
             }
         }
+        return false;
     }
+
 }
 
 class melee{
@@ -189,6 +177,9 @@ class melee{
 
     detectCollision(other){
         let points = [];
+        if(other === null){
+            return;
+        }
         if(!(other.points)){
             let topRight = {
                 x: other.x + other.width,
@@ -217,7 +208,7 @@ class melee{
             let distance = findDistance(points[i].x, points[i].y, this.x, this.y)
             if(this.currentAngle >= targetDegrees - this.width/2 && this.currentAngle <= targetDegrees + this.width/2 && distance < this.height){ //checks if the sword is facing the point and reaches the point
                 if(this.hitList.indexOf(other) == -1){
-                    other.onDamage()
+                    other.onDamage(this.damage)
                     this.hitList.push(other)
                 }
                 return true;
