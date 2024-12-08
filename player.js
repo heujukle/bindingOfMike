@@ -134,7 +134,7 @@ class player {
             console.log('DAMAGE')
             this.health -= damage
             this.directionList = this.directionList.concat(knockBackArray)
-            this.iFrames = 10;
+            this.iFrames = 15;
         }
     }
 
