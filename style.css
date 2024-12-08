@@ -95,3 +95,37 @@ body{
 .image{
     display: none
 }
+
+#hotbar{
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    background-color: antiquewhite;
+    top: 10px;
+    left: 10px;
+}
+
+.hotbarItem{
+    opacity: 1;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8vh;
+    height: 8vh;
+    background-color: white;
+    border: 5px solid black;
+}
+
+.box{
+    background-color: black;
+    height: 75%;
+    width: 75%;
+}
+
+.selected{
+    width: 9vh;
+    height: 9vh;
+    background-color: grey;
+}

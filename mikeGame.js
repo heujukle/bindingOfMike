@@ -82,7 +82,7 @@ const rooms = [
 
 let menu = true;
 let fConsole = document.getElementById('console');
-let zombieSpeed = 4;
+let zombieSpeed = 2;
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')

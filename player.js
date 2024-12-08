@@ -102,19 +102,26 @@ class player {
         this.pSpeed = 9;
         this.pDamage = 10;
         this.health = 100;
-        this.hotbar = ['melee', 'shoot']
-        this.selectedItem = 'melee'
+        this.hotbar = ['shoot', 'melee']
+        this.selectedItem = 'shoot'
         this.melee = new melee(this, 10, 25, 100)
         this.iFrames = 0;
     }
     
     hotBarChange(direction){
+        const hotbar = document.getElementById('hotbar')
         if(direction == 'up'){
-          let index = this.hotbar.indexOf(this.selectedItem) + 1 >= this.hotbar.length ? 0 : this.hotbar.indexOf(this.selectedItem) + 1
+          let index = this.hotbar.indexOf(this.selectedItem);
+          hotbar.children[index].classList.remove('selected')
+          index = this.hotbar.indexOf(this.selectedItem) + 1 >= this.hotbar.length ? 0 : this.hotbar.indexOf(this.selectedItem) + 1
+          hotbar.children[index].classList.add('selected')
           this.selectedItem = this.hotbar[index];
         }
         else{
-          let index = this.hotbar.indexOf(this.selectedItem) - 1 < 0 ? 0 : this.hotbar.indexOf(this.selectedItem) - 1
+          let index = this.hotbar.indexOf(this.selectedItem);
+          hotbar.children[index].classList.remove('selected')
+          index = this.hotbar.indexOf(this.selectedItem) - 1 < 0 ? this.hotbar.length - 1 : this.hotbar.indexOf(this.selectedItem) - 1
+          hotbar.children[index].classList.add('selected')
           this.selectedItem = this.hotbar[index];
         }
     }
