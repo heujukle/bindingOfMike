@@ -106,6 +106,7 @@ class player {
         this.selectedItem = 'shoot'
         this.melee = new melee(this, 10, 25, 100)
         this.iFrames = 0;
+        this.map = null;
     }
     
     hotBarChange(direction){
@@ -175,6 +176,7 @@ class player {
     setArea(area){
         console.log(area.map)
         this.area = area;
+        this.map = new areaMap(this.area)
         this.setRoom(this.area.map.get('0,0'))
     }
     detectCollision(direction){ //left, right, up, down

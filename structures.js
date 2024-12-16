@@ -74,6 +74,7 @@ class area{
     constructor(){
         this.map = new Map()
         this.generateAreaLayout(Math.random(), this.map)
+        console.log(findMapBounds(this.map))
     }
 
     generateAreaLayout(seed, map){
