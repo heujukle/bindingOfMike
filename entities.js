@@ -137,6 +137,7 @@ class skeleton{
         this.color = "#ab5901"
         this.defaultColor = "#ab5901"
         this.timeSinceDamage = 0;
+        this.timeToProjectile = document.timeline.currentTime + 5000 + Math.floor((Math.random() * 10000))
         this.action = this.pursuit
         this.target = target
         this.speed = speed
@@ -157,6 +158,9 @@ class skeleton{
             return;
         }
         this.action()
+        if(document.timeline.currentTime > this.timeToProjectile){
+            this.action = this.fire
+        }
         this.points = getPoints(3, this)
         if(document.timeline.currentTime - this.timeSinceDamage > 200){
             this.color = this.defaultColor;
@@ -196,6 +200,46 @@ class skeleton{
                 this.target.onDamage(5, ['forceUp', 'forceUp', 'forceUp'])
             }
         }
+    }
+
+    shoot(degrees){
+        let centerX = character.x + character.width / 2
+        let centerY = character.y + character.height / 2
+        if(degrees >= 45 && degrees < 135){
+            let xVelocity = ((this.pSpeed / 45) * degrees) - this.pSpeed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
+            let yVelocity = this.pSpeed * -1
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+        }
+        else if(degrees >= 135 && degrees < 225){
+            let yVelocity = (((this.pSpeed / 45) * (degrees - 90)) - this.pSpeed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
+            let xVelocity = this.pSpeed
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+        }
+        else if(degrees >= 225 && degrees < 315){
+            let xVelocity = -(((this.pSpeed / 45) * (degrees - 180)) - this.pSpeed * 2)
+            let yVelocity = this.pSpeed
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+        }
+        else{
+            if(degrees < 45){
+                degrees += 360
+            }
+            let yVelocity = -(((this.pSpeed / 45) * (degrees - 270)) - this.pSpeed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
+            let xVelocity = this.pSpeed * -1
+            console.log("xv:", xVelocity, 'yv', yVelocity)
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+        }
+    }
+
+    fire(){
+        let centerX = this.x + this.width / 2
+        let centerY = this.y + this.height / 2
+        let degrees = findDegrees(this.target.x, this.target.y, centerX, centerY)
+        this.shoot(degrees)
+        this.action = this.pursuit
     }
 
     collision2(target) {
