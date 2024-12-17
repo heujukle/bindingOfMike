@@ -171,6 +171,7 @@ class player {
     setRoom(room){
         this.room = room
         this.room.newRoomLoad()
+        this.map.updateMap(this.room.cords)
         console.log(this.room.cords)
     }
     setArea(area){

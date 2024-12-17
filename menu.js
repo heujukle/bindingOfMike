@@ -22,11 +22,16 @@ document.addEventListener('keypress', (e) => {
 
 class areaMap {
     constructor(area){
+        this.selected = null
+        this.highX = 0
+        this.lowX = 0 //functions as offset
+        this.highY = 0
+        this.lowY = 0 //functions as offset
         this.map = area.map;
         this.element = document.createElement('div')
         mapElement.appendChild(this.element)
-        this.bounds = findMapBounds(this.map)
-        this.element.style = `display: grid; grid-template-columns: repeat(${this.bounds[0]}, 1fr); grid-template-rows: repeat(${this.bounds[1]}, 1fr);`
+        this.bounds = this.findMapBounds(this.map)
+        this.element.style = `display: grid; grid-template-columns: repeat(${this.bounds[0]}, 50px); grid-template-rows: repeat(${this.bounds[1]}, 50px); gap: 5px;`
         this.mapLayout = this.generateMapArray()
     }
 
@@ -44,35 +49,54 @@ class areaMap {
     }
 
     updateMap(cords){
+        const room = this.map.get(cords)
+        console.log(room)
+        let styleString = ''
+        if(!room.left){
+            styleString += 'border-left: 5px solid black; '
+        }
+        if(!room.right){
+            styleString += 'border-right: 5px solid black; '
+        }
+        if(!room.top){
+            styleString += 'border-top: 5px solid black; '
+        }
+        if(!room.bottom){
+            styleString += 'border-bottom: 5px solid black; '
+        }
         const cord = cords.split(',')
-        const x = parseInt(cord[0])
-        const y = parseInt(cord[1])
+        const x = parseInt(cord[0]) + Math.abs(this.lowX)
+        const y = parseInt(cord[1]) + Math.abs(this.lowY)
+        console.log(this)
+        console.log(x, y)
+        if(this.selected){
+            this.selected.id = ''
+        }
+        this.selected = this.mapLayout[y][x]
+        this.selected.id = 'playerMarker'
         this.mapLayout[y][x].classList.add('visited')
+        this.mapLayout[y][x].style = styleString
     }
-}
 
-function findMapBounds(map){ //returns the length and width of the map required to fit
-    const keys = Array.from(map.keys())
-    let highX = 0
-    let lowX = 0
-    let highY = 0
-    let lowY = 0
-    for(let i = 0; i < keys.length; i++){
-        const cord = keys[i].split(',')
-        const x = parseInt(cord[0])
-        const y = parseInt(cord[1])
-        if(x > highX){
-            highX = x
+    findMapBounds(map){ //returns the length and width of the map required to fit
+        const keys = Array.from(map.keys())
+        for(let i = 0; i < keys.length; i++){
+            const cord = keys[i].split(',')
+            const x = parseInt(cord[0])
+            const y = parseInt(cord[1])
+            if(x > this.highX){
+                this.highX = x
+            }
+            else if(x < this.lowX){
+                this.lowX = x
+            }
+            if(y > this.highY){
+                this.highY = y
+            }
+            else if(y < this.lowY){
+                this.lowY = y
+            }
         }
-        else if(x < lowX){
-            lowX = x
-        }
-        if(y > highY){
-            highY = y
-        }
-        else if(y < lowY){
-            lowY = y
-        }
+        return [this.highX + Math.abs(this.lowX) + 1, this.highY + Math.abs(this.lowY) + 1]
     }
-    return [highX + Math.abs(lowX), highY + Math.abs(lowY)]
 }

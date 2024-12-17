@@ -45,7 +45,9 @@ body{
 }
 
 #map{
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 0;
     left: 0;
@@ -149,4 +151,8 @@ img{
 
 .visited{
     background-color: red;
+}
+
+#playerMarker{
+    background-color: rgb(1, 253, 22);
 }
