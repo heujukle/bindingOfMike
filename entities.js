@@ -209,19 +209,19 @@ class skeleton{
             let xVelocity = ((this.pSpeed / 45) * degrees) - this.pSpeed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
             let yVelocity = this.pSpeed * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'skelly', undefined, this.pDamage))
         }
         else if(degrees >= 135 && degrees < 225){
             let yVelocity = (((this.pSpeed / 45) * (degrees - 90)) - this.pSpeed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
             let xVelocity = this.pSpeed
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'skelly', undefined, this.pDamage))
         }
         else if(degrees >= 225 && degrees < 315){
             let xVelocity = -(((this.pSpeed / 45) * (degrees - 180)) - this.pSpeed * 2)
             let yVelocity = this.pSpeed
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'skelly', undefined, this.pDamage))
         }
         else{
             if(degrees < 45){
@@ -230,7 +230,7 @@ class skeleton{
             let yVelocity = -(((this.pSpeed / 45) * (degrees - 270)) - this.pSpeed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
             let xVelocity = this.pSpeed * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'skelly', undefined, this.pDamage))
         }
     }
 
