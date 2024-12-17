@@ -73,26 +73,28 @@ class zombie{
 
     pursuit(){
         let damageThisTime = false
+        let speedMod = Math.floor(Math.random() * 5)
+        console.log(speedMod)
         if(this.target.x > this.x){
-            moveEntitiy(this, this.speed, 0)
+            moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
                 this.target.onDamage(5, ["forceRight", "forceRight", "forceRight"])
             }
         }
         else{
-            moveEntitiy(this, -this.speed, 0)
+            moveEntitiy(this, -(this.speed + speedMod), 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
                 this.target.onDamage(5, ["forceLeft", "forceLeft", "forceLeft"])
             }
         }
         if(this.target.y > this.y){
-            moveEntitiy(this, 0, this.speed)
+            moveEntitiy(this, 0, this.speed + speedMod, true)
             if(this.collision2([this.target]) && !damageThisTime){
                 this.target.onDamage(5, ['forceDown', 'forceDown', 'forceDown'])
             }
         }
         else{
-            moveEntitiy(this, 0, -this.speed)
+            moveEntitiy(this, 0, -(this.speed + speedMod), true)
             if(this.collision2([this.target]) && !damageThisTime){
                 this.target.onDamage(5, ['forceUp', 'forceUp', 'forceUp'])
             }

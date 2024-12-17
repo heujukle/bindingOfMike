@@ -93,7 +93,7 @@ const rooms = [
 
 let menu = true;
 let fConsole = document.getElementById('console');
-let zombieSpeed = 2;
+let zombieSpeed = 1;
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')
@@ -379,10 +379,10 @@ function findDistance(x1, y1, x2, y2){
     return Math.sqrt(x * x + y * y)
 }
 
-function moveEntitiy(entitiy, xChange, yChange){
+function moveEntitiy(entitiy, xChange, yChange, skipEntities){
     entitiy.x += xChange
     entitiy.y += yChange
-    if(collision2(entitiy, structures) || collision2(entitiy, entities)){
+    if(collision2(entitiy, structures) || (collision2(entitiy, entities) && skipEntities != true)){
         entitiy.y -= yChange;
         entitiy.x -= xChange;
     }
