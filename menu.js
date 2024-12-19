@@ -33,6 +33,7 @@ class areaMap {
         this.lowY = 0 //functions as offset
         this.map = area.map;
         this.element = document.createElement('div')
+        mapElement.innerHTML = ''
         mapElement.appendChild(this.element)
         this.bounds = this.findMapBounds(this.map)
         this.element.style = `width: 100%; height: 100%; display: grid; grid-template-columns: repeat(${this.bounds[0]}, 1fr); grid-template-rows: repeat(${this.bounds[1]}, 1fr); gap: 5px;`

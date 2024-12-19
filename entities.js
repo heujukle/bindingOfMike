@@ -73,7 +73,7 @@ class zombie{
 
     pursuit(){
         let damageThisTime = false
-        let speedMod = Math.floor(Math.random() * 5)
+        let speedMod = Math.floor(Math.random() * this.speed * 2)
         console.log(speedMod)
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
@@ -137,7 +137,7 @@ class skeleton{
         this.color = "grey"
         this.defaultColor = "grey"
         this.timeSinceDamage = 0;
-        this.timeToProjectile = document.timeline.currentTime + 5000 + Math.floor((Math.random() * 0))
+        this.timeToProjectile = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
         this.action = this.pursuit
         this.target = target
         this.speed = speed
@@ -176,7 +176,7 @@ class skeleton{
 
     pursuit(){
         let damageThisTime = false
-        let speedMod = Math.floor(Math.random() * 5)
+        let speedMod = Math.floor(Math.random() * this.speed * 2)
         console.log(speedMod)
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
@@ -241,7 +241,7 @@ class skeleton{
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(this.target.x, this.target.y, centerX, centerY)
         this.shoot(degrees + Math.floor((Math.random() * 10) - 5))
-        this.timeToProjectile = document.timeline.currentTime + 5000 + Math.floor((Math.random() * 0))
+        this.timeToProjectile = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
     }
 
     collision2(target) {
@@ -267,4 +267,56 @@ class skeleton{
     }
         return false;
     }
+}
+
+class portal{
+    constructor(x, y, width, height, target){
+        this.index;
+        this.x = x
+        this.y = y
+        this.target = target
+        this.width = width
+        this.height = height
+        this.type = 'portal'
+        this.behavior = 'dynamic'
+    }
+
+
+    draw(){
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "purple";
+        ctx.fill();
+        ctx.closePath();
+        if(this.collision2([this.target])){
+            console.log('portal')
+            this.target.setArea(new area())
+        }
+    }
+
+    collision2(target) {
+        const left = this.x;
+        const right = this.x + this.width;
+        const top = this.y;
+        const bottom = this.y + this.height;
+        
+        for (let i = 0; i < target.length; i++) {
+            if(!(target[i] === this)){
+            const tleft = target[i].x;
+            const tright = target[i].x + target[i].width;
+            const ttop = target[i].y;
+            const tbottom = target[i].y + target[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                return true;
+                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+            }
+        }
+    }
+        return false;
+    }
+
+
 }

@@ -98,7 +98,7 @@ class player {
         this.area = 'spawn'
         this.index = 0;
         this.directionList = [];
-        this.speed = 5;
+        this.speed = 15;
         this.pSpeed = 9;
         this.pDamage = 10;
         this.health = 100;
@@ -175,10 +175,16 @@ class player {
         console.log(this.room.cords)
     }
     setArea(area){
+        structures.list = []
+        entities.list = []
+        damageInstances.list = []
         console.log(area.map)
+        this.x = Math.ceil(window.innerWidth / 2);
+        this.y = Math.ceil(window.innerHeight / 2);
         this.area = area;
         this.map = new areaMap(this.area)
         this.setRoom(this.area.map.get('0,0'))
+        console.log(this.area.map)
     }
     detectCollision(direction){ //left, right, up, down
         let tl = this.room.layout.get(inSpace(getCorner("tl", this)));
