@@ -98,7 +98,7 @@ class player {
         this.area = 'spawn'
         this.index = 0;
         this.directionList = [];
-        this.speed = 15;
+        this.speed = 5;
         this.pSpeed = 9;
         this.pDamage = 10;
         this.health = 100;

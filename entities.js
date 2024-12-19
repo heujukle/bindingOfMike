@@ -141,7 +141,7 @@ class skeleton{
         this.action = this.pursuit
         this.target = target
         this.speed = speed
-        this.pSpeed = 10;
+        this.pSpeed = target.speed + 3;
         this.pDamage = 5;
         this.index;
         this.health = 25;
