@@ -413,6 +413,14 @@ function collision2(entitiy, target) {
     return false;
 }
 
+function incrementLimit(variable, limit, increment = 1){
+    variable+=increment;
+    if(variable >= limit){
+        return variable - limit
+    }
+    return variable;
+}
+
 class point{
     constructor(x, y){
         this.x = x;

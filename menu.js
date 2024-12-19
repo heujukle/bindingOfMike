@@ -4,7 +4,7 @@ const game = document.getElementById('game');
 const nameInput = document.getElementById('name');
 const title = document.getElementsByTagName('title')[0]
 const hotbar =  document.getElementById('hotbar')
-const mapElement = document.getElementById('map')
+const mapElement = document.getElementsByName('map')[0]
 
 playStart.addEventListener('click', (e) => {
     menu = false;
@@ -14,9 +14,12 @@ playStart.addEventListener('click', (e) => {
     game.src='script.js'
 })
 
+let mapPosIDs = ['mapAbsolute', 'mapNone', 'mapMini']
+let mapType = 2;
 document.addEventListener('keypress', (e) => {
     if(e.key == 'm'){
-        mapElement.classList.toggle('invisible')
+        mapType = incrementLimit(mapType, 3)
+        mapElement.id = mapPosIDs[mapType];
     }
 })
 
@@ -31,7 +34,7 @@ class areaMap {
         this.element = document.createElement('div')
         mapElement.appendChild(this.element)
         this.bounds = this.findMapBounds(this.map)
-        this.element.style = `display: grid; grid-template-columns: repeat(${this.bounds[0]}, 50px); grid-template-rows: repeat(${this.bounds[1]}, 50px); gap: 5px;`
+        this.element.style = `width: 100%; height: 100%; display: grid; grid-template-columns: repeat(${this.bounds[0]}, 1fr); grid-template-rows: repeat(${this.bounds[1]}, 1fr); gap: 5px;`
         this.mapLayout = this.generateMapArray()
     }
 
