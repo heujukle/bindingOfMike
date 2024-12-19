@@ -135,7 +135,7 @@ const createTurret = (x, y, width, height, key) => {
 }
 
 const createDummy = (x, y, width, height) => { //function to make dummys
-    structures.add(new dummy(x, y, width, height))
+    entities.add(new dummy(x, y, width, height))
 }
 
 const createZombie = (x, y, width, height) => { //function to make dummys
