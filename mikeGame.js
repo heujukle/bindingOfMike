@@ -113,13 +113,16 @@ const createTurret = (x, y, width, height, key) => {
 }
 
 const createDummy = (x, y, width, height) => { //function to make dummys
-    entities.add(new dummy(x, y, width, height))
+    structures.add(new dummy(x, y, width, height))
 }
 
 const createZombie = (x, y, width, height) => { //function to make dummys
     entities.add(new zombie(x, y, 30, 30, character, zombieSpeed))
 }
 
+const createSkeleton = (x, y, width, height) => { //function to make dummys
+    entities.add(new skeleton(x, y, 30, 30, character, 1))
+}
 const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
         return;
@@ -128,7 +131,8 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['lt', createTurret],
     ['d', createDummy],
     ['z', createZombie],
-    ['rt', createTurret]
+    ['rt', createTurret],
+    ['s', createSkeleton],
 ])
 
 const structures = { //loads structures

@@ -134,13 +134,15 @@ class skeleton{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "#ab5901"
-        this.defaultColor = "#ab5901"
+        this.color = "grey"
+        this.defaultColor = "grey"
         this.timeSinceDamage = 0;
-        this.timeToProjectile = document.timeline.currentTime + 5000 + Math.floor((Math.random() * 10000))
+        this.timeToProjectile = document.timeline.currentTime + 5000 + Math.floor((Math.random() * 0))
         this.action = this.pursuit
         this.target = target
         this.speed = speed
+        this.pSpeed = 10;
+        this.pDamage = 5;
         this.index;
         this.health = 25;
         console.log(this.target)
@@ -159,7 +161,7 @@ class skeleton{
         }
         this.action()
         if(document.timeline.currentTime > this.timeToProjectile){
-            this.action = this.fire
+           this.fire()
         }
         this.points = getPoints(3, this)
         if(document.timeline.currentTime - this.timeSinceDamage > 200){
@@ -203,8 +205,8 @@ class skeleton{
     }
 
     shoot(degrees){
-        let centerX = character.x + character.width / 2
-        let centerY = character.y + character.height / 2
+        let centerX = this.x + this.width / 2
+        let centerY = this.y + this.height / 2
         if(degrees >= 45 && degrees < 135){
             let xVelocity = ((this.pSpeed / 45) * degrees) - this.pSpeed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
             let yVelocity = this.pSpeed * -1
@@ -238,8 +240,8 @@ class skeleton{
         let centerX = this.x + this.width / 2
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(this.target.x, this.target.y, centerX, centerY)
-        this.shoot(degrees)
-        this.action = this.pursuit
+        this.shoot(degrees + Math.floor((Math.random() * 10) - 5))
+        this.timeToProjectile = document.timeline.currentTime + 5000 + Math.floor((Math.random() * 0))
     }
 
     collision2(target) {
