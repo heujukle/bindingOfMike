@@ -290,6 +290,7 @@ class portal{
         ctx.closePath();
         if(this.collision2([this.target])){
             console.log('portal')
+            zombieSpeed += 2
             this.target.setArea(new area())
         }
     }

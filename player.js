@@ -32,7 +32,7 @@ class player {
                     entities.clear();
                     damageInstances.clear();
                     player.setRoom(player.room.left)
-                    player.x = window.innerWidth;
+                    player.x = window.innerWidth - player.width;
                 }
             }],
             ['right', function(player){
