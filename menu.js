@@ -11,6 +11,7 @@ playStart.addEventListener('click', (e) => {
     title.textContent = nameInput.value + " Game"
     start.classList.add('invisible')
     hotbar.classList.remove('invisible')
+    mapElement.classList.remove('invisible')
     game.src='script.js'
 })
 
