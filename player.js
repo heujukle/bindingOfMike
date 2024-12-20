@@ -186,48 +186,6 @@ class player {
         this.setRoom(this.area.map.get('0,0'))
         console.log(this.area.map)
     }
-    detectCollision(direction){ //left, right, up, down
-        let tl = this.room.layout.get(inSpace(getCorner("tl", this)));
-        let tr = this.room.layout.get(inSpace(getCorner("tr", this)));
-        let bl = this.room.layout.get(inSpace(getCorner("bl", this)));
-        let br = this.room.layout.get(inSpace(getCorner("br", this)));
-        let mr = this.room.layout.get(inSpace(getCorner("mr", this)));
-        let ml = this.room.layout.get(inSpace(getCorner("ml", this)));
-        let mt = this.room.layout.get(inSpace(getCorner("mt", this)));
-        let mb = this.room.layout.get(inSpace(getCorner("mb", this)));
-        switch(direction){
-            case "left":
-                if(tl && bl){
-                    if(tl.type != 'space' || bl.type != 'space' || ml.type != 'space'){
-                        return true
-                    }
-                    return false;
-                }
-                return false;
-                //NEED TO FIX INCREMENTAL MOVING PROBALY A ROUNDING ERROR
-            case "right":
-                if(tr && br){
-                    if(tr.type != 'space' || br.type != 'space' || mr.type != 'space'){
-                        return true
-                    }
-                    return false;
-                }
-            case "up":
-                if(tl && tr){
-                    if(tl.type != 'space' || tr.type != 'space' || mt.type != 'space'){
-                        return true
-                    }
-                    return false;
-                }
-            case "down":
-                if(bl && br){
-                    if(bl.type != 'space' || br.type != 'space' || mb.type != 'space'){
-                        return true
-                    }
-                    return false;
-                }
-        }
-    }
 
     shoot(degrees){
         let centerX = character.x + character.width / 2

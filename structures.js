@@ -144,12 +144,25 @@ class area{
                 layout[layout.length - 1][11] = 0;
                 roomBudget -= 1
             }
-            if(bottom == false && top == false && left == false && right == false && roomBudget > 0 && roomBudget > 5){
+            /*-------------------------------------------------------------------------------------------------------------------------------*/
+            if(bottom == false && top == false && left == false && right == false && roomBudget > 5){
                 layout[4][0] = 0;
                 layout[5][0] = 0;
-                left = true;
+                if(exclusion.indexOf('right') != -1){
+                    left = true;
+                }
+                else if(exclusion.indexOf('left') != -1){
+                    right = true;
+                }
+                else if(exclusion.indexOf('top') != -1){
+                    down = true;
+                }
+                else{
+                    top = true;
+                }
                 roomBudget -= 1
             }
+            /*-------------------------------------------------------------------------------------------------------------------------------*/
             let leftRoom;
             let rightRoom;
             let topRoom;
