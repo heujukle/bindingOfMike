@@ -155,7 +155,7 @@ class area{
                     right = true;
                 }
                 else if(exclusion.indexOf('top') != -1){
-                    down = true;
+                    bottom = true;
                 }
                 else{
                     top = true;

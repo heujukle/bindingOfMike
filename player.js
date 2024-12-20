@@ -110,7 +110,7 @@ class player {
         this.melee = new melee(this, 10, 25, 100)
         this.iFrames = 0;
         this.map = null;
-        this.wallet = 1000;
+        this.wallet = 0;
         this.interact = false;
     }
     
