@@ -472,6 +472,7 @@ function animate() {
       entities.draw();
       character.draw();
       damageInstances.draw();
+      character.interact = false;
     } 
     window.requestAnimationFrame(animate);
 }

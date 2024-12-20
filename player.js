@@ -89,6 +89,9 @@ class player {
                 }
                 player.directionList.splice(player.directionList.indexOf("forceDown"), 1)
             }],
+            ['interact', function(player){
+                player.interact = true;
+            }],
         ])
         this.width = 50
         this.height = 50
@@ -108,6 +111,7 @@ class player {
         this.iFrames = 0;
         this.map = null;
         this.wallet = 1000;
+        this.interact = false;
     }
     
     hotBarChange(direction){

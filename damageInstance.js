@@ -298,8 +298,8 @@ class shop{
         ctx.fillStyle = "yellow";
         ctx.fill();
         ctx.closePath();
-        if(this.collision2([this.target])){
-            
+        if(this.collision2([this.target]) && this.target.interact == true){
+            this.loadStore()
         }
     }
 
@@ -329,18 +329,28 @@ class shop{
 
     loadStore(){
         const overlay = document.getElementById('overlay');
+        hotbar.classList.toggle('invisible')
         menu = true
         const mainStore = document.createElement('div')
         const exit = document.createElement('div')
+        overlay.appendChild(mainStore)
+        mainStore.appendChild(exit)
+        exit.textContent = 'X'
         mainStore.classList.add('store')
         exit.classList.add('exit')
         exit.addEventListener('click', function(){
             menu = false
             overlay.innerHTML = ''
+            overlay.classList.toggle('invisible')
+            hotbar.classList.toggle('invisible')
         })
+        for(let i = 0; i < this.forSale.length; i++){
+            mainStore.appendChild(this.createItem(this.forSale[i]))
+        }
+        overlay.classList.toggle('invisible')
     }
 
-    createItem(item){
+    createItem(item, index){
         const frame = document.createElement('div')
         frame.classList.add('frame')
         const sprite = document.createElement('img')
@@ -355,17 +365,19 @@ class shop{
         const purchase = document.createElement('div')
         purchase.textContent = 'Buy!'
         frame.appendChild(purchase)
-        purchase.addEventListener('click', function(){
-            if(target.wallet >= target.price){
-                target.wallet -= target.price;
+        purchase.addEventListener('click', () => {
+            if(this.target.wallet >= this.target.price){
+                this.target.wallet -= this.target.price;
             }
             else{
                 purchase.textContent = 'BROKE AHAHAHHAHAHAHAHA'
             }
             if(item.type == 'melee'){
-                target.melee = item.item;
+                this.target.melee = item.item;
+                this.forSale.splice(index, 1)
                 frame.remove()
             }
         })
+        return frame;
     }
 }

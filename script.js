@@ -18,6 +18,7 @@ character.setArea(startingArea);
 window.requestAnimationFrame(animate);
 
 document.addEventListener('keydown', (e) => {
+    console.log(e)
     switch(e.key){
         case 'w':
             if(character.directionList.indexOf('up') == -1){
@@ -39,6 +40,11 @@ document.addEventListener('keydown', (e) => {
                             character.directionList.push('right')
                             }
                         break;
+                        case 'e':
+                        if(character.directionList.indexOf('interact') == -1){
+                            character.directionList.push('interact')
+                            }
+                        break;
     }
 })
 
@@ -56,6 +62,9 @@ document.addEventListener('keyup', (e) => {
                     case 'd':
                         character.directionList.splice(character.directionList.indexOf('right'), 1);
                         break;
+                        case 'e':
+                            character.directionList.splice(character.directionList.indexOf('interact'), 1);
+                            break;
     }
     console.log(character)
 })
