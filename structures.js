@@ -146,19 +146,25 @@ class area{
             }
             /*-------------------------------------------------------------------------------------------------------------------------------*/
             if(bottom == false && top == false && left == false && right == false && roomBudget > 5){
-                layout[4][0] = 0;
-                layout[5][0] = 0;
                 if(exclusion.indexOf('right') != -1){
                     left = true;
+                    layout[4][0] = 0;
+                    layout[5][0] = 0;
                 }
                 else if(exclusion.indexOf('left') != -1){
                     right = true;
+                    layout[4][layout[4].length - 1] = 0;
+                    layout[5][layout[4].length - 1] = 0;
                 }
                 else if(exclusion.indexOf('top') != -1){
                     bottom = true;
+                    layout[layout.length - 1][10] = 0;
+                    layout[layout.length - 1][11] = 0;
                 }
                 else{
                     top = true;
+                    layout[0][10] = 0;
+                    layout[0][11] = 0;
                 }
                 roomBudget -= 1
             }
