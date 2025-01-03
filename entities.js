@@ -57,7 +57,7 @@ class zombie{
     draw(){
         if(this.health < 0){
             entities.remove(this.index)
-            this.target.wallet += 10
+            updateWallet(10, this.target)
             return;
         }
         this.action()
@@ -158,7 +158,7 @@ class skeleton{
     draw(){
         if(this.health < 0){
             entities.remove(this.index)
-            this.target.wallet += 20;
+            updateWallet(20, this.target)
             return;
         }
         this.action()

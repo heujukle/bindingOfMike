@@ -481,6 +481,12 @@ function setFPS(target){
     fps = target;
 }
 
+function updateWallet(increase, target){
+    if(target.wallet){
+        target.wallet += increase
+        document.getElementById('walletDisplay').textContent = target.wallet;
+    }
+}
 const structJS = document.createElement('script')
 structJS.src = 'structures.js'
 const playerJS = document.createElement('script')

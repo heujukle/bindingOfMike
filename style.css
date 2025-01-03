@@ -105,13 +105,17 @@ body{
     display: none
 }
 
+
+#topLeft{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
 #hotbar{
     display: flex;
     align-items: center;
-    position: absolute;
     background-color: antiquewhite;
-    top: 10px;
-    left: 10px;
 }
 
 .hotbarItem{
@@ -225,4 +229,11 @@ img{
     justify-content: center;
     align-items: center;
     display: flex;
+}
+
+#wallet{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: antiquewhite;
 }

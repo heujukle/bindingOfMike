@@ -1,3 +1,5 @@
+/*To be remnamed to interactables */
+
 class projectile{
     constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5){
         this.room = room;

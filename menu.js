@@ -3,14 +3,14 @@ const start = document.getElementById('start');
 const game = document.getElementById('game');
 const nameInput = document.getElementById('name');
 const title = document.getElementsByTagName('title')[0]
-const hotbar =  document.getElementById('hotbar')
+const topLeft =  document.getElementById('topLeft')
 const mapElement = document.getElementsByName('map')[0]
 
 playStart.addEventListener('click', (e) => {
     menu = false;
     title.textContent = nameInput.value + " Game"
     start.classList.add('invisible')
-    hotbar.classList.remove('invisible')
+    topLeft.classList.remove('invisible')
     mapElement.classList.remove('invisible')
     game.src='script.js'
 })
