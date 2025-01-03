@@ -124,7 +124,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height, name = 'sword', sprite = document.getElementById('sword').src){
+    constructor(source, damage, width, height, name = 'sword', sprite = document.getElementById('sword')){
         this.name = name
         this.span;
         this.source = source
@@ -290,6 +290,11 @@ class shop{
             item:new melee(target, 10, 100, 300, 'Big sword'), //item itself
             price:100, //price
             type: 'melee' //type
+        }, 
+        {
+            item:'multi1',
+            price:20,
+            type:'passiveItem'
         }]
     }
 
@@ -360,10 +365,10 @@ class shop{
         const frame = document.createElement('div')
         frame.classList.add('frame')
         const sprite = document.createElement('img')
-        sprite.src = item.item.sprite;
+        sprite.src = item.item.sprite != null ? item.item.sprite.src : 'images/Coin.png';
         frame.appendChild(sprite)
         const name = document.createElement('p')
-        name.textContent = item.item.name
+        name.textContent = item.item.name != null ? item.item.name : item.item;
         frame.appendChild(name)
         const price = document.createElement('p')
         price.textContent = '$' + item.price
@@ -377,6 +382,11 @@ class shop{
                 updateWallet(-item.price, this.target)
                 if(item.type == 'melee'){
                     this.target.melee = item.item;
+                    this.forSale.splice(index, 1)
+                    frame.remove()
+                }
+                if(item.type == 'passiveItem'){
+                    this.target.passiveItems.push(item.item);
                     this.forSale.splice(index, 1)
                     frame.remove()
                 }

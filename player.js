@@ -106,6 +106,7 @@ class player {
         this.pDamage = 10;
         this.health = 100;
         this.hotbar = ['shoot', 'melee']
+        this.passiveItems = []
         this.selectedItem = 'shoot'
         this.melee = new melee(this, 10, 25, 100)
         this.iFrames = 0;
@@ -228,6 +229,9 @@ class player {
         let centerX = this.x + this.width / 2
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
+        if(this.passiveItems.includes('multi1')){
+            this.shoot(degrees + Math.floor((Math.random() * 10) - 5))
+        }
         this.shoot(degrees)
     }
 
