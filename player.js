@@ -230,7 +230,7 @@ class player {
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
         if(this.passiveItems.includes('multi1')){
-            this.shoot(degrees + Math.floor((Math.random() * 10) - 5))
+            this.shoot(degrees + Math.floor((Math.random() * 20) - 5))
         }
         this.shoot(degrees)
     }
