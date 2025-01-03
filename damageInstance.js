@@ -124,7 +124,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height, name = 'sword', sprite = document.getElementById('sword')){
+    constructor(source, damage, width, height, name = 'sword', sprite = document.getElementById('sword').src){
         this.name = name
         this.span;
         this.source = source
@@ -278,31 +278,35 @@ class portal{
 
 class shop{
     constructor(x, y, width, height, target){
-        this.index;
-        this.x = x
-        this.y = y
+        this.index; //index in interactables
+        this.x = x //x
+        this.y = y //y
         this.target = target
         this.width = width
         this.height = height
-        this.type = 'shop'
-        this.behavior = 'dynamic'
-        this.forSale = [{
-            item:new melee(target, 10, 100, 300, 'Big sword'),
-            price:100,
-            type: 'melee'
+        this.type = 'shop' //is shop
+        this.behavior = 'dynamic' //dynamically changes
+        this.forSale = [{ //list of items for sale
+            item:new melee(target, 10, 100, 300, 'Big sword'), //item itself
+            price:100, //price
+            type: 'melee' //type
         }]
     }
 
 
-    draw(){
+    draw(){ 
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "yellow";
         ctx.fill();
-        ctx.closePath();
-        if(this.collision2([this.target]) && this.target.interact == true){
-            this.loadStore()
+        ctx.fillStyle = "black";
+        if(this.collision2([this.target])){ //checks if overlap and player has pressed interact button
+            ctx.fillText('press E to interact', this.x - 20, this.y - 20) //shows interact text
+            if(this.target.interact == true){ //if player interacts
+            this.loadStore() //loads store
+            }
         }
+        ctx.closePath();
     }
 
     collision2(target) {
@@ -330,14 +334,14 @@ class shop{
     }
 
     loadStore(){
-        const overlay = document.getElementById('overlay');
-        hotbar.classList.toggle('invisible')
-        menu = true
-        const mainStore = document.createElement('div')
-        const exit = document.createElement('div')
-        overlay.appendChild(mainStore)
-        mainStore.appendChild(exit)
-        exit.textContent = 'X'
+        const overlay = document.getElementById('overlay'); //grabs overlay 
+        hotbar.classList.toggle('invisible') //makes hotbar invisible
+        menu = true //turns on menu, which pauses game loop
+        const mainStore = document.createElement('div') //creates store for overlay
+        const exit = document.createElement('div') //creates exit button
+        overlay.appendChild(mainStore) //adds store to overlay
+        mainStore.appendChild(exit) //adds exit button
+        exit.textContent = 'X' //exit text
         mainStore.classList.add('store')
         exit.classList.add('exit')
         exit.addEventListener('click', function(){
@@ -366,6 +370,7 @@ class shop{
         frame.appendChild(price)
         const purchase = document.createElement('div')
         purchase.textContent = 'Buy!'
+        purchase.classList.add('buyButton')
         frame.appendChild(purchase)
         purchase.addEventListener('click', () => {
             if(this.target.wallet >= item.price){
