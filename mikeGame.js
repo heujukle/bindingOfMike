@@ -482,7 +482,7 @@ function setFPS(target){
 }
 
 function updateWallet(increase, target){
-    if(target.wallet){
+    if(target.wallet != null){
         target.wallet += increase
         document.getElementById('walletDisplay').textContent = target.wallet;
     }

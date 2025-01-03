@@ -368,16 +368,16 @@ class shop{
         purchase.textContent = 'Buy!'
         frame.appendChild(purchase)
         purchase.addEventListener('click', () => {
-            if(this.target.wallet >= this.target.price){
-                this.target.wallet -= this.target.price;
+            if(this.target.wallet >= item.price){
+                updateWallet(-item.price, this.target)
+                if(item.type == 'melee'){
+                    this.target.melee = item.item;
+                    this.forSale.splice(index, 1)
+                    frame.remove()
+                }
             }
             else{
                 purchase.textContent = 'BROKE AHAHAHHAHAHAHAHA'
-            }
-            if(item.type == 'melee'){
-                this.target.melee = item.item;
-                this.forSale.splice(index, 1)
-                frame.remove()
             }
         })
         return frame;
