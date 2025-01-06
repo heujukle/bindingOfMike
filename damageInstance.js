@@ -292,9 +292,10 @@ class shop{
             type: 'melee' //type
         }, 
         {
-            item:'multi1',
-            price:20,
-            type:'passiveItem'
+            item:'multiShot',
+            price:0,
+            type:'stat',
+            statName:'multishot'
         }]
     }
 
@@ -356,12 +357,13 @@ class shop{
             hotbar.classList.toggle('invisible')
         })
         for(let i = 0; i < this.forSale.length; i++){
-            mainStore.appendChild(this.createItem(this.forSale[i]))
+            mainStore.appendChild(this.createItem(this.forSale[i], i))
         }
         overlay.classList.toggle('invisible')
     }
 
     createItem(item, index){
+        const itemIndex = index;
         const frame = document.createElement('div')
         frame.classList.add('frame')
         const sprite = document.createElement('img')
@@ -382,12 +384,17 @@ class shop{
                 updateWallet(-item.price, this.target)
                 if(item.type == 'melee'){
                     this.target.melee = item.item;
-                    this.forSale.splice(index, 1)
+                    this.forSale.splice(itemIndex, 1)
                     frame.remove()
                 }
-                if(item.type == 'passiveItem'){
+                else if(item.type == 'passiveItem'){
                     this.target.passiveItems.push(item.item);
-                    this.forSale.splice(index, 1)
+                    this.forSale.splice(itemIndex, 1)
+                    frame.remove()
+                }
+                else if(item.type == 'stat'){
+                    this.target.stats[item.statName] += 1;
+                    this.forSale.splice(itemIndex, 1)
                     frame.remove()
                 }
             }

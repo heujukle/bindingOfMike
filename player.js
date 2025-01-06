@@ -6,7 +6,7 @@ class player {
         ])
         this.actions = new Map([
             ['up', function(player){
-                moveEntitiy(player, 0, -player.speed)
+                moveEntitiy(player, 0, -player.stats["speed"])
                 if(player.y < 0){
                     structures.resetList();
                     entities.clear();
@@ -16,7 +16,7 @@ class player {
                 }
             }],
             ['down', function(player){
-                moveEntitiy(player, 0, player.speed)
+                moveEntitiy(player, 0, player.stats["speed"])
                 if(player.y+player.height > window.innerHeight){
                     structures.resetList();
                     entities.clear();
@@ -26,7 +26,7 @@ class player {
                 }
             }],
             ['left', function(player){
-                moveEntitiy(player, -player.speed, 0)
+                moveEntitiy(player, -player.stats["speed"], 0)
                 if(player.x < 0){
                     structures.resetList();
                     entities.clear();
@@ -36,7 +36,7 @@ class player {
                 }
             }],
             ['right', function(player){
-                moveEntitiy(player, player.speed, 0)
+                moveEntitiy(player, player.stats["speed"], 0)
                 if(player.x+player.width > window.innerWidth){
                     structures.resetList();
                     entities.clear();
@@ -46,7 +46,7 @@ class player {
                 }
             }],
             ['forceLeft', function(player){
-                moveEntitiy(player, -player.speed, 0)
+                moveEntitiy(player, -player.stats["speed"], 0)
                 if(player.x < 0){
                     structures.resetList();
                     entities.clear();
@@ -57,7 +57,7 @@ class player {
                 player.directionList.splice(player.directionList.indexOf("forceLeft"), 1)
             }],
             ['forceRight', function(player){
-                moveEntitiy(player, player.speed, 0)
+                moveEntitiy(player, player.stats["speed"], 0)
                 if(player.x+player.width > window.innerWidth){
                     structures.resetList();
                     entities.clear();
@@ -68,7 +68,7 @@ class player {
                 player.directionList.splice(player.directionList.indexOf("forceRight"), 1)
             }],
             ['forceUp', function(player){
-                moveEntitiy(player, 0, -player.speed)
+                moveEntitiy(player, 0, -player.stats["speed"])
                 if(player.y < 0){
                     structures.resetList();
                     entities.clear();
@@ -79,7 +79,7 @@ class player {
                 player.directionList.splice(player.directionList.indexOf("forceUp"), 1)
             }],
             ['forceDown', function(player){
-                moveEntitiy(player, 0, player.speed)
+                moveEntitiy(player, 0, player.stats["speed"])
                 if(player.y+player.height > window.innerHeight){
                     structures.resetList();
                     entities.clear();
@@ -101,9 +101,18 @@ class player {
         this.area = 'spawn'
         this.index = 0;
         this.directionList = [];
+        this.stats = {
+            'speed' : 5,
+            'pSpeed' : 9,
+            'pDamage' : 10,
+            'multishot' : 0,
+            'maxHealth' : 100,
+            'maxStamina' : 100
+        }
         this.speed = 5;
         this.pSpeed = 9;
         this.pDamage = 10;
+        this.multishot = 0
         this.health = 100;
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = []
@@ -197,31 +206,31 @@ class player {
         let centerX = character.x + character.width / 2
         let centerY = character.y + character.height / 2
         if(degrees >= 45 && degrees < 135){
-            let xVelocity = ((this.pSpeed / 45) * degrees) - this.pSpeed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
-            let yVelocity = this.pSpeed * -1
+            let xVelocity = ((this.stats["pSpeed"] / 45) * degrees) - this.stats["pSpeed"] * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
+            let yVelocity = this.stats["pSpeed"] * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.stats["pDamage"]))
         }
         else if(degrees >= 135 && degrees < 225){
-            let yVelocity = (((this.pSpeed / 45) * (degrees - 90)) - this.pSpeed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
-            let xVelocity = this.pSpeed
+            let yVelocity = (((this.stats["pSpeed"] / 45) * (degrees - 90)) - this.stats["pSpeed"] * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
+            let xVelocity = this.stats["pSpeed"]
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.stats["pDamage"]))
         }
         else if(degrees >= 225 && degrees < 315){
-            let xVelocity = -(((this.pSpeed / 45) * (degrees - 180)) - this.pSpeed * 2)
-            let yVelocity = this.pSpeed
+            let xVelocity = -(((this.stats["pSpeed"] / 45) * (degrees - 180)) - this.stats["pSpeed"] * 2)
+            let yVelocity = this.stats["pSpeed"]
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.stats["pDamage"]))
         }
         else{
             if(degrees < 45){
                 degrees += 360
             }
-            let yVelocity = -(((this.pSpeed / 45) * (degrees - 270)) - this.pSpeed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
-            let xVelocity = this.pSpeed * -1
+            let yVelocity = -(((this.stats["pSpeed"] / 45) * (degrees - 270)) - this.stats["pSpeed"] * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
+            let xVelocity = this.stats["pSpeed"] * -1
             console.log("xv:", xVelocity, 'yv', yVelocity)
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.pDamage))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', undefined, this.stats["pDamage"]))
         }
     }
 
@@ -229,7 +238,7 @@ class player {
         let centerX = this.x + this.width / 2
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
-        if(this.passiveItems.includes('multi1')){
+        for(let i = 0; i < this.stats['multishot']; i++){
             this.shoot(degrees + Math.floor((Math.random() * 20) - 5))
         }
         this.shoot(degrees)
