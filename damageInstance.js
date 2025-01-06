@@ -1,7 +1,7 @@
 /*To be remnamed to interactables */
 
 class projectile{
-    constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5){
+    constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5, ricochet = false){
         this.room = room;
         this.index;
         this.x = startX;
@@ -16,23 +16,57 @@ class projectile{
         this.repeating = repeating;
         this.color = color;
         this.damage = damage;
+        this.ricochet = ricochet
+        console.log(color)
+        console.log(damage)
+        console.log(ricochet)
     }
 
 
     draw(){
-        this.x += this.xVelocity
-        this.y += this.yVelocity
-        // this.detectCollision();
-        if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){
-            if(this.repeating){
-                this.x = this.startX;
-                this.y = this.startY;
+        // richochet
+        if(this.ricochet === true){
+            console.log(this.ricochet)
+
+            this.x += this.xVelocity
+            if(this.collision2(structures.list)){
+                this.xVelocity *= -1
             }
-            else{
-                console.log('reset')
-                damageInstances.remove(this.index)
-                return;
+            this.x -= this.xVelocity
+            this.y += this.yVelocity * 2
+            if(this.collision2(structures.list)){
+                this.yVelocity *= -1
             }
+            this.y -= this.yVelocity
+            this.x += this.xVelocity
+            if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.entityCollision()){
+                if(this.repeating){
+                    this.x = this.startX;
+                    this.y = this.startY;
+                }
+                else{
+                    console.log('reset')
+                    damageInstances.remove(this.index)
+                    return;
+                }
+            }
+        }
+        //normal
+        else{
+            this.x += this.xVelocity
+            this.y += this.yVelocity
+            // this.detectCollision();
+                if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){
+                    if(this.repeating){
+                        this.x = this.startX;
+                        this.y = this.startY;
+                    }
+                    else{
+                        console.log('reset')
+                        damageInstances.remove(this.index)
+                        return;
+                    }
+                }
         }
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
