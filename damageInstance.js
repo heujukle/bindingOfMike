@@ -248,6 +248,14 @@ class melee{
             if(this.currentAngle >= targetDegrees - this.width/2 && this.currentAngle <= targetDegrees + this.width/2 && distance < this.height){ //checks if the sword is facing the point and reaches the point
                 if(this.hitList.indexOf(other) == -1){
                     other.onDamage(this.damage)
+                    if(other.xVelocity != null){
+                        console.log('knockbackX')
+                        other.xVelocity = other.x > this.source.x ? other.xVelocity += 5 : other.xVelocity -= 5
+                    }
+                    if(other.yVelocity != null){
+                        console.log('knockbackY')
+                        other.yVelocity = other.y > this.source.y ? other.yVelocity += 5 : other.yVelocity -= 5
+                    }
                     this.hitList.push(other)
                 }
                 return true;

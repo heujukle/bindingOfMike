@@ -492,32 +492,28 @@ function updateWallet(increase, target){
 }
 
 function velocity(entity, xVelocity, yVelocity){
-    entity.x += xVelocity
-            if(collision2(entity, structures)){
-                xVelocity *= -1
-            }
-            entity.x -= xVelocity
-            entity.y += yVelocity * 2
-            if(collision2(entity, structures)){
-                yVelocity *= -1
-            }
-            entity.y -= yVelocity
-            entity.x += xVelocity
-
-    // entity.x += xVelocity
-    // entity.y += yVelocity
-    // if(collision2(entity, structures)){
-    //     while(collision2(entity, structures)){
-    //         entity.x -= xVelocity
-    //         entity.y -= yVelocity
-    //         xVelocity -= 5
-    //         yVelocity -= 5
-    //         entity.x += xVelocity
-    //         entity.y += yVelocity
-    //     }
-    //     yVelocity = 0
-    //     xVelocity = 0
-    // }
+    const temp = {
+        x : entity.x,
+        y : entity.y,
+        width : entity.width,
+        height : entity.height
+    }
+    temp.x += xVelocity
+    if(collision2(temp, structures)){
+        xVelocity *= -1
+    }
+    temp.x -= xVelocity
+    temp.y += yVelocity * 2
+    if(collision2(temp, structures)){
+        yVelocity *= -1
+    }
+    temp.y -= yVelocity
+    temp.x += xVelocity
+    if(!collision2(temp, structures)){
+        entity.x = temp.x
+        entity.y = temp.y
+    }
+    
     if(xVelocity > 0){
         xVelocity *= 0.9
         if(xVelocity < 0.5){
@@ -542,8 +538,8 @@ function velocity(entity, xVelocity, yVelocity){
             yVelocity = 0
         }
     }
-
-    return [xVelocity, yVelocity]
+    entity.xVelocity = xVelocity
+    entity.yVelocity = yVelocity
 }
 
 const structJS = document.createElement('script')

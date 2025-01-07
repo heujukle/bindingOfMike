@@ -117,13 +117,13 @@ class player {
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = ['richochet']
         this.selectedItem = 'shoot'
-        this.melee = new melee(this, 10, 25, 100)
+        this.melee = new melee(this, 10, 30, 125)
         this.iFrames = 0;
         this.map = null;
         this.wallet = 0;
         this.interact = false;
-        this.xVelocity = 50;
-        this.yVelocity = 50;
+        this.xVelocity = 0;
+        this.yVelocity = 0;
     }
     
     hotBarChange(direction){
@@ -146,9 +146,7 @@ class player {
 
     draw(){
         this.iFrames = this.iFrames - 1 >= 0 ? this.iFrames - 1 : 0
-        let newVelocity = velocity(this, this.xVelocity, this.yVelocity)
-        this.xVelocity = newVelocity[0]
-        this.yVelocity = newVelocity[1]
+        velocity(this, this.xVelocity, this.yVelocity)
         this.updateMove()
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
@@ -217,18 +215,30 @@ class player {
             let xVelocity = ((speed / 45) * degrees) - speed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
             let yVelocity = speed * -1
             // console.log("xv:", xVelocity, 'yv', yVelocity)
+            if(this.stats["multishot"] >= 10){
+                this.xVelocity = xVelocity * -1
+                this.yVelocity = yVelocity * -1
+            }
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
         }
         else if(degrees >= 135 && degrees < 225){
             let yVelocity = (((speed / 45) * (degrees - 90)) - speed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
             let xVelocity = speed
             // console.log("xv:", xVelocity, 'yv', yVelocity)
+            if(this.stats["multishot"] >= 10){
+                this.xVelocity = xVelocity * -1
+                this.yVelocity = yVelocity * -1
+            }
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
         }
         else if(degrees >= 225 && degrees < 315){
             let xVelocity = -(((speed / 45) * (degrees - 180)) - speed * 2)
             let yVelocity = speed
             // console.log("xv:", xVelocity, 'yv', yVelocity)
+            if(this.stats["multishot"] >= 10){
+                this.xVelocity = xVelocity * -1
+                this.yVelocity = yVelocity * -1
+            }
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
         }
         else{
@@ -238,6 +248,10 @@ class player {
             let yVelocity = -(((speed / 45) * (degrees - 270)) - speed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
             let xVelocity = speed * -1
             // console.log("xv:", xVelocity, 'yv', yVelocity)
+            if(this.stats["multishot"] >= 10){
+                this.xVelocity = xVelocity * -1
+                this.yVelocity = yVelocity * -1
+            }
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
         }
     }
@@ -249,20 +263,6 @@ class player {
         for(let i = 0; i < this.stats['multishot']; i++){
             const bloom = Math.random()
             this.shoot(degrees + Math.floor((bloom * 20) - 5), this.stats["pSpeed"] - 5 * Math.random())
-        }
-        if(this.stats['multishot'] >= 10){
-            if(e.x > this.x){
-                this.directionList.push('forceLeft')
-            }
-            else{
-                this.directionList.push('forceRight')
-            }
-            if(e.y > this.y){
-                this.directionList.push('forceUp')
-            }
-            else{
-                this.directionList.push('forceDown')
-            }
         }
         this.shoot(degrees)
     }

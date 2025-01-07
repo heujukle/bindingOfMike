@@ -45,6 +45,8 @@ class zombie{
         this.speed = speed
         this.index;
         this.health = 25;
+        this.xVelocity = 0;
+        this.yVelocity = 0;
         console.log(this.target)
     }
 
@@ -60,6 +62,7 @@ class zombie{
             updateWallet(10, this.target)
             return;
         }
+        velocity(this, this.xVelocity, this.yVelocity)
         this.action()
         this.points = getPoints(3, this)
         if(document.timeline.currentTime - this.timeSinceDamage > 200){
@@ -146,6 +149,8 @@ class skeleton{
         this.pDamage = 5;
         this.index;
         this.health = 25;
+        this.xVelocity = 0;
+        this.yVelocity = 0;
         console.log(this.target)
     }
 
@@ -161,6 +166,7 @@ class skeleton{
             updateWallet(20, this.target)
             return;
         }
+        velocity(this, this.xVelocity, this.yVelocity)
         this.action()
         if(document.timeline.currentTime > this.timeToProjectile){
            this.fire()
