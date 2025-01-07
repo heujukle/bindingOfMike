@@ -424,7 +424,7 @@ function moveEntitiy(entitiy, xChange, yChange, skipEntities){
     }
 }
 
-function collision2(entitiy, target) {
+function collision2(entitiy, target, collider) { //collider returns the item collided with instead of true
     let targetList = target.list
     const left = entitiy.x;
     const right = entitiy.x + entitiy.width;
@@ -441,6 +441,9 @@ function collision2(entitiy, target) {
             // Check if the rectangles are overlapping
             if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
                 // Collision detected
+                if(collider == true){
+                    return targetList[i]
+                }
                 return true;
                 // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
                 }
@@ -487,6 +490,62 @@ function updateWallet(increase, target){
         document.getElementById('walletDisplay').textContent = target.wallet;
     }
 }
+
+function velocity(entity, xVelocity, yVelocity){
+    entity.x += xVelocity
+            if(collision2(entity, structures)){
+                xVelocity *= -1
+            }
+            entity.x -= xVelocity
+            entity.y += yVelocity * 2
+            if(collision2(entity, structures)){
+                yVelocity *= -1
+            }
+            entity.y -= yVelocity
+            entity.x += xVelocity
+
+    // entity.x += xVelocity
+    // entity.y += yVelocity
+    // if(collision2(entity, structures)){
+    //     while(collision2(entity, structures)){
+    //         entity.x -= xVelocity
+    //         entity.y -= yVelocity
+    //         xVelocity -= 5
+    //         yVelocity -= 5
+    //         entity.x += xVelocity
+    //         entity.y += yVelocity
+    //     }
+    //     yVelocity = 0
+    //     xVelocity = 0
+    // }
+    if(xVelocity > 0){
+        xVelocity *= 0.9
+        if(xVelocity < 0.5){
+            xVelocity = 0
+        }
+    }
+    else{
+        xVelocity *= 0.9
+        if(xVelocity > -0.5){
+            xVelocity = 0
+        }
+    }
+    if(yVelocity > 0){
+        yVelocity *= 0.9
+        if(yVelocity < 0.5){
+            yVelocity = 0
+        }
+    }
+    else{
+        yVelocity *= 0.9
+        if(yVelocity > -0.5){
+            yVelocity = 0
+        }
+    }
+
+    return [xVelocity, yVelocity]
+}
+
 const structJS = document.createElement('script')
 structJS.src = 'structures.js'
 const playerJS = document.createElement('script')

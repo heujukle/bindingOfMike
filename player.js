@@ -122,6 +122,8 @@ class player {
         this.map = null;
         this.wallet = 0;
         this.interact = false;
+        this.xVelocity = 50;
+        this.yVelocity = 50;
     }
     
     hotBarChange(direction){
@@ -144,6 +146,9 @@ class player {
 
     draw(){
         this.iFrames = this.iFrames - 1 >= 0 ? this.iFrames - 1 : 0
+        let newVelocity = velocity(this, this.xVelocity, this.yVelocity)
+        this.xVelocity = newVelocity[0]
+        this.yVelocity = newVelocity[1]
         this.updateMove()
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
