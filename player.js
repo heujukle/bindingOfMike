@@ -117,7 +117,7 @@ class player {
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = ['richochet']
         this.selectedItem = 'shoot'
-        this.melee = new melee(this, 10, 30, 125)
+        this.melee = new melee(this, 10, 30, 125, 5)
         this.iFrames = 0;
         this.map = null;
         this.wallet = 0;
@@ -155,11 +155,22 @@ class player {
         ctx.closePath();
     }
 
-    onDamage(damage = 5, knockBackArray = []){
+    onDamage(damage = 5, knockBackDirection, knockbackAmount = 5){
         if(this.iFrames == 0){
             console.log('DAMAGE')
             this.health -= damage
-            this.directionList = this.directionList.concat(knockBackArray)
+            if(knockBackDirection == 'left'){
+                this.xVelocity -= knockbackAmount
+            }
+            else if(knockBackDirection == 'right'){
+                this.xVelocity += knockbackAmount
+            }
+            else if(knockBackDirection == 'down'){
+                this.yVelocity += knockbackAmount
+            }
+            else if(knockBackDirection == 'up'){
+                this.yVelocity -= knockbackAmount
+            }
             this.iFrames = 30;
         }
     }

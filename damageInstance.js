@@ -16,7 +16,7 @@ class projectile{
         this.repeating = repeating;
         this.color = color;
         this.damage = damage;
-        this.ricochet = ricochet
+        this.ricochet = ricochet;
         console.log(color)
         console.log(damage)
         console.log(ricochet)
@@ -158,7 +158,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height, name = 'sword', sprite = document.getElementById('sword')){
+    constructor(source, damage, width, height, knockback = 5, name = 'sword', sprite = document.getElementById('sword')){
         this.name = name
         this.span;
         this.source = source
@@ -174,6 +174,7 @@ class melee{
         this.animating = false;
         this.hitList = []
         this.sprite = sprite;
+        this.knockback = knockback
     }
 
     setValues(span, mouseAngle){
@@ -250,11 +251,11 @@ class melee{
                     other.onDamage(this.damage)
                     if(other.xVelocity != null){
                         console.log('knockbackX')
-                        other.xVelocity = other.x > this.source.x ? other.xVelocity += 5 : other.xVelocity -= 5
+                        other.xVelocity = other.x > this.source.x ? other.xVelocity += this.knockback : other.xVelocity -= this.knockback
                     }
                     if(other.yVelocity != null){
                         console.log('knockbackY')
-                        other.yVelocity = other.y > this.source.y ? other.yVelocity += 5 : other.yVelocity -= 5
+                        other.yVelocity = other.y > this.source.y ? other.yVelocity += this.knockback : other.yVelocity -= this.knockback
                     }
                     this.hitList.push(other)
                 }
@@ -329,7 +330,7 @@ class shop{
         this.type = 'shop' //is shop
         this.behavior = 'dynamic' //dynamically changes
         this.forSale = [{ //list of items for sale
-            item:new melee(target, 10, 100, 300, 'Big sword'), //item itself
+            item:new melee(target, 10, 100, 300, 50, 'Big sword'), //item itself
             price:100, //price
             type: 'melee' //type
         }, 

@@ -47,6 +47,7 @@ class zombie{
         this.health = 25;
         this.xVelocity = 0;
         this.yVelocity = 0;
+        this.knockback = 50
         console.log(this.target)
     }
 
@@ -82,25 +83,25 @@ class zombie{
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ["forceRight", "forceRight", "forceRight"])
+                this.target.onDamage(5, 'right', this.knockback)
             }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ["forceLeft", "forceLeft", "forceLeft"])
+                this.target.onDamage(5, 'left', this.knockback)
             }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ['forceDown', 'forceDown', 'forceDown'])
+                this.target.onDamage(5, 'down', this.knockback)
             }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ['forceUp', 'forceUp', 'forceUp'])
+                this.target.onDamage(5, 'up', this.knockback)
             }
         }
     }
@@ -189,25 +190,25 @@ class skeleton{
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ["forceRight", "forceRight", "forceRight"])
+                this.target.onDamage(5, 'right')
             }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ["forceLeft", "forceLeft", "forceLeft"])
+                this.target.onDamage(5, 'left')
             }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ['forceDown', 'forceDown', 'forceDown'])
+                this.target.onDamage(5, 'down')
             }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, ['forceUp', 'forceUp', 'forceUp'])
+                this.target.onDamage(5, 'up')
             }
         }
     }
