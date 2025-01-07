@@ -2,49 +2,46 @@
 
 class projectile{
     constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5, ricochet = false){
-        this.room = room;
-        this.index;
-        this.x = startX;
-        this.y = startY;
-        this.startX = startX;
+        this.room = room; //what room the projectile occupies
+        this.index; //index in the damageinstance/interactable array
+        this.x = startX; //xcord
+        this.y = startY;//ycord
+        this.startX = startX; //saves the start cords for repeating projectiles
         this.startY = startY;
-        this.width = width;
-        this.height = height;
-        this.xVelocity = xVelocity;
-        this.yVelocity = yVelocity;
-        this.source = source;
-        this.repeating = repeating;
-        this.color = color;
-        this.damage = damage;
-        this.ricochet = ricochet;
-        console.log(color)
-        console.log(damage)
-        console.log(ricochet)
+        this.width = width; //width of projectile
+        this.height = height; //height of projectile
+        this.xVelocity = xVelocity; //velocity of projectile
+        this.yVelocity = yVelocity; //velocity
+        this.source = source; //source, just a unique string per source, doesn't link back to main object
+        this.repeating = repeating; //if the object is repeating
+        this.color = color; //color
+        this.damage = damage; //how much damage
+        this.ricochet = ricochet; //if the projectile richochets
     }
 
 
     draw(){
         // richochet
-        if(this.ricochet === true){
+        if(this.ricochet === true){ //if richochet
             console.log(this.ricochet)
 
-            this.x += this.xVelocity
-            if(this.collision2(structures.list)){
+            this.x += this.xVelocity //checks x collision first
+            if(this.collision2(structures.list)){ //if x collison then it flips the x veolicty direction
                 this.xVelocity *= -1
             }
-            this.x -= this.xVelocity
-            this.y += this.yVelocity * 2
-            if(this.collision2(structures.list)){
+            this.x -= this.xVelocity //undoes x movement to prevent trigger the y collsion detection
+            this.y += this.yVelocity * 2 // idk why this is required but it works
+            if(this.collision2(structures.list)){ //checks for y collisions
                 this.yVelocity *= -1
             }
-            this.y -= this.yVelocity
-            this.x += this.xVelocity
-            if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.entityCollision()){
-                if(this.repeating){
+            this.y -= this.yVelocity //fixes the y velocicty
+            this.x += this.xVelocity //readds xvelocity
+            if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.entityCollision()){ //if hits enemeny or oobs the remove or repeat
+                if(this.repeating){//repeats
                     this.x = this.startX;
                     this.y = this.startY;
                 }
-                else{
+                else{ //removes
                     console.log('reset')
                     damageInstances.remove(this.index)
                     return;
@@ -53,35 +50,35 @@ class projectile{
         }
         //normal
         else{
-            this.x += this.xVelocity
+            this.x += this.xVelocity //adds velocities
             this.y += this.yVelocity
-            // this.detectCollision();
-                if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){
-                    if(this.repeating){
-                        this.x = this.startX;
+            // checks collisions
+                if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){ 
+                    if(this.repeating){//repeats projectile
+                        this.x = this.startX; 
                         this.y = this.startY;
                     }
-                    else{
+                    else{ //resets projectile
                         console.log('reset')
                         damageInstances.remove(this.index)
                         return;
                     }
                 }
         }
-        ctx.beginPath();
+        ctx.beginPath(); //draws the projectile to the canvas
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#000000";
         ctx.fill();
         ctx.closePath();
     }
 
-    detectCollision(){
+    detectCollision(){ //unused code for collision
         if(this.collision2(structures.list)){
             entities.remove(this.index);
         }
     }
 
-    detectStructures(points){
+    detectStructures(points){ //different way for structure collsion detect
         for(let i = 0; i < points.length; i++) {
             let cords = inSpace(points[i]);
             let space = this.room.layout.get(cords)
@@ -95,7 +92,7 @@ class projectile{
         }
     }
 
-    collision2(target) {
+    collision2(target) { //final way for collision detect in object, most new entities use the function in mikeGame however
         const left = this.x;
         const right = this.x + this.width;
         const top = this.y;
@@ -117,7 +114,7 @@ class projectile{
         return false;
     }
 
-    entityCollision(){
+    entityCollision(){ //prevents entity collision with self, and applies the ondamage
         const left = this.x;
         const right = this.x + this.width;
         const top = this.y;
@@ -159,28 +156,28 @@ class projectile{
 
 class melee{
     constructor(source, damage, width, height, knockback = 5, name = 'sword', sprite = document.getElementById('sword')){
-        this.name = name
-        this.span;
-        this.source = source
-        this.x;
-        this.y;
-        this.width = width;
-        this.height = height;
-        this.damage = damage;
-        this.index;
-        this.target;
-        this.currentAngle;
+        this.name = name //name of obj
+        this.span; //how wide the blade spans, degrees aroudn the player
+        this.source = source //source, does link back to source
+        this.x; //x links to source x and y when swung
+        this.y;//y
+        this.width = width; //width
+        this.height = height; //height
+        this.damage = damage; //damage
+        this.index; //index in damage instance array
+        this.target; //target is the target angle at the end
+        this.currentAngle; //the current angle of the sword for that frame
         this.step = 5; //how many pixels the sword moves
-        this.animating = false;
-        this.hitList = []
-        this.sprite = sprite;
-        this.knockback = knockback
+        this.animating = false; //if the sword is animating
+        this.hitList = [] //entities teh sword has it in a swing
+        this.sprite = sprite; //image teh sword displays, default is the sword png
+        this.knockback = knockback //how much knockback the sword gives
     }
 
-    setValues(span, mouseAngle){
-            this.span = span;
-            this.currentAngle = mouseAngle - this.span/2;
-            this.target = span + this.currentAngle;
+    setValues(span, mouseAngle){ //called on mouse click
+            this.span = span; //span is set from the event listener
+            this.currentAngle = mouseAngle - this.span/2; //current angle is set to half the span away from where cursor was clicked
+            this.target = span + this.currentAngle; 
     }
 
     animate(){ //should change the degrees for this frame
