@@ -254,6 +254,8 @@ class area{
 
 class room{
     constructor(layout, cords = '0,0'){
+        this.savedInteractables = []
+        this.savedEntities = []
         this.layout = layout 
         this.mappedLayout = null//converts layout to a map
         this.left = null;
