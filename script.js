@@ -100,3 +100,7 @@ document.addEventListener('wheel', (e) => {
         character.hotBarChange('up')
       }
 })
+
+const test = (key) => {
+    console.log("double press " + key)
+}

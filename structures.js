@@ -311,7 +311,7 @@ class room{
             }
             y += height;
         }
-        if(this.savedEntities.length > 0){
+        if(this.savedEntities.length > 0){ //if there is any saved data for rooms it will replace readd them instead
             entities.list = this.savedEntities;
         }
         if(this.savedInteractables.length > 0){
