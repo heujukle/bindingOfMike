@@ -147,11 +147,11 @@ const createSkeleton = (x, y, width, height) => { //function to make dummys
 }
 
 const createPortal = (x, y, width, height) => { //function to make dummys
-    damageInstances.add(new portal(x, y, width, height, character))
+    interactables.add(new portal(x, y, width, height, character))
 }
 
 const createShop = (x, y, width, height) => { //function to make dummys
-    damageInstances.add(new shop(x, y, width, height, character))
+    interactables.add(new shop(x, y, width, height, character))
 }
 const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
@@ -229,7 +229,6 @@ const entities = { // loads entities
             }
             return false;
     }
-    
 }
 
 const damageInstances = {
@@ -261,6 +260,35 @@ const damageInstances = {
             this.list[i].animating = false;
             }
         }
+        this.list = []
+    }
+    
+}
+
+const interactables = {
+    list: [],
+    add: function(entity){
+        if(this.list.indexOf(null) != -1){
+            entity.index = this.list.indexOf(null)
+            this.list[this.list.indexOf(null)] = entity;
+        }
+        else{
+            entity.index = this.list.length;
+            this.list.push(entity)
+        }
+        return entity.index;
+    },
+    remove: function(index){
+        this.list[index] = null;
+    },
+    draw: function (){
+        for(let i = 0; i < this.list.length; i++){
+            if(this.list[i]){
+            this.list[i].draw();
+            }
+        }
+    },
+    clear: function(){
         this.list = []
     }
     
@@ -471,8 +499,10 @@ function animate() {
     if (document.timeline.currentTime - lastUpdate > 1000 / fps && !menu) {
       lastUpdate = document.timeline.currentTime;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      character.preDraw();
       structures.draw();
       entities.draw();
+      interactables.draw();
       character.draw();
       damageInstances.draw();
       character.interact = false;
@@ -550,7 +580,10 @@ const entitiesJS = document.createElement('script')
 entitiesJS.src = 'entities.js'
 const damageInstanceJS = document.createElement('script')
 damageInstanceJS.src = 'damageInstance.js'
+const interactableJS = document.createElement('script')
+interactableJS.src = 'interactable.js'
 document.getElementsByTagName('body')[0].appendChild(structJS)
 document.getElementsByTagName('body')[0].appendChild(playerJS)
 document.getElementsByTagName('body')[0].appendChild(entitiesJS)
 document.getElementsByTagName('body')[0].appendChild(damageInstanceJS)
+document.getElementsByTagName('body')[0].appendChild(interactableJS)

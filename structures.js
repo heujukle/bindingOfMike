@@ -288,7 +288,7 @@ class room{
         return result; //returns map of room
     }
 
-    roomLoad(){
+    roomLoad(){ //old layout system
         const keys = this.mappedLayout.keys().toArray();
         for(let i = 0; i < keys.length; i++){
             if(this.mappedLayout.get(keys[i]).type != 'space'){
@@ -310,6 +310,12 @@ class room{
                 x += width
             }
             y += height;
+        }
+        if(this.savedEntities.length > 0){
+            entities.list = this.savedEntities;
+        }
+        if(this.savedInteractables.length > 0){
+            interactables.list = this.savedInteractables;
         }
     }
 }

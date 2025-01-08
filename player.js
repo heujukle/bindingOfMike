@@ -9,7 +9,10 @@ class player {
                 moveEntitiy(player, 0, -player.stats["speed"])
                 if(player.y < 0){
                     structures.resetList();
+                    player.room.savedEntities = entities.list;
                     entities.clear();
+                    player.room.savedInteractables = interactables.list;
+                    interactables.clear()
                     damageInstances.clear();
                     player.setRoom(player.room.top)
                     player.y = window.innerHeight;
@@ -19,7 +22,10 @@ class player {
                 moveEntitiy(player, 0, player.stats["speed"])
                 if(player.y+player.height > window.innerHeight){
                     structures.resetList();
+                    player.room.savedEntities = entities.list;
                     entities.clear();
+                    player.room.savedInteractables = interactables.list;
+                    interactables.clear()
                     damageInstances.clear();
                     player.setRoom(player.room.bottom)
                     player.y = 0;
@@ -29,7 +35,10 @@ class player {
                 moveEntitiy(player, -player.stats["speed"], 0)
                 if(player.x < 0){
                     structures.resetList();
+                    player.room.savedEntities = entities.list;
                     entities.clear();
+                    player.room.savedInteractables = interactables.list;
+                    interactables.clear()
                     damageInstances.clear();
                     player.setRoom(player.room.left)
                     player.x = window.innerWidth - player.width;
@@ -39,55 +48,14 @@ class player {
                 moveEntitiy(player, player.stats["speed"], 0)
                 if(player.x+player.width > window.innerWidth){
                     structures.resetList();
+                    player.room.savedEntities = entities.list;
                     entities.clear();
+                    player.room.savedInteractables = interactables.list;
+                    interactables.clear()
                     damageInstances.clear();
                     player.setRoom(player.room.right)
                     player.x = 0;
                 }
-            }],
-            ['forceLeft', function(player){
-                moveEntitiy(player, -player.stats["speed"], 0)
-                if(player.x < 0){
-                    structures.resetList();
-                    entities.clear();
-                    damageInstances.clear();
-                    player.setRoom(player.room.left)
-                    player.x = window.innerWidth;
-                }
-                player.directionList.splice(player.directionList.indexOf("forceLeft"), 1)
-            }],
-            ['forceRight', function(player){
-                moveEntitiy(player, player.stats["speed"], 0)
-                if(player.x+player.width > window.innerWidth){
-                    structures.resetList();
-                    entities.clear();
-                    damageInstances.clear();
-                    player.setRoom(player.room.right)
-                    player.x = 0;
-                }
-                player.directionList.splice(player.directionList.indexOf("forceRight"), 1)
-            }],
-            ['forceUp', function(player){
-                moveEntitiy(player, 0, -player.stats["speed"])
-                if(player.y < 0){
-                    structures.resetList();
-                    entities.clear();
-                    damageInstances.clear();
-                    player.setRoom(player.room.top)
-                    player.y = window.innerHeight;
-                }
-                player.directionList.splice(player.directionList.indexOf("forceUp"), 1)
-            }],
-            ['forceDown', function(player){
-                moveEntitiy(player, 0, player.stats["speed"])
-                if(player.y+player.height > window.innerHeight){
-                    structures.resetList();
-                    entities.clear();
-                    damageInstances.clear();
-                    player.setRoom(player.room.bottom)
-                    player.y = 0;
-                }
-                player.directionList.splice(player.directionList.indexOf("forceDown"), 1)
             }],
             ['interact', function(player){
                 player.interact = true;
@@ -144,10 +112,13 @@ class player {
         }
     }
 
-    draw(){
+    preDraw(){ //completes the player actions before drawing
         this.iFrames = this.iFrames - 1 >= 0 ? this.iFrames - 1 : 0
         velocity(this, this.xVelocity, this.yVelocity)
         this.updateMove()
+    }
+
+    draw(){
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.iFrames > 0 ? "#66ccff" : "#0000ff";
