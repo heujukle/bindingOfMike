@@ -7,55 +7,15 @@ class player {
         this.actions = new Map([
             ['up', function(player){
                 moveEntitiy(player, 0, -player.stats["speed"])
-                if(player.y < 0){
-                    structures.resetList();
-                    player.room.savedEntities = entities.list;
-                    entities.clear();
-                    player.room.savedInteractables = interactables.list;
-                    interactables.clear()
-                    damageInstances.clear();
-                    player.setRoom(player.room.top)
-                    player.y = window.innerHeight;
-                }
             }],
             ['down', function(player){
                 moveEntitiy(player, 0, player.stats["speed"])
-                if(player.y+player.height > window.innerHeight){
-                    structures.resetList();
-                    player.room.savedEntities = entities.list;
-                    entities.clear();
-                    player.room.savedInteractables = interactables.list;
-                    interactables.clear()
-                    damageInstances.clear();
-                    player.setRoom(player.room.bottom)
-                    player.y = 0;
-                }
             }],
             ['left', function(player){
                 moveEntitiy(player, -player.stats["speed"], 0)
-                if(player.x < 0){
-                    structures.resetList();
-                    player.room.savedEntities = entities.list;
-                    entities.clear();
-                    player.room.savedInteractables = interactables.list;
-                    interactables.clear()
-                    damageInstances.clear();
-                    player.setRoom(player.room.left)
-                    player.x = window.innerWidth - player.width;
-                }
             }],
             ['right', function(player){
                 moveEntitiy(player, player.stats["speed"], 0)
-                if(player.x+player.width > window.innerWidth){
-                    structures.resetList();
-                    player.room.savedEntities = entities.list;
-                    entities.clear();
-                    player.room.savedInteractables = interactables.list;
-                    interactables.clear()
-                    damageInstances.clear();
-                    player.setRoom(player.room.right)
-                    player.x = 0;
-                }
             }],
             ['interact', function(player){
                 player.interact = true;
@@ -75,7 +35,8 @@ class player {
             'pDamage' : 11,
             'multishot' : 0,
             'maxHealth' : 100,
-            'maxStamina' : 100
+            'maxStamina' : 100,
+            'dashSpeed' : 10
         }
         this.speed = 5;
         this.pSpeed = 9;
@@ -83,7 +44,7 @@ class player {
         this.multishot = 0
         this.health = 100;
         this.hotbar = ['shoot', 'melee']
-        this.passiveItems = ['richochet']
+        this.passiveItems = []
         this.selectedItem = 'shoot'
         this.melee = new melee(this, 10, 30, 125, 5)
         this.iFrames = 0;
@@ -174,6 +135,7 @@ class player {
         this.map.updateMap(this.room.cords)
         console.log(this.room.cords)
     }
+
     setArea(area){
         structures.list = []
         entities.list = []

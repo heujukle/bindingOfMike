@@ -506,6 +506,7 @@ function animate() {
       character.draw();
       damageInstances.draw();
       character.interact = false;
+      roomChange(character)
     } 
     window.requestAnimationFrame(animate);
 }
@@ -570,6 +571,49 @@ function velocity(entity, xVelocity, yVelocity){
     }
     entity.xVelocity = xVelocity
     entity.yVelocity = yVelocity
+}
+
+function roomChange(player){
+    if(player.y < 0){
+        structures.resetList();
+        player.room.savedEntities = entities.list;
+        entities.clear();
+        player.room.savedInteractables = interactables.list;
+        interactables.clear()
+        damageInstances.clear();
+        player.setRoom(player.room.top)
+        player.y = window.innerHeight;
+    }
+    else if(player.y > window.innerHeight){
+        structures.resetList();
+        player.room.savedEntities = entities.list;
+        entities.clear();
+        player.room.savedInteractables = interactables.list;
+        interactables.clear()
+        damageInstances.clear();
+        player.setRoom(player.room.bottom)
+        player.y = 0;
+    }
+    else if(player.x < 0){
+        structures.resetList();
+        player.room.savedEntities = entities.list;
+        entities.clear();
+        player.room.savedInteractables = interactables.list;
+        interactables.clear()
+        damageInstances.clear();
+        player.setRoom(player.room.left)
+        player.x = window.innerWidth - player.width;
+    }
+    else if(player.x+player.width > window.innerWidth){
+        structures.resetList();
+        player.room.savedEntities = entities.list;
+        entities.clear();
+        player.room.savedInteractables = interactables.list;
+        interactables.clear()
+        damageInstances.clear();
+        player.setRoom(player.room.right)
+        player.x = 0;
+    }
 }
 
 const structJS = document.createElement('script')
