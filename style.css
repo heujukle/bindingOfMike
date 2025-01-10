@@ -101,6 +101,11 @@ body{
     border: 2px solid black;
 }
 
+#playStart:hover{
+    background-color: rgb(184, 179, 179);
+    cursor: pointer;
+}
+
 .image{
     display: none
 }
