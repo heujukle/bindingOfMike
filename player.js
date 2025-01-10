@@ -46,7 +46,7 @@ class player {
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = []
         this.selectedItem = 'shoot'
-        this.melee = new melee(this, 10, 30, 125, 5)
+        this.melee = new melee(this, 10, 30, 125, 5, 90)
         this.iFrames = 0;
         this.map = null;
         this.wallet = 0;
@@ -219,7 +219,7 @@ class player {
         let degrees = findDegrees(e.x, e.y, centerX, centerY)
         if(this.melee.animating == false){
             this.melee.animating = true;
-            this.melee.setValues(90, degrees)
+            this.melee.setValues(degrees, e)
             damageInstances.add(this.melee)
         }
     }

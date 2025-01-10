@@ -62,11 +62,19 @@ constructor(x, y, width, height, target){
     this.height = height
     this.type = 'shop' //is shop
     this.behavior = 'dynamic' //dynamically changes
-    this.forSale = [{ //list of items for sale
-        item:new melee(target, 10, 100, 300, 50, 'Big sword'), //item itself
-        price:100, //price
+    this.forSale = [{ 
+        item:new melee(target, 10, 75, 150, 15, 40, 'projectile sword', function(sword, e){
+            const degrees = findDegrees(e.x, e.y, sword.source.x, sword.source.y)
+            console.log('cf: ' + degrees)
+            const startX = (sword.source.x + sword.source.width) / 2
+            const startY = (sword.source.x + sword.source.width) / 2
+            const swordProjectile = new projectile(startX, startY, 10, 10, 0, 0, 'player')
+            console.log(swordProjectile)
+            shoot(degrees, swordProjectile)
+        }), //item itself
+        price:0, //price
         type: 'melee' //type
-    }, 
+    },
     {
         item:'multiShot',
         price:0,

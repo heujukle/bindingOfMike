@@ -4,10 +4,10 @@ class projectile{
     constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5, ricochet = false){
         this.room = room; //what room the projectile occupies
         this.index; //index in the damageinstance/interactable array
-        this.x = startX; //xcord
-        this.y = startY;//ycord
         this.startX = startX; //saves the start cords for repeating projectiles
         this.startY = startY;
+        this.x = startX; //xcord
+        this.y = startY;//ycord
         this.width = width; //width of projectile
         this.height = height; //height of projectile
         this.xVelocity = xVelocity; //velocity of projectile
@@ -155,7 +155,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height, knockback = 5, name = 'sword', sprite = document.getElementById('sword')){
+    constructor(source = character, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, sprite = document.getElementById('sword')){
         this.name = name //name of obj
         this.span; //how wide the blade spans, degrees aroudn the player
         this.source = source //source, does link back to source
@@ -172,12 +172,19 @@ class melee{
         this.hitList = [] //entities teh sword has it in a swing
         this.sprite = sprite; //image teh sword displays, default is the sword png
         this.knockback = knockback //how much knockback the sword gives
+        this.span = span
+        this.clickFunc = clickFunc
+        this.runFunc = runFunc
+        this.runFuncCD = runFuncCD
     }
 
-    setValues(span, mouseAngle){ //called on mouse click
-            this.span = span; //span is set from the event listener
+    setValues(mouseAngle, event){ //called on mouse click
             this.currentAngle = mouseAngle - this.span/2; //current angle is set to half the span away from where cursor was clicked
-            this.target = span + this.currentAngle; 
+            this.target = this.span + this.currentAngle; 
+            if(this.clickFunc){
+                this.clickFunc(this, event)
+                console.log('clickFunc')
+            }
     }
 
     animate(){ //should change the degrees for this frame
@@ -190,6 +197,12 @@ class melee{
     }
 
     draw(){
+        this.lastRun = 0
+        let currentTime = new Date().getTime()
+        if(this.runFunc && currentTime - this.lastRun < this.runFuncCD){
+            this.runFunc(this)
+            this.lastRun = currentTime
+        }
         this.x = this.source.x + this.source.width/2
         this.y = this.source.y + this.source.height/2
         this.animate();
@@ -199,9 +212,6 @@ class melee{
         ctx.rotate(((this.currentAngle * Math.PI) / 180) + 90)
         ctx.translate(-this.x, -this.y)
         ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height)
-        // ctx.rect(this.x, this.y, this.width, this.height);
-        // ctx.fillStyle = "#0000ff";
-        // ctx.fill();
         ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;
@@ -243,7 +253,9 @@ class melee{
         for(let i = 0; i < points.length; i++){
             let targetDegrees = findDegrees(points[i].x, points[i].y, this.x, this.y)
             let distance = findDistance(points[i].x, points[i].y, this.x, this.y)
-            if(this.currentAngle >= targetDegrees - this.width/2 && this.currentAngle <= targetDegrees + this.width/2 && distance < this.height){ //checks if the sword is facing the point and reaches the point
+            if(this.currentAngle >= targetDegrees - this.width && this.currentAngle <= targetDegrees + this.width && distance < this.height){ //checks if the sword is facing the point and reaches the point
+                console.log(distance)
+                console.log(targetDegrees)
                 if(this.hitList.indexOf(other) == -1){
                     other.onDamage(this.damage)
                     if(other.xVelocity != null){
