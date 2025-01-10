@@ -155,7 +155,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source = character, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, sprite = document.getElementById('sword')){
+    constructor(source, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, sprite = document.getElementById('sword')){
         this.name = name //name of obj
         this.span; //how wide the blade spans, degrees aroudn the player
         this.source = source //source, does link back to source

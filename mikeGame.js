@@ -616,48 +616,29 @@ function roomChange(player){
     }
 }
 
-function shoot(degrees, projectile){
+function getProjVelocities(degrees, speed){
+    const result = {
+        xVelocity: 0,
+        yVelocity : 0
+    }
     if(degrees >= 45 && degrees < 135){
-        projectile.xVelocity = ((this.pSpeed / 45) * degrees) - this.pSpeed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
-        projectile.yVelocity = this.pSpeed * -1
-        damageInstances.add(projectile)
+        result.xVelocity = ((speed / 45) * degrees) - speed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
+        result.yVelocity = speed * -1
     }
     else if(degrees >= 135 && degrees < 225){
-        projectile.yVelocity = (((this.pSpeed / 45) * (degrees - 90)) - this.pSpeed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
-        projectile.xVelocity = this.pSpeed
-        damageInstances.add(projectile)
+        result.yVelocity = (((speed / 45) * (degrees - 90)) - speed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
+        result.xVelocity = speed
     }
     else if(degrees >= 225 && degrees < 315){
-        projectile.xVelocity = -(((this.pSpeed / 45) * (degrees - 180)) - this.pSpeed * 2)
-        projectile.yVelocity = this.pSpeed
-        damageInstances.add(projectile)
+        result.xVelocity = -(((speed / 45) * (degrees - 180)) - speed * 2)
+        result.yVelocity = speed
     }
     else{
         if(degrees < 45){
             degrees += 360
         }
-        projectile.yVelocity = -(((this.pSpeed / 45) * (degrees - 270)) - this.pSpeed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
-        projectile.xVelocity = this.pSpeed * -1
-        damageInstances.add(projectile)
+        result.yVelocity = -(((speed / 45) * (degrees - 270)) - speed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
+        result.xVelocity = speed * -1
     }
-    console.log(projectile)
+    return result;
 }
-
-const structJS = document.createElement('script')
-structJS.src = 'structures.js'
-const playerJS = document.createElement('script')
-playerJS.src = 'player.js'
-const entitiesJS = document.createElement('script')
-entitiesJS.src = 'entities.js'
-const damageInstanceJS = document.createElement('script')
-damageInstanceJS.src = 'damageInstance.js'
-const interactableJS = document.createElement('script')
-interactableJS.src = 'interactable.js'
-const itemsJS = document.createElement('script')
-itemsJS.src = 'items.js'
-document.getElementsByTagName('body')[0].appendChild(structJS)
-document.getElementsByTagName('body')[0].appendChild(playerJS)
-document.getElementsByTagName('body')[0].appendChild(entitiesJS)
-document.getElementsByTagName('body')[0].appendChild(damageInstanceJS)
-document.getElementsByTagName('body')[0].appendChild(interactableJS)
-document.getElementsByTagName('body')[0].appendChild(itemsJS)

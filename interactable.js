@@ -62,25 +62,15 @@ constructor(x, y, width, height, target){
     this.height = height
     this.type = 'shop' //is shop
     this.behavior = 'dynamic' //dynamically changes
-    this.forSale = [{ 
-        item:new melee(target, 10, 75, 150, 15, 40, 'projectile sword', function(sword, e){
-            const degrees = findDegrees(e.x, e.y, sword.source.x, sword.source.y)
-            console.log('cf: ' + degrees)
-            const startX = (sword.source.x + sword.source.width) / 2
-            const startY = (sword.source.x + sword.source.width) / 2
-            const swordProjectile = new projectile(startX, startY, 10, 10, 0, 0, 'player')
-            console.log(swordProjectile)
-            shoot(degrees, swordProjectile)
-        }), //item itself
-        price:0, //price
-        type: 'melee' //type
-    },
+    this.forSale = [
+        meleeItems[2],
     {
         item:'multiShot',
         price:0,
         type:'stat',
         statName:'multishot'
-    }]
+    }
+    ]
 }
 
 
@@ -168,6 +158,8 @@ createItem(item, index){
             updateWallet(-item.price, this.target)
             if(item.type == 'melee'){
                 this.target.melee = item.item;
+                this.target.melee.source = this.target
+                console.log(this.target.melee)
                 this.forSale.splice(itemIndex, 1)
                 frame.remove()
             }
