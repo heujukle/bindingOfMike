@@ -201,6 +201,10 @@ img{
     justify-content: center;
     width: 20vw;
     height: 20vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
 }
 
 .exit{

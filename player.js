@@ -36,7 +36,7 @@ class player {
             'multishot' : 0,
             'maxHealth' : 100,
             'maxStamina' : 100,
-            'dashSpeed' : 50
+            'dashSpeed' : 10
         }
         this.speed = 5;
         this.pSpeed = 9;

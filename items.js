@@ -3,9 +3,61 @@ melee(source, damage, width, height, knockback, span, name = 'sword', clickFunc,
 
 */
 
-const stats = []
+const stats = [
+{
+    item:'multiShot',
+    price:25,
+    type:'stat',
+    statName:'multishot'
+},
+{
+    item:'speed',
+    price:20,
+    type:'stat',
+    statName:'speed'
+},
+{
+    item:'projectile speed',
+    price:20,
+    type:'stat',
+    statName:'pSpeed'
+},
+{
+    item:'projectile damage',
+    price:20,
+    type:'stat',
+    statName:'pDamage'
+},
+{
+    item:'max health',
+    price:20,
+    type:'stat',
+    statName:'maxHealth',
+    increment: 10
+},
+{
+    item:'max stamina',
+    price:20,
+    type:'stat',
+    statName:'maxStamina',
+    increment: 10
+},
+{
+    item:'dash speed',
+    price:20,
+    type:'stat',
+    statName:'dashSpeed',
+    increment: 1
+}
+]
 
-const passives = []
+const passives = [
+{
+    item: 'richochet',
+    price: 50,
+    type: 'passiveItem'
+}
+]
 
 const meleeItems = [
 { 
@@ -27,7 +79,16 @@ const meleeItems = [
 },
 {
     item:new melee(undefined, 10, 100, 300, 50, 360, 'Spin sword'), //item itself
-    price:0, //price
+    price:50, //price
+    type: 'melee' //type
+},
+{
+    item:new melee(undefined, 10, 100, 300, 50, 360, 'Super Spin swords', null, function(sword){
+        const spinner = new melee(sword.source, 5, 75, 250, 25, 360)
+        spinner.setValues(sword.startingAngle + 180)
+        damageInstances.add(spinner)
+    }, 100), //item itself
+    price:400, //price
     type: 'melee' //type
 },
 ]

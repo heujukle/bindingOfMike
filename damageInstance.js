@@ -180,6 +180,7 @@ class melee{
 
     setValues(mouseAngle, event){ //called on mouse click
             this.currentAngle = mouseAngle - this.span/2; //current angle is set to half the span away from where cursor was clicked
+            this.startingAngle = this.currentAngle
             this.target = this.span + this.currentAngle; 
             if(this.clickFunc){
                 this.clickFunc(this, event)
@@ -197,9 +198,10 @@ class melee{
     }
 
     draw(){
-        this.lastRun = 0
-        let currentTime = new Date().getTime()
-        if(this.runFunc && currentTime - this.lastRun < this.runFuncCD){
+        let currentTime = document.timeline.currentTime
+        console.log(currentTime - this.lastRun)
+        if(this.runFunc != null && (currentTime - this.lastRun > this.runFuncCD || this.lastRun == undefined)){ 
+            console.log('run funk')
             this.runFunc(this)
             this.lastRun = currentTime
         }

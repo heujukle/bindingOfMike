@@ -62,14 +62,11 @@ constructor(x, y, width, height, target){
     this.height = height
     this.type = 'shop' //is shop
     this.behavior = 'dynamic' //dynamically changes
+    const seed = Math.random() + ''
     this.forSale = [
-        meleeItems[2],
-    {
-        item:'multiShot',
-        price:0,
-        type:'stat',
-        statName:'multishot'
-    }
+        determineValueArray(seed[4], meleeItems),
+        determineValueArray(seed[5], stats),
+        determineValueArray(seed[6], passives),
     ]
 }
 
@@ -169,7 +166,12 @@ createItem(item, index){
                 frame.remove()
             }
             else if(item.type == 'stat'){
-                this.target.stats[item.statName] += 1;
+                if(item.increment){
+                    this.target.stats[item.statName] += item.increment
+                }
+                else{
+                    this.target.stats[item.statName] += 1
+                }
                 this.forSale.splice(itemIndex, 1)
                 frame.remove()
             }
