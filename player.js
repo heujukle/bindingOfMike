@@ -140,6 +140,7 @@ class player {
         structures.list = []
         entities.list = []
         damageInstances.list = []
+        interactables.list = []
         console.log(area.map)
         this.x = Math.ceil(window.innerWidth / 2);
         this.y = Math.ceil(window.innerHeight / 2);

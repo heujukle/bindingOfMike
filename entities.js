@@ -47,7 +47,7 @@ class zombie{
         this.health = 25;
         this.xVelocity = 0;
         this.yVelocity = 0;
-        this.knockback = 50
+        this.knockback = 10;
         console.log(this.target)
     }
 
@@ -152,7 +152,6 @@ class skeleton{
         this.health = 25;
         this.xVelocity = 0;
         this.yVelocity = 0;
-        console.log(this.target)
     }
 
     onDamage(damage = 5){
