@@ -254,7 +254,7 @@ class skeleton{
         this.timeToProjectile = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
     }
 
-    collision2(target) {
+    collision2(target) { //im leaving the chat gpt commenst for fun
         const left = this.x;
         const right = this.x + this.width;
         const top = this.y;

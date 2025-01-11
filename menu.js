@@ -9,22 +9,22 @@ const topRight =  document.getElementById('topRight')
 const keyBinds =  document.getElementById('Key-Binds')
 const mapElement = document.getElementsByName('map')[0]
 
-playStart.addEventListener('click', (e) => {
+playStart.addEventListener('click', (e) => { //starts games
     menu = false;
     title.textContent = nameInput.value + " Game"
     start.classList.add('invisible')
     topLeft.classList.remove('invisible')
     topRight.classList.remove('invisible')
     mapElement.classList.remove('invisible')
-    game.src='script.js'
+    game.src='script.js' //loads script
 })
 
 let mapPosIDs = ['mapAbsolute', 'mapNone', 'mapMini']
 let mapType = 2;
 document.addEventListener('keypress', (e) => {
     if(e.key == 'm'){
-        mapType = incrementLimit(mapType, 3)
-        mapElement.id = mapPosIDs[mapType];
+        mapType = incrementLimit(mapType, 3) //ensures no overflow
+        mapElement.id = mapPosIDs[mapType]; //changes the id of the map
     }
 })
 
@@ -39,9 +39,9 @@ class areaMap {
         this.element = document.createElement('div')
         mapElement.innerHTML = ''
         mapElement.appendChild(this.element)
-        this.bounds = this.findMapBounds(this.map)
-        this.element.style = `width: 100%; height: 100%; display: grid; grid-template-columns: repeat(${this.bounds[0]}, 1fr); grid-template-rows: repeat(${this.bounds[1]}, 1fr); gap: 5px;`
-        this.mapLayout = this.generateMapArray()
+        this.bounds = this.findMapBounds(this.map) //returns [rangeX, rangeY]
+        this.element.style = `width: 100%; height: 100%; display: grid; grid-template-columns: repeat(${this.bounds[0]}, 1fr); grid-template-rows: repeat(${this.bounds[1]}, 1fr); gap: 5px;` //makes a grid that fits the area
+        this.mapLayout = this.generateMapArray() //makes the array the carries the map
     }
 
     generateMapArray(){
@@ -61,6 +61,7 @@ class areaMap {
         const room = this.map.get(cords)
         console.log(room)
         let styleString = ''
+        /* assigns borders to rooms with walls*/
         if(!room.left){
             styleString += 'border-left: 5px solid black; '
         }
@@ -73,7 +74,8 @@ class areaMap {
         if(!room.bottom){
             styleString += 'border-bottom: 5px solid black; '
         }
-        const cord = cords.split(',')
+        /* */
+        const cord = cords.split(',') //grabs the cords from the strings in the room object
         const x = parseInt(cord[0]) + Math.abs(this.lowX)
         const y = parseInt(cord[1]) + Math.abs(this.lowY)
         console.log(this)
@@ -93,7 +95,7 @@ class areaMap {
             const cord = keys[i].split(',')
             const x = parseInt(cord[0])
             const y = parseInt(cord[1])
-            if(x > this.highX){
+            if(x > this.highX){ //finds highest and lowest
                 this.highX = x
             }
             else if(x < this.lowX){
@@ -106,10 +108,10 @@ class areaMap {
                 this.lowY = y
             }
         }
-        return [this.highX + Math.abs(this.lowX) + 1, this.highY + Math.abs(this.lowY) + 1]
+        return [this.highX + Math.abs(this.lowX) + 1, this.highY + Math.abs(this.lowY) + 1] //finds the range
     }
 }
-const controls = {
+const controls = { //holds the controls of the game
     'up' : 'w',
     'left' : 'a',
     'down' : 's',
@@ -117,53 +119,53 @@ const controls = {
     'interact' : 'e',
 }
 
-keyBinds.addEventListener('click', (e) => {
-    for(let i = 1; i < panel.children.length; i++){
+keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code written at 1 am
+    for(let i = 1; i < panel.children.length; i++){ //removes other buttons
         panel.children[i].classList.add('invisible')
     }
-    const values = []
-    const containers = []
-    for(let i = 0; i < Object.keys(controls).length; i++){
-        const container = document.createElement('div')
-        container.textContent = Object.keys(controls)[i]
+    const values = [] //saves values
+    const containers = [] //saves containers
+    for(let i = 0; i < Object.keys(controls).length; i++){ //for each control
+        const container = document.createElement('div') 
+        container.textContent = Object.keys(controls)[i] //gets the text for each keybind
         const input = document.createElement('div')
-        input.textContent = controls[Object.keys(controls)[i]] 
-        input.addEventListener('click', (e) => {
+        input.textContent = controls[Object.keys(controls)[i]]  //displays the current control
+        input.addEventListener('click', (e) => { //event listener for input
             input.textContent = 'Press Key to change Bind'
             function changeBind(e){
-                if(e.key == controls.up || e.key == controls.left || e.key == controls.right || e.key == controls.down || e.key == controls.interact){
+                if(e.key == controls.up || e.key == controls.left || e.key == controls.right || e.key == controls.down || e.key == controls.interact){ ///if matches another bind
                     input.textContent = 'Conflict with other binds'
                 }
                 else{
-                    input.textContent = e.key
+                    input.textContent = e.key //shows the new key
                 }
-                document.removeEventListener('keydown', changeBind)
+                document.removeEventListener('keydown', changeBind) //removes the keydown event listener
             }
             document.addEventListener('keydown', changeBind)
         })
-        values.push(input)
-        containers.push(container)
+        values.push(input) //saves input
+        containers.push(container) //saves containers
         container.appendChild(input)
         panel.appendChild(container)
     }
-    const saveChanges = document.createElement('div')
+    const saveChanges = document.createElement('div') //button to save changes
     saveChanges.textContent = 'Save Changes'
     containers.push(saveChanges)
     panel.appendChild(saveChanges)
     saveChanges.addEventListener('click', (e) => {
         for(let i = 0; i < values.length; i++){
             if(values[i].textContent === 'Conflict with other binds'){
-                return false;
+                return false; //ensures you cannot save with conflicting binds
             }
             else{
-                controls[Object.keys(controls)[i]] = values[i].textContent
+                controls[Object.keys(controls)[i]] = values[i].textContent //updates binds
             }
         }
         for(let i = 0; i < containers.length; i++){
-            containers[i].remove()
+            containers[i].remove() //removes the button divs
         }
         for(let i = 1; i < panel.children.length; i++){
-            panel.children[i].classList.remove('invisible')
+            panel.children[i].classList.remove('invisible') //readds the old buttons
         }
     })
 })
