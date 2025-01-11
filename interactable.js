@@ -86,7 +86,7 @@ draw(){
     ctx.fill();
     ctx.fillStyle = "black";
     if(this.collision2([this.target])){ //checks if overlap and player has pressed interact button
-        ctx.fillText('press E to interact', this.x - 20, this.y - 20) //shows interact text
+        ctx.fillText(`press ${controls.interact.toUpperCase()} to interact`, this.x - 20, this.y - 20) //shows interact text
         if(this.target.interact == true){ //if player interacts
         this.loadStore() //loads store
         }
