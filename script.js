@@ -19,27 +19,27 @@ window.requestAnimationFrame(animate);
 
 document.addEventListener('keydown', (e) => {
     switch(e.key){
-        case 'w':
+        case controls.up:
             if(character.directionList.indexOf('up') == -1){
             character.directionList.push('up')
             }
             break;
-            case 'a':
+            case controls.left:
                 if(character.directionList.indexOf('left') == -1){
                     character.directionList.push('left')
                     }
                 break;
-                case 's':
+                case controls.down:
                     if(character.directionList.indexOf('down') == -1){
                         character.directionList.push('down')
                         }
                     break;
-                    case 'd':
+                    case controls.right:
                         if(character.directionList.indexOf('right') == -1){
                             character.directionList.push('right')
                             }
                         break;
-                        case 'e':
+                        case controls.interact:
                         if(character.directionList.indexOf('interact') == -1){
                             character.directionList.push('interact')
                             }
@@ -49,19 +49,19 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keyup', (e) => {
     switch(e.key){
-        case 'w':
+        case controls.up:
             character.directionList.splice(character.directionList.indexOf('up'), 1);
             break;
-            case 'a':
+            case controls.left:
                 character.directionList.splice(character.directionList.indexOf('left'), 1);
                 break;
-                case 's':
+                case controls.down:
                     character.directionList.splice(character.directionList.indexOf('down'), 1);
                     break;
-                    case 'd':
+                    case controls.right:
                         character.directionList.splice(character.directionList.indexOf('right'), 1);
                         break;
-                        case 'e':
+                        case controls.interact:
                             character.directionList.splice(character.directionList.indexOf('interact'), 1);
                             break;
     }
@@ -103,23 +103,38 @@ const test = (key) => {
     console.log("double press " + key)
 }
 
+function isAControl(key){
+    switch(key){
+        case controls.up:
+            return 'upKey'
+            case controls.left:
+                return 'leftKey'
+                case controls.down:
+                    return 'downKey'
+                    case controls.right:
+                        return 'rightKey'
+    }
+    return null
+}
+
 function doublePress(func){
     const selectedInputs = {
-        'w' : 0,
-        'a' : 0,
-        's' : 0,
-        'd' : 0
+        'upKey' : 0,
+        'leftKey' : 0,
+        'downKey' : 0,
+        'rightKey' : 0
     }
     return function(e){
-        if(selectedInputs[e.key] != null && selectedInputs[e.key] != undefined){
+        const keyUse = isAControl(e.key)
+        if(keyUse != null){
             let currentPress = new Date().getTime()
-            let timeSinceLastPress = currentPress - selectedInputs[e.key]
+            let timeSinceLastPress = currentPress - selectedInputs[keyUse]
             if(timeSinceLastPress < 300){
                 e.preventDefault()
                 console.log(`the key ${e.key} was double pressed`)
                 func(e)
             }
-            selectedInputs[e.key] = currentPress
+            selectedInputs[keyUse] = currentPress
         }
         else {return}
     }
@@ -127,25 +142,25 @@ function doublePress(func){
 
 const doublePressEvent = doublePress(function(e){
     if(character.stamina >= 20){
-        if(e.key == 'd' && !character.directionList.includes('right')){
+        if(e.key == controls.right && !character.directionList.includes('right')){
             character.xVelocity += character.stats['dashSpeed']
             character.stamina -= 20;
             character.iFrames = character.stats['dashSpeed']
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
-        if(e.key == 'a' && !character.directionList.includes('left')){
+        if(e.key == controls.left && !character.directionList.includes('left')){
             character.xVelocity -= character.stats['dashSpeed']
             character.stamina -= 20;
             character.iFrames = character.stats['dashSpeed']
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
-        if(e.key == 'w' && !character.directionList.includes('up')){
+        if(e.key == controls.up && !character.directionList.includes('up')){
             character.yVelocity -= character.stats['dashSpeed']
             character.stamina -= 20;
             character.iFrames = character.stats['dashSpeed']
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
-        if(e.key == 's' && !character.directionList.includes('down')){
+        if(e.key == controls.down && !character.directionList.includes('down')){
             character.yVelocity += character.stats['dashSpeed']
             character.stamina -= 20;
             character.iFrames = character.stats['dashSpeed']

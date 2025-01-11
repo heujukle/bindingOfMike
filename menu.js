@@ -1,10 +1,12 @@
 const playStart = document.getElementById('playStart');
 const start = document.getElementById('start');
+const panel = document.getElementById('panel');
 const game = document.getElementById('game');
 const nameInput = document.getElementById('name');
 const title = document.getElementsByTagName('title')[0]
 const topLeft =  document.getElementById('topLeft')
 const topRight =  document.getElementById('topRight')
+const keyBinds =  document.getElementById('Key-Binds')
 const mapElement = document.getElementsByName('map')[0]
 
 playStart.addEventListener('click', (e) => {
@@ -107,3 +109,61 @@ class areaMap {
         return [this.highX + Math.abs(this.lowX) + 1, this.highY + Math.abs(this.lowY) + 1]
     }
 }
+const controls = {
+    'up' : 'w',
+    'left' : 'a',
+    'down' : 's',
+    'right' : 'd',
+    'interact' : 'e',
+}
+
+keyBinds.addEventListener('click', (e) => {
+    for(let i = 1; i < panel.children.length; i++){
+        panel.children[i].classList.add('invisible')
+    }
+    const values = []
+    const containers = []
+    for(let i = 0; i < Object.keys(controls).length; i++){
+        const container = document.createElement('div')
+        container.textContent = Object.keys(controls)[i]
+        const input = document.createElement('div')
+        input.textContent = controls[Object.keys(controls)[i]] 
+        input.addEventListener('click', (e) => {
+            input.textContent = 'Press Key to change Bind'
+            function changeBind(e){
+                if(e.key == controls.up || e.key == controls.left || e.key == controls.right || e.key == controls.down || e.key == controls.interact){
+                    input.textContent = 'Conflict with other binds'
+                }
+                else{
+                    input.textContent = e.key
+                }
+                document.removeEventListener('keydown', changeBind)
+            }
+            document.addEventListener('keydown', changeBind)
+        })
+        values.push(input)
+        containers.push(container)
+        container.appendChild(input)
+        panel.appendChild(container)
+    }
+    const saveChanges = document.createElement('div')
+    saveChanges.textContent = 'Save Changes'
+    containers.push(saveChanges)
+    panel.appendChild(saveChanges)
+    saveChanges.addEventListener('click', (e) => {
+        for(let i = 0; i < values.length; i++){
+            if(values[i].textContent === 'Conflict with other binds'){
+                return false;
+            }
+            else{
+                controls[Object.keys(controls)[i]] = values[i].textContent
+            }
+        }
+        for(let i = 0; i < containers.length; i++){
+            containers[i].remove()
+        }
+        for(let i = 1; i < panel.children.length; i++){
+            panel.children[i].classList.remove('invisible')
+        }
+    })
+})
