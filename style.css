@@ -91,11 +91,11 @@ body{
     outline: none;
 }
 #panel h1{
-    margin-bottom: 25%;
+    margin-bottom: 10%;
 }
 
 #panel div{
-    margin: 5%;
+    margin: 3%;
     width: 200px;
     height: 75px;
     display: flex;

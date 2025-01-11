@@ -199,7 +199,6 @@ class melee{
 
     draw(){
         let currentTime = document.timeline.currentTime
-        console.log(currentTime - this.lastRun)
         if(this.runFunc != null && (currentTime - this.lastRun > this.runFuncCD || this.lastRun == undefined)){ 
             console.log('run funk')
             this.runFunc(this)
@@ -249,7 +248,6 @@ class melee{
             points = [topLeft, topRight, bottomRight, bottomLeft];
         }
         else{
-            console.log('points')
             points = other.points; //takes an objects points
         }
         for(let i = 0; i < points.length; i++){
