@@ -8,7 +8,6 @@ class portal{
         this.height = height
         this.type = 'portal'
         this.behavior = 'dynamic'
-        this.newSpeed = zombieSpeed + 1
     }
 
 
@@ -20,7 +19,13 @@ class portal{
         ctx.closePath();
         if(this.collision2([this.target])){
             console.log('portal')
-            zombieSpeed = this.newSpeed
+            entitiySpeed = entitiySpeed + 1 >= 5 ?  entitiySpeed : entitiySpeed + 1;
+            zombieHealth += 5;
+            zombieDamage += 5;
+            skeletonPspeed = skeletonPspeed + 1 >= 3 ?  skeletonPspeed : skeletonPspeed + 1;
+            skeletonPdamage += 1;
+            skeletonDamage += 1
+            skeletonHealth += 3;
             this.target.setArea(new area())
         }
     }
@@ -66,6 +71,7 @@ constructor(x, y, width, height, target){
     this.forSale = [
         determineValueArray(seed[4], meleeItems),
         determineValueArray(seed[5], stats),
+        determineValueArray(seed[7], stats),
         determineValueArray(seed[6], passives),
     ]
 }
@@ -147,6 +153,12 @@ createItem(item, index){
     price.textContent = '$' + item.price
     frame.appendChild(price)
     const purchase = document.createElement('div')
+    if(this.target.passiveItems.includes(item.item)){
+        purchase.textContent = 'You already Own!'
+        purchase.classList.add('buyButton');
+        frame.appendChild(purchase)
+    }
+    else{
     purchase.textContent = 'Buy!'
     purchase.classList.add('buyButton')
     frame.appendChild(purchase)
@@ -180,6 +192,8 @@ createItem(item, index){
             purchase.textContent = 'BROKE AHAHAHHAHAHAHAHA'
         }
     })
+    }
     return frame;
-}
-}
+    }
+
+    }

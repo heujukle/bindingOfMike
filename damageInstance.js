@@ -260,13 +260,16 @@ class melee{
                 console.log(targetDegrees)
                 if(this.hitList.indexOf(other) == -1){
                     other.onDamage(this.damage)
+                    const directions = getProjVelocities(targetDegrees, this.knockback)
                     if(other.xVelocity != null){
                         console.log('knockbackX')
-                        other.xVelocity = other.x > this.source.x ? other.xVelocity += this.knockback : other.xVelocity -= this.knockback
+                        // other.xVelocity = other.x > this.source.x ? other.xVelocity += this.knockback : other.xVelocity -= this.knockback
+                        other.xVelocity = directions.xVelocity
                     }
                     if(other.yVelocity != null){
                         console.log('knockbackY')
-                        other.yVelocity = other.y > this.source.y ? other.yVelocity += this.knockback : other.yVelocity -= this.knockback
+                        // other.yVelocity = other.y > this.source.y ? other.yVelocity += this.knockback : other.yVelocity -= this.knockback
+                        other.yVelocity = directions.yVelocity
                     }
                     this.hitList.push(other)
                 }

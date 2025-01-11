@@ -115,7 +115,13 @@ const rooms = [
 
 let menu = true;
 let fConsole = document.getElementById('console');
-let zombieSpeed = 1;
+let entitiySpeed = 1;
+let zombieHealth = 35;
+let skeletonHealth = 35;
+let skeletonPspeed = 8;
+let skeletonPdamage = 5;
+let zombieDamage = 5; 
+let skeletonDamage = 5; 
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')
@@ -139,11 +145,11 @@ const createDummy = (x, y, width, height) => { //function to make dummys
 }
 
 const createZombie = (x, y, width, height) => { //function to make dummys
-    entities.add(new zombie(x, y, 30, 30, character, zombieSpeed))
+    entities.add(new zombie(x, y, 30, 30, character, entitiySpeed))
 }
 
 const createSkeleton = (x, y, width, height) => { //function to make dummys
-    entities.add(new skeleton(x, y, 30, 30, character, zombieSpeed/2))
+    entities.add(new skeleton(x, y, 30, 30, character, entitiySpeed/2))
 }
 
 const createPortal = (x, y, width, height) => { //function to make dummys

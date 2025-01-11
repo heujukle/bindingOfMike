@@ -30,7 +30,7 @@ class dummy{
 }
 
 class zombie{
-    constructor(x, y, width, height, target, speed){
+    constructor(x, y, width, height, target, speed, health = 25, damage = 5){
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -43,8 +43,9 @@ class zombie{
         this.action = this.pursuit
         this.target = target
         this.speed = speed
+        this.damage = damage
         this.index;
-        this.health = 25;
+        this.health = health;
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.knockback = 10;
@@ -83,25 +84,25 @@ class zombie{
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'right', this.knockback)
+                this.target.onDamage(this.damage, 'right', this.knockback)
             }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'left', this.knockback)
+                this.target.onDamage(this.damage, 'left', this.knockback)
             }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'down', this.knockback)
+                this.target.onDamage(this.damage, 'down', this.knockback)
             }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'up', this.knockback)
+                this.target.onDamage(this.damage, 'up', this.knockback)
             }
         }
     }
@@ -132,7 +133,7 @@ class zombie{
 }
 
 class skeleton{
-    constructor(x, y, width, height, target, speed){
+    constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5){
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -146,10 +147,11 @@ class skeleton{
         this.action = this.pursuit
         this.target = target
         this.speed = speed
-        this.pSpeed = target.speed + 3;
-        this.pDamage = 5;
+        this.pSpeed = 8;
+        this.pDamage = pDamage;
+        this.damage = damage;
         this.index;
-        this.health = 25;
+        this.health = health;
         this.xVelocity = 0;
         this.yVelocity = 0;
     }
@@ -189,25 +191,25 @@ class skeleton{
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'right')
+                this.target.onDamage(this.damage, 'right')
             }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'left')
+                this.target.onDamage(this.damage, 'left')
             }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'down')
+                this.target.onDamage(this.damage, 'down')
             }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(5, 'up')
+                this.target.onDamage(this.damage, 'up')
             }
         }
     }
