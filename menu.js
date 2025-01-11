@@ -4,6 +4,7 @@ const game = document.getElementById('game');
 const nameInput = document.getElementById('name');
 const title = document.getElementsByTagName('title')[0]
 const topLeft =  document.getElementById('topLeft')
+const topRight =  document.getElementById('topRight')
 const mapElement = document.getElementsByName('map')[0]
 
 playStart.addEventListener('click', (e) => {
@@ -11,6 +12,7 @@ playStart.addEventListener('click', (e) => {
     title.textContent = nameInput.value + " Game"
     start.classList.add('invisible')
     topLeft.classList.remove('invisible')
+    topRight.classList.remove('invisible')
     mapElement.classList.remove('invisible')
     game.src='script.js'
 })

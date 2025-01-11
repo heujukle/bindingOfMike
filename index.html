@@ -8,11 +8,17 @@
 </head>
 <body>
 <div id = 'console' class="invisible"></div>
+<div id="topRight" class="invisible">
+    <div class="displayStat"><div id="healthBar"></div></div>
+    <div class="displayStat"><div id="stamina"></div></div>
+</div>
 <div class = 'map invisible' id="mapMini" name="map"></div>
 <div id = 'start'>
     <div id="panel">
         <h1><input id="name"></input> Game</h1>
         <div id="playStart"><h3>PLAY</h3></div>
+        <div id="Key-Binds"><h3>KEY BINDS</h3></div>
+        <div id="How-To-Play"><h3>HOW TO PLAY</h3></div>
     </div>
 </div>
 <div id='overlay' class="invisible"></div>
@@ -23,7 +29,7 @@
     <div class = 'hotbarItem selected'><div class = 'box'></div></div>
     <img class = 'hotbarItem' src = "images\sword.png">
 </div>
-<div id="wallet"><img src="images/Coin.png">$<div id="walletDisplay">0</div></div>
+<div id="wallet"><img src="images/Coin.png" id="Coin">$<div id="walletDisplay">0</div></div>
 </div>
 <canvas id="screen"></canvas>
 <script defer src='menu.js'></script>

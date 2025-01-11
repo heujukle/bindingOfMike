@@ -3,10 +3,17 @@ melee(source, damage, width, height, knockback, span, name = 'sword', clickFunc,
 
 */
 
+const healthInACan = {
+    item: 'health in a can',
+    price: 20,
+    type: 'health',
+    increment: 25
+}
+
 const stats = [
 {
     item:'multiShot',
-    price:25,
+    price:75,
     type:'stat',
     statName:'multishot'
 },
@@ -18,13 +25,13 @@ const stats = [
 },
 {
     item:'projectile speed',
-    price:20,
+    price:25,
     type:'stat',
     statName:'pSpeed'
 },
 {
     item:'projectile damage',
-    price:20,
+    price:30,
     type:'stat',
     statName:'pDamage'
 },
@@ -48,13 +55,25 @@ const stats = [
     type:'stat',
     statName:'dashSpeed',
     increment: 1
+},
+{
+    item:'stamina regeneration',
+    price:20,
+    type:'stat',
+    statName:'staminaRegen',
+    increment: 0.1
 }
 ]
 
 const passives = [
 {
     item: 'richochet',
-    price: 50,
+    price: 600,
+    type: 'passiveItem'
+},
+{
+    item: 'spikey',
+    price: 150,
     type: 'passiveItem'
 }
 ]

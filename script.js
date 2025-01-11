@@ -126,17 +126,31 @@ function doublePress(func){
 }
 
 const doublePressEvent = doublePress(function(e){
-    if(e.key == 'd' && !character.directionList.includes('right')){
-        character.xVelocity += character.stats['dashSpeed']
-    }
-    if(e.key == 'a' && !character.directionList.includes('left')){
-        character.xVelocity -= character.stats['dashSpeed']
-    }
-    if(e.key == 'w' && !character.directionList.includes('up')){
-        character.yVelocity -= character.stats['dashSpeed']
-    }
-    if(e.key == 's' && !character.directionList.includes('down')){
-        character.yVelocity += character.stats['dashSpeed']
+    if(character.stamina >= 20){
+        if(e.key == 'd' && !character.directionList.includes('right')){
+            character.xVelocity += character.stats['dashSpeed']
+            character.stamina -= 20;
+            character.iFrames = character.stats['dashSpeed']
+            staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
+        }
+        if(e.key == 'a' && !character.directionList.includes('left')){
+            character.xVelocity -= character.stats['dashSpeed']
+            character.stamina -= 20;
+            character.iFrames = character.stats['dashSpeed']
+            staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
+        }
+        if(e.key == 'w' && !character.directionList.includes('up')){
+            character.yVelocity -= character.stats['dashSpeed']
+            character.stamina -= 20;
+            character.iFrames = character.stats['dashSpeed']
+            staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
+        }
+        if(e.key == 's' && !character.directionList.includes('down')){
+            character.yVelocity += character.stats['dashSpeed']
+            character.stamina -= 20;
+            character.iFrames = character.stats['dashSpeed']
+            staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
+        }
     }
 })
 

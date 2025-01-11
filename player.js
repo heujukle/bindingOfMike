@@ -1,3 +1,6 @@
+const healthBar = document.getElementById('healthBar')
+const staminaBar = document.getElementById('stamina')
+
 class player {
     constructor(){
         this.usableItemList = new Map([
@@ -32,17 +35,19 @@ class player {
         this.stats = {
             'speed' : 5,
             'pSpeed' : 9,
-            'pDamage' : 11,
+            'pDamage' : 9,
             'multishot' : 0,
             'maxHealth' : 100,
             'maxStamina' : 100,
-            'dashSpeed' : 10
+            'dashSpeed' : 10,
+            'staminaRegen' : 0.1
         }
         this.speed = 5;
         this.pSpeed = 9;
         this.pDamage = 10;
         this.multishot = 0
         this.health = 100;
+        this.stamina = 100;
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = []
         this.selectedItem = 'shoot'
@@ -75,11 +80,13 @@ class player {
 
     preDraw(){ //completes the player actions before drawing
         this.iFrames = this.iFrames - 1 >= 0 ? this.iFrames - 1 : 0
+        if(this.stamina < this.stats['maxStamina']) this.stamina += this.stats['staminaRegen'];
         velocity(this, this.xVelocity, this.yVelocity)
         this.updateMove()
     }
 
     draw(){
+        staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.iFrames > 0 ? "#66ccff" : "#0000ff";
@@ -87,10 +94,11 @@ class player {
         ctx.closePath();
     }
 
-    onDamage(damage = 5, knockBackDirection, knockbackAmount = 5){
+    onDamage(damage = 5, knockBackDirection, knockbackAmount = 5, source = null){
         if(this.iFrames == 0){
             console.log('DAMAGE')
             this.health -= damage
+            healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
             if(knockBackDirection == 'left'){
                 this.xVelocity -= knockbackAmount
             }
@@ -105,6 +113,25 @@ class player {
             }
             this.iFrames = 30;
         }
+        else if((this.xVelocity > 0 || this.yVelocity > 0) && this.passiveItems.includes('spikey') && source != null){
+            source.onDamage(1)
+        }
+    }
+
+    updateHealthBar(){
+        healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
+    }
+
+    updateStaminaBar(){
+        staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
+    }
+
+    addHealth(increase){
+        this.health += increase;
+        if(this.health > this.stats['maxHealth']){
+            this.health = this.stats['maxHealth']
+        }
+        this.updateHealthBar()
     }
 
     updateMove(){

@@ -84,25 +84,25 @@ class zombie{
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'right', this.knockback)
+                this.target.onDamage(this.damage, 'right', this.knockback, this)
             }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'left', this.knockback)
+                this.target.onDamage(this.damage, 'left', this.knockback, this)
             }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'down', this.knockback)
+                this.target.onDamage(this.damage, 'down', this.knockback, this)
             }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'up', this.knockback)
+                this.target.onDamage(this.damage, 'up', this.knockback, this)
             }
         }
     }
@@ -191,25 +191,25 @@ class skeleton{
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'right')
+                this.target.onDamage(this.damage, 'right', 5, this)
             }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'left')
+                this.target.onDamage(this.damage, 'left', 5, this)
             }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'down')
+                this.target.onDamage(this.damage, 'down', 5, this)
             }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
             if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'up')
+                this.target.onDamage(this.damage, 'up', 5, this)
             }
         }
     }

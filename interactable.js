@@ -69,9 +69,11 @@ constructor(x, y, width, height, target){
     this.behavior = 'dynamic' //dynamically changes
     const seed = Math.random() + ''
     this.forSale = [
+        healthInACan,
         determineValueArray(seed[4], meleeItems),
         determineValueArray(seed[5], stats),
         determineValueArray(seed[7], stats),
+        determineValueArray(seed[8], stats),
         determineValueArray(seed[6], passives),
     ]
 }
@@ -118,7 +120,6 @@ collision2(target) {
 
 loadStore(){
     const overlay = document.getElementById('overlay'); //grabs overlay 
-    hotbar.classList.toggle('invisible') //makes hotbar invisible
     menu = true //turns on menu, which pauses game loop
     const mainStore = document.createElement('div') //creates store for overlay
     const exit = document.createElement('div') //creates exit button
@@ -131,7 +132,6 @@ loadStore(){
         menu = false
         overlay.innerHTML = ''
         overlay.classList.toggle('invisible')
-        hotbar.classList.toggle('invisible')
     })
     for(let i = 0; i < this.forSale.length; i++){
         mainStore.appendChild(this.createItem(this.forSale[i], i))
@@ -183,6 +183,22 @@ createItem(item, index){
                 }
                 else{
                     this.target.stats[item.statName] += 1
+                }
+                if(item.statName == 'maxHealth'){
+                    this.target.updateHealthBar()
+                }
+                else if(item.statName == 'maxStamina'){
+                    this.target.updateStaminaBar()
+                }
+                this.forSale.splice(itemIndex, 1)
+                frame.remove()
+            }
+            else if(item.type == 'health'){
+                if(item.increment){
+                    this.target.addHealth(item.increment)
+                }
+                else{
+                    this.target.addHealth(1)
                 }
                 this.forSale.splice(itemIndex, 1)
                 frame.remove()
