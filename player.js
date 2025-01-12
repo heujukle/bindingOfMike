@@ -89,7 +89,12 @@ class player {
         staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = this.iFrames > 0 ? "#66ccff" : "#0000ff";
+        if(this.iFrames > 0){
+            ctx.fillStyle = "#66ccff";
+        }
+        else{
+            ctx.fillStyle = "#0000ff";
+        }
         ctx.fill();
         ctx.closePath();
     }
@@ -114,7 +119,13 @@ class player {
             this.iFrames = 30;
         }
         else if((this.xVelocity > 0 || this.yVelocity > 0) && this.passiveItems.includes('spikey') && source != null){
-            source.onDamage(1)
+            source.onDamage(5)
+            healthBar.parentElement.style.borderColor = 'white'
+            setTimeout(function(){healthBar.parentElement.style.borderColor = 'black'}, 100)
+        }
+        else{
+            healthBar.parentElement.style.borderColor = 'white'
+            setTimeout(function(){healthBar.parentElement.style.borderColor = 'black'}, 100)
         }
     }
 
