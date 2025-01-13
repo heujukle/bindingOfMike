@@ -300,6 +300,28 @@ const interactables = {
     
 }
 
+const timers = { //holds frame timers
+    list: [],
+    run: function(){
+        for(let i = 0; i < this.list.length; i++){
+            if(this.list[i].frames > 0){ //if frames left then remove 1
+                this.list[i].frames -= 1;
+            }
+            else{ //if 0 frames execute code
+                this.list[i].func()
+                this.list[i] = null;
+            }
+        }
+        this.list = this.list.filter(function(value){
+            return value != null
+        })
+    },
+}
+
+function addFrameTimeout(func, frames){
+    timers.list.push({func : func, frames : frames })
+}
+
 function toDegrees(radians) {
     return radians * (180 / Math.PI);
   }
@@ -506,6 +528,7 @@ function animate() {
       lastUpdate = document.timeline.currentTime;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       character.preDraw();
+      timers.run()
       structures.draw();
       entities.draw();
       interactables.draw();
@@ -535,22 +558,45 @@ function velocity(entity, xVelocity, yVelocity){
         width : entity.width,
         height : entity.height
     }
-    temp.x += xVelocity
-    if(collision2(temp, structures)){
-        xVelocity *= -1
+
+    // temp.x += xVelocity
+    // if(collision2(temp, structures)){
+    //     xVelocity *= -1
+    // }
+    // temp.x -= xVelocity
+    // temp.y += yVelocity * 2
+    // if(collision2(temp, structures)){
+    //     yVelocity *= -1
+    // }
+    // temp.y -= yVelocity
+    // temp.x += xVelocity
+    // if(!collision2(temp, structures)){
+    //     entity.x = temp.x
+    //     entity.y = temp.y
+    // }
+    const steps = 20
+    const xStep = xVelocity/steps
+    const yStep = yVelocity/steps
+
+    for(let i = 0; i < steps; i++){
+        temp.x += xStep
+        if(collision2(temp, structures)){
+            temp.x -= xStep
+            entity.xVelocity = 0
+            break;
+        }
     }
-    temp.x -= xVelocity
-    temp.y += yVelocity * 2
-    if(collision2(temp, structures)){
-        yVelocity *= -1
+    for(let i = 0; i < steps; i++){
+        temp.y += yStep
+        if(collision2(temp, structures)){
+            temp.y -= yStep
+            entity.yVelocity = 0
+            break;
+        }
     }
-    temp.y -= yVelocity
-    temp.x += xVelocity
-    if(!collision2(temp, structures)){
-        entity.x = temp.x
-        entity.y = temp.y
-    }
-    
+    entity.x = temp.x
+    entity.y = temp.y
+
     if(xVelocity > 0){
         xVelocity *= 0.9
         if(xVelocity < 0.5){

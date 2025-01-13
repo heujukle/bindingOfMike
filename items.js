@@ -68,12 +68,14 @@ const stats = [
 const passives = [
 {
     item: 'richochet',
-    price: 600,
+    itemVariables: {},
+    price: 1000,
     type: 'passiveItem'
 },
 {
     item: 'spikey',
-    price: 150,
+    itemVariables: {hitList : []},
+    price: 200,
     type: 'passiveItem'
 }
 ]
@@ -81,7 +83,7 @@ const passives = [
 const meleeItems = [
 { 
     item:new melee(undefined, 10, 100, 300, 50, 100, 'Big sword'), //item itself
-    price:100, //price
+    price:150, //price
     type: 'melee' //type
 }, 
 { 
@@ -93,12 +95,12 @@ const meleeItems = [
         const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player')
         damageInstances.add(swordProjectile)
     }), //item itself
-    price:200, //price
+    price:600, //price
     type: 'melee' //type
 },
 {
     item:new melee(undefined, 10, 100, 300, 50, 360, 'Spin sword'), //item itself
-    price:50, //price
+    price:200, //price
     type: 'melee' //type
 },
 {
@@ -107,7 +109,7 @@ const meleeItems = [
         spinner.setValues(sword.startingAngle + 180)
         damageInstances.add(spinner)
     }, 100), //item itself
-    price:400, //price
+    price:1000, //price
     type: 'melee' //type
 },
 ]

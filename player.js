@@ -39,7 +39,7 @@ class player {
             'multishot' : 0,
             'maxHealth' : 100,
             'maxStamina' : 100,
-            'dashSpeed' : 10,
+            'dashSpeed' : 30,
             'staminaRegen' : 0.1
         }
         this.speed = 5;
@@ -49,7 +49,7 @@ class player {
         this.health = 100;
         this.stamina = 100;
         this.hotbar = ['shoot', 'melee']
-        this.passiveItems = []
+        this.passiveItems = {}
         this.selectedItem = 'shoot'
         this.melee = new melee(this, 10, 30, 125, 5, 90)
         this.iFrames = 0;
@@ -58,6 +58,7 @@ class player {
         this.interact = false;
         this.xVelocity = 0;
         this.yVelocity = 0;
+        this.damaged = false
     }
     
     hotBarChange(direction){
@@ -79,7 +80,14 @@ class player {
     }
 
     preDraw(){ //completes the player actions before drawing
-        this.iFrames = this.iFrames - 1 >= 0 ? this.iFrames - 1 : 0
+        if(this.iFrames > 0){
+            this.iFrames -= 1
+        }
+        else{
+            if(this.has('spikey')){
+                this.passiveItems["spikey"].hitList = []
+            }
+        }
         if(this.stamina < this.stats['maxStamina']) this.stamina += this.stats['staminaRegen'];
         velocity(this, this.xVelocity, this.yVelocity)
         this.updateMove()
@@ -89,19 +97,31 @@ class player {
         staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
-        if(this.iFrames > 0){
+        if(this.iFrames > 0 && this.damaged == true){
+            ctx.fillStyle = "red";
+            healthBar.parentElement.style.borderColor = 'white'
+        }
+        else if(this.iFrames > 0 && this.damaged == false){
             ctx.fillStyle = "#66ccff";
+            healthBar.parentElement.style.borderColor = 'white'
         }
         else{
+            healthBar.parentElement.style.borderColor = 'black'
             ctx.fillStyle = "#0000ff";
+            this.damaged = false;
         }
         ctx.fill();
         ctx.closePath();
     }
 
+    has(item){ //if player has an item
+        return Object.keys(this.passiveItems).includes(item)
+    }
+
     onDamage(damage = 5, knockBackDirection, knockbackAmount = 5, source = null){
         if(this.iFrames == 0){
             console.log('DAMAGE')
+            this.damaged = true
             this.health -= damage
             healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
             if(knockBackDirection == 'left'){
@@ -118,14 +138,24 @@ class player {
             }
             this.iFrames = 30;
         }
-        else if((this.xVelocity > 0 || this.yVelocity > 0) && this.passiveItems.includes('spikey') && source != null){
-            source.onDamage(5)
-            healthBar.parentElement.style.borderColor = 'white'
-            setTimeout(function(){healthBar.parentElement.style.borderColor = 'black'}, 100)
-        }
-        else{
-            healthBar.parentElement.style.borderColor = 'white'
-            setTimeout(function(){healthBar.parentElement.style.borderColor = 'black'}, 100)
+        if(Object.keys(this.passiveItems).includes('spikey') && source != null){
+            let character = this
+            if(!this.passiveItems["spikey"].hitList.includes(source)){
+            source.onDamage(5, function(target){
+                const degrees = findDegrees(character.x, character.y, target.x, target.y)
+                const velocities = getProjVelocities(degrees, 10)
+                console.log(velocities)
+                if(target.xVelocity != undefined){
+                    console.log('added knockback')
+                    target.xVelocity += velocities.xVelocity * character.xVelocity != 0 ? -velocities.xVelocity * Math.abs(character.xVelocity * 0.15) : 10
+                }
+                if(target.yVelocity != undefined){
+                    target.yVelocity += velocities.yVelocity * character.yVelocity != 0 ? -velocities.yVelocity * Math.abs(character.yVelocity  * 0.15) : 10
+                }
+                console.log(target)
+            })
+            character.passiveItems['spikey'].hitList.push(source)
+            }
         }
     }
 
@@ -192,7 +222,7 @@ class player {
     shoot(degrees, speed = this.stats["pSpeed"]){
         let centerX = character.x + character.width / 2
         let centerY = character.y + character.height / 2
-        let richochet = this.passiveItems.includes('richochet')
+        let richochet = Object.keys(this.passiveItems).includes('richochet')
         // let richochet = false;
         console.log(richochet)
         if(degrees >= 45 && degrees < 135){

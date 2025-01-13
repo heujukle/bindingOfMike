@@ -153,7 +153,7 @@ createItem(item, index){
     price.textContent = '$' + item.price
     frame.appendChild(price)
     const purchase = document.createElement('div')
-    if(this.target.passiveItems.includes(item.item)){
+    if(Object.keys(this.target.passiveItems).includes(item.itemName)){
         purchase.textContent = 'You already Own!'
         purchase.classList.add('buyButton');
         frame.appendChild(purchase)
@@ -173,7 +173,7 @@ createItem(item, index){
                 frame.remove()
             }
             else if(item.type == 'passiveItem'){
-                this.target.passiveItems.push(item.item);
+                this.target.passiveItems[item.item] = item.itemVariables;
                 this.forSale.splice(itemIndex, 1)
                 frame.remove()
             }

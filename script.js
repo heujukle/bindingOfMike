@@ -145,25 +145,25 @@ const doublePressEvent = doublePress(function(e){
         if(e.key == controls.right && !character.directionList.includes('right')){
             character.xVelocity += character.stats['dashSpeed']
             character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 1.5
+            character.iFrames = character.stats['dashSpeed'] * 2
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.left && !character.directionList.includes('left')){
             character.xVelocity -= character.stats['dashSpeed']
             character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 1.5
+            character.iFrames = character.stats['dashSpeed'] * 2
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.up && !character.directionList.includes('up')){
             character.yVelocity -= character.stats['dashSpeed']
             character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 1.5
+            character.iFrames = character.stats['dashSpeed'] * 2
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.down && !character.directionList.includes('down')){
             character.yVelocity += character.stats['dashSpeed']
             character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 1.5
+            character.iFrames = character.stats['dashSpeed'] * 2
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
     }

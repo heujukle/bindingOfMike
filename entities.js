@@ -52,10 +52,13 @@ class zombie{
         console.log(this.target)
     }
 
-    onDamage(damage = 5){
+    onDamage(damage = 5, knockbackfunc = null){
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
+        if(knockbackfunc){
+            knockbackfunc(this)
+        }
     }
 
     draw(){
@@ -80,7 +83,6 @@ class zombie{
     pursuit(){
         let damageThisTime = false
         let speedMod = Math.floor(Math.random() * this.speed * 2)
-        console.log(speedMod)
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
@@ -156,10 +158,13 @@ class skeleton{
         this.yVelocity = 0;
     }
 
-    onDamage(damage = 5){
+    onDamage(damage = 5, knockbackfunc = null){
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
+        if(knockbackfunc){
+            knockbackfunc(this)
+        }
     }
 
     draw(){
