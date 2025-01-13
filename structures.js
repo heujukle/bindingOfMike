@@ -1,4 +1,4 @@
-const wallArt = ["images/pixil-frame-0.png", "images/greyBrick.png"]
+const wallArt = ["images/pixil-frame-0.png", "images/greyBrick.png", "images/walls/tile.png"]
 const floorArt = ["images/floor1.png"]
 
 class space{
