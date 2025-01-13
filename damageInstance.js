@@ -67,7 +67,7 @@ class projectile{
         }
         ctx.beginPath(); //draws the projectile to the canvas
         ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
     }

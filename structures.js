@@ -49,14 +49,14 @@ class turret{
         this.tProjectile = null;
         if(this.direction == "lt"){
             console.log('lt')
-            this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#ff0000')
+            this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#000000')
             damageInstances.add(this.tProjectile);
         }
         else if(direction == "ut"){
 
         }
         else if(direction == "rt"){
-            this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, 'turret', true, character.room, '#ff0000')
+            this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, 'turret', true, character.room, '#000000')
             damageInstances.add(this.tProjectile);
         }
         else if(direction == "dt"){

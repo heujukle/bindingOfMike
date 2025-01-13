@@ -237,7 +237,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
         }
         else if(degrees >= 135 && degrees < 225){
             let yVelocity = (((speed / 45) * (degrees - 90)) - speed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
@@ -247,7 +247,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
         }
         else if(degrees >= 225 && degrees < 315){
             let xVelocity = -(((speed / 45) * (degrees - 180)) - speed * 2)
@@ -257,7 +257,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
         }
         else{
             if(degrees < 45){
@@ -270,7 +270,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, null, this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
         }
     }
 
