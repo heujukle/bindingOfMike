@@ -1,5 +1,5 @@
 const wallArt = ["images/pixil-frame-0.png", "images/greyBrick.png", "images/walls/tile.png"]
-const floorArt = ["images/floor1.png", "images/walls/floors/pleaseBeAGoodFloor.png"]
+const floorArt = ["images/floor1.png", "images/floors/pleaseBeAGoodFloor.png"]
 
 class space{
     constructor(x, y, width, height){
@@ -28,6 +28,7 @@ class wall {
 
     draw(){
         let sprite = document.getElementById('wall')
+        console.log(sprite.src)
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#000000";

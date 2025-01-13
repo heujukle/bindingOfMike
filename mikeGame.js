@@ -700,3 +700,14 @@ function getProjVelocities(degrees, speed){
     }
     return result;
 }
+
+function dropItems(item, target){
+    if(target.materials){ //m,akes sure target has materials
+        if(target.materials[item.name]){
+            target.materials[item.name] += Math.floor(1 + Math.random() * 5)
+        }
+        else{
+            target.materials[item.name] = Math.floor(1 + Math.random() * 5)
+        }
+    }
+}

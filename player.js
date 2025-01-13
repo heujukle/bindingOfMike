@@ -62,7 +62,7 @@ class player {
         this.color = "#0000ff"
         this.sprite = null;
         this.meleeInventory = []
-        this.materials = []
+        this.materials = {}
     }
     
     hotBarChange(direction){

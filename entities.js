@@ -49,7 +49,9 @@ class zombie{
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.knockback = 10;
-        console.log(this.target)
+        this.drops = {
+            name : 'cloth',
+        }
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -65,6 +67,7 @@ class zombie{
         if(this.health < 0){
             entities.remove(this.index)
             updateWallet(10, this.target)
+            dropItems(this.drops, this.target)
             return;
         }
         velocity(this, this.xVelocity, this.yVelocity)
@@ -156,6 +159,9 @@ class skeleton{
         this.health = health;
         this.xVelocity = 0;
         this.yVelocity = 0;
+        this.drops = {
+            name : 'bones',
+        }
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -171,6 +177,7 @@ class skeleton{
         if(this.health < 0){
             entities.remove(this.index)
             updateWallet(20, this.target)
+            dropItems(this.drops, this.target)
             return;
         }
         velocity(this, this.xVelocity, this.yVelocity)
