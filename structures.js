@@ -1,5 +1,5 @@
 const wallArt = ["images/pixil-frame-0.png", "images/greyBrick.png", "images/walls/tile.png"]
-const floorArt = ["images/floor1.png"]
+const floorArt = ["images/floor1.png", "images/walls/floors/pleaseBeAGoodFloor.png"]
 
 class space{
     constructor(x, y, width, height){

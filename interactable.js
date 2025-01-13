@@ -26,6 +26,7 @@ class portal{
             skeletonPdamage += 1;
             skeletonDamage += 1
             skeletonHealth += 3;
+            moneyScale += 0.5;
             this.target.setArea(new area())
         }
     }

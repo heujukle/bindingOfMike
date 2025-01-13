@@ -122,6 +122,7 @@ let skeletonPspeed = 8;
 let skeletonPdamage = 5;
 let zombieDamage = 5; 
 let skeletonDamage = 5; 
+let moneyScale = 1; 
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')
@@ -549,7 +550,7 @@ function setFPS(target){
 
 function updateWallet(increase, target){
     if(target.wallet != null){
-        target.wallet += increase
+        target.wallet += increase * moneyScale
         document.getElementById('walletDisplay').textContent = target.wallet;
     }
 }
