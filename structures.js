@@ -1,3 +1,6 @@
+const wallArt = ["images/pixil-frame-0.png", "images/greyBrick.png"]
+const floorArt = ["images/floor1.png"]
+
 class space{
     constructor(x, y, width, height){
         this.top = y
@@ -72,6 +75,8 @@ class turret{
 
 class area{
     constructor(){
+        document.getElementById('wall').src = determineValueArray((Math.random() + '')[5], wallArt)
+        document.getElementById('floor').src = determineValueArray((Math.random() + '')[7], floorArt)
         this.map = new Map()
         this.generateAreaLayout(Math.random(), this.map)
     }

@@ -527,6 +527,9 @@ function animate() {
     if (document.timeline.currentTime - lastUpdate > 1000 / fps && !menu) {
       lastUpdate = document.timeline.currentTime;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const floor = ctx.createPattern(document.getElementById('floor'), "repeat")
+      ctx.fillStyle = floor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height); 
       character.preDraw();
       timers.run()
       structures.draw();
