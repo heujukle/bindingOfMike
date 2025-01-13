@@ -561,22 +561,24 @@ function velocity(entity, xVelocity, yVelocity){
         width : entity.width,
         height : entity.height
     }
-
-    // temp.x += xVelocity
-    // if(collision2(temp, structures)){
-    //     xVelocity *= -1
-    // }
-    // temp.x -= xVelocity
-    // temp.y += yVelocity * 2
-    // if(collision2(temp, structures)){
-    //     yVelocity *= -1
-    // }
-    // temp.y -= yVelocity
-    // temp.x += xVelocity
-    // if(!collision2(temp, structures)){
-    //     entity.x = temp.x
-    //     entity.y = temp.y
-    // }
+    if(character.has('bouncy')){
+        temp.x += xVelocity
+        if(collision2(temp, structures)){
+            xVelocity *= -1
+        }
+        temp.x -= xVelocity
+        temp.y += yVelocity * 2
+        if(collision2(temp, structures)){
+            yVelocity *= -1
+        }
+        temp.y -= yVelocity
+        temp.x += xVelocity
+        if(!collision2(temp, structures)){
+            entity.x = temp.x
+            entity.y = temp.y
+        }
+    }
+    else{
     const steps = 20
     const xStep = xVelocity/steps
     const yStep = yVelocity/steps
@@ -599,7 +601,7 @@ function velocity(entity, xVelocity, yVelocity){
     }
     entity.x = temp.x
     entity.y = temp.y
-
+    }
     if(xVelocity > 0){
         xVelocity *= 0.9
         if(xVelocity < 0.5){

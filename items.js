@@ -77,7 +77,13 @@ const passives = [
     itemVariables: {hitList : []},
     price: 200,
     type: 'passiveItem'
-}
+},
+{
+    item: 'bouncy',
+    itemVariables: {},
+    price: 50,
+    type: 'passiveItem'
+},
 ]
 
 const meleeItems = [
