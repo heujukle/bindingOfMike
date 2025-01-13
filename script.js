@@ -68,8 +68,7 @@ document.addEventListener('keyup', (e) => {
 })
 
 document.addEventListener('click', (e) => {
-    println('shoot')
-    character.usableItemList.get(character.selectedItem)(e);
+    if(!menu) character.usableItemList.get(character.selectedItem)(e);
     })
 
 

@@ -8,6 +8,7 @@ const topLeft =  document.getElementById('topLeft')
 const topRight =  document.getElementById('topRight')
 const keyBinds =  document.getElementById('Key-Binds')
 const mapElement = document.getElementsByName('map')[0]
+const overlay = document.getElementById('overlay');
 
 playStart.addEventListener('click', (e) => { //starts games
     menu = false;
@@ -22,9 +23,13 @@ playStart.addEventListener('click', (e) => { //starts games
 let mapPosIDs = ['mapAbsolute', 'mapNone', 'mapMini']
 let mapType = 2;
 document.addEventListener('keypress', (e) => {
-    if(e.key == 'm'){
+    if(e.key == controls.map){
         mapType = incrementLimit(mapType, 3) //ensures no overflow
         mapElement.id = mapPosIDs[mapType]; //changes the id of the map
+    }
+    else if(e.key == controls.inventory){
+        createInventory()
+        overlay.classList.remove('invisible')
     }
 })
 
@@ -111,12 +116,57 @@ class areaMap {
         return [this.highX + Math.abs(this.lowX) + 1, this.highY + Math.abs(this.lowY) + 1] //finds the range
     }
 }
+
+function createInventory(){
+    topLeft.classList.toggle('invisible')
+    menu = true
+    overlay.innerHTML = ''
+    const inventory = document.createElement('div')
+    inventory.classList.add('inventory')
+    overlay.appendChild(inventory)
+    const exit = document.createElement('div')
+    exit.classList.add('exit')
+    exit.addEventListener('click', function(){
+        menu = false
+        topLeft.classList.toggle('invisible')
+        overlay.innerHTML = ''
+        overlay.classList.toggle('invisible')
+    })
+    inventory.appendChild(exit)
+    const sideBar = document.createElement('div')
+    sideBar.classList.add('sideBar')
+    const playerImgCont = document.createElement('div')
+    playerImgCont.classList.add('playerImgContainer')
+    const playerDisplay = document.createElement('div')
+    playerDisplay.style.width = character.width + 'px'
+    playerDisplay.style.height = character.height + 'px'
+    playerDisplay.style.backgroundColor = character.color
+    const health = document.createElement('div')
+    health.textContent = `Health: ${character.health}`
+    const stamina = document.createElement('div')
+    stamina.textContent = `stamina: ${Math.floor(character.stamina)}`
+    if(character.sprite != null) playerDisplay.style.backgroundImage = character.sprite
+    inventory.appendChild(sideBar)
+    sideBar.appendChild(playerImgCont)
+    playerImgCont.appendChild(playerDisplay)
+    playerImgCont.appendChild(health)
+    playerImgCont.appendChild(stamina)
+    playerImgCont.innerHTML += `<div id="wallet"><img src="images/Coin.png" id="Coin">$<div id="walletDisplay">${character.wallet}</div></div>`
+    for(let i = 0; i < Object.keys(character.stats).length; i++){
+       const statDisplay = document.createElement('div')
+       statDisplay.textContent = `${Object.keys(character.stats)[i]} : ${character.stats[Object.keys(character.stats)[i]]}`
+       sideBar.appendChild(statDisplay)
+    }
+}
+
 const controls = { //holds the controls of the game
     'up' : 'w',
     'left' : 'a',
     'down' : 's',
     'right' : 'd',
     'interact' : 'e',
+    'map' : 'm',
+    'inventory' : 'i'
 }
 
 keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code written at 1 am

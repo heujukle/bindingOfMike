@@ -119,7 +119,6 @@ collision2(target) {
 }
 
 loadStore(){
-    const overlay = document.getElementById('overlay'); //grabs overlay 
     menu = true //turns on menu, which pauses game loop
     const mainStore = document.createElement('div') //creates store for overlay
     const exit = document.createElement('div') //creates exit button

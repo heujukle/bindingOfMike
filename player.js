@@ -39,7 +39,7 @@ class player {
             'multishot' : 0,
             'maxHealth' : 100,
             'maxStamina' : 100,
-            'dashSpeed' : 30,
+            'dashSpeed' : 10,
             'staminaRegen' : 0.1
         }
         this.speed = 5;
@@ -59,6 +59,10 @@ class player {
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.damaged = false
+        this.color = "#0000ff"
+        this.sprite = null;
+        this.meleeInventory = []
+        this.materials = []
     }
     
     hotBarChange(direction){
