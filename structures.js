@@ -28,7 +28,6 @@ class wall {
 
     draw(){
         let sprite = document.getElementById('wall')
-        console.log(sprite.src)
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#000000";

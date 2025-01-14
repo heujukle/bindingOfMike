@@ -3,6 +3,17 @@ melee(source, damage, width, height, knockback, span, name = 'sword', clickFunc,
 
 */
 
+/* materials */
+const bones = {
+    name:"bones",
+    sprite: 'images/items/bones.png'
+}
+
+const cloth = {
+    name:"cloth",
+    sprite: null
+}
+/* */
 const healthInACan = {
     item: 'health in a can',
     price: 20,

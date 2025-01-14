@@ -702,12 +702,29 @@ function getProjVelocities(degrees, speed){
 }
 
 function dropItems(item, target){
-    if(target.materials){ //m,akes sure target has materials
+    const timeBeforeFade = 5000;
+    const fadeTime = 0;
+    if(target.materials){ //makes sure target has materials
+        const amount = Math.floor(1 + Math.random() * 5)
         if(target.materials[item.name]){
-            target.materials[item.name] += Math.floor(1 + Math.random() * 5)
+            target.materials[item.name].amount += amount
         }
         else{
-            target.materials[item.name] = Math.floor(1 + Math.random() * 5)
+            target.materials[item.name] = {amount:amount, sprite: item.sprite != null || item.sprite != undefined ?  item.sprite : "images/Coin.png"}
         }
+        const itemDisplay = document.createElement("div")
+            const sprite = document.createElement("img")
+                sprite.src =  target.materials[item.name].sprite
+                sprite.style.marginRight = '5px'
+        itemDisplay.appendChild(sprite)
+            const text = document.createElement("div")
+                text.textContent += `${amount} : ${item.name}`
+        itemDisplay.appendChild(text)
+        itemDisplay.classList.add('attainedItem')
+        sideBar.appendChild(itemDisplay)
+        setTimeout(()=>{
+            itemDisplay.style.opacity = '0';
+            setTimeout(() => {itemDisplay.remove()}, timeBeforeFade + fadeTime)
+        }, timeBeforeFade)
     }
 }

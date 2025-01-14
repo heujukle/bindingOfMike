@@ -12,12 +12,9 @@
 <img class = 'image' id="floor" src="images\floor1.png">
 <div id = 'console' class="invisible"></div>
 <div id="topRight" class="invisible">
-    <div class="displayStat"><div id="healthBar"></div></div>
-    <div class="displayStat"><div id="stamina"></div></div>
 </div>
 <div class = 'map invisible' id="mapMini" name="map"></div>
 <div id="middleRight">
-
 </div>
 <div id = 'start'>
     <div id="panel">
@@ -29,11 +26,17 @@
 </div>
 <div id='overlay' class="invisible"></div>
 <div id="topLeft" class="invisible">
-<div id="hotbar">
-    <div class = 'hotbarItem selected'><div class = 'box'></div></div>
-    <img class = 'hotbarItem' src = "images\sword.png">
+<div id="playerInfo">
+    <div id="hotbar">
+        <div class = 'hotbarItem selected'><div class = 'box'></div></div>
+        <img class = 'hotbarItem' src = "images\sword.png">
+    </div>
+    <div id="wallet"><img src="images/Coin.png" id="Coin">$<div id="walletDisplay">0</div></div>
 </div>
-<div id="wallet"><img src="images/Coin.png" id="Coin">$<div id="walletDisplay">0</div></div>
+<div>
+    <div class="displayStat"><div id="healthBar"></div></div>
+    <div class="displayStat"><div id="stamina"></div></div>
+</div>
 </div>
 <canvas id="screen"></canvas>
 <script defer src='menu.js'></script>

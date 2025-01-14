@@ -49,9 +49,7 @@ class zombie{
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.knockback = 10;
-        this.drops = {
-            name : 'cloth',
-        }
+        this.drops = cloth
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -159,9 +157,7 @@ class skeleton{
         this.health = health;
         this.xVelocity = 0;
         this.yVelocity = 0;
-        this.drops = {
-            name : 'bones',
-        }
+        this.drops = bones
     }
 
     onDamage(damage = 5, knockbackfunc = null){

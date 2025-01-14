@@ -9,6 +9,7 @@ const topRight =  document.getElementById('topRight')
 const keyBinds =  document.getElementById('Key-Binds')
 const mapElement = document.getElementsByName('map')[0]
 const overlay = document.getElementById('overlay');
+const sideBar = document.getElementById('middleRight')
 
 playStart.addEventListener('click', (e) => { //starts games
     menu = false;
