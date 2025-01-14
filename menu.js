@@ -29,8 +29,16 @@ document.addEventListener('keypress', (e) => {
         mapElement.id = mapPosIDs[mapType]; //changes the id of the map
     }
     else if(e.key == controls.inventory){
-        createInventory()
         overlay.classList.remove('invisible')
+        if(document.getElementById('inventory')){
+            overlay.innerHTML = ''
+            overlay.classList.add('invisible')
+            topLeft.classList.toggle('invisible')
+            menu = false
+        }
+        else{
+            createInventory()
+        }
     }
 })
 
@@ -123,7 +131,7 @@ function createInventory(){
     menu = true
     overlay.innerHTML = ''
     const inventory = document.createElement('div')
-    inventory.classList.add('inventory')
+    inventory.id = 'inventory'
     overlay.appendChild(inventory)
     const exit = document.createElement('div')
     exit.classList.add('exit')
@@ -135,17 +143,17 @@ function createInventory(){
     })
     inventory.appendChild(exit)
     const sideBar = document.createElement('div')
-    sideBar.classList.add('sideBar')
+        sideBar.classList.add('sideBar')
     const playerImgCont = document.createElement('div')
-    playerImgCont.classList.add('playerImgContainer')
+        playerImgCont.classList.add('playerImgContainer')
     const playerDisplay = document.createElement('div')
-    playerDisplay.style.width = character.width + 'px'
-    playerDisplay.style.height = character.height + 'px'
-    playerDisplay.style.backgroundColor = character.color
+        playerDisplay.style.width = character.width + 'px'
+        playerDisplay.style.height = character.height + 'px'
+        playerDisplay.style.backgroundColor = character.color
     const health = document.createElement('div')
-    health.textContent = `Health: ${character.health}`
+        health.textContent = `Health: ${character.health}`
     const stamina = document.createElement('div')
-    stamina.textContent = `stamina: ${Math.floor(character.stamina)}`
+        stamina.textContent = `stamina: ${Math.floor(character.stamina)}`
     if(character.sprite != null) playerDisplay.style.backgroundImage = character.sprite
     inventory.appendChild(sideBar)
     sideBar.appendChild(playerImgCont)
@@ -167,7 +175,7 @@ const controls = { //holds the controls of the game
     'right' : 'd',
     'interact' : 'e',
     'map' : 'm',
-    'inventory' : 'i'
+    'inventory' : 'q'
 }
 
 keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code written at 1 am
