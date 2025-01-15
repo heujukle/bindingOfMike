@@ -323,9 +323,10 @@ img{
     display: flex;
     width: 80vw;
     height: 79vh;
-    background-color: white;
+    background-color: antiquewhite;
     z-index: 10;
     padding-bottom: 1vh;
+    overflow-y: scroll;
 }
 /* player inventiory sideBar distinct from teh js sidebar which is middleRight */
 .sideBar{

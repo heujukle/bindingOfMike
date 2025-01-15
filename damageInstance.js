@@ -155,7 +155,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, sprite = document.getElementById('sword')){
+    constructor(source, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, tier = 1, increase = {}, sprite = document.getElementById('sword')){
         this.name = name //name of obj
         this.span; //how wide the blade spans, degrees aroudn the player
         this.source = source //source, does link back to source
@@ -176,6 +176,8 @@ class melee{
         this.clickFunc = clickFunc
         this.runFunc = runFunc
         this.runFuncCD = runFuncCD
+        this.tier = tier
+        this.increase = increase //stats that will be added if this wepaon is used in fusion
     }
 
     setValues(mouseAngle, event){ //called on mouse click

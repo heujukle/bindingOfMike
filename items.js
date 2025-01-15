@@ -1,5 +1,5 @@
 /*
-melee(source, damage, width, height, knockback, span, name = 'sword', clickFunc, runFunc, runFuncCD, sprite) 
+constructor(source, damage, width, height, knockback, span, name, clickFunc, runFunc, runFuncCD, tier, increase, sprite) 
 
 */
 
@@ -80,19 +80,19 @@ const passives = [
 {
     item: 'richochet',
     itemVariables: {},
-    price: 1000,
+    price: 0, //1000
     type: 'passiveItem'
 },
 {
     item: 'spikey',
     itemVariables: {hitList : []},
-    price: 200,
+    price: 0, //200
     type: 'passiveItem'
 },
 {
     item: 'bouncy',
     itemVariables: {},
-    price: 50,
+    price: 0, //100
     type: 'passiveItem'
 },
 ]

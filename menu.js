@@ -150,6 +150,24 @@ function createMeleeInv(item){
     return element;
 }
 
+function createPassiveInv(key, item){
+    const element = createElement('div', 'inventoryItem')
+    const Img = createElement('img', null, {src:item.sprite != null || item.sprite != undefined ? item.sprite : "images/Coin.png"})
+    const itemText = createElement('p', null, {textContent:key})
+    element.appendChild(Img)
+    element.appendChild(itemText)
+    return element;
+}
+
+function createMaterial(key, item){
+    const element = createElement('div', 'inventoryItem')
+    const Img = createElement('img', null, {src:item.sprite != null || item.sprite != undefined ? item.sprite : "images/Coin.png"})
+    const itemText = createElement('p', null, {textContent: item.amount + ":" + key})
+    element.appendChild(Img)
+    element.appendChild(itemText)
+    return element;
+}
+//makes the inventory, handles all events and such
 function createInventory(){
     topLeft.classList.toggle('invisible')
     menu = true
@@ -158,6 +176,7 @@ function createInventory(){
     inventory.id = 'inventory'
     overlay.appendChild(inventory)
     const exit = document.createElement('div')
+    exit.textContent = "X"
     exit.classList.add('exit')
     exit.addEventListener('click', function(){
         menu = false
@@ -209,7 +228,7 @@ function createInventory(){
             equipped.id = 'equippedMelee';
         }
     })
-
+    //melee stuff
     for(let i = 0; i < character.meleeInventory.length; i++){
         const melee = character.meleeInventory[i]
         const meleeDisplay = createMeleeInv(melee)
@@ -225,6 +244,31 @@ function createInventory(){
             }
         })
     }
+    //passive stuff
+    if(Object.keys(character.passiveItems).length > 0){
+        const passiveHeader = createElement('h1', null, {textContent:'Passive'})
+        itemSection.appendChild(passiveHeader)
+        const passiveSection = createElement('div', 'sectionOfInventory')
+        itemSection.appendChild(passiveSection)
+        for(let i = 0; i < Object.keys(character.passiveItems).length; i++){
+            const key = Object.keys(character.passiveItems)[i]
+            const element = createPassiveInv(key, character.passiveItems[key])
+            passiveSection.appendChild(element)
+        }
+    }
+    //material stuff
+    if(Object.keys(character.materials).length > 0){
+        const materialsHeader = createElement('h1', null, {textContent:'Materials'})
+        itemSection.appendChild(materialsHeader)
+        const materialsSection = createElement('div', 'sectionOfInventory')
+        itemSection.appendChild(materialsSection)
+        for(let i = 0; i < Object.keys(character.materials).length; i++){
+            const key = Object.keys(character.materials)[i]
+            const element = createMaterial(key, character.materials[key])
+            materialsSection.appendChild(element)
+        }
+    }
+
 }
 
 const controls = { //holds the controls of the game
