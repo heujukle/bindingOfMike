@@ -36,7 +36,7 @@ document.addEventListener('keypress', (e) => {
             topLeft.classList.toggle('invisible')
             menu = false
         }
-        else{
+        else if(menu == false){
             createInventory()
         }
     }

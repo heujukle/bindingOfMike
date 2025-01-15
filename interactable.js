@@ -214,3 +214,79 @@ createItem(item, index){
     }
 
     }
+
+    class forge{
+        constructor(x, y, width, height, target){
+            this.index; //index in interactables
+            this.x = x //x
+            this.y = y //y
+            this.target = target
+            this.width = width
+            this.height = height
+            this.type = 'forge' //is shop
+            this.behavior = 'dynamic' //dynamically changes
+        }
+        
+        
+        draw(){ 
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = "brown";
+            ctx.fill();
+            ctx.fillStyle = "black";
+            if(this.collision2([this.target])){ //checks if overlap and player has pressed interact button
+                ctx.fillText(`press ${controls.interact.toUpperCase()} to interact`, this.x - 20, this.y - 20) //shows interact text
+                if(this.target.interact == true){ //if player interacts
+                this.loadForge() //loads store
+                }
+            }
+            ctx.closePath();
+        }
+        
+        collision2(target) {
+            const left = this.x;
+            const right = this.x + this.width;
+            const top = this.y;
+            const bottom = this.y + this.height;
+            
+            for (let i = 0; i < target.length; i++) {
+                if(!(target[i] === this)){
+                const tleft = target[i].x;
+                const tright = target[i].x + target[i].width;
+                const ttop = target[i].y;
+                const tbottom = target[i].y + target[i].height;
+                
+                // Check if the rectangles are overlapping
+                if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                    // Collision detected
+                    return true;
+                    // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+                }
+            }
+        }
+            return false;
+        }
+        
+        loadForge(){
+            menu = true
+            overlay.innerHTML = ''
+            overlay.classList.remove('invisible')
+            topLeft.classList.add('invisible')
+            const mainForge = createElement('div', null, {id:"forge"})
+            overlay.appendChild(mainForge)
+            const exit = createElement('div', 'exit', {textContent:'X'})
+            exit.addEventListener('click', function(){
+                menu = false
+                overlay.innerHTML = ''
+                overlay.classList.add('invisible')
+                topLeft.classList.remove('invisible')
+            })
+            mainForge.appendChild(exit)
+            const swordOne = createElement('div')
+            const swordTwo = createElement('div')
+            const result = createElement('div')
+            mainForge.appendChild(swordOne)
+            mainForge.appendChild(swordTwo)
+            mainForge.appendChild(result)
+        }
+    }

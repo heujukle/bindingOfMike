@@ -51,7 +51,7 @@ class player {
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = {}
         this.selectedItem = 'shoot'
-        this.melee = new melee(this, 10, 30, 125, 5, 90)
+        this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', null, null, null, 1, {damage:10, span:10})
         this.iFrames = 0;
         this.map = null;
         this.wallet = 0;

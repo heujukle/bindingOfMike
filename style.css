@@ -409,3 +409,16 @@ img{
 #equippedMelee{
     background-color: rgb(39, 37, 37);
 }
+
+#forge{
+    width: 80vw;
+    height: 80vh;
+    background-color: antiquewhite;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#forge>*:not(:first-child, :last-child){
+    border-right: 2px solid black;
+}

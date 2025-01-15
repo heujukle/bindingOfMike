@@ -160,6 +160,10 @@ const createPortal = (x, y, width, height) => { //function to make dummys
 const createShop = (x, y, width, height) => { //function to make dummys
     interactables.add(new shop(x, y, width, height, character))
 }
+
+const createForge = (x, y, width, height) => { //function to make dummys
+    interactables.add(new forge(x, y, width, height, character))
+}
 const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
         return;
@@ -172,6 +176,7 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['s', createSkeleton],
     ['p', createPortal],
     ['sh', createShop],
+    ['f', createForge],
 ])
 
 const structures = { //loads structures

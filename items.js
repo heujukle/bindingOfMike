@@ -99,7 +99,7 @@ const passives = [
 
 const meleeItems = [
 { 
-    item:new melee(undefined, 10, 100, 300, 50, 100, 'Big sword'), //item itself
+    item:new melee(undefined, 10, 100, 300, 50, 100, 'Big sword', null, null, null, 1, {damage: 10, height:20, width:20, knockback: 10}), //item itself
     price:150, //price
     type: 'melee' //type
 }, 
@@ -116,7 +116,7 @@ const meleeItems = [
     type: 'melee' //type
 },
 {
-    item:new melee(undefined, 10, 100, 300, 50, 360, 'Spin sword'), //item itself
+    item:new melee(undefined, 10, 100, 300, 50, 360, 'Spin sword', null, null, null, 1, {damage:15, width:20, span:30}), //item itself
     price:200, //price
     type: 'melee' //type
 },
