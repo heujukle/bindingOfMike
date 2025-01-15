@@ -300,14 +300,81 @@ createItem(item, index){
                 swordTwo.appendChild(columnTwo)
 
             const resultHeader = createElement('h1', null, {textContent: 'Result'})
-            result.appendChild(resultHeader)
+                result.appendChild(resultHeader)
+            const columnThree = createElement('div', null, {id:'resultColumn'})
+                result.appendChild(columnThree)
 
             let firstSword = null;
             let secondSword = null;
 
-            function generateResults(forge){
+            function generateResults(forge){ 
+                if(firstSword === secondSword){//runs when two valid swords are chosen
+                    columnThree.innerHTML = 'Cannot Merge Same sword into itself!'
+                    return;
+                }
                 const newSword = forge.combineSword(firstSword, secondSword);
-                console.log(newSword)
+                columnThree.innerHTML = ''
+                const swordDisplay = createElement('div', 'mergePreview')
+                    columnThree.appendChild(swordDisplay)
+                const swordImg = createElement('img', 'd25pXauto', {src:newSword.sprite.src})
+                    swordDisplay.appendChild(swordImg)
+                const name = createElement('h3', null, {textContent:`Name : ${newSword.name}`}, swordDisplay)
+                const damage = createElement('div', null, {textContent:`Damage : ${newSword.damage}`}, swordDisplay)
+                const knockback = createElement('div', null, {textContent:`Knockback : ${newSword.knockback}`}, swordDisplay)
+                const span = createElement('div', null, {textContent:`Span : ${newSword.span}`}, swordDisplay)
+                const runFuncCD = createElement('div', null, {textContent:`Run Func CD : ${newSword.runFuncCD}`}, swordDisplay)
+                const width = createElement('div', null, {textContent:`Width : ${newSword.width}`}, swordDisplay)
+                const height = createElement('div', null, {textContent:`Height : ${newSword.height}`}, swordDisplay)
+
+                const requirementsDisplay = createElement('div', 'materialsPreview')
+                    columnThree.appendChild(requirementsDisplay)
+                const requirements = mergeRequirements[newSword.tier]
+                const keys = Object.keys(requirements)
+                let canMerge = true
+                for(let i = 0; i < keys.length; i++){
+                    let cssClass = null
+                    let amount = 0
+                    if(forge.target.materials[keys[i]] != undefined || forge.target.materials[keys[i]] != null){
+                        amount = forge.target.materials[keys[i]].amount //sets the amount equal to what the player has
+                    }
+                    if(amount < requirements[keys[i]]){ //updates color to show when player cannot afford
+                        cssClass = 'broke'
+                        canMerge = false
+                    }
+                    console.log(requirements)
+                    console.log(requirements[keys[i]])
+                    createElement('div', cssClass, {textContent:`${keys[i]} : ${amount} / ${requirements[keys[i]]}`}, requirementsDisplay)
+                }
+                if(canMerge){
+                    const interact = createElement('div', "mergeButton", {textContent:`Merge Weapons`}, columnThree)
+                    function mergeWeapons(forge){
+                        console.log(forge)
+                        let saveEquppied  = true
+                        if(forge.target.meleeInventory.indexOf(firstSword) != -1){
+                            forge.target.meleeInventory.splice(forge.target.meleeInventory.indexOf(firstSword), 1)
+                            saveEquppied = !saveEquppied //will save the quipped weapon if both weapons are in inventory
+                        }
+                        if(forge.target.meleeInventory.indexOf(secondSword) != -1){
+                            forge.target.meleeInventory.splice(forge.target.meleeInventory.indexOf(secondSword), 1)
+                            saveEquppied = !saveEquppied
+                        }
+                        if(saveEquppied) forge.target.meleeInventory.push(forge.target.melee)
+                        forge.target.melee = newSword;
+                        for(let i = 0; i < keys.length; i++){
+                            if(requirements[keys[i]] <= 0){
+                                continue;
+                            }
+                            forge.target.materials[keys[i]].amount -= requirements[keys[i]]
+                        }
+                        overlay.innerHTML = '' //reloads the forge
+                        forge.loadForge()
+                    }
+                    interact.addEventListener('click', (e) => {mergeWeapons(forge)})
+                }
+                
+                
+                
+                
             }
 
             function setFirstSword(sword, element, forge){
@@ -316,7 +383,7 @@ createItem(item, index){
                     document.getElementById('swordOneSelected').id = ''
                 }
                 element.id = 'swordOneSelected'
-                if(firstSword != null && secondSword != null && firstSword != secondSword){
+                if(firstSword != null && secondSword != null){
                     generateResults(forge)
                 }
             }
@@ -327,7 +394,7 @@ createItem(item, index){
                     document.getElementById('swordTwoSelected').id = ''
                 }
                 element.id = 'swordTwoSelected'
-                if(firstSword != null && secondSword != null && firstSword != secondSword){
+                if(firstSword != null && secondSword != null){
                     generateResults(forge)
                 }
             }
@@ -335,10 +402,10 @@ createItem(item, index){
             const equippedSword = this.target.melee
             const displayEquip1 = createMeleeInv(equippedSword, false)
                 displayEquip1.addEventListener('click', (e)=>{setFirstSword(equippedSword, displayEquip1, this)})
-                swordOne.appendChild(displayEquip1)
+                columnOne.appendChild(displayEquip1)
             const displayEquip2 = createMeleeInv(equippedSword, false)
                 displayEquip2.addEventListener('click', (e)=>{setSecondSword(equippedSword, displayEquip2, this)})
-                swordTwo.appendChild(displayEquip2)
+                columnTwo.appendChild(displayEquip2)
 
             for(let i = 0; i < this.target.meleeInventory.length; i++){
                 const sword = this.target.meleeInventory[i]
@@ -347,10 +414,10 @@ createItem(item, index){
                 }
                 const displayEquip1 = createMeleeInv(sword, false)
                     displayEquip1.addEventListener('click', (e)=>{setFirstSword(sword, displayEquip1, this)})
-                    swordOne.appendChild(displayEquip1)
+                    columnOne.appendChild(displayEquip1)
                 const displayEquip2 = createMeleeInv(sword, false)
                     displayEquip2.addEventListener('click', (e)=>{setSecondSword(sword, displayEquip2, this)})
-                    swordTwo.appendChild(displayEquip2)
+                    columnTwo.appendChild(displayEquip2)
             }
         }
 

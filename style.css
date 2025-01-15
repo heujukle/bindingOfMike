@@ -440,3 +440,62 @@ img{
 #swordTwoSelected{
     background-color: rgb(39, 37, 37);
 }
+
+#resultColumn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.mergePreview{
+    width: 100%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid black;
+    min-height: 30vh;
+}
+
+.materialsPreview{
+    width: 100%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid black;
+    min-height: 30vh;
+}
+
+.materialsPreview > *{
+    margin: 5px
+}
+
+/* dimensions 25p width */
+.d25pXauto{ 
+    width: 25%;
+}
+
+.broke{
+    color: red
+}
+
+.mergeButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: brown;
+    border: 2px solid black;
+    padding:15px;
+    cursor: pointer;
+}
+
+.mergeButton:hover{
+    background-color: rgb(204, 67, 67);
+}

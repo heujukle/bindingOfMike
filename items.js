@@ -1,8 +1,21 @@
 /*
 constructor(source, damage, width, height, knockback, span, name, clickFunc, runFunc, runFuncCD, tier, increase, sprite) 
 
-*/
-
+/* crafting requirements*/
+const mergeRequirements = {
+    1 : {
+        'bones' : 0,
+        'cloth' : 0,
+    },
+    2 : {
+        'bones' : 0,
+        'cloth' : 0
+    },
+    3 : {
+        'bones' : 0,
+        'cloth' : 0
+    },
+}
 /* materials */
 const bones = {
     name:"bones",
@@ -99,7 +112,7 @@ const passives = [
 
 const meleeItems = [
 { 
-    item:new melee(undefined, 10, 100, 300, 50, 100, 'Big sword', null, null, null, 1, {damage: 10, height:20, width:20, knockback: 10}), //item itself
+    item:new melee(undefined, 10, 100, 300, 50, 100, 'Big sword', null, null, null, 0, {damage: 10, height:20, width:20, knockback: 10}), //item itself
     price:150, //price
     type: 'melee' //type
 }, 
@@ -116,7 +129,7 @@ const meleeItems = [
     type: 'melee' //type
 },
 {
-    item:new melee(undefined, 10, 100, 300, 50, 360, 'Spin sword', null, null, null, 1, {damage:15, width:20, span:30}), //item itself
+    item:new melee(undefined, 10, 100, 300, 50, 360, 'Spin sword', null, null, null, 0, {damage:15, width:20, span:30}), //item itself
     price:200, //price
     type: 'melee' //type
 },

@@ -51,7 +51,7 @@ class player {
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = {}
         this.selectedItem = 'shoot'
-        this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', null, null, null, 1, {damage:10, span:10})
+        this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 0, {damage:10, span:10})
         this.iFrames = 0;
         this.map = null;
         this.wallet = 0;
@@ -62,7 +62,11 @@ class player {
         this.color = "#0000ff"
         this.sprite = null;
         this.meleeInventory = [
-            new melee(this, 10, 100, 300, 50, 100, 'Big sword', null, null, null, 1, {damage: 10, height:20, width:20, knockback: 10}),
+            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
+            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
+            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
+            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
+            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
             new melee(this, 7, 50, 100, 15, 40, 'projectile sword', function(sword, e){
                 const degrees = findDegrees(e.x, e.y, sword.source.x, sword.source.y)
                 const startX = sword.source.x + sword.source.width/2
@@ -70,7 +74,12 @@ class player {
                 const velocities = getProjVelocities(degrees, 7)
                 const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player')
                 damageInstances.add(swordProjectile)
-            }),]
+            }),
+            new melee(this, 10, 100, 300, 50, 360, 'Super Spin swords', null, function(sword){
+                const spinner = new melee(sword.source, 5, sword.width * 0.75, sword.height * 0.75, 25, sword.span)
+                spinner.setValues(sword.startingAngle + 90)
+                damageInstances.add(spinner)
+            }, 100)]
         this.materials = {}
     }
     
