@@ -329,7 +329,7 @@ createItem(item, index){
                 const requirementsDisplay = createElement('div', 'materialsPreview')
                     columnThree.appendChild(requirementsDisplay)
                 const requirements = mergeRequirements[newSword.tier]
-                const keys = Object.keys(requirements)
+                const keys = Object.keys(requirements) //bug
                 let canMerge = true
                 for(let i = 0; i < keys.length; i++){
                     let cssClass = null
