@@ -1,10 +1,10 @@
 to-do list
 nerf multishot
 redo pricing --
-items pop ups
-inventory
+items pop ups --
+inventory --
 big zombie
-weapon merging
+weapon merging --
 different projectile colors --
 change iframe --
 iframe indictaor --
