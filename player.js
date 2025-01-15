@@ -61,7 +61,16 @@ class player {
         this.damaged = false
         this.color = "#0000ff"
         this.sprite = null;
-        this.meleeInventory = []
+        this.meleeInventory = [
+            new melee(this, 10, 100, 300, 50, 100, 'Big sword', null, null, null, 1, {damage: 10, height:20, width:20, knockback: 10}),
+            new melee(this, 7, 50, 100, 15, 40, 'projectile sword', function(sword, e){
+                const degrees = findDegrees(e.x, e.y, sword.source.x, sword.source.y)
+                const startX = sword.source.x + sword.source.width/2
+                const startY = sword.source.y + sword.source.height/2
+                const velocities = getProjVelocities(degrees, 7)
+                const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player')
+                damageInstances.add(swordProjectile)
+            }),]
         this.materials = {}
     }
     

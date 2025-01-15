@@ -285,8 +285,159 @@ createItem(item, index){
             const swordOne = createElement('div')
             const swordTwo = createElement('div')
             const result = createElement('div')
-            mainForge.appendChild(swordOne)
-            mainForge.appendChild(swordTwo)
-            mainForge.appendChild(result)
+                mainForge.appendChild(swordOne)
+                mainForge.appendChild(swordTwo)
+                mainForge.appendChild(result)
+
+            const headerOne = createElement('h1', null, {textContent: 'Base Sword'})
+                swordOne.appendChild(headerOne)
+            const columnOne = createElement('div', "forgeColumn")
+                swordOne.appendChild(columnOne)
+
+            const headerTwo = createElement('h1', null, {textContent: 'Modifer Sword'})
+                swordTwo.appendChild(headerTwo)
+            const columnTwo = createElement('div', "forgeColumn")
+                swordTwo.appendChild(columnTwo)
+
+            const resultHeader = createElement('h1', null, {textContent: 'Result'})
+            result.appendChild(resultHeader)
+
+            let firstSword = null;
+            let secondSword = null;
+
+            function generateResults(forge){
+                const newSword = forge.combineSword(firstSword, secondSword);
+                console.log(newSword)
+            }
+
+            function setFirstSword(sword, element, forge){
+                firstSword = sword
+                if(document.getElementById('swordOneSelected')){
+                    document.getElementById('swordOneSelected').id = ''
+                }
+                element.id = 'swordOneSelected'
+                if(firstSword != null && secondSword != null && firstSword != secondSword){
+                    generateResults(forge)
+                }
+            }
+
+            function setSecondSword(sword, element, forge){
+                secondSword = sword
+                if(document.getElementById('swordTwoSelected')){
+                    document.getElementById('swordTwoSelected').id = ''
+                }
+                element.id = 'swordTwoSelected'
+                if(firstSword != null && secondSword != null && firstSword != secondSword){
+                    generateResults(forge)
+                }
+            }
+
+            const equippedSword = this.target.melee
+            const displayEquip1 = createMeleeInv(equippedSword, false)
+                displayEquip1.addEventListener('click', (e)=>{setFirstSword(equippedSword, displayEquip1, this)})
+                swordOne.appendChild(displayEquip1)
+            const displayEquip2 = createMeleeInv(equippedSword, false)
+                displayEquip2.addEventListener('click', (e)=>{setSecondSword(equippedSword, displayEquip2, this)})
+                swordTwo.appendChild(displayEquip2)
+
+            for(let i = 0; i < this.target.meleeInventory.length; i++){
+                const sword = this.target.meleeInventory[i]
+                if(sword.tier >= 3){
+                    continue;
+                }
+                const displayEquip1 = createMeleeInv(sword, false)
+                    displayEquip1.addEventListener('click', (e)=>{setFirstSword(sword, displayEquip1, this)})
+                    swordOne.appendChild(displayEquip1)
+                const displayEquip2 = createMeleeInv(sword, false)
+                    displayEquip2.addEventListener('click', (e)=>{setSecondSword(sword, displayEquip2, this)})
+                    swordTwo.appendChild(displayEquip2)
+            }
+        }
+
+        combineSword(swordOne, swordTwo){
+            const result = {
+                source: swordOne.source,
+                name:swordOne.name + ' ' + swordTwo.name,
+                width:swordOne.width,
+                height:swordOne.height,
+                damage:swordOne.damage,
+                sprite:swordOne.sprite,
+                runFuncCD:swordOne.runFuncCD,
+                tier: swordOne.tier += 1,
+                runFunc : null,
+                clickFunc : null,
+                knockback : swordOne.knockback,
+                span : swordOne.span,
+            }
+            const newIncrease = {}
+            if(swordTwo.increase != null){
+                const keys = Object.keys(swordTwo.increase)
+                for(let i = 0; i < keys.length; i++){
+                    result[keys[i]] += swordTwo.increase[keys[i]]
+                    newIncrease[keys[i]] = Math.round(swordTwo.increase[keys[i]] * 1.5)
+                }
+            }
+            if(swordOne.increase != null){
+                const keys = Object.keys(swordOne.increase)
+                for(let i = 0; i < keys.length; i++){
+                    if(newIncrease[keys[i]] != null && newIncrease[keys[i]] != undefined){
+                        newIncrease[keys[i]] += Math.round(swordOne.increase[keys[i]] * 1.5)
+                    }
+                    else{
+                        newIncrease[keys[i]] = Math.round(swordOne.increase[keys[i]] * 1.5)
+                    }
+                }
+            }
+            // run func
+            if(swordOne.runFunc != null && swordTwo.runFunc != null){
+                result.runFunc = (sword) => {
+                    swordOne.runFunc(sword)
+                    swordTwo.runFunc(sword)
+                }
+            }
+            else if(swordOne.runFunc == null && swordTwo.runFunc != null){
+                result.runFunc = (sword) => {
+                    swordTwo.runFunc(sword)
+                }
+            }
+            else if(swordOne.runFunc != null && swordTwo.runFunc == null){
+                result.runFunc = (sword) => {
+                    swordOne.runFunc(sword)
+                }
+            }
+            //end run func
+
+            //click func
+            if(swordOne.clickFunc != null && swordTwo.clickFunc != null){
+                result.clickFunc = (sword, event) => {
+                    swordOne.clickFunc(sword, event)
+                    swordTwo.clickFunc(sword, event)
+                }
+            }
+            else if(swordOne.clickFunc == null && swordTwo.clickFunc != null){
+                result.clickFunc = (sword, event) => {
+                    swordTwo.clickFunc(sword, event)
+                }
+            }
+            else if(swordOne.clickFunc != null && swordTwo.clickFunc == null){
+                result.clickFunc = (sword, event) => {
+                    swordOne.clickFunc(sword, event)
+                }
+            }
+            //end click func
+            return new melee(
+                result.source, 
+                result.damage, 
+                result.width, 
+                result.height, 
+                result.knockback, 
+                result.span, 
+                result.name, 
+                result.clickFunc, 
+                result.runFunc,
+                result.runFuncCD,
+                result.tier,
+                newIncrease,
+                result.sprite)
         }
     }

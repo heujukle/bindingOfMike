@@ -137,13 +137,13 @@ function createElement(elementType = null, cssClass, properties = {}){
     }
 }
 
-function createMeleeInv(item){
+function createMeleeInv(item, checkEquip = true){
     const element = createElement('div', 'inventoryItem')
     const Img = createElement('img', null, {src:item.sprite.src})
     const itemText = createElement('p', null, {textContent:item.name})
     element.appendChild(Img)
     element.appendChild(itemText)
-    if(item === character.melee){
+    if(item === character.melee && checkEquip){
         console.log('ashjfgashgdfjhkg')
         element.id = 'equippedMelee'
         }

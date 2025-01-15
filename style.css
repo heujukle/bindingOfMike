@@ -422,3 +422,21 @@ img{
 #forge>*:not(:first-child, :last-child){
     border-right: 2px solid black;
 }
+
+#forge>*:not(:first-child){
+    text-align: center;
+}
+
+.forgeColumn{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#swordOneSelected{
+    background-color: rgb(39, 37, 37);
+}
+
+#swordTwoSelected{
+    background-color: rgb(39, 37, 37);
+}

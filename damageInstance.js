@@ -155,9 +155,9 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, tier = 1, increase = {}, sprite = document.getElementById('sword')){
+    constructor(source, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, tier = 1, increase = null, sprite = document.getElementById('sword')){
         this.name = name //name of obj
-        this.span; //how wide the blade spans, degrees aroudn the player
+        this.span = span; //how wide the blade spans, degrees aroudn the player
         this.source = source //source, does link back to source
         this.x; //x links to source x and y when swung
         this.y;//y
@@ -172,7 +172,6 @@ class melee{
         this.hitList = [] //entities teh sword has it in a swing
         this.sprite = sprite; //image teh sword displays, default is the sword png
         this.knockback = knockback //how much knockback the sword gives
-        this.span = span
         this.clickFunc = clickFunc
         this.runFunc = runFunc
         this.runFuncCD = runFuncCD
