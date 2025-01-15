@@ -166,6 +166,7 @@ createItem(item, index){
         if(this.target.wallet >= item.price){
             updateWallet(-item.price, this.target)
             if(item.type == 'melee'){
+                this.target.meleeInventory.push(this.target.melee)
                 this.target.melee = item.item;
                 this.target.melee.source = this.target
                 console.log(this.target.melee)

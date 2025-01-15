@@ -126,6 +126,30 @@ class areaMap {
     }
 }
 
+function createElement(elementType = null, cssClass, properties = {}){
+    if(elementType){
+        const element = document.createElement(elementType)
+        if(cssClass) element.classList.add(cssClass)
+        for(let i = 0; i < Object.keys(properties).length; i++){
+            element[Object.keys(properties)[i]] =  properties[Object.keys(properties)[i]]
+        }
+        return element
+    }
+}
+
+function createMeleeInv(item){
+    const element = createElement('div', 'inventoryItem')
+    const Img = createElement('img', null, {src:item.sprite.src})
+    const itemText = createElement('p', null, {textContent:item.name})
+    element.appendChild(Img)
+    element.appendChild(itemText)
+    if(item === character.melee){
+        console.log('ashjfgashgdfjhkg')
+        element.id = 'equippedMelee'
+        }
+    return element;
+}
+
 function createInventory(){
     topLeft.classList.toggle('invisible')
     menu = true
@@ -155,16 +179,51 @@ function createInventory(){
     const stamina = document.createElement('div')
         stamina.textContent = `stamina: ${Math.floor(character.stamina)}`
     if(character.sprite != null) playerDisplay.style.backgroundImage = character.sprite
-    inventory.appendChild(sideBar)
-    sideBar.appendChild(playerImgCont)
+    inventory.appendChild(sideBar) 
+    sideBar.appendChild(playerImgCont) //player img
     playerImgCont.appendChild(playerDisplay)
     playerImgCont.appendChild(health)
     playerImgCont.appendChild(stamina)
     playerImgCont.innerHTML += `<div id="wallet"><img src="images/Coin.png" id="Coin">$<div id="walletDisplay">${character.wallet}</div></div>`
-    for(let i = 0; i < Object.keys(character.stats).length; i++){
+    for(let i = 0; i < Object.keys(character.stats).length; i++){ //stats
        const statDisplay = document.createElement('div')
        statDisplay.textContent = `${Object.keys(character.stats)[i]} : ${character.stats[Object.keys(character.stats)[i]]}`
        sideBar.appendChild(statDisplay)
+    }
+    const itemSection = createElement('div', null, {id:'itemSection'})
+        inventory.appendChild(itemSection)
+    const meleeHeader = createElement('h1', null, {textContent:'Melee'})
+        itemSection.appendChild(meleeHeader)
+    const meleeSection = createElement('div', 'sectionOfInventory')
+        itemSection.appendChild(meleeSection)
+    const equipped = createMeleeInv(character.melee)
+        meleeSection.appendChild(equipped)
+        const meleeEquipped = character.melee //characters melee on inventory open
+    equipped.addEventListener('click', (e) => {
+        if(meleeEquipped != character.melee){
+            const currentEquipped = character.melee
+            character.melee = meleeEquipped
+            character.meleeInventory[character.meleeInventory.indexOf(meleeEquipped)] = currentEquipped
+            const element = document.getElementById('equippedMelee');
+            element.id = '';
+            equipped.id = 'equippedMelee';
+        }
+    })
+
+    for(let i = 0; i < character.meleeInventory.length; i++){
+        const melee = character.meleeInventory[i]
+        const meleeDisplay = createMeleeInv(melee)
+        meleeSection.appendChild(meleeDisplay)
+        meleeDisplay.addEventListener('click', (e) => {
+            if(melee != character.melee){
+                const currentEquipped = character.melee
+                character.melee = melee
+                character.meleeInventory[character.meleeInventory.indexOf(melee)] = currentEquipped
+                const element = document.getElementById('equippedMelee');
+                element.id = '';
+                meleeDisplay.id = 'equippedMelee';
+            }
+        })
     }
 }
 
