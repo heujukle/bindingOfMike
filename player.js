@@ -61,25 +61,7 @@ class player {
         this.damaged = false
         this.color = "#0000ff"
         this.sprite = null;
-        this.meleeInventory = [
-            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
-            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
-            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
-            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
-            new melee(this, 10, 100, 300, 50, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10}),
-            new melee(this, 7, 50, 100, 15, 40, 'projectile sword', function(sword, e){
-                const degrees = findDegrees(e.x, e.y, sword.source.x, sword.source.y)
-                const startX = sword.source.x + sword.source.width/2
-                const startY = sword.source.y + sword.source.height/2
-                const velocities = getProjVelocities(degrees, 7)
-                const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player')
-                damageInstances.add(swordProjectile)
-            }),
-            new melee(this, 10, 100, 300, 50, 360, 'Super Spin swords', null, function(sword){
-                const spinner = new melee(sword.source, 5, sword.width * 0.75, sword.height * 0.75, 25, sword.span)
-                spinner.setValues(sword.startingAngle + 90)
-                damageInstances.add(spinner)
-            }, 100)]
+        this.meleeInventory = []
         this.materials = {}
     }
     
@@ -182,11 +164,11 @@ class player {
     }
 
     updateHealthBar(){
-        healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
+        healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;` //converts the perent of health into the health bar
     }
 
     updateStaminaBar(){
-        staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
+        staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;` //converts the perent of stamina into the health bar
     }
 
     addHealth(increase){

@@ -263,12 +263,12 @@ class melee{
                     if(other.xVelocity != null){
                         console.log('knockbackX')
                         // other.xVelocity = other.x > this.source.x ? other.xVelocity += this.knockback : other.xVelocity -= this.knockback
-                        other.xVelocity = directions.xVelocity
+                        other.xVelocity = directions.xVelocity * other.knockBackResistance
                     }
                     if(other.yVelocity != null){
                         console.log('knockbackY')
                         // other.yVelocity = other.y > this.source.y ? other.yVelocity += this.knockback : other.yVelocity -= this.knockback
-                        other.yVelocity = directions.yVelocity
+                        other.yVelocity = directions.yVelocity * other.knockBackResistance
                     }
                     this.hitList.push(other)
                 }

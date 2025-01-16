@@ -4,16 +4,16 @@ constructor(source, damage, width, height, knockback, span, name, clickFunc, run
 /* crafting requirements*/
 const mergeRequirements = {
     1 : {
-        'bones' : 0,
-        'cloth' : 0,
+        'bones' : 30,
+        'cloth' : 30,
     },
     2 : {
-        'bones' : 0,
-        'cloth' : 0
+        'bones' : 45,
+        'cloth' : 60
     },
     3 : {
-        'bones' : 0,
-        'cloth' : 0
+        'bones' : 70,
+        'cloth' : 70
     },
 }
 /* materials */
@@ -24,6 +24,11 @@ const bones = {
 
 const cloth = {
     name:"cloth",
+    sprite: null
+}
+
+const evilCloth = {
+    name:'Evil Cloth',
     sprite: null
 }
 /* */
@@ -93,19 +98,19 @@ const passives = [
 {
     item: 'richochet',
     itemVariables: {},
-    price: 0, //1000
+    price: 750, //1000
     type: 'passiveItem'
 },
 {
     item: 'spikey',
     itemVariables: {hitList : []},
-    price: 0, //200
+    price: 250, //200
     type: 'passiveItem'
 },
 {
     item: 'bouncy',
     itemVariables: {},
-    price: 0, //100
+    price: 100, //100
     type: 'passiveItem'
 },
 ]

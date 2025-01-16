@@ -1,7 +1,7 @@
 const wallArt = ["images/pixil-frame-0.png", "images/greyBrick.png", "images/walls/tile.png"]
 const floorArt = ["images/floor1.png", "images/floors/pleaseBeAGoodFloor.png"]
 
-class space{
+class space{ //empty space unused code
     constructor(x, y, width, height){
         this.top = y
         this.left = x
@@ -15,7 +15,7 @@ class space{
     }
 }
 
-class wall {
+class wall { //creates the wall
     constructor(x, y, width, height){
         this.index;
         this.x = x
@@ -37,7 +37,7 @@ class wall {
     }
 }
 
-class turret{
+class turret{ //creates the turret
     constructor(x, y, width, height, direction){
         this.index;
         this.x = x
@@ -47,24 +47,27 @@ class turret{
         this.type = 'turret'
         this.direction = direction;
         this.tProjectile = null;
-        if(this.direction == "lt"){
-            console.log('lt')
-            this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#000000')
-            damageInstances.add(this.tProjectile);
-        }
-        else if(direction == "ut"){
+        switch(this.direction){//determines the direction of the turrets
+            case "lt":
+                console.log('lt')
+                this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#000000') //create turret
+                damageInstances.add(this.tProjectile); //add projectile
+                break;
 
-        }
-        else if(direction == "rt"){
-            this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, 'turret', true, character.room, '#000000')
-            damageInstances.add(this.tProjectile);
-        }
-        else if(direction == "dt"){
+            case 'ut':
+                break;
 
+            case 'rt':
+                this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, 'turret', true, character.room, '#000000')
+                damageInstances.add(this.tProjectile);
+                break;
+
+            case 'dt':
+                break;
         }
     }
 
-    draw(){
+    draw(){ //draws the turret
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#4d4d4d";
@@ -75,24 +78,24 @@ class turret{
 
 class area{
     constructor(){
-        document.getElementById('wall').src = determineValueArray((Math.random() + '')[5], wallArt)
-        document.getElementById('floor').src = determineValueArray((Math.random() + '')[7], floorArt)
-        this.map = new Map()
-        this.generateAreaLayout(Math.random(), this.map)
+        document.getElementById('wall').src = determineValueArray((Math.random() + '')[5], wallArt) //randomizes walls for area
+        document.getElementById('floor').src = determineValueArray((Math.random() + '')[7], floorArt) //randomizes floor for area
+        this.map = new Map() //makes the data structure for the area to be stored in
+        this.generateAreaLayout(Math.random(), this.map) //generates the area
     }
 
     generateAreaLayout(seed, map){
-        let end = false;
+        let end = false; //shows th end hasnt been generated
         console.log(this.map)
-        seed += ''
-        let roomBudget = 30;
-        function generateRoom(seed, cord, exclusion = []){ 
+        seed += '' //convertes seed to string
+        let roomBudget = 20; //soft limit to amount of rooms, will generate no more after this number is hit, however it can go slightly over due to js
+        function generateRoom(seed, cord, exclusion = []){  //seed: random number, cord: 'x,y', exclusion: array of directions to avoid
             const cordArray = cord.split(',')
             const x = parseInt(cordArray[0])
             const y = parseInt(cordArray[1])
             seed += ''
             let layout;
-            if(roomBudget == 30){
+            if(roomBudget == 20){ //starting room, always 0,0
                 layout = [
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
@@ -105,7 +108,7 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sh', 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             }
-            else if(roomBudget < 5 && end == false){
+            else if(roomBudget < 5 && end == false){//will generate the end when less than 5 rooms are left
                 end = true;
                 console.log('end made')
                 layout = [
@@ -120,11 +123,12 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             }
-            else{
-                layout = determineValueArray(seed[7] + seed[10], rooms).map(function(arr) {
+            else{ //will generate a random layout
+                layout = determineValueArray(seed[7] + seed[10], rooms).map(function(arr) { //funny way to copy array
                     return arr.slice();
                 });
             }
+            // determines the sides of the next room to be generated, if true opens the door and takes away from the budget
             let left = determineValue(seed[3], true, false) && roomBudget > 0 && exclusion.indexOf('left') == -1 ? true : false;
             if(left == true){
                 layout[4][0] = 0;
@@ -150,6 +154,7 @@ class area{
                 roomBudget -= 1
             }
             /*-------------------------------------------------------------------------------------------------------------------------------*/
+            //fills if no room is generated and still a budget it will force a room generation
             if(bottom == false && top == false && left == false && right == false && roomBudget > 5){
                 if(exclusion.indexOf('right') != -1){
                     left = true;
@@ -174,28 +179,30 @@ class area{
                 roomBudget -= 1
             }
             /*-------------------------------------------------------------------------------------------------------------------------------*/
+            //variables for the next rooms
             let leftRoom;
             let rightRoom;
             let topRoom;
             let bottomRoom;
 
-            const currentRoom = new room(layout, `${x},${y}`)
-            map.set(`${x},${y}`, currentRoom)
+            const currentRoom = new room(layout, `${x},${y}`) //makes a new room object
+            map.set(`${x},${y}`, currentRoom) //adds it to the map
 
-            if(left){
-                const leftCord = '' + (x - 1) + ',' + y
-                if(map.has(leftCord)){
-                    leftRoom = map.get(leftCord)
-                    currentRoom.left = leftRoom;
-                    leftRoom.right = currentRoom;
-                    leftRoom.layout[4][layout[4].length - 1] = 0;
+            //nested slop
+            if(left){ //if direction has been chosen
+                const leftCord = '' + (x - 1) + ',' + y //creates a cord in that direction
+                if(map.has(leftCord)){ //if already in the map
+                    leftRoom = map.get(leftCord) //grabs the existing room
+                    currentRoom.left = leftRoom; //sets direction of existing room to variable
+                    leftRoom.right = currentRoom; //sets the old rooms opposite direction to current room
+                    leftRoom.layout[4][layout[4].length - 1] = 0; //opens door in old room
                     leftRoom.layout[5][layout[4].length - 1] = 0;
                 }
-                else{
-                    leftRoom = generateRoom(Math.random(), leftCord, ["right"])
-                    currentRoom.left = leftRoom;
+                else{ //if doesnt exist
+                    leftRoom = generateRoom(Math.random(), leftCord, ["right"]) //generate new room with an exclusion of right, so it doesn't loop back in
+                    currentRoom.left = leftRoom; //sets room variables
                     leftRoom.right = currentRoom;
-                    leftRoom.layout[4][layout[4].length - 1] = 0;
+                    leftRoom.layout[4][layout[4].length - 1] = 0; //opens door
                     leftRoom.layout[5][layout[4].length - 1] = 0;
                 }
             }
@@ -251,9 +258,9 @@ class area{
                 }
             }
             // currentRoom.mappedLayout = currentRoom.convertLayout(currentRoom.layout)
-            return currentRoom;
+            return currentRoom; //returns current room
         }
-        generateRoom(Math.random(), '0,0', [])
+        generateRoom(Math.random(), '0,0', []) //generates 0,0
     }
 }
 
@@ -263,10 +270,12 @@ class room{
         this.savedEntities = []
         this.layout = layout 
         this.mappedLayout = null//converts layout to a map
+        //other rooms
         this.left = null;
         this.right = null;
         this.top = null;
         this.bottom = null;
+        //-----------------
         this.cords = cords;
     }
 
