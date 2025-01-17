@@ -37,8 +37,8 @@ class zombie{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "#ab5901"
-        this.defaultColor = "#ab5901"
+        this.color = "#4b8749"
+        this.defaultColor = "#4b8749"
         this.timeSinceDamage = 0;
         this.action = this.pursuit
         this.target = target

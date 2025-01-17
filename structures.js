@@ -88,14 +88,14 @@ class area{
         let end = false; //shows th end hasnt been generated
         console.log(this.map)
         seed += '' //convertes seed to string
-        let roomBudget = 20; //soft limit to amount of rooms, will generate no more after this number is hit, however it can go slightly over due to js
+        let roomBudget = 30; //soft limit to amount of rooms, will generate no more after this number is hit, however it can go slightly over due to js
         function generateRoom(seed, cord, exclusion = []){  //seed: random number, cord: 'x,y', exclusion: array of directions to avoid
             const cordArray = cord.split(',')
             const x = parseInt(cordArray[0])
             const y = parseInt(cordArray[1])
             seed += ''
             let layout;
-            if(roomBudget == 20){ //starting room, always 0,0
+            if(roomBudget == 30){ //starting room, always 0,0
                 layout = [
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
@@ -108,7 +108,7 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sh', 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             }
-            else if(roomBudget < 5 && end == false){//will generate the end when less than 5 rooms are left
+            else if(roomBudget < 10 && end == false){//will generate the end when less than 5 rooms are left
                 end = true;
                 console.log('end made')
                 layout = [

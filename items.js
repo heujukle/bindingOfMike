@@ -6,14 +6,17 @@ const mergeRequirements = {
     1 : {
         'bones' : 30,
         'cloth' : 30,
+        'Evil Cloth' : 15,
     },
     2 : {
         'bones' : 45,
-        'cloth' : 60
+        'cloth' : 60,
+        'Evil Cloth' : 20,
     },
     3 : {
         'bones' : 70,
-        'cloth' : 70
+        'cloth' : 70,
+        'Evil Cloth' : 30,
     },
 }
 /* materials */
@@ -119,7 +122,7 @@ const meleeItems = [
 { 
     name: 'Big sword',
     sprite: null,
-    item:()=>{return new melee(undefined, 10, 100, 300, 50, 100, 'Big sword', null, null, null, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
+    item:()=>{return new melee(undefined, 10, 100, 300, 25, 100, 'Big sword', null, null, null, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
     price:150, //price
     type: 'melee' //type
 }, 
@@ -140,14 +143,14 @@ const meleeItems = [
 {
     name: 'Spin sword',
     sprite: null,
-    item:()=>{return new melee(undefined, 10, 100, 300, 50, 360, 'Spin sword', null, null, null, 0, {damage:15, width:20, span:30})}, //item itself
+    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Spin sword', null, null, null, 0, {damage:15, width:20, span:30})}, //item itself
     price:200, //price
     type: 'melee' //type
 },
 {
     name: 'Super Spin Swords',
     sprite: null,
-    item:()=>{return new melee(undefined, 10, 100, 300, 50, 360, 'Super Spin swords', null, function(sword){
+    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Super Spin swords', null, function(sword){
         const spinner = new melee(sword.source, 5, 75, 250, 25, 360)
         spinner.setValues(sword.startingAngle + 180)
         damageInstances.add(spinner)
