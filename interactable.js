@@ -144,10 +144,10 @@ createItem(item, index){
     const frame = document.createElement('div')
     frame.classList.add('frame')
     const sprite = document.createElement('img')
-    sprite.src = item.item.sprite != null ? item.item.sprite.src : 'images/Coin.png';
+    sprite.src = item.sprite != null ? item.sprite.src : 'images/Coin.png';
     frame.appendChild(sprite)
     const name = document.createElement('p')
-    name.textContent = item.item.name != null ? item.item.name : item.item;
+    name.textContent = item.name;
     frame.appendChild(name)
     const price = document.createElement('p')
     price.textContent = '$' + item.price
@@ -167,14 +167,14 @@ createItem(item, index){
             updateWallet(-item.price, this.target)
             if(item.type == 'melee'){ //for melees
                 this.target.meleeInventory.push(this.target.melee)
-                this.target.melee = item.item;
+                this.target.melee = item.item();
                 this.target.melee.source = this.target
                 console.log(this.target.melee)
                 this.forSale.splice(itemIndex, 1)
                 frame.remove()
             }
             else if(item.type == 'passiveItem'){ //for passive items
-                this.target.passiveItems[item.item] = item.itemVariables;
+                this.target.passiveItems[item.name] = item.itemVariables;
                 this.forSale.splice(itemIndex, 1)
                 frame.remove()
             }

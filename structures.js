@@ -270,13 +270,15 @@ class room{
         this.savedEntities = []
         this.layout = layout 
         this.mappedLayout = null//converts layout to a map
+
         //other rooms
         this.left = null;
         this.right = null;
         this.top = null;
         this.bottom = null;
         //-----------------
-        this.cords = cords;
+
+        this.cords = cords; //cords: "x,y"
     }
 
     convertLayout(layout){ //unused
