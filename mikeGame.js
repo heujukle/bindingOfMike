@@ -156,7 +156,8 @@ let skeletonPspeed = 8;
 let skeletonPdamage = 5;
 let zombieDamage = 5; 
 let skeletonDamage = 5; 
-let moneyScale = 1; 
+let moneyScale = 1;
+let areaCount = 0 
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')

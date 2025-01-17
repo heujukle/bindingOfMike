@@ -27,6 +27,7 @@ class portal{
             skeletonDamage += 1
             skeletonHealth += 3;
             moneyScale += 0.5;
+            areaCount += 1;
             this.target.setArea(new area())
         }
     }
@@ -215,7 +216,7 @@ createItem(item, index){
 
     }
 
-    class forge{
+class forge{
         constructor(x, y, width, height, target){
             this.index; //index in interactables
             this.x = x //x

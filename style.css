@@ -499,3 +499,45 @@ img{
 .mergeButton:hover{
     background-color: rgb(204, 67, 67);
 }
+
+/* its a black background, get it its funny */
+.blackGround{ 
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.deathText{
+    font-size: 10rem;
+    color: red;
+    animation: youDied 1s;
+}
+
+.areaText{
+    font-size: 5rem;
+    color: rgb(255, 255, 255);
+    animation: youDied 1.3s;
+}
+
+.replayText{
+    margin-top: 10%;
+    font-size: 3rem;
+    color: rgb(146, 146, 146);
+    animation: youDied 1.5s;
+    transition: all 1s ease;
+}
+
+.replayText:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    color: rgb(255, 255, 255);
+}
+
+@keyframes youDied{
+    from {opacity: 0;}
+    to {opacity: 1;}
+}

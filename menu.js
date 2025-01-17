@@ -198,9 +198,11 @@ function createInventory(){
         health.textContent = `Health: ${character.health}`
     const stamina = document.createElement('div')
         stamina.textContent = `stamina: ${Math.floor(character.stamina)}`
+    const areaAmount = createElement('div', null, {textContent:`Area: ${areaCount}`})
     if(character.sprite != null) playerDisplay.style.backgroundImage = character.sprite
     inventory.appendChild(sideBar) 
     sideBar.appendChild(playerImgCont) //player img
+    playerImgCont.appendChild(areaAmount)
     playerImgCont.appendChild(playerDisplay)
     playerImgCont.appendChild(health)
     playerImgCont.appendChild(stamina)

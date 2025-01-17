@@ -84,6 +84,9 @@ class player {
     }
 
     preDraw(){ //completes the player actions before drawing
+        if(this.health <= 0){ //causes the game to end when health reaches 0
+            onDeath()
+        }
         if(this.iFrames > 0){
             this.iFrames -= 1
         }
