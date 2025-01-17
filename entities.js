@@ -30,7 +30,7 @@ class dummy{
 }
 
 class zombie{
-    constructor(x, y, width, height, target, speed, health = 25, damage = 5){
+    constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.75){
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -49,7 +49,7 @@ class zombie{
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.knockback = 10;
-        this.knockBackResistance = 1
+        this.knockBackResistance = knockBackResistance * 0.75
         this.drops = cloth
     }
 
@@ -65,7 +65,7 @@ class zombie{
     draw(){
         if(this.health < 0){
             entities.remove(this.index)
-            updateWallet(10, this.target)
+            updateWallet(15, this.target)
             dropItems(this.drops, this.target)
             return;
         }
@@ -137,7 +137,7 @@ class zombie{
 }
 
 class skeleton{
-    constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5, pSpeed = 8){
+    constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5, pSpeed = 8, knockBackResistance = 1){
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -158,7 +158,7 @@ class skeleton{
         this.health = health;
         this.xVelocity = 0;
         this.yVelocity = 0;
-        this.knockBackResistance = 1
+        this.knockBackResistance = knockBackResistance
         this.drops = bones
     }
 
@@ -290,7 +290,7 @@ class skeleton{
 }
 
 class evilZombie{
-    constructor(x, y, width, height, target, speed, health = 25, damage = 5){
+    constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.5){
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -309,7 +309,7 @@ class evilZombie{
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.knockback = 15;
-        this.knockBackResistance = 0.5
+        this.knockBackResistance = knockBackResistance * 0.5
         this.drops = evilCloth
     }
 
@@ -325,7 +325,7 @@ class evilZombie{
     draw(){
         if(this.health < 0){
             entities.remove(this.index)
-            updateWallet(25, this.target)
+            updateWallet(30, this.target)
             dropItems(this.drops, this.target)
             return;
         }

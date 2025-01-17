@@ -28,6 +28,7 @@ class portal{
             skeletonHealth += 3;
             moneyScale += 0.5;
             areaCount += 1;
+            knockBackResistance = knockBackResistance - 0.1 < 0.1 ? knockBackResistance : knockBackResistance - 0.1
             this.target.setArea(new area())
         }
     }
@@ -401,12 +402,14 @@ class forge{
             }
 
             const equippedSword = this.target.melee
+            if(equippedSword.tier <= 3){
             const displayEquip1 = createMeleeInv(equippedSword, false)
                 displayEquip1.addEventListener('click', (e)=>{setFirstSword(equippedSword, displayEquip1, this)})
                 columnOne.appendChild(displayEquip1)
             const displayEquip2 = createMeleeInv(equippedSword, false)
                 displayEquip2.addEventListener('click', (e)=>{setSecondSword(equippedSword, displayEquip2, this)})
                 columnTwo.appendChild(displayEquip2)
+            }
 
             for(let i = 0; i < this.target.meleeInventory.length; i++){
                 const sword = this.target.meleeInventory[i]
@@ -431,7 +434,7 @@ class forge{
                 damage:swordOne.damage,
                 sprite:swordOne.sprite,
                 runFuncCD:swordOne.runFuncCD,
-                tier: swordOne.tier += 1,
+                tier: swordOne.tier + 1,
                 runFunc : null,
                 clickFunc : null,
                 knockback : swordOne.knockback,

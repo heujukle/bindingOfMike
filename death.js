@@ -16,6 +16,7 @@ function onDeath(){
         zombieDamage = 5; 
         skeletonDamage = 5; 
         moneyScale = 1;
+        knockBackResistance = 1;
         areaCount = 0 
         character = new player()
         character.setArea(new area())

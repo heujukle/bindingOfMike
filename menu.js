@@ -285,6 +285,7 @@ const controls = { //holds the controls of the game
 }
 
 keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code written at 1 am
+    panel.style.overflowY = 'scroll'
     for(let i = 1; i < panel.children.length; i++){ //removes other buttons
         panel.children[i].classList.add('invisible')
     }
@@ -318,6 +319,7 @@ keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code writ
     containers.push(saveChanges)
     panel.appendChild(saveChanges)
     saveChanges.addEventListener('click', (e) => {
+        panel.style.overflowY = 'hidden'
         for(let i = 0; i < values.length; i++){
             if(values[i].textContent === 'Conflict with other binds'){
                 return false; //ensures you cannot save with conflicting binds

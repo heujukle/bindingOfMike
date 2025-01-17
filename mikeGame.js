@@ -157,6 +157,7 @@ let skeletonPdamage = 5;
 let zombieDamage = 5; 
 let skeletonDamage = 5; 
 let moneyScale = 1;
+let knockBackResistance = 1;
 let areaCount = 0 
 
 document.addEventListener('error', (e) => {
@@ -181,15 +182,15 @@ const createDummy = (x, y, width, height) => { //function to make dummys
 }
 
 const createZombie = (x, y, width, height) => { //function to make dummys
-    entities.add(new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage))
+    entities.add(new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage, knockBackResistance))
 }
 
 const createEvilZombie = (x, y, width, height) => { //function to make dummys
-    entities.add(new evilZombie(x, y, 30, 30, character, entitiySpeed * 0.75, zombieHealth, zombieDamage * 1.5))
+    entities.add(new evilZombie(x, y, 30, 30, character, entitiySpeed * 0.75, zombieHealth, zombieDamage * 1.5, knockBackResistance))
 }
 
 const createSkeleton = (x, y, width, height) => { //function to make dummys
-    entities.add(new skeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed))
+    entities.add(new skeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed, knockBackResistance))
 }
 
 const createPortal = (x, y, width, height) => { //function to make dummys

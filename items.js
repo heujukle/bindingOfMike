@@ -120,7 +120,7 @@ const meleeItems = [
     name: 'Big sword',
     sprite: null,
     item:()=>{return new melee(undefined, 10, 100, 300, 50, 100, 'Big sword', null, null, null, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
-    price:0, //price
+    price:150, //price
     type: 'melee' //type
 }, 
 { 
