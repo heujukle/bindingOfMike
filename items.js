@@ -6,10 +6,10 @@ const mergeRequirements = {
     1 : {
         'bones' : 40, //40
         'cloth' : 40, //40
-        'Evil Cloth' : 15, //15
+        'Evil Cloth' : 20, //15
     },
     2 : {
-        'bones' : 45, //45
+        'bones' : 50, //45
         'cloth' : 60, //60
         'Evil Cloth' : 20, //20
     },
@@ -123,7 +123,7 @@ const meleeItems = [
     name: 'Big sword',
     sprite: null,
     item:()=>{return new melee(undefined, 10, 100, 300, 25, 100, 'Big sword', null, null, null, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
-    price:150, //price
+    price:250, //price
     type: 'melee' //type
 }, 
 { 
@@ -134,10 +134,10 @@ const meleeItems = [
         const startX = sword.source.x + sword.source.width/2
         const startY = sword.source.y + sword.source.height/2
         const velocities = getProjVelocities(degrees, 7)
-        const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player')
+        const swordProjectile = new projectile(startX, startY, sword.width/4, sword.width/4, velocities.xVelocity, velocities.yVelocity, 'player')
         damageInstances.add(swordProjectile)
     })}, //item itself
-    price:600, //price
+    price:350, //price
     type: 'melee' //type
 },
 {

@@ -20,11 +20,11 @@ class portal{
         if(this.collision2([this.target])){ //scales the difficulty
             console.log('portal')
             entitiySpeed = entitiySpeed + 1 >= 3 ?  entitiySpeed : entitiySpeed + 1; //limits to 3
-            zombieHealth += 5;
+            zombieHealth *= 1.5;
             zombieDamage *= 1.5;
             skeletonPspeed = skeletonPspeed + 1 >= 3 ?  skeletonPspeed : skeletonPspeed + 1;
             skeletonPdamage += 1;
-            skeletonDamage += 1
+            skeletonDamage *= 1.2
             skeletonHealth += 3;
             moneyScale += 0.2;
             areaCount += 1;
@@ -402,7 +402,7 @@ class forge{
             }
 
             const equippedSword = this.target.melee
-            if(equippedSword.tier <= 3){
+            if(equippedSword.tier <= 150){
             const displayEquip1 = createMeleeInv(equippedSword, false) //im making ui see functions in menu
                 displayEquip1.addEventListener('click', (e)=>{setFirstSword(equippedSword, displayEquip1, this)})
                 columnOne.appendChild(displayEquip1)
@@ -413,7 +413,7 @@ class forge{
 
             for(let i = 0; i < this.target.meleeInventory.length; i++){
                 const sword = this.target.meleeInventory[i]
-                if(sword.tier >= 3){
+                if(sword.tier >= 150){
                     continue;
                 }
                 const displayEquip1 = createMeleeInv(sword, false)
@@ -463,7 +463,7 @@ class forge{
             if(swordOne.runFunc != null && swordTwo.runFunc != null){ //merges run and click funcs
                 result.runFunc = (sword) => {
                     swordOne.runFunc(sword)
-                    setTimeout(()=>{swordTwo.runFunc(sword)}, 50 * (swordOne.tier + 1)) //makes sure the effects doont execute at the same time, makes effects looks cooler
+                    setTimeout(()=>{swordTwo.runFunc(sword)}, 100 * (swordOne.tier + 1)) //makes sure the effects doont execute at the same time, makes effects looks cooler
                 }
             }
             else if(swordOne.runFunc == null && swordTwo.runFunc != null){
