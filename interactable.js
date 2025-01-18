@@ -17,19 +17,19 @@ class portal{
         ctx.fillStyle = "purple";
         ctx.fill();
         ctx.closePath();
-        if(this.collision2([this.target])){
+        if(this.collision2([this.target])){ //scales the difficulty
             console.log('portal')
-            entitiySpeed = entitiySpeed + 1 >= 5 ?  entitiySpeed : entitiySpeed + 1;
+            entitiySpeed = entitiySpeed + 1 >= 3 ?  entitiySpeed : entitiySpeed + 1; //limits to 3
             zombieHealth += 5;
-            zombieDamage += 5;
+            zombieDamage *= 1.5;
             skeletonPspeed = skeletonPspeed + 1 >= 3 ?  skeletonPspeed : skeletonPspeed + 1;
             skeletonPdamage += 1;
             skeletonDamage += 1
             skeletonHealth += 3;
-            moneyScale += 0.5;
+            moneyScale += 0.2;
             areaCount += 1;
-            knockBackResistance = knockBackResistance - 0.1 < 0.1 ? knockBackResistance : knockBackResistance - 0.1
-            this.target.setArea(new area())
+            knockBackResistance = knockBackResistance - 0.1 < 0.1 ? knockBackResistance : knockBackResistance - 0.1 //keeps enemies taking some knockback
+            this.target.setArea(new area()) //makes new area
         }
     }
 
@@ -155,7 +155,7 @@ createItem(item, index){
     price.textContent = '$' + item.price
     frame.appendChild(price)
     const purchase = document.createElement('div')
-    if(Object.keys(this.target.passiveItems).includes(item.itemName)){
+    if(Object.keys(this.target.passiveItems).includes(item.name)){
         purchase.textContent = 'You already Own!'
         purchase.classList.add('buyButton');
         frame.appendChild(purchase)
@@ -187,7 +187,7 @@ createItem(item, index){
                 else{
                     this.target.stats[item.statName] += 1
                 }
-                if(item.statName == 'maxHealth'){
+                if(item.statName == 'maxHealth'){ //updates the bars for the stats the affect the bars
                     this.target.updateHealthBar()
                 }
                 else if(item.statName == 'maxStamina'){
@@ -208,7 +208,7 @@ createItem(item, index){
             }
         }
         else{
-            purchase.textContent = 'BROKE AHAHAHHAHAHAHAHA'
+            purchase.textContent = 'BROKE AHAHAHHAHAHAHAHA' //youre broke
         }
     })
     }
@@ -306,8 +306,8 @@ class forge{
             const columnThree = createElement('div', null, {id:'resultColumn'})
                 result.appendChild(columnThree)
 
-            let firstSword = null;
-            let secondSword = null;
+            let firstSword = null; //base sword to merge
+            let secondSword = null; //modifier sword
 
             function generateResults(forge){ 
                 if(firstSword === secondSword){//runs when two valid swords are chosen
@@ -341,7 +341,7 @@ class forge{
                     }
                     if(amount < requirements[keys[i]]){ //updates color to show when player cannot afford
                         cssClass = 'broke'
-                        canMerge = false
+                        canMerge = false //prevents merge
                     }
                     console.log(requirements)
                     console.log(requirements[keys[i]])
@@ -403,7 +403,7 @@ class forge{
 
             const equippedSword = this.target.melee
             if(equippedSword.tier <= 3){
-            const displayEquip1 = createMeleeInv(equippedSword, false)
+            const displayEquip1 = createMeleeInv(equippedSword, false) //im making ui see functions in menu
                 displayEquip1.addEventListener('click', (e)=>{setFirstSword(equippedSword, displayEquip1, this)})
                 columnOne.appendChild(displayEquip1)
             const displayEquip2 = createMeleeInv(equippedSword, false)
@@ -426,7 +426,7 @@ class forge{
         }
 
         combineSword(swordOne, swordTwo){
-            const result = {
+            const result = { //sets all the value for swords
                 source: swordOne.source,
                 name:swordOne.name + ' ' + swordTwo.name,
                 width:swordOne.width,
@@ -440,30 +440,30 @@ class forge{
                 knockback : swordOne.knockback,
                 span : swordOne.span,
             }
-            const newIncrease = {}
+            const newIncrease = {} //new increase value, will scale based on the mmodifeiers
             if(swordTwo.increase != null){
                 const keys = Object.keys(swordTwo.increase)
                 for(let i = 0; i < keys.length; i++){
-                    result[keys[i]] += swordTwo.increase[keys[i]]
-                    newIncrease[keys[i]] = Math.round(swordTwo.increase[keys[i]] * 1.5)
+                    result[keys[i]] += swordTwo.increase[keys[i]] //adds the increase value to the new sword
+                    newIncrease[keys[i]] = Math.round(swordTwo.increase[keys[i]] * 1.5) //will add scale the increase value and add it to the new increase
                 }
             }
             if(swordOne.increase != null){
                 const keys = Object.keys(swordOne.increase)
                 for(let i = 0; i < keys.length; i++){
-                    if(newIncrease[keys[i]] != null && newIncrease[keys[i]] != undefined){
-                        newIncrease[keys[i]] += Math.round(swordOne.increase[keys[i]] * 1.5)
+                    if(newIncrease[keys[i]] != null && newIncrease[keys[i]] != undefined){ ///if tehre is a key
+                        newIncrease[keys[i]] += Math.round(swordOne.increase[keys[i]] * 1.5) //scales
                     }
                     else{
-                        newIncrease[keys[i]] = Math.round(swordOne.increase[keys[i]] * 1.5)
+                        newIncrease[keys[i]] = Math.round(swordOne.increase[keys[i]] * 1.5) //scales based off of sword one increase
                     }
                 }
             }
             // run func
-            if(swordOne.runFunc != null && swordTwo.runFunc != null){
+            if(swordOne.runFunc != null && swordTwo.runFunc != null){ //merges run and click funcs
                 result.runFunc = (sword) => {
                     swordOne.runFunc(sword)
-                    swordTwo.runFunc(sword)
+                    setTimeout(()=>{swordTwo.runFunc(sword)}, 50 * (swordOne.tier + 1)) //makes sure the effects doont execute at the same time, makes effects looks cooler
                 }
             }
             else if(swordOne.runFunc == null && swordTwo.runFunc != null){
@@ -482,7 +482,7 @@ class forge{
             if(swordOne.clickFunc != null && swordTwo.clickFunc != null){
                 result.clickFunc = (sword, event) => {
                     swordOne.clickFunc(sword, event)
-                    swordTwo.clickFunc(sword, event)
+                    setTimeout(()=>{swordTwo.clickFunc(sword, event)},50 * (swordOne.tier + 1))
                 }
             }
             else if(swordOne.clickFunc == null && swordTwo.clickFunc != null){
@@ -509,6 +509,6 @@ class forge{
                 result.runFuncCD,
                 result.tier,
                 newIncrease,
-                result.sprite)
+                result.sprite) //makes new melee
         }
     }

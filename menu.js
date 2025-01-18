@@ -7,6 +7,7 @@ const title = document.getElementsByTagName('title')[0]
 const topLeft =  document.getElementById('topLeft')
 const topRight =  document.getElementById('topRight')
 const keyBinds =  document.getElementById('Key-Binds')
+const howToPlay =  document.getElementById('How-To-Play')
 const mapElement = document.getElementsByName('map')[0]
 const overlay = document.getElementById('overlay');
 const sideBar = document.getElementById('middleRight')
@@ -126,7 +127,7 @@ class areaMap {
     }
 }
 
-function createElement(elementType = null, cssClass, properties = {}, parent = null){
+function createElement(elementType = null, cssClass, properties = {}, parent = null){ //element type makes a type, class adds a class, properties allows acsess to css properties, parent adds the element
     if(elementType){
         const element = document.createElement(elementType)
         if(cssClass) element.classList.add(cssClass)
@@ -138,7 +139,7 @@ function createElement(elementType = null, cssClass, properties = {}, parent = n
     }
 }
 
-function createMeleeInv(item, checkEquip = true){
+function createMeleeInv(item, checkEquip = true){ //does the styling for a melee element
     const element = createElement('div', 'inventoryItem')
     const Img = createElement('img', null, {src:item.sprite.src})
     const itemText = createElement('p', null, {textContent:item.name})
@@ -151,7 +152,7 @@ function createMeleeInv(item, checkEquip = true){
     return element;
 }
 
-function createPassiveInv(key, item){
+function createPassiveInv(key, item){ //does the styling for a passive element
     const element = createElement('div', 'inventoryItem')
     const Img = createElement('img', null, {src:item.sprite != null || item.sprite != undefined ? item.sprite : "images/Coin.png"})
     const itemText = createElement('p', null, {textContent:key})
@@ -160,7 +161,7 @@ function createPassiveInv(key, item){
     return element;
 }
 
-function createMaterial(key, item){
+function createMaterial(key, item){ //does the styling for a material element
     const element = createElement('div', 'inventoryItem')
     const Img = createElement('img', null, {src:item.sprite != null || item.sprite != undefined ? item.sprite : "images/Coin.png"})
     const itemText = createElement('p', null, {textContent: item.amount + ":" + key})
@@ -333,6 +334,27 @@ keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code writ
         }
         for(let i = 1; i < panel.children.length; i++){
             panel.children[i].classList.remove('invisible') //readds the old buttons
+        }
+    })
+})
+
+howToPlay.addEventListener('click', (e)=>{
+    panel.style.overflowY = 'scroll'
+    for(let i = 1; i < panel.children.length; i++){ //removes other buttons
+        panel.children[i].classList.add('invisible')
+    }
+    const text = createElement('div', null, 
+        {
+        id:'howToPlayTextBox', 
+        innerHTML: '<p style="margin: 5px;">The goal of the game is to progress to as many areas as possible. Explore each area until you find the portal, the purple rectangle. Each area you progress the enemies will progressivley get stronger. However you will get stronger as well. You can find shops across areas, at shops you can buy new swords, upgrade stats, and buy items with unique effects. Shops also offer a way to heal deamage you have taken. Shops are not the only way to upgrade your character, you will also find forges throughout the area. Using materials gained from defeating enemies you can merge swords together fusing the effects of each swords together. </p>'
+        }, panel)
+    const exit = createElement('div', null, {innerHTML: '<h3>Exit</h3>'}, panel)
+    exit.addEventListener('click', (e)=>{
+        exit.remove()
+        text.remove()
+        panel.style.overflowY = 'hidden'
+        for(let i = 1; i < panel.children.length; i++){ //removes other buttons
+            panel.children[i].classList.remove('invisible')
         }
     })
 })

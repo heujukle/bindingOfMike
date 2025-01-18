@@ -4,19 +4,19 @@ constructor(source, damage, width, height, knockback, span, name, clickFunc, run
 /* crafting requirements*/
 const mergeRequirements = {
     1 : {
-        'bones' : 30,
-        'cloth' : 30,
-        'Evil Cloth' : 15,
+        'bones' : 40, //40
+        'cloth' : 40, //40
+        'Evil Cloth' : 15, //15
     },
     2 : {
-        'bones' : 45,
-        'cloth' : 60,
-        'Evil Cloth' : 20,
+        'bones' : 45, //45
+        'cloth' : 60, //60
+        'Evil Cloth' : 20, //20
     },
     3 : {
-        'bones' : 70,
-        'cloth' : 70,
-        'Evil Cloth' : 30,
+        'bones' : 70, //70
+        'cloth' : 70, //70
+        'Evil Cloth' : 30, //30
     },
 }
 /* materials */

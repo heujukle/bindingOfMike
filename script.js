@@ -17,7 +17,7 @@ character.setArea(startingArea);
 
 window.requestAnimationFrame(animate);
 
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', (e) => { //adds action to player
     switch(e.key){
         case controls.up:
             if(character.directionList.indexOf('up') == -1){
@@ -47,7 +47,7 @@ document.addEventListener('keydown', (e) => {
     }
 })
 
-document.addEventListener('keyup', (e) => {
+document.addEventListener('keyup', (e) => { //removes action
     switch(e.key){
         case controls.up:
             character.directionList.splice(character.directionList.indexOf('up'), 1);
@@ -67,26 +67,26 @@ document.addEventListener('keyup', (e) => {
     }
 })
 
-document.addEventListener('click', (e) => {
+document.addEventListener('click', (e) => { //uses players selected item
     if(!menu) character.usableItemList.get(character.selectedItem)(e);
     })
 
 
-document.addEventListener('keydown', (e) => {
-    if(e.key === 'c'){
-        menu = !menu;
-        document.getElementById('console').classList.toggle('invisible');
-        if(menu == true){
-        println('Player cords:' + character.x + "," + character.y)
-        println('Structure:' + structures.list.length)
-        println('entities:' + entities.list.length)
-        println('damageInstances:' + damageInstances.list.length)
-        console.log(damageInstances.list)
-        println('area:' + character.area.map.keys().length)
-        println('')
-        }
-    }
-})
+// document.addEventListener('keydown', (e) => {
+//     if(e.key === 'c'){
+//         menu = !menu;
+//         document.getElementById('console').classList.toggle('invisible');
+//         if(menu == true){
+//         println('Player cords:' + character.x + "," + character.y)
+//         println('Structure:' + structures.list.length)
+//         println('entities:' + entities.list.length)
+//         println('damageInstances:' + damageInstances.list.length)
+//         console.log(damageInstances.list)
+//         println('area:' + character.area.map.keys().length)
+//         println('')
+//         }
+//     }
+// })
 
 document.addEventListener('wheel', (e) => {
     if (e.deltaY > 0) {
@@ -116,8 +116,8 @@ function isAControl(key){
     return null
 }
 
-function doublePress(func){
-    const selectedInputs = {
+function doublePress(func){ //sets double press for dash
+    const selectedInputs = { //saves value since last input
         'upKey' : 0,
         'leftKey' : 0,
         'downKey' : 0,
@@ -128,7 +128,7 @@ function doublePress(func){
         if(keyUse != null){
             let currentPress = new Date().getTime()
             let timeSinceLastPress = currentPress - selectedInputs[keyUse]
-            if(timeSinceLastPress < 300){
+            if(timeSinceLastPress < 300){  //time since last key press is less than 300
                 e.preventDefault()
                 console.log(`the key ${e.key} was double pressed`)
                 func(e)
@@ -139,30 +139,30 @@ function doublePress(func){
     }
 }
 
-const doublePressEvent = doublePress(function(e){
-    if(character.stamina >= 20){
+const doublePressEvent = doublePress(function(e){ //adds function to double press listener
+    if(character.stamina >= 25){
         if(e.key == controls.right && !character.directionList.includes('right')){
             character.xVelocity += character.stats['dashSpeed']
-            character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 2
+            character.stamina -= 25;
+            character.iFrames = character.stats['dashSpeed']
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.left && !character.directionList.includes('left')){
             character.xVelocity -= character.stats['dashSpeed']
-            character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 2
+            character.stamina -= 25;
+            character.iFrames = character.stats['dashSpeed']
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.up && !character.directionList.includes('up')){
             character.yVelocity -= character.stats['dashSpeed']
-            character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 2
+            character.stamina -= 25;
+            character.iFrames = character.stats['dashSpeed']
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.down && !character.directionList.includes('down')){
             character.yVelocity += character.stats['dashSpeed']
-            character.stamina -= 20;
-            character.iFrames = character.stats['dashSpeed'] * 2
+            character.stamina -= 25;
+            character.iFrames = character.stats['dashSpeed']
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
     }

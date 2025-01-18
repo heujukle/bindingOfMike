@@ -541,3 +541,15 @@ img{
     from {opacity: 0;}
     to {opacity: 1;}
 }
+
+#howToPlayTextBox{
+    width: 90% !important;
+    height: 90% !important;
+    cursor: auto !important;
+    align-content: start !important;
+    flex-wrap: wrap;
+}
+
+#howToPlayTextBox:hover{
+    background-color: white !important;
+}

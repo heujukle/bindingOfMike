@@ -7,7 +7,7 @@ class player {
             ['shoot', this.sendProjectile],
             ['melee', this.sword]
         ])
-        this.actions = new Map([
+        this.actions = new Map([ //binds funtioncs to actions by event listeners, allows the actions to be executed on frame
             ['up', function(player){
                 moveEntitiy(player, 0, -player.stats["speed"])
             }],
@@ -32,7 +32,7 @@ class player {
         this.area = 'spawn'
         this.index = 0;
         this.directionList = [];
-        this.stats = {
+        this.stats = { //player stats that can increase
             'speed' : 5,
             'pSpeed' : 9,
             'pDamage' : 9,
@@ -42,10 +42,6 @@ class player {
             'dashSpeed' : 10,
             'staminaRegen' : 0.1
         }
-        this.speed = 5;
-        this.pSpeed = 9;
-        this.pDamage = 10;
-        this.multishot = 0
         this.health = 100;
         this.stamina = 100;
         this.hotbar = ['shoot', 'melee']
@@ -53,19 +49,19 @@ class player {
         this.selectedItem = 'shoot'
         this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 0, {damage:10, span:10})
         this.iFrames = 0;
-        this.map = null;
-        this.wallet = 0;
+        this.map = null; //amount of immunity frames
+        this.wallet = 0; //money
         this.interact = false;
-        this.xVelocity = 0;
+        this.xVelocity = 0; //force applied to player
         this.yVelocity = 0;
-        this.damaged = false
-        this.color = "#0000ff"
+        this.damaged = false //if the player is going through damage
+        this.color = "#0000ff" //player color
         this.sprite = null;
         this.meleeInventory = []
         this.materials = {}
     }
     
-    hotBarChange(direction){
+    hotBarChange(direction){ //changes direction of hotbar
         const hotbar = document.getElementById('hotbar')
         if(direction == 'up'){
           let index = this.hotbar.indexOf(this.selectedItem);
@@ -100,11 +96,11 @@ class player {
         this.updateMove()
     }
 
-    draw(){
+    draw(){ //draws player
         staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
-        if(this.iFrames > 0 && this.damaged == true){
+        if(this.iFrames > 0 && this.damaged == true){ //sets color based on actions
             ctx.fillStyle = "red";
             healthBar.parentElement.style.borderColor = 'white'
         }
@@ -131,7 +127,7 @@ class player {
             this.damaged = true
             this.health -= damage
             healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
-            if(knockBackDirection == 'left'){
+            if(knockBackDirection == 'left'){ //sets knock back direction
                 this.xVelocity -= knockbackAmount
             }
             else if(knockBackDirection == 'right'){
@@ -143,16 +139,16 @@ class player {
             else if(knockBackDirection == 'up'){
                 this.yVelocity -= knockbackAmount
             }
-            this.iFrames = 30;
+            this.iFrames = 30; //gives iframes
         }
-        if(Object.keys(this.passiveItems).includes('spikey') && source != null){
+        if(Object.keys(this.passiveItems).includes('spikey') && source != null){ //spikey code
             let character = this
             if(!this.passiveItems["spikey"].hitList.includes(source)){
-            source.onDamage(5, function(target){
+            source.onDamage(5, function(target){ //special functionality for spiikey
                 const degrees = findDegrees(character.x, character.y, target.x, target.y)
                 const velocities = getProjVelocities(degrees, 10)
                 console.log(velocities)
-                if(target.xVelocity != undefined){
+                if(target.xVelocity != undefined){ //knock back to enemeny
                     console.log('added knockback')
                     target.xVelocity += velocities.xVelocity * character.xVelocity != 0 ? -velocities.xVelocity * Math.abs(character.xVelocity * 0.15) : 10
                 }
@@ -161,7 +157,7 @@ class player {
                 }
                 console.log(target)
             })
-            character.passiveItems['spikey'].hitList.push(source)
+            character.passiveItems['spikey'].hitList.push(source) //makes sure spkiey doesnt hit twice
             }
         }
     }
