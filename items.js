@@ -143,21 +143,21 @@ const meleeItems = [
     { 
         name: 'Medium Sword',
         sprite: null,
-        item:()=>{return new melee(undefined, 10, 150, 175, 10, 80, 'Medium Sword', null, null, null, 0, {damage: 15, height:5, width:5})}, //item itself
+        item:()=>{return new melee(undefined, 10, 150, 175, 10, 80, 'Medium Sword', undefined, undefined, undefined, 0, {damage: 15, height:5, width:5})}, //item itself
         price:150, //price
         type: 'melee' //type
     }, 
     { 
         name: 'Small sword',
         sprite: null,
-        item:()=>{return new melee(undefined, 40, 25, 50, 25, 30, 'Small sword', null, null, null, 0, {damage: 20})}, //item itself
+        item:()=>{return new melee(undefined, 40, 25, 50, 25, 30, 'Small sword', undefined, undefined, undefined, 0, {damage: 20})}, //item itself
         price:100, //price
         type: 'melee' //type
     }, 
     { 
         name: 'Projectile Spin Sword',
         sprite: null,
-        item:()=>{return new melee(undefined, 10, 100, 300, 25, 360, 'Projectile Spin Sword', null, function(sword){
+        item:()=>{return new melee(undefined, 10, 100, 300, 25, 360, 'Projectile Spin Sword', undefined, function(sword){
             const velocities = getProjVelocities(sword.currentAngle + 180, 7);
             const startX = sword.source.x + sword.source.width/2
             const startY = sword.source.y + sword.source.height/2
@@ -170,7 +170,7 @@ const meleeItems = [
     { 
         name: 'Big sword',
         sprite: null,
-        item:()=>{return new melee(undefined, 10, 100, 300, 25, 100, 'Big sword', null, null, null, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
+        item:()=>{return new melee(undefined, 10, 100, 300, 25, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
         price:250, //price
         type: 'melee' //type
     }, 
