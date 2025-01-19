@@ -330,7 +330,7 @@ class forge{
 
                 const requirementsDisplay = createElement('div', 'materialsPreview')
                     columnThree.appendChild(requirementsDisplay)
-                const requirements = mergeRequirements[newSword.tier]
+                const requirements = mergeRequirements[newSword.tier >= 3 ? 3 : newSword.tier] //please remoe debug to add prices back
                 const keys = Object.keys(requirements) //bug
                 let canMerge = true
                 for(let i = 0; i < keys.length; i++){
