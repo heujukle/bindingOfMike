@@ -164,12 +164,13 @@ let entitiySpeed = 1;
 let zombieHealth = 35;
 let skeletonHealth = 35;
 let skeletonPspeed = 8;
-let skeletonPdamage = 5;
-let zombieDamage = 5; 
+let skeletonPdamage = 10;
+let zombieDamage = 15; 
 let skeletonDamage = 5; 
 let moneyScale = 1;
 let knockBackResistance = 1;
 let areaCount = 0 
+let itemScale = 1
 
 document.addEventListener('error', (e) => {
     fConsole.classList.add('visible')
@@ -770,7 +771,7 @@ function dropItems(item, target){
     const timeBeforeFade = 5000;
     const fadeTime = 0;
     if(target.materials){ //makes sure target has materials
-        const amount = Math.floor(1 + Math.random() * 5)
+        const amount = Math.floor(1 + Math.random() * 5 * itemScale)
         if(target.materials[item.name]){
             target.materials[item.name].amount += amount
         }

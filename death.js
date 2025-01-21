@@ -17,6 +17,7 @@ function onDeath(){
         skeletonDamage = 5; 
         moneyScale = 1;
         knockBackResistance = 1;
+        itemScale = 1
         areaCount = 0 
         character = new player()
         character.setArea(new area())

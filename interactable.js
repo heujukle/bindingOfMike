@@ -21,14 +21,15 @@ class portal{
             console.log('portal')
             entitiySpeed = entitiySpeed + 1 >= 3 ?  entitiySpeed : entitiySpeed + 1; //limits to 3
             zombieHealth *= 1.5;
-            zombieDamage *= 1.5;
+            zombieDamage *= 1.3;
             skeletonPspeed = skeletonPspeed + 1 >= 3 ?  skeletonPspeed : skeletonPspeed + 1;
-            skeletonPdamage += 1;
+            skeletonPdamage *= 1.2;
             skeletonDamage *= 1.2
-            skeletonHealth += 3;
+            skeletonHealth *= 1.5;
             moneyScale += 0.2;
+            itemScale *= 1.5;
             areaCount += 1;
-            knockBackResistance = knockBackResistance - 0.1 < 0.1 ? knockBackResistance : knockBackResistance - 0.1 //keeps enemies taking some knockback
+            knockBackResistance = knockBackResistance - 0.2 < 0.1 ? 0.1 : knockBackResistance - 0.2 //keeps enemies taking some knockback
             this.target.setArea(new area()) //makes new area
         }
     }
