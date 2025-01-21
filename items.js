@@ -158,7 +158,7 @@ const meleeItems = [
         name: 'Projectile Spin Sword',
         sprite: null,
         item:()=>{return new melee(undefined, 10, 100, 300, 25, 360, 'Projectile Spin Sword', undefined, function(sword){
-            const velocities = getProjVelocities(sword.currentAngle + 180, 7);
+            const velocities = getProjVelocities(sword.currentAngle, 7);
             const startX = sword.source.x + sword.source.width/2
             const startY = sword.source.y + sword.source.height/2
             const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player', false, sword.source.room, '#268199', 5, sword.source.has('richochet'))
