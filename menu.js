@@ -139,6 +139,41 @@ function createElement(elementType = null, cssClass, properties = {}, parent = n
     }
 }
 
+function generateItemText(item){
+    const result = document.createElement("div")
+    if(item instanceof melee){
+        console.log("facts")
+        createElement('div', null, {textContent:`Damage : ${item.damage}`}, result)
+        createElement('div', null, {textContent:`Knockback : ${item.knockback}`}, result)
+        createElement('div', null, {textContent:`Span : ${item.span}`}, result)
+        createElement('div', null, {textContent:`Run Func CD : ${item.runFuncCD}`}, result)
+        createElement('div', null, {textContent:`Width : ${item.width}`}, result)
+        createElement('div', null, {textContent:`Height : ${item.height}`}, result)
+    }
+    return result
+}
+
+function addHoverFunctionality(element, item){
+    let popUp = document.getElementById('statPopUp')
+    const rect = element.getBoundingClientRect()
+    const rectWidth = rect.right - rect.left
+    element.addEventListener('mouseover', (e)=>{
+        if(!element.classList.contains('hovering')){
+            element.classList.add('hovering')
+            popUp.appendChild(generateItemText(item))
+            popUp.style.left = rect.left + 'px'
+            popUp.style.top = (rect.bottom + 5) + 'px'
+            popUp.style.width = rectWidth + 'px'
+            popUp.style.display = 'flex'
+        }
+    });
+    element.addEventListener('mouseout', (e)=>{
+        element.classList.remove('hovering')
+        popUp.style.display = 'none'
+        popUp.innerHTML = ''
+    });
+}
+
 function createMeleeInv(item, checkEquip = true){ //does the styling for a melee element
     const element = createElement('div', 'inventoryItem')
     const Img = createElement('img', null, {src:item.sprite.src})
@@ -232,11 +267,13 @@ function createInventory(){
             equipped.id = 'equippedMelee';
         }
     })
+    addHoverFunctionality(equipped, meleeEquipped)
     //melee stuff
     for(let i = 0; i < character.meleeInventory.length; i++){
         const melee = character.meleeInventory[i]
         const meleeDisplay = createMeleeInv(melee)
         meleeSection.appendChild(meleeDisplay)
+        addHoverFunctionality(meleeDisplay, melee)
         meleeDisplay.addEventListener('click', (e) => {
             if(melee != character.melee){
                 const currentEquipped = character.melee

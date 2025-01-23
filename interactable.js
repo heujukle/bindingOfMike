@@ -407,9 +407,11 @@ class forge{
             const displayEquip1 = createMeleeInv(equippedSword, false) //im making ui see functions in menu
                 displayEquip1.addEventListener('click', (e)=>{setFirstSword(equippedSword, displayEquip1, this)})
                 columnOne.appendChild(displayEquip1)
+                addHoverFunctionality(displayEquip1, equippedSword)
             const displayEquip2 = createMeleeInv(equippedSword, false)
                 displayEquip2.addEventListener('click', (e)=>{setSecondSword(equippedSword, displayEquip2, this)})
                 columnTwo.appendChild(displayEquip2)
+                addHoverFunctionality(displayEquip2, equippedSword)
             }
 
             for(let i = 0; i < this.target.meleeInventory.length; i++){
@@ -420,9 +422,11 @@ class forge{
                 const displayEquip1 = createMeleeInv(sword, false)
                     displayEquip1.addEventListener('click', (e)=>{setFirstSword(sword, displayEquip1, this)})
                     columnOne.appendChild(displayEquip1)
+                    addHoverFunctionality(displayEquip1, sword)
                 const displayEquip2 = createMeleeInv(sword, false)
                     displayEquip2.addEventListener('click', (e)=>{setSecondSword(sword, displayEquip2, this)})
                     columnTwo.appendChild(displayEquip2)
+                    addHoverFunctionality(displayEquip2, sword)
             }
         }
 

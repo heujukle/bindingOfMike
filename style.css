@@ -553,3 +553,18 @@ img{
 #howToPlayTextBox:hover{
     background-color: white !important;
 }
+
+#statPopUp{
+    display:none;
+    position: absolute;
+    z-index: 10;
+    background-color: grey;
+    padding-bottom: 2px;
+}
+/* alligns the div with text */
+#statPopUp > *{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
