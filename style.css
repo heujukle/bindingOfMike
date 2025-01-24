@@ -76,6 +76,7 @@ body{
     border: 2px solid black;
     width: 25%;
     height: 75%;
+    z-index: 6;
 }
 
 #name{
@@ -567,4 +568,33 @@ img{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+/* default styling for fade in */
+.fadeIn{
+    z-index: 11;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    animation: fadeIn 3s;
+}
+
+/* adds the animation */
+@keyframes fadeIn{
+    0% {opacity: 1;}
+    10%{opacity: 1;}
+    100% {opacity: 0;}
+}
+
+#cover{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    background-color: rgb(255, 255, 255);
+    z-index: 5;
 }

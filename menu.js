@@ -1,5 +1,5 @@
-const playStart = document.getElementById('playStart');
-const start = document.getElementById('start');
+const playStart = document.getElementById('playStart'); //starting button
+const start = document.getElementById('start'); //contains starting menu
 const panel = document.getElementById('panel');
 const game = document.getElementById('game');
 const nameInput = document.getElementById('name');
@@ -11,15 +11,16 @@ const howToPlay =  document.getElementById('How-To-Play')
 const mapElement = document.getElementsByName('map')[0]
 const overlay = document.getElementById('overlay');
 const sideBar = document.getElementById('middleRight')
+const body = document.getElementsByTagName('body')[0]
 
 playStart.addEventListener('click', (e) => { //starts games
+    game.src='script.js' //loads script
     menu = false;
     title.textContent = nameInput.value + " Game"
     start.classList.add('invisible')
     topLeft.classList.remove('invisible')
     topRight.classList.remove('invisible')
     mapElement.classList.remove('invisible')
-    game.src='script.js' //loads script
 })
 
 let mapPosIDs = ['mapAbsolute', 'mapNone', 'mapMini']

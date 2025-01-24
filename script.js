@@ -11,6 +11,7 @@ const startingArea = new area()
 
 let character = new player();
 
+"NEED FUNCTION".toLowerCase()
 //end entities segement
 
 character.setArea(startingArea);

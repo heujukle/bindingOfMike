@@ -209,6 +209,9 @@ class player {
     }
 
     setArea(area){
+        const fade = createElement('div', 'fadeIn', {}, body)
+        if(document.getElementById('cover')) document.getElementById('cover').remove()
+        setTimeout(()=>{fade.remove()}, 2900)
         structures.list = []
         entities.list = []
         damageInstances.list = []
