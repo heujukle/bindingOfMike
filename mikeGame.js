@@ -756,7 +756,7 @@ function roomChange(player){
     }
 }
 
-function getProjVelocities(degrees, speed){
+function getProjVelocities(degrees, speed){ //returns velocities for projectiles so they travel at a consistent speed
     if(degrees > 360){
         degrees -= 360
     }
