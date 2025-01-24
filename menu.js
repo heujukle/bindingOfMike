@@ -384,7 +384,13 @@ howToPlay.addEventListener('click', (e)=>{
     const text = createElement('div', null, 
         {
         id:'howToPlayTextBox', 
-        innerHTML: '<p style="margin: 5px;">The goal of the game is to progress to as many areas as possible. Explore each area until you find the portal, the purple rectangle. Each area you progress the enemies will progressivley get stronger. However you will get stronger as well. You can find shops across areas, at shops you can buy new swords, upgrade stats, and buy items with unique effects. Shops also offer a way to heal deamage you have taken. Shops are not the only way to upgrade your character, you will also find forges throughout the area. Using materials gained from defeating enemies you can merge swords together fusing the effects of each swords together. </p>'
+        innerHTML: `<p style="margin: 5px;">The goal of the game is to progress to as many areas as possible. 
+        Explore each area until you find the portal, the purple rectangle. Each area you progress the enemies will progressivley get stronger. 
+        However you will get stronger as well. You can find shops across areas, at shops you can buy new swords, upgrade stats, and buy items with unique effects. 
+        Shops also offer a way to heal deamage you have taken. Shops are not the only way to upgrade your character, you will also find forges throughout the area. 
+        Using materials gained from defeating enemies you can merge swords together fusing the effects of each swords together. <br> <br> Your health is the RED bar. <br> 
+        The game will end if your health reaches 0 <br> Your stamina is the BLUE bar <br> you can doubletap the movement key in a direction to dash <br> <br>
+        Scrolling will change your equipped tool, the black square fires a projectile, while the sword swings your equipped sword</p>`
         }, panel)
     const exit = createElement('div', null, {innerHTML: '<h3>Exit</h3>'}, panel)
     exit.addEventListener('click', (e)=>{
