@@ -78,6 +78,7 @@ constructor(x, y, width, height, target){
         determineValueArray(seed[5], stats),
         determineValueArray(seed[7], stats),
         determineValueArray(seed[8], stats),
+        determineValueArray(seed[9], stats),
         determineValueArray(seed[6], passives),
     ]
 }
