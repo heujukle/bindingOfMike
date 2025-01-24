@@ -138,13 +138,12 @@ loadStore(){
         overlay.classList.toggle('invisible')
     })
     for(let i = 0; i < this.forSale.length; i++){
-        mainStore.appendChild(this.createItem(this.forSale[i], i))
+        mainStore.appendChild(this.createItem(this.forSale[i]))
     }
     overlay.classList.toggle('invisible')
 }
 
-createItem(item, index){
-    const itemIndex = index;
+createItem(item){
     const frame = document.createElement('div')
     frame.classList.add('frame')
     const sprite = document.createElement('img')
@@ -174,12 +173,12 @@ createItem(item, index){
                 this.target.melee = item.item();
                 this.target.melee.source = this.target
                 console.log(this.target.melee)
-                this.forSale.splice(itemIndex, 1)
+                this.forSale.splice(this.forSale.indexOf(item), 1)
                 frame.remove()
             }
             else if(item.type == 'passiveItem'){ //for passive items
                 this.target.passiveItems[item.name] = item.itemVariables;
-                this.forSale.splice(itemIndex, 1)
+                this.forSale.splice(this.forSale.indexOf(item), 1)
                 frame.remove()
             }
             else if(item.type == 'stat'){ //stats
@@ -195,7 +194,7 @@ createItem(item, index){
                 else if(item.statName == 'maxStamina'){
                     this.target.updateStaminaBar()
                 }
-                this.forSale.splice(itemIndex, 1)
+                this.forSale.splice(this.forSale.indexOf(item), 1)
                 frame.remove()
             }
             else if(item.type == 'health'){//for health items
@@ -205,7 +204,7 @@ createItem(item, index){
                 else{
                     this.target.addHealth(1)
                 }
-                this.forSale.splice(itemIndex, 1)
+                this.forSale.splice(this.forSale.indexOf(item), 1)
                 frame.remove()
             }
         }
