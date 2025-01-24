@@ -332,8 +332,9 @@ class forge{
 
                 const requirementsDisplay = createElement('div', 'materialsPreview')
                     columnThree.appendChild(requirementsDisplay)
-                const requirements = mergeRequirements[newSword.tier >= 3 ? 3 : newSword.tier] //please remoe debug to add prices back
+                const requirements = mergeRequirements[1] //grabs the cheapest prices, is in a object not an array
                 const keys = Object.keys(requirements) //bug
+                const magicIncrementNumber = Math.pow(1.3, newSword.tier) //number to multiply the price by
                 let canMerge = true
                 for(let i = 0; i < keys.length; i++){
                     let cssClass = null
@@ -341,13 +342,13 @@ class forge{
                     if(forge.target.materials[keys[i]] != undefined || forge.target.materials[keys[i]] != null){
                         amount = forge.target.materials[keys[i]].amount //sets the amount equal to what the player has
                     }
-                    if(amount < requirements[keys[i]]){ //updates color to show when player cannot afford
+                    if(amount < requirements[keys[i]] * magicIncrementNumber){ //updates color to show when player cannot afford
                         cssClass = 'broke'
                         canMerge = false //prevents merge
                     }
                     console.log(requirements)
                     console.log(requirements[keys[i]])
-                    createElement('div', cssClass, {textContent:`${keys[i]} : ${amount} / ${requirements[keys[i]]}`}, requirementsDisplay)
+                    createElement('div', cssClass, {textContent:`${keys[i]} : ${amount} / ${requirements[keys[i]] * magicIncrementNumber}`}, requirementsDisplay)
                 }
                 if(canMerge){
                     const interact = createElement('div', "mergeButton", {textContent:`Merge Weapons`}, columnThree)
@@ -440,7 +441,7 @@ class forge{
                 damage:swordOne.damage,
                 sprite:swordOne.sprite,
                 runFuncCD:swordOne.runFuncCD,
-                tier: swordOne.tier + 1,
+                tier: swordOne.tier + swordTwo.tier,
                 runFunc : null,
                 clickFunc : null,
                 knockback : swordOne.knockback,

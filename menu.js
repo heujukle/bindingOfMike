@@ -149,6 +149,7 @@ function generateItemText(item){
         createElement('div', null, {textContent:`Run Func CD : ${item.runFuncCD}`}, result)
         createElement('div', null, {textContent:`Width : ${item.width}`}, result)
         createElement('div', null, {textContent:`Height : ${item.height}`}, result)
+        createElement('div', null, {textContent:`Tier : ${item.tier}`}, result)
     }
     return result
 }
