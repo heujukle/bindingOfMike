@@ -50,7 +50,7 @@ class player {
         this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10})
         this.iFrames = 0;
         this.map = null; //amount of immunity frames
-        this.wallet = 1000; //money
+        this.wallet = 0; //money
         this.interact = false;
         this.xVelocity = 0; //force applied to player
         this.yVelocity = 0;
