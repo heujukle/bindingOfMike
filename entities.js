@@ -57,6 +57,10 @@ class zombie{
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
+        if(this.target.has('vampire')){
+            this.target.health += 1
+            this.target.updateHealthBar()
+        }
         if(knockbackfunc){
             knockbackfunc(this)
         }
@@ -166,6 +170,10 @@ class skeleton{
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
+        if(this.target.has('vampire')){
+            this.target.health += 1
+            this.target.updateHealthBar()
+        }
         if(knockbackfunc){
             knockbackfunc(this)
         }
@@ -317,6 +325,10 @@ class evilZombie{
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
+        if(this.target.has('vampire')){
+            this.target.health += 1
+            this.target.updateHealthBar()
+        }
         if(knockbackfunc){
             knockbackfunc(this)
         }

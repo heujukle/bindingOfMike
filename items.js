@@ -121,18 +121,32 @@ const passives = [
     name: 'richochet',
     itemVariables: {},
     price: 750, //1000
+    hasFunc: null, //future proofing items
+    type: 'passiveItem'
+},
+{
+    name: 'vampire',
+    itemVariables: {},
+    price: 1000, //1000
+    hasFunc: {func:() =>{  //future proofing items
+        return;
+    }, hook: 'enemy damage'},
     type: 'passiveItem'
 },
 {
     name: 'spikey',
     itemVariables: {hitList : []},
     price: 250, //200
+    hasFunc: {func:() =>{ //future proofing items
+        return;
+    }, hook: 'playerDamage'},
     type: 'passiveItem'
 },
 {
     name: 'bouncy',
     itemVariables: {},
     price: 100, //100
+    hasFunc: null, //future proofing items
     type: 'passiveItem'
 },
 ]
@@ -143,14 +157,14 @@ const meleeItems = [
     { 
         name: 'Medium Sword',
         sprite: null,
-        item:()=>{return new melee(undefined, 10, 150, 175, 10, 80, 'Medium Sword', undefined, undefined, undefined, 0, {damage: 15, height:5, width:5})}, //item itself
+        item:()=>{return new melee(undefined, 10, 150, 175, 10, 80, 'Medium Sword', undefined, undefined, undefined, 1, {damage: 15, height:5, width:5})}, //item itself
         price:150, //price
         type: 'melee' //type
     }, 
     { 
         name: 'Small sword',
         sprite: null,
-        item:()=>{return new melee(undefined, 40, 25, 50, 25, 30, 'Small sword', undefined, undefined, undefined, 0, {damage: 20})}, //item itself
+        item:()=>{return new melee(undefined, 40, 25, 50, 25, 30, 'Small sword', undefined, undefined, undefined, 1, {damage: 20})}, //item itself
         price:100, //price
         type: 'melee' //type
     }, 
@@ -163,14 +177,14 @@ const meleeItems = [
             const startY = sword.source.y + sword.source.height/2
             const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player', false, sword.source.room, '#268199', 5, sword.source.has('richochet'))
             damageInstances.add(swordProjectile)
-        }, 40, 0, {runFuncCD: -2})}, //item itself
+        }, 40, 1, {runFuncCD: -2})}, //item itself
         price:700, //price
         type: 'melee' //type
     }, 
     { 
         name: 'Big sword',
         sprite: null,
-        item:()=>{return new melee(undefined, 10, 100, 300, 25, 100, 'Big sword', undefined, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
+        item:()=>{return new melee(undefined, 10, 100, 300, 25, 100, 'Big sword', undefined, undefined, undefined, 1, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
         price:250, //price
         type: 'melee' //type
     }, 
@@ -204,7 +218,7 @@ const meleeItems = [
 {
     name: 'Spin sword',
     sprite: null,
-    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Spin sword', null, null, null, 0, {damage:15, width:20, span:30})}, //item itself
+    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Spin sword', null, null, null, 1, {damage:15, width:20, span:30})}, //item itself
     price:200, //price
     type: 'melee' //type
 },
