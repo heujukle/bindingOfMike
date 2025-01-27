@@ -127,8 +127,9 @@ const passives = [
 {
     name: 'vampire',
     itemVariables: {},
-    price: 1000, //1000
-    hasFunc: {func:() =>{  //future proofing items
+    price: 2500, //1000
+    hasFunc: {func:(target) =>{  //future proofing items
+        target.health += 1
         return;
     }, hook: 'enemy damage'},
     type: 'passiveItem'
