@@ -126,6 +126,8 @@ class player {
             console.log('DAMAGE')
             this.damaged = true
             this.health -= damage
+            console.log(this)
+            if(source != null) hook.dispatch('onPlayerDamage', this, source)
             healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
             if(knockBackDirection == 'left'){ //sets knock back direction
                 this.xVelocity -= knockbackAmount
@@ -141,25 +143,7 @@ class player {
             }
             this.iFrames = 30; //gives iframes
         }
-        if(Object.keys(this.passiveItems).includes('spikey') && source != null){ //spikey code
-            let character = this
-            if(!this.passiveItems["spikey"].hitList.includes(source)){
-            source.onDamage(5, function(target){ //special functionality for spiikey
-                const degrees = findDegrees(character.x, character.y, target.x, target.y)
-                const velocities = getProjVelocities(degrees, 10)
-                console.log(velocities)
-                if(target.xVelocity != undefined){ //knock back to enemeny
-                    console.log('added knockback')
-                    target.xVelocity += velocities.xVelocity * character.xVelocity != 0 ? -velocities.xVelocity * Math.abs(character.xVelocity * 0.15) : 10
-                }
-                if(target.yVelocity != undefined){
-                    target.yVelocity += velocities.yVelocity * character.yVelocity != 0 ? -velocities.yVelocity * Math.abs(character.yVelocity  * 0.15) : 10
-                }
-                console.log(target)
-            })
-            character.passiveItems['spikey'].hitList.push(source) //makes sure spkiey doesnt hit twice
-            }
-        }
+        if(source != null) hook.dispatch('playerTouch', this, source)
     }
 
     updateHealthBar(){
@@ -297,5 +281,12 @@ class player {
             this.melee.setValues(degrees, e)
             damageInstances.add(this.melee)
         }
+    }
+
+    addItem(item){
+        this.passiveItems[item.name] = item.itemVariables; //adds item and item variables
+        if(item.hasFunc != null){
+            hook.add(item.hasFunc.hook, item.hasFunc.func) //adds function to event hook
+        }        
     }
 }

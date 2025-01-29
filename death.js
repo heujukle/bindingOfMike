@@ -20,6 +20,11 @@ function onDeath(){
         itemScale = 1
         areaCount = 0 
         character = new player()
+        hook.hooks = {
+            'onEnemyDamage' : [],
+            'onPlayerDamage' : [],
+            'playerTouch' : [],
+        }
         character.setArea(new area())
         character.updateHealthBar()
         character.updateStaminaBar()

@@ -57,10 +57,7 @@ class zombie{
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
-        if(this.target.has('vampire')){
-            this.target.health += 1
-            this.target.updateHealthBar()
-        }
+        hook.dispatch('onEnemyDamage', this.target, this)
         if(knockbackfunc){
             knockbackfunc(this)
         }
@@ -170,10 +167,7 @@ class skeleton{
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
-        if(this.target.has('vampire')){
-            this.target.health += 1
-            this.target.updateHealthBar()
-        }
+        hook.dispatch('onEnemyDamage', this.target, this)
         if(knockbackfunc){
             knockbackfunc(this)
         }
@@ -206,6 +200,7 @@ class skeleton{
         let damageThisTime = false
         let speedMod = Math.floor(Math.random() * this.speed * 2)
         console.log(speedMod)
+        console.log(character)
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
             if(this.collision2([this.target]) && !damageThisTime){
@@ -325,10 +320,7 @@ class evilZombie{
         this.color = '#ff0000'
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
-        if(this.target.has('vampire')){
-            this.target.health += 1
-            this.target.updateHealthBar()
-        }
+        hook.dispatch('onEnemyDamage', this.target, this)
         if(knockbackfunc){
             knockbackfunc(this)
         }

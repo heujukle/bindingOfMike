@@ -147,14 +147,22 @@ function addFrameTimeout(func, frames){
     timers.list.push({func : func, frames : frames })
 }
 
-class hook {
-    constructor(){
-        this.list = []
-    }
-
-    dispatch(arg1, arg2, arg3){ //optional args to pass to function
-        for(let i = 0; i < this.list.length; i++){
-            this.list[i](arg1, arg2, arg3)
+const hook = {
+    hooks: {
+        'onEnemyDamage' : [],
+        'onPlayerDamage' : [],
+        'playerTouch' : [],
+    },
+    add:function(hooktype, func){
+        if(this.hooks[hooktype] === null || this.hooks[hooktype] === undefined) this.hooks[hooktype] = [func] //creates a new hook incase one isnt used
+        else this.hooks[hooktype].push(func) //adds function to current hook
+    },
+    dispatch: function(hooktype, arg1=null, arg2=null, arg3=null){ //args to pass to functions
+        if(this.hooks[hooktype] === null || this.hooks[hooktype] === undefined) console.log("empty hook")
+        else{
+            for(let i = 0; i < this.hooks[hooktype].length; i++){
+                this.hooks[hooktype][i](arg1, arg2, arg3)
+            }
         }
     }
 }

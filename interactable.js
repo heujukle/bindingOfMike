@@ -177,7 +177,7 @@ createItem(item){
                 frame.remove()
             }
             else if(item.type == 'passiveItem'){ //for passive items
-                this.target.passiveItems[item.name] = item.itemVariables;
+                this.target.addItem(item)
                 this.forSale.splice(this.forSale.indexOf(item), 1)
                 frame.remove()
             }
