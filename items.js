@@ -128,8 +128,8 @@ const passives = [
     name: 'vampire',
     itemVariables: {},
     price: 2500, //1000
-    hasFunc: {func:(target) =>{  //future proofing items
-        target.health += 1
+    hasFunc: {func:(character) =>{  //future proofing items
+        character.health += 1
         return;
     }, hook: 'enemy damage'},
     type: 'passiveItem'
@@ -138,8 +138,21 @@ const passives = [
     name: 'spikey',
     itemVariables: {hitList : []},
     price: 250, //200
-    hasFunc: {func:() =>{ //future proofing items
-        return;
+    hasFunc: {func:(character, source) =>{ //future proofing items
+            source.onDamage(5, function(target){ //special functionality for spiikey
+            const degrees = findDegrees(character.x, character.y, target.x, target.y)
+            const velocities = getProjVelocities(degrees, 10)
+            console.log(velocities)
+            if(target.xVelocity != undefined){ //knock back to enemeny
+                console.log('added knockback')
+                target.xVelocity += velocities.xVelocity * character.xVelocity != 0 ? -velocities.xVelocity * Math.abs(character.xVelocity * 0.15) : 10
+            }
+            if(target.yVelocity != undefined){
+                target.yVelocity += velocities.yVelocity * character.yVelocity != 0 ? -velocities.yVelocity * Math.abs(character.yVelocity  * 0.15) : 10
+            }
+            console.log(target)
+        })
+        character.passiveItems['spikey'].hitList.push(source) //makes sure spkiey doesnt hit twice;
     }, hook: 'playerDamage'},
     type: 'passiveItem'
 },
