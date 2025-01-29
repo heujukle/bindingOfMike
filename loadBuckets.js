@@ -146,3 +146,15 @@ const timers = { //holds frame timers
 function addFrameTimeout(func, frames){
     timers.list.push({func : func, frames : frames })
 }
+
+class hook {
+    constructor(){
+        this.list = []
+    }
+
+    dispatch(arg1, arg2, arg3){ //optional args to pass to function
+        for(let i = 0; i < this.list.length; i++){
+            this.list[i](arg1, arg2, arg3)
+        }
+    }
+}
