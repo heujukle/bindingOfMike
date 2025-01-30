@@ -4,9 +4,9 @@ constructor(source, damage, width, height, knockback, span, name, clickFunc, run
 /* crafting requirements*/
 const mergeRequirements = {
     1 : {
-        'bones' : 40, //40
-        'cloth' : 40, //40
-        'Evil Cloth' : 20, //15
+        'bones' : 20, //40
+        'cloth' : 20, //40
+        'Evil Cloth' : 10, //15
     },
     2 : {
         'bones' : 50, //45

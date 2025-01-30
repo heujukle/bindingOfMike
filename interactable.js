@@ -333,7 +333,7 @@ class forge{
                     columnThree.appendChild(requirementsDisplay)
                 const requirements = mergeRequirements[1] //grabs the cheapest prices, is in a object not an array
                 const keys = Object.keys(requirements) //bug
-                const magicIncrementNumber = Math.pow(1.3, newSword.tier) //number to multiply the price by
+                const magicIncrementNumber = Math.floor(Math.pow(1.3, newSword.tier)) //number to multiply the price by
                 let canMerge = true
                 for(let i = 0; i < keys.length; i++){
                     let cssClass = null
