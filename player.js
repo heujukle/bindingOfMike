@@ -127,7 +127,7 @@ class player {
             this.damaged = true
             this.health -= damage
             console.log(this)
-            if(source != null) hook.dispatch('onPlayerDamage', this, source)
+            if(source != null) hook.dispatch('onPlayerDamage', this, source) //calls when player takes damage
             healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
             if(knockBackDirection == 'left'){ //sets knock back direction
                 this.xVelocity -= knockbackAmount
@@ -143,7 +143,7 @@ class player {
             }
             this.iFrames = 30; //gives iframes
         }
-        if(source != null) hook.dispatch('playerTouch', this, source)
+        if(source != null) hook.dispatch('playerTouch', this, source) //calls the player touch hook
     }
 
     updateHealthBar(){

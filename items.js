@@ -129,7 +129,7 @@ const passives = [
     itemVariables: {},
     price: 2500, //1000
     hasFunc: {func:(character) =>{  //future proofing items
-        character.health += 1
+        character.health  += character.health + 1 > character.stats['maxHealth'] ? 0 : 1
         character.updateHealthBar()
         return;
     }, hook: 'onEnemyDamage'},
