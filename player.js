@@ -256,7 +256,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, null, null, '#268199', this.stats["pDamage"], richochet))
         }
     }
 

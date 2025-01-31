@@ -152,6 +152,7 @@ const hook = {
         'onEnemyDamage' : [],
         'onPlayerDamage' : [],
         'playerTouch' : [],
+        'playerProjectileInteract' : [],
     },
     add:function(hooktype, func){
         if(this.hooks[hooktype] === null || this.hooks[hooktype] === undefined) this.hooks[hooktype] = [func] //creates a new hook incase one isnt used

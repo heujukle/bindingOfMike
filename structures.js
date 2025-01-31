@@ -50,7 +50,7 @@ class turret{ //creates the turret
         switch(this.direction){//determines the direction of the turrets
             case "lt":
                 console.log('lt')
-                this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, 'turret', true, character.room, '#000000') //create turret
+                this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, this, true, character.room, '#000000') //create turret
                 damageInstances.add(this.tProjectile); //add projectile
                 break;
 
@@ -58,7 +58,7 @@ class turret{ //creates the turret
                 break;
 
             case 'rt':
-                this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, 'turret', true, character.room, '#000000')
+                this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, this, true, character.room, '#000000')
                 damageInstances.add(this.tProjectile);
                 break;
 

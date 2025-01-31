@@ -182,7 +182,7 @@ function moveEntitiy(entitiy, xChange, yChange, skipEntities){
     }
 }
 
-function collision2(entitiy, target, collider) { //collider returns the item collided with instead of true
+function collision2(entitiy, target, collider, func = false) { //collider returns the FIRST item collided with instead of true, func runs a function on collisiob
     let targetList = target.list
     const left = entitiy.x;
     const right = entitiy.x + entitiy.width;
@@ -202,7 +202,13 @@ function collision2(entitiy, target, collider) { //collider returns the item col
                 if(collider == true){
                     return targetList[i]
                 }
-                return true;
+                else if(func != false){ 
+                    func(entitiy, targetList[i])
+                    continue;
+                }
+                else{
+                    return true;
+                }
                 // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
                 }
             }
@@ -435,4 +441,11 @@ function dropItems(item, target){
             setTimeout(() => {itemDisplay.remove()}, timeBeforeFade + fadeTime)
         }, timeBeforeFade)
     }
+}
+
+function verifyIfPlayer(source){ //returns true if player
+    if(entities.list.indexOf(source) == -1 && structures.list.indexOf(source) == -1 && source != null && source != null && source instanceof player){
+        return true;
+    }
+    return false;
 }

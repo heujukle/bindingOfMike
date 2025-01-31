@@ -60,6 +60,7 @@ class projectile{
                     }
                     else{ //resets projectile
                         console.log('reset')
+                        if(verifyIfPlayer(this.source)) hook.dispatch("playerProjectileInteract", this)
                         damageInstances.remove(this.index)
                         return;
                     }
@@ -107,6 +108,9 @@ class projectile{
             // Check if the rectangles are overlapping
             if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
                 // Collision detected
+                // if(entities.list.indexOf(this.source) != -1 && structures.list.indexOf(this.source) != -1){
+                //     hook.dispatch("playerProjectileInteract", this) // calls the player projectile interact
+                // }
                 return true;
                 // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
             }
@@ -119,7 +123,7 @@ class projectile{
         const right = this.x + this.width;
         const top = this.y;
         const bottom = this.y + this.height;
-        if(this.source != "player"){
+        if(!verifyIfPlayer(this.source)){ //if not player
             const tleft = character.x;
             const tright = character.x + character.width;
             const ttop = character.y;
@@ -133,7 +137,7 @@ class projectile{
                 return false
             }
         }
-        else{
+        else{ //for player
             for(let i = 0; i < entities.list.length; i++){
                 if(entities.list[i] == null){
                     continue;
@@ -143,8 +147,8 @@ class projectile{
                 const ttop = entities.list[i].y;
                 const tbottom = entities.list[i].y + entities.list[i].height;
                 if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
-                    entities.list[i].health -= this.damage;
                     entities.list[i].onDamage(this.damage)
+                    hook.dispatch("playerProjectileInteract", this) // calls the player projectile interact
                     return true;
                 }
             }
@@ -274,6 +278,49 @@ class melee{
                 }
                 return true;
             }
+        }
+    }
+}
+
+class explosion{
+    constructor(source, size, damage, duration){
+        this.source = source;
+        this.superSource = null
+        if(source.source != undefined || source.source != null){
+            this.superSource = source.source;
+        }
+        this.x = (source.x + source.width/2) - size/2
+        this.y = (source.y + source.height/2) - size/2
+        this.index = null;
+        this.width = size
+        this.height = size
+        this.damage = damage
+        this.duration = duration;
+        this.counter = 0;
+        const trueSource = this.superSource != null ? this.superSource : this.source //grabs the true source to ensure it doesn't interact with wrong entities
+        let target = entities
+        if(entities.list.indexOf(trueSource) != -1) target = [character] //if the source of the source is not player target is swictehd to character
+            collision2(this, target, false, function(explosion, target){
+                target.onDamage(explosion.damage, function(target){
+                    const degrees = findDegrees(explosion.x + explosion.width/2, explosion.y + explosion.height/2, target.x + target.width/2, target.y + target.height/2)
+                    const pv = getProjVelocities(degrees, 10)
+                    target.xVelocity += pv.xVelocity
+                    target.yVelocity += pv.yVelocity
+                })
+            })
+    }
+
+    draw(){
+        const opacity = 1 - this.counter/this.duration
+        ctx.beginPath()
+        // ctx.rect(this.x, this.y, this.size, this.size)
+        ctx.rect(this.x, this.y, 100, 100)
+        ctx.fillStyle = `rgba(255, 0, 0, ${opacity})`
+        ctx.fill()
+        ctx.closePath()
+        this.counter += 1;
+        if(this.counter === this.duration){
+            damageInstances.remove(this.index)
         }
     }
 }

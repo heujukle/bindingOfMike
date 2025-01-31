@@ -136,6 +136,16 @@ const passives = [
     type: 'passiveItem'
 },
 {
+    name: 'boom',
+    itemVariables: {},
+    price: 2500, //1000
+    hasFunc: {func:(source) =>{  //future proofing items
+        damageInstances.add(new explosion(source, 100, 15, 60))
+        return;
+    }, hook: 'playerProjectileInteract'},
+    type: 'passiveItem'
+},
+{
     name: 'spikey',
     itemVariables: {hitList : []},
     price: 250, //200
