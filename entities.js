@@ -88,27 +88,19 @@ class zombie{
         let speedMod = Math.floor(Math.random() * this.speed * 2)
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'right', this.knockback, this)
-            }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'left', this.knockback, this)
-            }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'down', this.knockback, this)
-            }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'up', this.knockback, this)
-            }
+        }
+        if(this.collision2([this.target]) && !damageThisTime){
+            const knockbackfunc = makeKnockback(this)
+            this.target.onDamage(this.damage, knockbackfunc, this)
         }
     }
 
@@ -199,31 +191,21 @@ class skeleton{
     pursuit(){
         let damageThisTime = false
         let speedMod = Math.floor(Math.random() * this.speed * 2)
-        console.log(speedMod)
-        console.log(character)
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'right', 5, this)
-            }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'left', 5, this)
-            }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'down', 5, this)
-            }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'up', 5, this)
-            }
+        }
+        if(this.collision2([this.target]) && !damageThisTime){
+            const knockbackfunc = makeKnockback(this)
+            this.target.onDamage(this.damage, knockbackfunc, this)
         }
     }
 
@@ -233,19 +215,16 @@ class skeleton{
         if(degrees >= 45 && degrees < 135){
             let xVelocity = ((this.pSpeed / 45) * degrees) - this.pSpeed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2
             let yVelocity = this.pSpeed * -1
-            console.log("xv:", xVelocity, 'yv', yVelocity)
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, undefined, this.pDamage))
         }
         else if(degrees >= 135 && degrees < 225){
             let yVelocity = (((this.pSpeed / 45) * (degrees - 90)) - this.pSpeed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
             let xVelocity = this.pSpeed
-            console.log("xv:", xVelocity, 'yv', yVelocity)
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, undefined, this.pDamage))
         }
         else if(degrees >= 225 && degrees < 315){
             let xVelocity = -(((this.pSpeed / 45) * (degrees - 180)) - this.pSpeed * 2)
             let yVelocity = this.pSpeed
-            console.log("xv:", xVelocity, 'yv', yVelocity)
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, undefined, this.pDamage))
         }
         else{
@@ -254,7 +233,6 @@ class skeleton{
             }
             let yVelocity = -(((this.pSpeed / 45) * (degrees - 270)) - this.pSpeed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
             let xVelocity = this.pSpeed * -1
-            console.log("xv:", xVelocity, 'yv', yVelocity)
             damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, undefined, this.pDamage))
         }
     }
@@ -351,27 +329,24 @@ class evilZombie{
         let speedMod = Math.floor(Math.random() * this.speed * 2)
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed + speedMod, 0, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'right', this.knockback, this)
-            }
         }
         else{
             moveEntitiy(this, -(this.speed + speedMod), 0, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'left', this.knockback, this)
-            }
         }
         if(this.target.y > this.y){
             moveEntitiy(this, 0, this.speed + speedMod, true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'down', this.knockback, this)
-            }
         }
         else{
             moveEntitiy(this, 0, -(this.speed + speedMod), true)
-            if(this.collision2([this.target]) && !damageThisTime){
-                this.target.onDamage(this.damage, 'up', this.knockback, this)
+        }
+        if(this.collision2([this.target]) && !damageThisTime){
+            const knockbackfunc = (target) => {
+                const degrees = findDegrees(this.x + this.width/2, this.y + this.height/2, target.x + target.width/2, target.y + target.height/2)
+                const pv = getProjVelocities(degrees, this.knockback)
+                target.xVelocity += -pv.xVelocity
+                target.yVelocity += -pv.yVelocity
             }
+            this.target.onDamage(this.damage, knockbackfunc, this)
         }
     }
 

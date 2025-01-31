@@ -182,7 +182,36 @@ function moveEntitiy(entitiy, xChange, yChange, skipEntities){
     }
 }
 
-function collision2(entitiy, target, collider, func = false) { //collider returns the FIRST item collided with instead of true, func runs a function on collisiob
+function collison(entitiy, target, collider, func = false){ //used for induvidual collisions
+    if(target !== entitiy && target != null){ //check for entities returns if it is static
+        const left = entitiy.x;
+        const right = entitiy.x + entitiy.width;
+        const top = entitiy.y;
+        const bottom = entitiy.y + entitiy.height;
+        const tleft = target.x;
+        const tright = target.x + target.width;
+        const ttop = target.y;
+        const tbottom = target.y + target.height;
+        
+        // Check if the rectangles are overlapping
+        if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+            // Collision detected
+            if(func != false){ 
+                func(entitiy, targetList[i])
+            }
+            if(collider == true){
+                return targetList[i]
+            }
+            else{
+                return true;
+            }
+            // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+            }
+        }
+        return false;
+    }
+
+function collision2(entitiy, target, collider, func = false) { //collider returns the FIRST item collided with instead of true, func runs a function on collisio,
     let targetList = target.list
     const left = entitiy.x;
     const right = entitiy.x + entitiy.width;
@@ -199,12 +228,11 @@ function collision2(entitiy, target, collider, func = false) { //collider return
             // Check if the rectangles are overlapping
             if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
                 // Collision detected
+                if(func != false){ 
+                    func(entitiy, targetList[i])
+                }
                 if(collider == true){
                     return targetList[i]
-                }
-                else if(func != false){ 
-                    func(entitiy, targetList[i])
-                    continue;
                 }
                 else{
                     return true;
@@ -214,6 +242,38 @@ function collision2(entitiy, target, collider, func = false) { //collider return
             }
         }
     return false;
+}
+
+function collison3(entitiy, target, func){ //does not return upon collison
+    let collision = 'nuh'
+    let targetList = target.list
+    const left = entitiy.x;
+    const right = entitiy.x + entitiy.width;
+    const top = entitiy.y;
+    const bottom = entitiy.y + entitiy.height;
+    console.log(left, right, top, bottom)
+    
+    for (let i = 0; i < targetList.length; i++) {
+        console.log((targetList[i] !== entitiy) && targetList[i] != null)
+        if(((targetList[i] !== entitiy) && target.check(targetList[i], entitiy)) && targetList[i] != null){ //check for entities returns if it is static
+            console.log('trying')
+            const tleft = targetList[i].x;
+            const tright = targetList[i].x + targetList[i].width;
+            const ttop = targetList[i].y;
+            const tbottom = targetList[i].y + targetList[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                collision = 'yuh'
+                if(func != false){ 
+                    func(entitiy, targetList[i])
+                }
+
+                }
+            }
+        }
+        console.log(collision)
 }
 
 function incrementLimit(variable, limit, increment = 1){
@@ -444,8 +504,19 @@ function dropItems(item, target){
 }
 
 function verifyIfPlayer(source){ //returns true if player
-    if(entities.list.indexOf(source) == -1 && structures.list.indexOf(source) == -1 && source != null && source != null){
+    if(source instanceof player){
         return true;
     }
     return false;
+}
+
+function makeKnockback(source){ //returns a default knockback function
+function result (target){
+    const degrees = findDegrees(source.x + source.width/2, source.y + source.height/2, target.x + target.width/2, target.y + target.height/2)
+    const pv = getProjVelocities(degrees, 5)
+    console.log(degrees, pv)
+    target.xVelocity += -pv.xVelocity
+    target.yVelocity += -pv.yVelocity
+}
+return result;
 }

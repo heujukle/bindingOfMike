@@ -138,11 +138,20 @@ const passives = [
 {
     name: 'boom',
     itemVariables: {},
-    price: 2500, //1000
+    price: 1500, //1000
     hasFunc: {func:(source) =>{  //future proofing items
-        damageInstances.add(new explosion(source, 100, 15, 60))
+        damageInstances.add(new explosion(source, 100, 15, 30))
         return;
     }, hook: 'playerProjectileInteract'},
+    type: 'passiveItem'
+},
+{
+    name: 'self boom',
+    itemVariables: {hitList : []},
+    price: 500, //200
+    hasFunc: {func:(character) =>{ //future proofing items
+        damageInstances.add(new explosion(character, 400, 15, 60))
+    }, hook: 'playerTouch'},
     type: 'passiveItem'
 },
 {
@@ -204,7 +213,7 @@ const meleeItems = [
             const velocities = getProjVelocities(sword.currentAngle, 7);
             const startX = sword.source.x + sword.source.width/2
             const startY = sword.source.y + sword.source.height/2
-            const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player', false, sword.source.room, '#268199', 5, sword.source.has('richochet'))
+            const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, sword.source, false, sword.source.room, '#268199', 5, sword.source.has('richochet'))
             damageInstances.add(swordProjectile)
         }, 40, 1, {runFuncCD: -2})}, //item itself
         price:700, //price
@@ -238,7 +247,7 @@ const meleeItems = [
         const startX = sword.source.x + sword.source.width/2
         const startY = sword.source.y + sword.source.height/2
         const velocities = getProjVelocities(degrees, 7)
-        const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, 'player', false, sword.source.room, '#268199', 5, sword.source.has('richochet'))
+        const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, sword.source, false, sword.source.room, '#268199', 5, sword.source.has('richochet'))
         damageInstances.add(swordProjectile)
     })}, //item itself
     price:350, //price

@@ -121,25 +121,14 @@ class player {
         return Object.keys(this.passiveItems).includes(item)
     }
 
-    onDamage(damage = 5, knockBackDirection, knockbackAmount = 5, source = null){
+    onDamage(damage = 5, knockbackfunc = null, source = null){
         if(this.iFrames == 0){
-            console.log('DAMAGE')
             this.damaged = true
             this.health -= damage
-            console.log(this)
             if(source != null) hook.dispatch('onPlayerDamage', this, source) //calls when player takes damage
             healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
-            if(knockBackDirection == 'left'){ //sets knock back direction
-                this.xVelocity -= knockbackAmount
-            }
-            else if(knockBackDirection == 'right'){
-                this.xVelocity += knockbackAmount
-            }
-            else if(knockBackDirection == 'down'){
-                this.yVelocity += knockbackAmount
-            }
-            else if(knockBackDirection == 'up'){
-                this.yVelocity -= knockbackAmount
+            if(typeof knockbackfunc === 'function'){
+                knockbackfunc(this)
             }
             this.iFrames = 30; //gives iframes
         }
@@ -223,7 +212,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, null, null, '#268199', this.stats["pDamage"], richochet))
         }
         else if(degrees >= 135 && degrees < 225){
             let yVelocity = (((speed / 45) * (degrees - 90)) - speed * 2) //((225 - 45) - degrees) / this.pVelocityModifier * -2
@@ -233,7 +222,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, null, null, '#268199', this.stats["pDamage"], richochet))
         }
         else if(degrees >= 225 && degrees < 315){
             let xVelocity = -(((speed / 45) * (degrees - 180)) - speed * 2)
@@ -243,7 +232,7 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, 'player', null, null, '#268199', this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, null, null, '#268199', this.stats["pDamage"], richochet))
         }
         else{
             if(degrees < 45){

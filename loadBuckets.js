@@ -45,20 +45,13 @@ const entities = { // loads entities
     clear: function(){
         this.list = []
     },
-    check: function(entity, original){ //true means check
-            if(original.iframes == 0){
-                return true;
-            }
-            if(entity === null){
+    check: function(entity, original){ //original is the object which collision is based on, entity is what it is tried against
+        //function used to make sure the collision is valid
+        if(entity === null) return false
+            if(original.iframes === 0){
                 return false;
             }
-            if(entity.behavior == 'static'){ 
-                return true;
-            }
-            if(entity.target.iFrames == 0){ 
-                return true;
-            }
-            return false;
+            return true;
     }
 }
 

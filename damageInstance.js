@@ -27,6 +27,7 @@ class projectile{
 
             this.x += this.xVelocity //checks x collision first
             if(this.collision2(structures.list)){ //if x collison then it flips the x veolicty direction
+                if(verifyIfPlayer(this.source)) hook.dispatch("playerProjectileInteract", this)
                 this.xVelocity *= -1
             }
             this.x -= this.xVelocity //undoes x movement to prevent trigger the y collsion detection
@@ -298,23 +299,29 @@ class explosion{
         this.duration = duration;
         this.counter = 0;
         const trueSource = this.superSource != null ? this.superSource : this.source //grabs the true source to ensure it doesn't interact with wrong entities
-        let target = entities
-        if(entities.list.indexOf(trueSource) != -1) target = [character] //if the source of the source is not player target is swictehd to character
-            collision2(this, target, false, function(explosion, target){
-                target.onDamage(explosion.damage, function(target){
-                    const degrees = findDegrees(explosion.x + explosion.width/2, explosion.y + explosion.height/2, target.x + target.width/2, target.y + target.height/2)
-                    const pv = getProjVelocities(degrees, 10)
-                    target.xVelocity += pv.xVelocity
-                    target.yVelocity += pv.yVelocity
-                })
+        console.log(trueSource)
+
+        function damageFunc(explosion, target){
+            target.onDamage(explosion.damage, function(target){
+                const degrees = findDegrees(explosion.x + explosion.width/2, explosion.y + explosion.height/2, target.x + target.width/2, target.y + target.height/2)
+                const pv = getProjVelocities(degrees, 10)
+                target.xVelocity += -pv.xVelocity
+                target.yVelocity += -pv.yVelocity
             })
+        }
+
+        if(!trueSource instanceof player) { 
+            collison(this, character, false, damageFunc)//evil explosion
+        } 
+        else{
+            collison3(this, entities, damageFunc)
+        }
     }
 
     draw(){
-        const opacity = 1 - this.counter/this.duration
+        const opacity = 0.8 - this.counter/this.duration
         ctx.beginPath()
-        // ctx.rect(this.x, this.y, this.size, this.size)
-        ctx.rect(this.x, this.y, 100, 100)
+        ctx.rect(this.x, this.y, this.width, this.height)
         ctx.fillStyle = `rgba(255, 0, 0, ${opacity})`
         ctx.fill()
         ctx.closePath()
