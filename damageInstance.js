@@ -289,7 +289,7 @@ class melee{
 }
 
 class explosion{
-    constructor(source, size, damage, duration){
+    constructor(source, size, damage, duration, knockback = 10){
         this.source = source;
         this.superSource = null
         if(source.source != undefined || source.source != null){
@@ -303,13 +303,14 @@ class explosion{
         this.damage = damage
         this.duration = duration;
         this.counter = 0;
+        this.knockback = knockback
         const trueSource = this.superSource != null ? this.superSource : this.source //grabs the true source to ensure it doesn't interact with wrong entities
         console.log(trueSource)
 
         function damageFunc(explosion, target){
             target.onDamage(explosion.damage, function(target){
                 const degrees = findDegrees(explosion.x + explosion.width/2, explosion.y + explosion.height/2, target.x + target.width/2, target.y + target.height/2)
-                const pv = getProjVelocities(degrees, 10)
+                const pv = getProjVelocities(degrees, this.knockback)
                 target.xVelocity += -pv.xVelocity
                 target.yVelocity += -pv.yVelocity
             })

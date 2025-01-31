@@ -66,6 +66,13 @@ const healthInACan = {
     increment: 25
 }
 
+const markedUpHealthInCan = {
+    name: 'health: More money, same amount',
+    price: 50,
+    type: 'health',
+    increment: 25
+}
+
 const stats = [
 {
     name:'multiShot',
@@ -96,7 +103,7 @@ const stats = [
     price:20,
     type:'stat',
     statName:'maxHealth',
-    increment: 10
+    increment: 15
 },
 {
     name:'max stamina',
@@ -145,7 +152,7 @@ const passives = [
     itemVariables: {},
     price: 1500, //1000
     hasFunc: {func:(source) =>{  //future proofing items
-        damageInstances.add(new explosion(source, 100, 15, 30))
+        damageInstances.add(new explosion(source, 100, 15, 30, 5))
         return;
     }, hook: 'playerProjectileInteract'},
     type: 'passiveItem'

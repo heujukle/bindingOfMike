@@ -74,6 +74,7 @@ constructor(x, y, width, height, target){
     const seed = Math.random() + ''
     this.forSale = [
         healthInACan,
+        markedUpHealthInCan,
         determineValueArray(seed[4], meleeItems),
         determineValueArray(seed[5], stats),
         determineValueArray(seed[7], stats),

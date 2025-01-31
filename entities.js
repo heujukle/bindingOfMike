@@ -400,7 +400,7 @@ class boomSkeleton{
         this.knockBackResistance = knockBackResistance
         this.drops = boomBones
         this.boomFunc = (source) => {
-            damageInstances.add(new explosion(source, 100, 10 + this.pDamage, 60))
+            damageInstances.add(new explosion(source, 100, 5 + this.pDamage, 60))
             console.log('WE BRING THE BOOM')
         }
     }
