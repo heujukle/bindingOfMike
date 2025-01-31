@@ -444,7 +444,7 @@ function dropItems(item, target){
 }
 
 function verifyIfPlayer(source){ //returns true if player
-    if(entities.list.indexOf(source) == -1 && structures.list.indexOf(source) == -1 && source != null && source != null && source instanceof player){
+    if(entities.list.indexOf(source) == -1 && structures.list.indexOf(source) == -1 && source != null && source != null){
         return true;
     }
     return false;
