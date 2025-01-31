@@ -44,6 +44,11 @@ const bones = {
     sprite: 'images/items/bones.png'
 }
 
+const boomBones = {
+    name:"Boom Bones",
+    sprite: 'images/items/bones.png'
+}
+
 const cloth = {
     name:"cloth",
     sprite: null

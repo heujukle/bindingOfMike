@@ -197,10 +197,10 @@ function collison(entitiy, target, collider, func = false){ //used for induvidua
         if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
             // Collision detected
             if(func != false){ 
-                func(entitiy, targetList[i])
+                func(entitiy, target)
             }
             if(collider == true){
-                return targetList[i]
+                return target
             }
             else{
                 return true;

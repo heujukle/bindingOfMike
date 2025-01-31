@@ -1,7 +1,7 @@
 /*To be remnamed to interactables */
 
 class projectile{
-    constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5, ricochet = false){
+    constructor(startX, startY, width, height, xVelocity, yVelocity, source ,repeating = false, room = character.room, color = "#000000", damage = 5, ricochet = false, collisionFunc = null){
         this.room = room; //what room the projectile occupies
         this.index; //index in the damageinstance/interactable array
         this.startX = startX; //saves the start cords for repeating projectiles
@@ -17,6 +17,8 @@ class projectile{
         this.color = color; //color
         this.damage = damage; //how much damage
         this.ricochet = ricochet; //if the projectile richochets
+        this.collisionFunc = collisionFunc
+        console.log(collisionFunc)
     }
 
 
@@ -28,6 +30,7 @@ class projectile{
             this.x += this.xVelocity //checks x collision first
             if(this.collision2(structures.list)){ //if x collison then it flips the x veolicty direction
                 if(verifyIfPlayer(this.source)) hook.dispatch("playerProjectileInteract", this)
+                if(this.collisionFunc !== null)  this.collisionFunc(this) //for entity effects
                 this.xVelocity *= -1
             }
             this.x -= this.xVelocity //undoes x movement to prevent trigger the y collsion detection
@@ -62,6 +65,7 @@ class projectile{
                     else{ //resets projectile
                         console.log('reset')
                         if(verifyIfPlayer(this.source)) hook.dispatch("playerProjectileInteract", this)
+                        if(this.collisionFunc !== null)  this.collisionFunc(this) //for entity effects
                         damageInstances.remove(this.index)
                         return;
                     }
@@ -131,6 +135,7 @@ class projectile{
             const tbottom = character.y + character.height;
             if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
                 character.onDamage(this.damage);
+                if(this.collisionFunc !== null)  this.collisionFunc(this) //for entity effects
                 console.log(character.health)
                 return true;
             }
@@ -309,8 +314,8 @@ class explosion{
                 target.yVelocity += -pv.yVelocity
             })
         }
-
-        if(!trueSource instanceof player) { 
+        console.log(trueSource instanceof player)
+        if(!(trueSource instanceof player)) { 
             collison(this, character, false, damageFunc)//evil explosion
         } 
         else{

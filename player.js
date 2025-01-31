@@ -122,13 +122,14 @@ class player {
     }
 
     onDamage(damage = 5, knockbackfunc = null, source = null){
-        if(this.iFrames == 0){
+        if(this.iFrames == 0 && damage > 0){
             this.damaged = true
             this.health -= damage
             if(source != null) hook.dispatch('onPlayerDamage', this, source) //calls when player takes damage
             healthBar.style = `width: ${this.health / this.stats['maxHealth'] * 100}%;`
             if(typeof knockbackfunc === 'function'){
-                knockbackfunc(this)
+                console.log('knockback')
+                    knockbackfunc(this)
             }
             this.iFrames = 30; //gives iframes
         }
