@@ -418,7 +418,7 @@ class boomSkeleton{
     draw(){
         if(this.health < 0){
             entities.remove(this.index)
-            updateWallet(25, this.target)
+            updateWallet(35, this.target)
             dropItems(this.drops, this.target)
             return;
         }

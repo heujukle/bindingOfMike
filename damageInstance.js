@@ -310,7 +310,7 @@ class explosion{
         function damageFunc(explosion, target){
             target.onDamage(explosion.damage, function(target){
                 const degrees = findDegrees(explosion.x + explosion.width/2, explosion.y + explosion.height/2, target.x + target.width/2, target.y + target.height/2)
-                const pv = getProjVelocities(degrees, this.knockback)
+                const pv = getProjVelocities(degrees, explosion.knockback)
                 target.xVelocity += -pv.xVelocity
                 target.yVelocity += -pv.yVelocity
             })

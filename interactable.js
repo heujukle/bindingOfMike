@@ -470,7 +470,7 @@ class forge{
             if(swordOne.runFunc != null && swordTwo.runFunc != null){ //merges run and click funcs
                 result.runFunc = (sword) => {
                     swordOne.runFunc(sword)
-                    setTimeout(()=>{swordTwo.runFunc(sword)}, 100 * (swordOne.tier + 1)) //makes sure the effects doont execute at the same time, makes effects looks cooler
+                    setTimeout(()=>{swordTwo.runFunc(sword)}, 20 * (swordOne.tier + 1)) //makes sure the effects doont execute at the same time, makes effects looks cooler
                 }
             }
             else if(swordOne.runFunc == null && swordTwo.runFunc != null){
