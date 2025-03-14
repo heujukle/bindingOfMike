@@ -131,50 +131,58 @@ class area{
             // determines the sides of the next room to be generated, if true opens the door and takes away from the budget
             let left = determineValue(seed[3], true, false) && roomBudget > 0 && exclusion.indexOf('left') == -1 ? true : false;
             if(left == true){
-                layout[4][0] = 0;
-                layout[5][0] = 0;
+                const door = Math.floor(layout.length / 2)
+                layout[door][0] = 0;
+                layout[door -1 ][0] = 0;
                 roomBudget -= 1
             }
             let right = determineValue(seed[4], true, false) && roomBudget > 0 && exclusion.indexOf('right') == -1? true : false;
             if(right == true){
-                layout[4][layout[4].length - 1] = 0;
-                layout[5][layout[4].length - 1] = 0;
+                const door = Math.floor(layout.length / 2)
+                layout[door][layout[4].length - 1] = 0;
+                layout[door - 1][layout[4].length - 1] = 0;
                 roomBudget -= 1
             }
             let top = determineValue(seed[5], true, false) && roomBudget > 0 && exclusion.indexOf('top') == -1? true : false;
             if(top == true){
-                layout[0][10] = 0;
-                layout[0][11] = 0;
-                roomBudget -= 1
+                const door = Math.floor(layout[0].length / 2)
+                layout[0][door] = 0;
+                layout[0][door - 1] = 0;
+                roomBudget -= 1;
             }
             let bottom = determineValue(seed[6], true, false) && roomBudget > 0 && exclusion.indexOf('bottom') == -1? true : false;
             if(bottom == true){
-                layout[layout.length - 1][10] = 0;
-                layout[layout.length - 1][11] = 0;
-                roomBudget -= 1
+                const door = Math.floor(layout[0].length / 2)
+                layout[layout.length - 1][door] = 0;
+                layout[layout.length - 1][door - 1] = 0;
+                roomBudget -= 1;
             }
             /*-------------------------------------------------------------------------------------------------------------------------------*/
             //fills if no room is generated and still a budget it will force a room generation
             if(bottom == false && top == false && left == false && right == false && roomBudget > 5){
                 if(exclusion.indexOf('right') != -1){
                     left = true;
-                    layout[4][0] = 0;
-                    layout[5][0] = 0;
+                    const door = Math.floor(layout.length / 2)
+                    layout[door][0] = 0;
+                    layout[door -1 ][0] = 0;
                 }
                 else if(exclusion.indexOf('left') != -1){
                     right = true;
-                    layout[4][layout[4].length - 1] = 0;
-                    layout[5][layout[4].length - 1] = 0;
+                    const door = Math.floor(layout.length / 2)
+                    layout[door][layout[4].length - 1] = 0;
+                    layout[door - 1][layout[4].length - 1] = 0;
                 }
                 else if(exclusion.indexOf('top') != -1){
                     bottom = true;
-                    layout[layout.length - 1][10] = 0;
-                    layout[layout.length - 1][11] = 0;
+                    const door = Math.floor(layout[0].length / 2)
+                    layout[layout.length - 1][door] = 0;
+                    layout[layout.length - 1][door - 1] = 0;
                 }
                 else{
                     top = true;
-                    layout[0][10] = 0;
-                    layout[0][11] = 0;
+                    const door = Math.floor(layout[0].length / 2)
+                    layout[0][door] = 0;
+                    layout[0][door - 1] = 0;
                 }
                 roomBudget -= 1
             }
@@ -195,16 +203,14 @@ class area{
                     leftRoom = map.get(leftCord) //grabs the existing room
                     currentRoom.left = leftRoom; //sets direction of existing room to variable
                     leftRoom.right = currentRoom; //sets the old rooms opposite direction to current room
-                    leftRoom.layout[4][layout[4].length - 1] = 0; //opens door in old room
-                    leftRoom.layout[5][layout[4].length - 1] = 0;
                 }
                 else{ //if doesnt exist
                     leftRoom = generateRoom(Math.random(), leftCord, ["right"]) //generate new room with an exclusion of right, so it doesn't loop back in
                     currentRoom.left = leftRoom; //sets room variables
                     leftRoom.right = currentRoom;
-                    leftRoom.layout[4][layout[4].length - 1] = 0; //opens door
-                    leftRoom.layout[5][layout[4].length - 1] = 0;
                 }
+                leftRoom.layout[leftRoom.sideDoor][layout[4].length - 1] = 0; //opens door
+                leftRoom.layout[leftRoom.sideDoor-1][layout[4].length - 1] = 0;
             }
             if(right){
                 const rightCord = '' + (x + 1) + ',' + y
@@ -212,16 +218,14 @@ class area{
                     rightRoom = map.get(rightCord)
                     currentRoom.right = rightRoom;
                     rightRoom.left = currentRoom;
-                    rightRoom.layout[4][0] = 0;
-                    rightRoom.layout[5][0] = 0;
                 }
                 else{
                     rightRoom = generateRoom(Math.random(), rightCord, ["left"])
                     currentRoom.right = rightRoom;
                     rightRoom.left = currentRoom;
-                    rightRoom.layout[4][0] = 0;
-                    rightRoom.layout[5][0] = 0;
                 }
+                rightRoom.layout[rightRoom.sideDoor][0] = 0;
+                rightRoom.layout[rightRoom.sideDoor-1][0] = 0;
             }
             if(top){
                 const topCord = '' + x + ',' + (y-1);
@@ -229,16 +233,14 @@ class area{
                     topRoom = map.get(topCord)
                     currentRoom.top = topRoom;
                     topRoom.bottom = currentRoom;
-                    topRoom.layout[layout.length - 1][10] = 0;
-                    topRoom.layout[layout.length - 1][11] = 0;
                 }
                 else{
                     topRoom = generateRoom(Math.random(), topCord, ['bottom'])
                     currentRoom.top = topRoom;
                     topRoom.bottom = currentRoom;
-                    topRoom.layout[layout.length - 1][10] = 0;
-                    topRoom.layout[layout.length - 1][11] = 0;
                 }
+                topRoom.layout[layout.length - 1][topRoom.topDoor] = 0;
+                topRoom.layout[layout.length - 1][topRoom.topDoor - 1] = 0;
             }
             if(bottom){
                 const bottomCord = '' + x + ',' + (y+1)
@@ -246,16 +248,14 @@ class area{
                     bottomRoom = map.get(bottomCord)
                     currentRoom.bottom = bottomRoom;
                     bottomRoom.top = currentRoom;
-                    bottomRoom.layout[0][10] = 0;
-                    bottomRoom.layout[0][11] = 0;
                 }
                 else{
                     bottomRoom = generateRoom(Math.random(), bottomCord, ['top'])
                     currentRoom.bottom = bottomRoom;
                     bottomRoom.top = currentRoom;
-                    bottomRoom.layout[0][10] = 0;
-                    bottomRoom.layout[0][11] = 0;
                 }
+                bottomRoom.layout[0][bottomRoom.topDoor] = 0;
+                bottomRoom.layout[0][bottomRoom.topDoor-1] = 0;
             }
             // currentRoom.mappedLayout = currentRoom.convertLayout(currentRoom.layout)
             return currentRoom; //returns current room
@@ -279,6 +279,8 @@ class room{
         //-----------------
 
         this.cords = cords; //cords: "x,y"
+        this.sideDoor = Math.floor(layout.length / 2)
+        this.topDoor = Math.floor(layout[0].length / 2)
     }
 
     convertLayout(layout){ //unused
