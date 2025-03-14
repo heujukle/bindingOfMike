@@ -310,7 +310,8 @@ function animate() {
       character.draw();
       damageInstances.draw();
       character.interact = false;
-      roomChange(character)
+      roomChange(character);
+    //   character.fixCamera();
     } 
     window.requestAnimationFrame(animate);
 }
@@ -432,7 +433,7 @@ function roomChange(player){
         player.y = window.innerHeight;
         player.x = (player.room.topDoor - 1) * width + offset
     }
-    else if(player.y > window.innerHeight){
+    else if(player.y > player.room.layout.length * height){
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
@@ -456,7 +457,7 @@ function roomChange(player){
         player.x = window.innerWidth - player.width;
         player.y = (player.room.sideDoor - 1) * height + offset
     }
-    else if(player.x+player.width > window.innerWidth){
+    else if(player.x+player.width > player.room.layout[0].length * width){
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();

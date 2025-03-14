@@ -102,6 +102,8 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
@@ -209,8 +211,8 @@ class area{
                     currentRoom.left = leftRoom; //sets room variables
                     leftRoom.right = currentRoom;
                 }
-                leftRoom.layout[leftRoom.sideDoor][layout[4].length - 1] = 0; //opens door
-                leftRoom.layout[leftRoom.sideDoor-1][layout[4].length - 1] = 0;
+                leftRoom.layout[leftRoom.sideDoor][leftRoom.layout[4].length - 1] = 0; //opens door
+                leftRoom.layout[leftRoom.sideDoor-1][leftRoom.layout[4].length - 1] = 0;
             }
             if(right){
                 const rightCord = '' + (x + 1) + ',' + y
@@ -239,8 +241,8 @@ class area{
                     currentRoom.top = topRoom;
                     topRoom.bottom = currentRoom;
                 }
-                topRoom.layout[layout.length - 1][topRoom.topDoor] = 0;
-                topRoom.layout[layout.length - 1][topRoom.topDoor - 1] = 0;
+                topRoom.layout[topRoom.layout.length - 1][topRoom.topDoor] = 0;
+                topRoom.layout[topRoom.layout.length - 1][topRoom.topDoor - 1] = 0;
             }
             if(bottom){
                 const bottomCord = '' + x + ',' + (y+1)
@@ -282,6 +284,9 @@ class room{
         this.sideDoor = Math.floor(layout.length / 2)
         this.topDoor = Math.floor(layout[0].length / 2)
         this.dynamicCamera = (layout.length > 10 || layout[0].length > 20) ? true : false;
+        // this.width = layout[0].length * width;
+        // this.height = layout.length * height;
+
     }
 
     convertLayout(layout){ //unused
