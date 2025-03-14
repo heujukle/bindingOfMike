@@ -281,6 +281,7 @@ class room{
         this.cords = cords; //cords: "x,y"
         this.sideDoor = Math.floor(layout.length / 2)
         this.topDoor = Math.floor(layout[0].length / 2)
+        this.dynamicCamera = (layout.length > 10 || layout[0].length > 20) ? true : false;
     }
 
     convertLayout(layout){ //unused

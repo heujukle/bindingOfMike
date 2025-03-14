@@ -406,17 +406,31 @@ function velocity(entity, xVelocity, yVelocity){
     entity.yVelocity = yVelocity
 }
 
+function doorAdjustTB(player){
+    let offset = player.x - (player.room.topDoor - 1) * width;
+    offset = (offset < 0) ? 0 : offset;
+    return offset; 
+}
+
+function doorAdjustLR(player){
+    let offset = player.y - (player.room.sideDoor - 1) * height;
+    offset = (offset < 0) ? 0 : offset;
+    return offset; 
+}
+
 //changes room if player is out of bounds
 function roomChange(player){
-    if(player.y < 0){
+    if(player.y < 0){ //top
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustTB(player)
         player.setRoom(player.room.top)
         player.y = window.innerHeight;
+        player.x = (player.room.topDoor - 1) * width + offset
     }
     else if(player.y > window.innerHeight){
         structures.resetList();
@@ -425,8 +439,10 @@ function roomChange(player){
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustTB(player)
         player.setRoom(player.room.bottom)
         player.y = 0;
+        player.x = (player.room.topDoor - 1) * width + offset
     }
     else if(player.x < 0){
         structures.resetList();
@@ -435,8 +451,10 @@ function roomChange(player){
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustLR(player)
         player.setRoom(player.room.left)
         player.x = window.innerWidth - player.width;
+        player.y = (player.room.sideDoor - 1) * height + offset
     }
     else if(player.x+player.width > window.innerWidth){
         structures.resetList();
@@ -445,8 +463,10 @@ function roomChange(player){
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustLR(player)
         player.setRoom(player.room.right)
         player.x = 0;
+        player.y = (player.room.sideDoor - 1) * height + offset
     }
 }
 
