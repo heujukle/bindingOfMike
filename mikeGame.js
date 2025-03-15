@@ -179,7 +179,9 @@ function moveEntitiy(entitiy, xChange, yChange, skipEntities){ //moves an entity
     if(collision2(entitiy, structures) || (collision2(entitiy, entities) && skipEntities != true)){
         entitiy.y -= yChange;
         entitiy.x -= xChange;
+        return false;
     }
+    return true;
 }
 
 function collison(entitiy, target, collider, func = false){ //used for induvidual collisions
@@ -298,10 +300,10 @@ class point{
 function animate() {
     if (document.timeline.currentTime - lastUpdate > 1000 / fps && !menu) {
       lastUpdate = document.timeline.currentTime;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, character.room.width, character.room.height);
       const floor = ctx.createPattern(document.getElementById('floor'), "repeat") 
       ctx.fillStyle = floor;
-      ctx.fillRect(0, 0, canvas.width, canvas.height); //creates the floor
+      ctx.fillRect(0, 0,  character.room.width, character.room.height); //creates the floor
       character.preDraw();
       timers.run()
       structures.draw();
@@ -311,7 +313,6 @@ function animate() {
       damageInstances.draw();
       character.interact = false;
       roomChange(character);
-    //   character.fixCamera();
     } 
     window.requestAnimationFrame(animate);
 }
@@ -332,6 +333,10 @@ function updateWallet(increase, target){
 
 //applies velocity to an entitiy
 function velocity(entity, xVelocity, yVelocity){
+    const totalMovement = {
+        x: 0,
+        y: 0
+    }
     const temp = {
         x : entity.x,
         y : entity.y,
@@ -362,16 +367,20 @@ function velocity(entity, xVelocity, yVelocity){
 
     for(let i = 0; i < steps; i++){
         temp.x += xStep
+        totalMovement.x += xStep
         if(collision2(temp, structures)){
             temp.x -= xStep
+            totalMovement.x -= yStep
             entity.xVelocity = 0
             break;
         }
     }
     for(let i = 0; i < steps; i++){
         temp.y += yStep
+        totalMovement.y += yStep
         if(collision2(temp, structures)){
             temp.y -= yStep
+            totalMovement.y -= yStep
             entity.yVelocity = 0
             break;
         }
@@ -405,6 +414,7 @@ function velocity(entity, xVelocity, yVelocity){
     }
     entity.xVelocity = xVelocity
     entity.yVelocity = yVelocity
+    return totalMovement;
 }
 
 function doorAdjustTB(player){
@@ -422,6 +432,7 @@ function doorAdjustLR(player){
 //changes room if player is out of bounds
 function roomChange(player){
     if(player.y < 0){ //top
+        player.fixCamera()
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
@@ -430,10 +441,12 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.top)
-        player.y = window.innerHeight;
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
+        player.y = player.room.height;
         player.x = (player.room.topDoor - 1) * width + offset
     }
     else if(player.y > player.room.layout.length * height){
+        player.fixCamera()
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
@@ -442,10 +455,12 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.bottom)
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
         player.y = 0;
         player.x = (player.room.topDoor - 1) * width + offset
     }
     else if(player.x < 0){
+        player.fixCamera()
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
@@ -454,10 +469,12 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.left)
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
         player.x = window.innerWidth - player.width;
         player.y = (player.room.sideDoor - 1) * height + offset
     }
     else if(player.x+player.width > player.room.layout[0].length * width){
+        player.fixCamera()
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
@@ -466,6 +483,7 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.right)
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
         player.x = 0;
         player.y = (player.room.sideDoor - 1) * height + offset
     }

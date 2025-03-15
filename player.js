@@ -9,16 +9,24 @@ class player {
         ])
         this.actions = new Map([ //binds funtioncs to actions by event listeners, allows the actions to be executed on frame
             ['up', function(player){
-                moveEntitiy(player, 0, -player.stats["speed"])
+                if( moveEntitiy(player, 0, -player.stats["speed"]) && player.room.dynamicCamera == true){
+                    player.movements.y += -player.stats["speed"]
+                }
             }],
             ['down', function(player){
-                moveEntitiy(player, 0, player.stats["speed"])
+                if(moveEntitiy(player, 0, player.stats["speed"]) && player.room.dynamicCamera == true){
+                    player.movements.y += player.stats["speed"]
+                }
             }],
             ['left', function(player){
-                moveEntitiy(player, -player.stats["speed"], 0)
+                if(moveEntitiy(player, -player.stats["speed"], 0) && player.room.dynamicCamera == true){
+                    player.movements.x += -player.stats["speed"]
+                }
             }],
             ['right', function(player){
-                moveEntitiy(player, player.stats["speed"], 0)
+                if(moveEntitiy(player, player.stats["speed"], 0) && player.room.dynamicCamera == true){
+                    player.movements.x += player.stats["speed"]
+                }
             }],
             ['interact', function(player){
                 player.interact = true;
@@ -59,6 +67,12 @@ class player {
         this.sprite = null;
         this.meleeInventory = []
         this.materials = {}
+        this.movements = {
+            x:0,
+            y:0
+        }
+        this.translateX = 0;
+        this.translateY = 0;
     }
     
     hotBarChange(direction){ //changes direction of hotbar
@@ -92,10 +106,15 @@ class player {
             }
         }
         if(this.stamina < this.stats['maxStamina']) this.stamina += this.stats['staminaRegen'];
-        velocity(this, this.xVelocity, this.yVelocity)
+        this.velocity(this.xVelocity, this.yVelocity)
         this.updateMove()
+        if(this.room.dynamicCamera == true){
+            this.dynamicCamera()
+            this.movements.x = 0
+            this.movements.y = 0
+        }
     }
-
+    
     draw(){ //draws player
         staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
         ctx.beginPath();
@@ -117,13 +136,55 @@ class player {
         ctx.closePath();
     }
 
+    dynamicCamera(){
+            this.verifyCameraBounds()
+            this.translateY += this.movements.y
+            this.translateX += this.movements.x
+            ctx.translate(-this.movements.x, -this.movements.y)
+            // console.log(this.translateY)
+    }
+
+    verifyCameraBounds(){
+        if(this.y < window.innerHeight/2 + this.stats['speed'] * 2){ //top this.y < window.innerHeight/2 + this.stats['speed'] * 2
+            this.movements.y = 0;
+        }
+        if(this.x < window.innerWidth/2 + this.stats['speed'] * 2){
+            this.movements.x = 0;
+        }
+        if(this.y > this.room.height - window.innerHeight/2 - this.stats['speed'] * 2){
+            this.movements.y = 0;
+        }
+        if(this.x > this.room.width - window.innerWidth/2 - this.stats['speed'] * 2){
+            this.movements.x = 0;
+        }
+    }
+
+    lockCameraToPlayer(){
+        // this.translateX = this.x + this.width/2 - window.innerWidth/2;
+        // this.translateY = this.y + this.height/2 - window.innerHeight / 2;
+        // ctx.translate(-this.translateX, -this.translateY)
+    }
+
     fixCamera(){
         if(this.room.dynamicCamera == true){
-            ctx.translate(-this.x, -this.y)
+            ctx.translate(this.translateX, this.translateY)
+            this.translateX = 0;
+            this.translateY = 0;
         }
     }
     has(item){ //if player has an item
         return Object.keys(this.passiveItems).includes(item)
+    }
+
+    velocity(xVelocity, yVelocity){
+        const movement = velocity(this, xVelocity, yVelocity)
+        if(movement.y != 0){
+            const result = this.movements.y + movement.y
+            this.movements.y = result
+        }
+        if(movement.x != 0){
+            this.movements.y += movement.x
+        }
     }
 
     onDamage(damage = 5, knockbackfunc = null, source = null){
