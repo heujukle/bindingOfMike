@@ -157,11 +157,15 @@ class player {
                 stopY = true
             }
         }
-        if(this.x < window.innerWidth/2 + this.stats['speed'] * 2){
-            stopX = true
+        if(this.movements.x < 0){ // left
+            if(this.translateX + this.movements.x < 0 || this.x - this.translateX > window.innerWidth/2 + 10){
+                stopX = true
+            }
         }
-        if(this.x > this.room.width - window.innerWidth/2 - this.stats['speed'] * 2){
-            stopX = true
+        else{ //right
+            if(this.translateX + this.movements.x > this.room.width - window.innerWidth || this.x - this.translateX < window.innerWidth/2 - 10){
+                stopX = true
+            }
         }
         if(stopX) this.movements.x = 0
         if(stopY) this.movements.y = 0
@@ -169,18 +173,22 @@ class player {
     //should be the first thing to be run when a loading into a new area
     lockCameraToPlayer(side, offset){
         switch(side){
+            case 'left': //will enter room on right side
+                this.translateY -= this.y - window.innerHeight/2 - offset
+                this.translateX += this.room.width - window.innerWidth
+                break;
             case 'right':
-                this.translateY += offset;
+                this.translateY -= this.y - window.innerHeight/2 - offset;
                 break;
-            case 'left':
-                this.translateY += offset;
-                break;
-            case 'top':
+            case 'top': //enter room on bottom
+                this.translateY += this.room.height - window.innerHeight
+                this.translateX -= this.x - window.innerWidth /2 - offset
                 break;
             case 'bottom':
+                this.translateX -= this.x - window.innerWidth /2 - offset
                 break;
         }
-        ctx.translate(0, -this.translateY)
+        ctx.translate(-this.translateX, -this.translateY)
     }
 
     fixCamera(){
