@@ -139,7 +139,7 @@ const passives = [
 {
     name: 'vampire',
     itemVariables: {},
-    price: 2500, //1000
+    price: 600, //1000
     hasFunc: {func:(character) =>{  //future proofing items
         character.health  += character.health + 1 > character.stats['maxHealth'] ? 0 : 1
         character.updateHealthBar()
@@ -150,7 +150,7 @@ const passives = [
 {
     name: 'boom',
     itemVariables: {},
-    price: 1500, //1000
+    price: 800, //1000
     hasFunc: {func:(source) =>{  //future proofing items
         damageInstances.add(new explosion(source, 100, 15, 30, 5))
         return;
@@ -160,7 +160,7 @@ const passives = [
 {
     name: 'self boom',
     itemVariables: {hitList : []},
-    price: 500, //200
+    price: 300, //200
     hasFunc: {func:(character) =>{ //future proofing items
         damageInstances.add(new explosion(character, 400, 15, 60))
     }, hook: 'playerTouch'},
@@ -195,7 +195,7 @@ const passives = [
 {
     name: 'bouncy',
     itemVariables: {},
-    price: 100, //100
+    price: 10000, //100
     hasFunc: null, //future proofing items
     type: 'passiveItem'
 },

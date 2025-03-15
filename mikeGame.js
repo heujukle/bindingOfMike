@@ -10,7 +10,7 @@ let skeletonPspeed = 8;
 let skeletonPdamage = 10;
 let zombieDamage = 15; 
 let skeletonDamage = 5; 
-let moneyScale = 1;
+let moneyScale = 1.5;
 let knockBackResistance = 1;
 let areaCount = 0 
 let itemScale = 1
@@ -513,7 +513,7 @@ function verifyIfPlayer(source){ //returns true if player
 function makeKnockback(source){ //returns a default knockback function
 function result (target){
     const degrees = findDegrees(source.x + source.width/2, source.y + source.height/2, target.x + target.width/2, target.y + target.height/2)
-    const pv = getProjVelocities(degrees, 5)
+    const pv = getProjVelocities(degrees, 20)
     console.log(degrees, pv)
     target.xVelocity += -pv.xVelocity
     target.yVelocity += -pv.yVelocity
