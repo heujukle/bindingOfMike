@@ -40,12 +40,13 @@ class projectile{
             }
             this.y -= this.yVelocity //fixes the y velocicty
             this.x += this.xVelocity //readds xvelocity
-            if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.entityCollision()){ //if hits enemeny or oobs the remove or repeat
+            if(this.x > this.room.width || this.x < 0 || this.y > this.room.height || this.y < 0 || this.entityCollision()){ //if hits enemeny or oobs the remove or repeat
                 if(this.repeating){//repeats
                     this.x = this.startX;
                     this.y = this.startY;
                 }
                 else{ //removes
+                    console.log(this.x)
                     console.log('reset')
                     damageInstances.remove(this.index)
                     return;
@@ -57,7 +58,8 @@ class projectile{
             this.x += this.xVelocity //adds velocities
             this.y += this.yVelocity
             // checks collisions
-                if(this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){ 
+            console.log(this.room)
+                if(this.x > this.room.width || this.x < 0 || this.y > this.room.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){ 
                     if(this.repeating){//repeats projectile
                         this.x = this.startX; 
                         this.y = this.startY;
