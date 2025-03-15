@@ -441,7 +441,7 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.top)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("top", offset)
         player.y = player.room.height;
         player.x = (player.room.topDoor - 1) * width + offset
     }
@@ -455,7 +455,7 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.bottom)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("bottom", offset)
         player.y = 0;
         player.x = (player.room.topDoor - 1) * width + offset
     }
@@ -469,7 +469,7 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.left)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("left", offset)
         player.x = window.innerWidth - player.width;
         player.y = (player.room.sideDoor - 1) * height + offset
     }
@@ -483,7 +483,7 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.right)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer()
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("right", offset)
         player.x = 0;
         player.y = (player.room.sideDoor - 1) * height + offset
     }

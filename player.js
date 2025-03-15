@@ -158,11 +158,21 @@ class player {
             this.movements.x = 0;
         }
     }
-
-    lockCameraToPlayer(){
-        // this.translateX = this.x + this.width/2 - window.innerWidth/2;
-        // this.translateY = this.y + this.height/2 - window.innerHeight / 2;
-        // ctx.translate(-this.translateX, -this.translateY)
+    //should be the first thing to be run when a loading into a new area
+    lockCameraToPlayer(side, offset){
+        switch(side){
+            case 'right':
+                this.translateY += offset;
+                break;
+            case 'left':
+                this.translateY += offset;
+                break;
+            case 'top':
+                break;
+            case 'bottom':
+                break;
+        }
+        ctx.translate(0, -this.translateY)
     }
 
     fixCamera(){
