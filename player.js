@@ -117,6 +117,11 @@ class player {
         ctx.closePath();
     }
 
+    fixCamera(){
+        if(this.room.dynamicCamera == true){
+            ctx.translate(-this.x, -this.y)
+        }
+    }
     has(item){ //if player has an item
         return Object.keys(this.passiveItems).includes(item)
     }

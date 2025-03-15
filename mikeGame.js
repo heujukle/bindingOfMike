@@ -145,7 +145,7 @@ function determineValueArray(input, options){ //will determine value to be retur
     }
 }
 
-function findDegrees(x1, y1, x2, y2){
+function findDegrees(x1, y1, x2, y2){ //finds degrees between two points
     let x = x1 - x2;
     let y = y1 - y2;
     let radians = Math.atan(x/y);
@@ -167,13 +167,13 @@ function findDegrees(x1, y1, x2, y2){
     return degrees;
 }
 
-function findDistance(x1, y1, x2, y2){
+function findDistance(x1, y1, x2, y2){ //finds distance between two points
     let x = x1 - x2;
     let y = y1 - y2;
     return Math.sqrt(x * x + y * y)
 }
 
-function moveEntitiy(entitiy, xChange, yChange, skipEntities){
+function moveEntitiy(entitiy, xChange, yChange, skipEntities){ //moves an entity
     entitiy.x += xChange
     entitiy.y += yChange
     if(collision2(entitiy, structures) || (collision2(entitiy, entities) && skipEntities != true)){
@@ -276,14 +276,16 @@ function collison3(entitiy, target, func){ //does not return upon collison
         console.log(collision)
 }
 
+//used for incrementing with a limit
 function incrementLimit(variable, limit, increment = 1){
     variable+=increment;
     if(variable >= limit){
-        return variable - limit
+        return variable - limit;
     }
     return variable;
 }
 
+//a resuable x, y point object
 class point{
     constructor(x, y){
         this.x = x;
@@ -291,13 +293,15 @@ class point{
     }
 }
 
+//the update function
+//zlayer is determined by the order draaws are called in this function. The early the call the lower it is
 function animate() {
     if (document.timeline.currentTime - lastUpdate > 1000 / fps && !menu) {
       lastUpdate = document.timeline.currentTime;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const floor = ctx.createPattern(document.getElementById('floor'), "repeat")
+      const floor = ctx.createPattern(document.getElementById('floor'), "repeat") 
       ctx.fillStyle = floor;
-      ctx.fillRect(0, 0, canvas.width, canvas.height); 
+      ctx.fillRect(0, 0, canvas.width, canvas.height); //creates the floor
       character.preDraw();
       timers.run()
       structures.draw();
@@ -306,7 +310,8 @@ function animate() {
       character.draw();
       damageInstances.draw();
       character.interact = false;
-      roomChange(character)
+      roomChange(character);
+    //   character.fixCamera();
     } 
     window.requestAnimationFrame(animate);
 }
@@ -315,6 +320,8 @@ function setFPS(target){
     fps = target;
 }
 
+//increase is how much is added to the target objects wallet
+//target is most likely a player object
 function updateWallet(increase, target){
     if(target.wallet != null){
         if(increase > 0){target.wallet += increase * moneyScale}
@@ -323,6 +330,7 @@ function updateWallet(increase, target){
     }
 }
 
+//applies velocity to an entitiy
 function velocity(entity, xVelocity, yVelocity){
     const temp = {
         x : entity.x,
@@ -330,7 +338,7 @@ function velocity(entity, xVelocity, yVelocity){
         width : entity.width,
         height : entity.height
     }
-    if(character.has('bouncy')){
+    if(character.has('bouncy')){ //special psychics for bouncy
         temp.x += xVelocity
         if(collision2(temp, structures)){
             xVelocity *= -1
@@ -347,7 +355,7 @@ function velocity(entity, xVelocity, yVelocity){
             entity.y = temp.y
         }
     }
-    else{
+    else{ //default pyshics
     const steps = 20
     const xStep = xVelocity/steps
     const yStep = yVelocity/steps
@@ -371,7 +379,7 @@ function velocity(entity, xVelocity, yVelocity){
     entity.x = temp.x
     entity.y = temp.y
     }
-    if(xVelocity > 0){
+    if(xVelocity > 0){ //validates xVelocity
         xVelocity *= 0.9
         if(xVelocity < 0.5){
             xVelocity = 0
@@ -383,7 +391,7 @@ function velocity(entity, xVelocity, yVelocity){
             xVelocity = 0
         }
     }
-    if(yVelocity > 0){
+    if(yVelocity > 0){ //vallidates y veolcity
         yVelocity *= 0.9
         if(yVelocity < 0.5){
             yVelocity = 0
@@ -399,26 +407,43 @@ function velocity(entity, xVelocity, yVelocity){
     entity.yVelocity = yVelocity
 }
 
+function doorAdjustTB(player){
+    let offset = player.x - (player.room.topDoor - 1) * width;
+    offset = (offset < 0) ? 0 : offset;
+    return offset; 
+}
+
+function doorAdjustLR(player){
+    let offset = player.y - (player.room.sideDoor - 1) * height;
+    offset = (offset < 0) ? 0 : offset;
+    return offset; 
+}
+
+//changes room if player is out of bounds
 function roomChange(player){
-    if(player.y < 0){
+    if(player.y < 0){ //top
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustTB(player)
         player.setRoom(player.room.top)
         player.y = window.innerHeight;
+        player.x = (player.room.topDoor - 1) * width + offset
     }
-    else if(player.y > window.innerHeight){
+    else if(player.y > player.room.layout.length * height){
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustTB(player)
         player.setRoom(player.room.bottom)
         player.y = 0;
+        player.x = (player.room.topDoor - 1) * width + offset
     }
     else if(player.x < 0){
         structures.resetList();
@@ -427,22 +452,26 @@ function roomChange(player){
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustLR(player)
         player.setRoom(player.room.left)
         player.x = window.innerWidth - player.width;
+        player.y = (player.room.sideDoor - 1) * height + offset
     }
-    else if(player.x+player.width > window.innerWidth){
+    else if(player.x+player.width > player.room.layout[0].length * width){
         structures.resetList();
         player.room.savedEntities = entities.list;
         entities.clear();
         player.room.savedInteractables = interactables.list;
         interactables.clear()
         damageInstances.clear();
+        const offset = doorAdjustLR(player)
         player.setRoom(player.room.right)
         player.x = 0;
+        player.y = (player.room.sideDoor - 1) * height + offset
     }
 }
 
-function getProjVelocities(degrees, speed){ //returns velocities for projectiles so they travel at a consistent speed
+function getProjVelocities(degrees, speed){ //returns velocities for projectiles/entities so they travel at a consistent speed
     if(degrees > 360){
         degrees -= 360
     }
@@ -475,6 +504,9 @@ function getProjVelocities(degrees, speed){ //returns velocities for projectiles
     return result;
 }
 
+//drops an item object to the target
+//target must have a material variable
+//item must be an object with a name attribute
 function dropItems(item, target){
     const timeBeforeFade = 5000;
     const fadeTime = 0;
