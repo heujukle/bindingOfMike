@@ -48,7 +48,7 @@ class player {
             'maxHealth' : 100,
             'maxStamina' : 100,
             'dashSpeed' : 10,
-            'staminaRegen' : 0.1
+            'staminaRegen' : 10
         }
         this.health = 100;
         this.stamina = 100;
@@ -145,18 +145,26 @@ class player {
     }
 
     verifyCameraBounds(){
-        if(this.y < window.innerHeight/2 + this.stats['speed'] * 2){ //top this.y < window.innerHeight/2 + this.stats['speed'] * 2
-            this.movements.y = 0;
+        let stopY = false
+        let stopX = false
+        if(this.movements.y < 0){ // up
+            if(this.translateY + this.movements.y < 0 || this.y - this.translateY > window.innerHeight/2 + 10){
+                stopY = true
+            }
+        }
+        else{ //down
+            if(this.translateY + this.movements.y > this.room.height - window.innerHeight || this.y - this.translateY < window.innerHeight/2 - 10){
+                stopY = true
+            }
         }
         if(this.x < window.innerWidth/2 + this.stats['speed'] * 2){
-            this.movements.x = 0;
-        }
-        if(this.y > this.room.height - window.innerHeight/2 - this.stats['speed'] * 2){
-            this.movements.y = 0;
+            stopX = true
         }
         if(this.x > this.room.width - window.innerWidth/2 - this.stats['speed'] * 2){
-            this.movements.x = 0;
+            stopX = true
         }
+        if(stopX) this.movements.x = 0
+        if(stopY) this.movements.y = 0
     }
     //should be the first thing to be run when a loading into a new area
     lockCameraToPlayer(side, offset){
@@ -189,11 +197,10 @@ class player {
     velocity(xVelocity, yVelocity){
         const movement = velocity(this, xVelocity, yVelocity)
         if(movement.y != 0){
-            const result = this.movements.y + movement.y
-            this.movements.y = result
+            this.movements.y += movement.y
         }
         if(movement.x != 0){
-            this.movements.y += movement.x
+            this.movements.x += movement.x
         }
     }
 
