@@ -290,6 +290,10 @@ const createShop = (x, y, width, height) => { //function to make dummys
 const createForge = (x, y, width, height) => { //function to make dummys
     interactables.add(new forge(x, y, width, height, character))
 }
+
+const createZombieSpawner = (x, y, width, height) => { //function to make dummys
+    entities.add(new spawner(x, y, width, height, character, 'zombie'))
+}
 const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
         return;
@@ -305,5 +309,6 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['f', createForge],
     ['ez', createEvilZombie],
     ['bs', createBoomSkeleton],
+    ['zs', createZombieSpawner],
 
 ])

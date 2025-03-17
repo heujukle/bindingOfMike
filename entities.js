@@ -30,20 +30,24 @@ class dummy{
 }
 
 class spawner{
-    constructor(x, y, width, height, type){
+    constructor(x, y, width, height, target, type){
         this.x = x;
         this.y = y;
         this.index;
         this.width = width;
         this.height = height;
+        this.target = target
         this.points = getPoints(3, this)
         this.color = "#3c453e"
         this.defaultColor = "#3c453e"
         this.timeSinceDamage = 0;
         this.health = 100;
         this.behavior = 'static'
+        this.type = type
+        this.drops = cloth;
         switch(type){
             case "zombie":
+                console.log('zombie spawner')
                 this.drops = cloth
                 break;
         }
@@ -57,10 +61,15 @@ class spawner{
     }
 
     draw(){
-        if(health < 0){
+        if(document.timeline.currentTime - this.timeSinceSpawn > 1000){
+            this.timeSinceSpawn = document.timeline.currentTime
+            console.log("yippe")
+            summon(this, this.type)
+        }
+        if(this.health < 0){
             entities.remove(this.index)
             updateWallet(40, this.target)
-            dropItems(this.items, this.target)
+            dropItems(this.drops, this.target)
         }
         if(document.timeline.currentTime - this.timeSinceDamage > 250){
             this.color = this.defaultColor;
