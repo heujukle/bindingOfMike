@@ -10,7 +10,7 @@ let skeletonPspeed = 8;
 let skeletonPdamage = 10;
 let zombieDamage = 15; 
 let skeletonDamage = 5; 
-let moneyScale = 1.5;
+let moneyScale = 1;
 let knockBackResistance = 1;
 let areaCount = 0 
 let itemScale = 1
@@ -441,9 +441,9 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.top)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("top", offset)
         player.y = player.room.height;
         player.x = (player.room.topDoor - 1) * width + offset
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("top", offset)
     }
     else if(player.y > player.room.layout.length * height){
         player.fixCamera()
@@ -455,9 +455,9 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.bottom)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("bottom", offset)
         player.y = 0;
         player.x = (player.room.topDoor - 1) * width + offset
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("bottom", offset)
     }
     else if(player.x < 0){
         player.fixCamera()
@@ -469,9 +469,9 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.left)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("left", offset)
-        player.x = window.innerWidth - player.width;
+        player.x = player.room.width - player.width;
         player.y = (player.room.sideDoor - 1) * height + offset
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("left", offset)
     }
     else if(player.x+player.width > player.room.layout[0].length * width){
         player.fixCamera()
@@ -483,9 +483,9 @@ function roomChange(player){
         damageInstances.clear();
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.right)
-        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("right", offset)
         player.x = 0;
         player.y = (player.room.sideDoor - 1) * height + offset
+        if(player.room.dynamicCamera == true) player.lockCameraToPlayer("right", offset)
     }
 }
 
@@ -563,7 +563,7 @@ function verifyIfPlayer(source){ //returns true if player
 function makeKnockback(source){ //returns a default knockback function
 function result (target){
     const degrees = findDegrees(source.x + source.width/2, source.y + source.height/2, target.x + target.width/2, target.y + target.height/2)
-    const pv = getProjVelocities(degrees, 20)
+    const pv = getProjVelocities(degrees, 15)
     console.log(degrees, pv)
     target.xVelocity += -pv.xVelocity
     target.yVelocity += -pv.yVelocity

@@ -125,6 +125,13 @@ const stats = [
     type:'stat',
     statName:'staminaRegen',
     increment: 0.1
+},
+{
+    name:'shoot speed',
+    price:20,
+    type:'stat',
+    statName:'shoot speed',
+    increment: -25
 }
 ]
 
@@ -138,9 +145,11 @@ const passives = [
 },
 {
     name: 'vampire',
-    itemVariables: {},
+    itemVariables: {timeOfLastActivation: 0},
     price: 600, //1000
     hasFunc: {func:(character) =>{  //future proofing items
+        if(document.timeline.currentTime - character.passiveItems["vampire"].timeOfLastActivation < 500) return
+        character.passiveItems["vampire"].timeOfLastActivation = document.timeline.currentTime
         character.health  += character.health + 1 > character.stats['maxHealth'] ? 0 : 1
         character.updateHealthBar()
         return;

@@ -46,7 +46,6 @@ class projectile{
                     this.y = this.startY;
                 }
                 else{ //removes
-                    console.log(this.x)
                     console.log('reset')
                     damageInstances.remove(this.index)
                     return;
@@ -58,7 +57,6 @@ class projectile{
             this.x += this.xVelocity //adds velocities
             this.y += this.yVelocity
             // checks collisions
-            console.log(this.room)
                 if(this.x > this.room.width || this.x < 0 || this.y > this.room.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){ 
                     if(this.repeating){//repeats projectile
                         this.x = this.startX; 

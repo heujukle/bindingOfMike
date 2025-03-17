@@ -48,7 +48,8 @@ class player {
             'maxHealth' : 100,
             'maxStamina' : 100,
             'dashSpeed' : 10,
-            'staminaRegen' : 10
+            'staminaRegen' : 0.1,
+            'shoot speed' : 500
         }
         this.health = 100;
         this.stamina = 100;
@@ -73,6 +74,7 @@ class player {
         }
         this.translateX = 0;
         this.translateY = 0;
+        this.timeOfLastShot = 0
     }
     
     hotBarChange(direction){ //changes direction of hotbar
@@ -172,22 +174,25 @@ class player {
     }
     //should be the first thing to be run when a loading into a new area
     lockCameraToPlayer(side, offset){
+        console.log(side)
         switch(side){
             case 'left': //will enter room on right side
-                this.translateY -= this.y - window.innerHeight/2 - offset
+                this.translateY += this.y - window.innerHeight/2 - offset
                 this.translateX += this.room.width - window.innerWidth
                 break;
             case 'right':
-                this.translateY -= this.y - window.innerHeight/2 - offset;
+                this.translateY += this.y - window.innerHeight/2 - offset;
                 break;
             case 'top': //enter room on bottom
                 this.translateY += this.room.height - window.innerHeight
-                this.translateX -= this.x - window.innerWidth /2 - offset
+                this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset
                 break;
-            case 'bottom':
-                this.translateX -= this.x - window.innerWidth /2 - offset
+            case 'bottom': //enter room on top
+                this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset
                 break;
         }
+        console.log(this.translateX)
+        console.log(this.translateY)
         ctx.translate(-this.translateX, -this.translateY)
     }
 
@@ -221,6 +226,8 @@ class player {
             if(typeof knockbackfunc === 'function'){
                 console.log('knockback')
                     knockbackfunc(this)
+                    console.log("Xv", this.xVelocity)
+                    console.log("Yv", this.yVelocity)
             }
             this.iFrames = 30; //gives iframes
         }
@@ -342,6 +349,8 @@ class player {
     }
 
     sendProjectile = (e) =>{
+        if(document.timeline.currentTime - this.timeOfLastShot < this.stats['shoot speed']) return //early return
+        this.timeOfLastShot = document.timeline.currentTime
         let centerX = this.x + this.width / 2
         let centerY = this.y + this.height / 2
         let degrees = findDegrees(e.x + this.translateX, e.y + this.translateY, centerX, centerY)
