@@ -29,8 +29,52 @@ class dummy{
     }
 }
 
+class spawner{
+    constructor(x, y, width, height, type){
+        this.x = x;
+        this.y = y;
+        this.index;
+        this.width = width;
+        this.height = height;
+        this.points = getPoints(3, this)
+        this.color = "#3c453e"
+        this.defaultColor = "#3c453e"
+        this.timeSinceDamage = 0;
+        this.health = 100;
+        this.behavior = 'static'
+        switch(type){
+            case "zombie":
+                this.drops = cloth
+                break;
+        }
+        this.timeSinceSpawn = 0;
+    }
+
+    onDamage(damage = 5){
+        this.health -= damage;
+        this.color = '#ff0000'
+        this.timeSinceDamage =  document.timeline.currentTime;
+    }
+
+    draw(){
+        if(health < 0){
+            entities.remove(this.index)
+            updateWallet(40, this.target)
+            dropItems(this.items, this.target)
+        }
+        if(document.timeline.currentTime - this.timeSinceDamage > 250){
+            this.color = this.defaultColor;
+        }
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+}
+
 class zombie{
-    constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.75){
+    constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.75, spawned = false){
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -51,6 +95,7 @@ class zombie{
         this.knockback = 10;
         this.knockBackResistance = knockBackResistance * 0.75
         this.drops = cloth
+        this.spawned = spawned;
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -66,8 +111,10 @@ class zombie{
     draw(){
         if(this.health < 0){
             entities.remove(this.index)
-            updateWallet(15, this.target)
-            dropItems(this.drops, this.target)
+            if(spawned == false){
+                updateWallet(15, this.target)
+                dropItems(this.drops, this.target)
+            }
             return;
         }
         velocity(this, this.xVelocity, this.yVelocity)
