@@ -146,11 +146,11 @@ const passives = [
 {
     name: 'vampire',
     itemVariables: {timeOfLastActivation: 0},
-    price: 600, //1000
+    price: 2500, //1000
     hasFunc: {func:(character) =>{  //future proofing items
         if(document.timeline.currentTime - character.passiveItems["vampire"].timeOfLastActivation < 500) return
         character.passiveItems["vampire"].timeOfLastActivation = document.timeline.currentTime
-        character.health  += character.health + 1 > character.stats['maxHealth'] ? 0 : 1
+        character.health  += character.health + 0.5 > character.stats['maxHealth'] ? 0 : 1
         character.updateHealthBar()
         return;
     }, hook: 'onEnemyDamage'},
