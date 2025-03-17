@@ -42,8 +42,8 @@ class player {
         this.directionList = [];
         this.stats = { //player stats that can increase
             'speed' : 5,
-            'pSpeed' : 9,
-            'pDamage' : 9,
+            'pSpeed' : 10,
+            'pDamage' : 13,
             'multishot' : 0,
             'maxHealth' : 100,
             'maxStamina' : 100,
