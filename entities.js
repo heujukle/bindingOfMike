@@ -61,7 +61,7 @@ class spawner{
     }
 
     draw(){
-        if(document.timeline.currentTime - this.timeSinceSpawn > 1000){
+        if(document.timeline.currentTime - this.timeSinceSpawn > 5000){
             this.timeSinceSpawn = document.timeline.currentTime
             console.log("yippe")
             summon(this, this.type)
@@ -120,7 +120,7 @@ class zombie{
     draw(){
         if(this.health < 0){
             entities.remove(this.index)
-            if(spawned == false){
+            if(this.spawned == false){
                 updateWallet(15, this.target)
                 dropItems(this.drops, this.target)
             }
