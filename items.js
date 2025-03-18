@@ -76,7 +76,7 @@ const markedUpHealthInCan = {
 const stats = [
 {
     name:'multiShot',
-    price:75,
+    price:125,
     type:'stat',
     statName:'multishot'
 },
@@ -94,13 +94,13 @@ const stats = [
 },
 {
     name:'projectile damage',
-    price:30,
+    price:40,
     type:'stat',
     statName:'pDamage'
 },
 {
     name:'max health',
-    price:20,
+    price:40,
     type:'stat',
     statName:'maxHealth',
     increment: 15
@@ -121,14 +121,14 @@ const stats = [
 },
 {
     name:'stamina regeneration',
-    price:20,
+    price:45,
     type:'stat',
     statName:'staminaRegen',
     increment: 0.1
 },
 {
     name:'shoot speed',
-    price:20,
+    price:50,
     type:'stat',
     statName:'shoot speed',
     increment: -25
@@ -256,7 +256,7 @@ const meleeItems = [
             newSword.setValues(sword.startingAngle - 90, {x: window.innerWidth - e.x, y:window.innerHeight - e.y})
             damageInstances.add(newSword)
         }
-    }, null, null, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
+    }, undefined, undefined, 0, {damage: 10, height:20, width:20, knockback: 10})}, //item itself
     price:700, //price
     type: 'melee' //type
 }, 
@@ -277,14 +277,14 @@ const meleeItems = [
 {
     name: 'Spin sword',
     sprite: null,
-    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Spin sword', null, null, null, 1, {damage:15, width:20, span:30})}, //item itself
+    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Spin sword', undefined, undefined, undefined, 1, {damage:15, width:20, span:30})}, //item itself
     price:200, //price
     type: 'melee' //type
 },
 {
     name: 'Super Spin Swords',
     sprite: null,
-    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Super Spin swords', null, function(sword){
+    item:()=>{return new melee(undefined, 10, 100, 300, 30, 360, 'Super Spin swords', undefined, function(sword){
         const spinner = new melee(sword.source, 5, 75, 250, 25, 360)
         spinner.setValues(sword.startingAngle + 180)
         damageInstances.add(spinner)

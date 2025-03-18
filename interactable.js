@@ -74,12 +74,9 @@ constructor(x, y, width, height, target){
     const seed = Math.random() + ''
     this.forSale = [
         healthInACan,
-        markedUpHealthInCan,
         determineValueArray(seed[4], meleeItems),
         determineValueArray(seed[5], stats),
         determineValueArray(seed[7], stats),
-        determineValueArray(seed[8], stats),
-        determineValueArray(seed[9], stats),
         determineValueArray(seed[6], passives),
     ]
 }
@@ -452,17 +449,17 @@ class forge{
                 const keys = Object.keys(swordTwo.increase)
                 for(let i = 0; i < keys.length; i++){
                     result[keys[i]] += swordTwo.increase[keys[i]] //adds the increase value to the new sword
-                    newIncrease[keys[i]] = Math.round(swordTwo.increase[keys[i]] * 1.5) //will add scale the increase value and add it to the new increase
+                    newIncrease[keys[i]] = Math.round(swordTwo.increase[keys[i]] * 1) //will add scale the increase value and add it to the new increase
                 }
             }
             if(swordOne.increase != null){
                 const keys = Object.keys(swordOne.increase)
                 for(let i = 0; i < keys.length; i++){
                     if(newIncrease[keys[i]] != null && newIncrease[keys[i]] != undefined){ ///if tehre is a key
-                        newIncrease[keys[i]] += Math.round(swordOne.increase[keys[i]] * 1.5) //scales
+                        newIncrease[keys[i]] += Math.round(swordOne.increase[keys[i]] * 1) //scales
                     }
                     else{
-                        newIncrease[keys[i]] = Math.round(swordOne.increase[keys[i]] * 1.5) //scales based off of sword one increase
+                        newIncrease[keys[i]] = Math.round(swordOne.increase[keys[i]] * 1) //scales based off of sword one increase
                     }
                 }
             }
