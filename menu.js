@@ -321,7 +321,8 @@ const controls = { //holds the controls of the game
     'right' : 'd',
     'interact' : 'e',
     'map' : 'm',
-    'inventory' : 'q'
+    'inventory' : 'q',
+    'unstuck' : 'l'
 }
 
 keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code written at 1 am

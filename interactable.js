@@ -19,10 +19,10 @@ class portal{
         ctx.closePath();
         if(this.collision2([this.target])){ //scales the difficulty
             console.log('portal')
-            entitiySpeed = entitiySpeed + 1 >= 3 ?  entitiySpeed : entitiySpeed + 1; //limits to 3
+            entitiySpeed = entitiySpeed + 1 >= 3 ?  entitiySpeed : entitiySpeed + 0.25; //limits to 3
             zombieHealth *= 1.5;
             zombieDamage *= 1.3;
-            skeletonPspeed = skeletonPspeed + 1 >= 3 ?  skeletonPspeed : skeletonPspeed + 1;
+            skeletonPspeed = skeletonPspeed + 1 >= 3 ?  skeletonPspeed : skeletonPspeed + 0.25;
             skeletonPdamage *= 1.2;
             skeletonDamage *= 1.2
             skeletonHealth *= 1.5;

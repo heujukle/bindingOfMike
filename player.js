@@ -49,7 +49,7 @@ class player {
             'maxStamina' : 100,
             'dashSpeed' : 10,
             'staminaRegen' : 0.1,
-            'shoot speed' : 500
+            'shoot speed' : 425
         }
         this.health = 100;
         this.stamina = 100;

@@ -67,6 +67,9 @@ document.addEventListener('keyup', (e) => { //removes action
                         case controls.interact:
                             character.directionList.splice(character.directionList.indexOf('interact'), 1);
                             break;
+                            case controls.unstuck:
+                                unstuck(character)
+                                break;
     }
 })
 
@@ -74,6 +77,20 @@ document.addEventListener('click', (e) => { //uses players selected item
     if(!menu) character.usableItemList.get(character.selectedItem)(e);
     })
 
+
+function unstuck(player){
+    if(collision2(player, structures)){
+    for(let i = 1; i < player.room.layout.length; i++){
+        for(let j = 0; j < player.room.layout[0].length; j++){
+            if(player.room.layout[i][j] === 0){
+                player.y = i * height;
+                player.x = j * width;
+                return;
+            }
+        }
+    }
+}
+}
 
 // document.addEventListener('keydown', (e) => {
 //     if(e.key === 'c'){
