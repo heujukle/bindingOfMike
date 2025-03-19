@@ -227,10 +227,15 @@ class melee{
         ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;
-        for(let i = 0; i < entities.list.length; i++){
-            if(this.detectCollision(entities.list[i])){
-                console.log('I love writing code')
+        if(this.source instanceof player || this.source.allied === 'player'){ //allied is future proof for minions with swords
+            for(let i = 0; i < entities.list.length; i++){
+                if(this.detectCollision(entities.list[i])){
+                    console.log('I love writing code')
+                }
             }
+        }
+        else{
+            this.detectCollision(this.source.target);
         }
     }
 
@@ -273,12 +278,14 @@ class melee{
                     if(other.xVelocity != null){
                         console.log('knockbackX')
                         // other.xVelocity = other.x > this.source.x ? other.xVelocity += this.knockback : other.xVelocity -= this.knockback
-                        other.xVelocity = directions.xVelocity * other.knockBackResistance
+                        if(!(other instanceof player))other.xVelocity = directions.xVelocity * other.knockBackResistance
+                        else other.xVelocity = directions.xVelocity
                     }
                     if(other.yVelocity != null){
                         console.log('knockbackY')
                         // other.yVelocity = other.y > this.source.y ? other.yVelocity += this.knockback : other.yVelocity -= this.knockback
-                        other.yVelocity = directions.yVelocity * other.knockBackResistance
+                        if(!(other instanceof player))other.yVelocity = directions.yVelocity * other.knockBackResistance
+                        else other.yVelocity = directions.yVelocity
                     }
                     this.hitList.push(other)
                 }

@@ -307,6 +307,14 @@ const createZombie = (x, y, width, height) => { //function to make dummys
     entities.add(new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage, knockBackResistance))
 }
 
+const createBasicWarrior = (x, y, width, height) => { //function to make dummys
+    entities.add(new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, 'basic'))
+}
+
+const createSpinWarrior = (x, y, width, height) => { //function to make dummys
+    entities.add(new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, 'spin projectile'))
+}
+
 const createEvilZombie = (x, y, width, height) => { //function to make dummys
     entities.add(new evilZombie(x, y, 40, 40, character, entitiySpeed * 0.75, zombieHealth, zombieDamage * 1.5, knockBackResistance))
 }
@@ -350,5 +358,7 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['ez', createEvilZombie],
     ['bs', createBoomSkeleton],
     ['zs', createZombieSpawner],
+    ['bw', createBasicWarrior],
+    ['sw', createSpinWarrior]
 
 ])

@@ -185,6 +185,142 @@ class zombie{
     }
 }
 
+class Warrior{
+    constructor(x, y, width, height, target, speed, health = 25, damage = 0, knockBackResistance = 0.75, type = basic, spawned = false){
+        this.x = x;
+        this.y = y;
+        this.behavior = 'dynamic'
+        this.width = width;
+        this.height = height;
+        this.points = getPoints(3, this)
+        this.color = "#646875"
+        this.defaultColor = "#646875"
+        this.timeSinceDamage = 0;
+        this.action = this.pursuit
+        this.target = target
+        this.speed = speed
+        this.damage = damage
+        this.index;
+        this.health = health;
+        this.xVelocity = 0;
+        this.yVelocity = 0;
+        this.knockback = 10;
+        this.knockBackResistance = knockBackResistance * 0.75
+        this.drops = cloth
+        this.spawned = spawned;
+        this.type = type;
+        this.swingSpeed = 500
+        switch(this.type){
+            case "basic":
+                this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10})
+                break;
+            case "spin projectile":
+                this.melee = new melee(this, 10, 100, 300, 25, 360, 'Projectile Spin Sword', undefined, function(sword){
+                    const velocities = getProjVelocities(sword.currentAngle, 7);
+                    const startX = sword.source.x + sword.source.width/2
+                    const startY = sword.source.y + sword.source.height/2
+                    const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, sword.source, false, sword.source.target.room, '#268199', 5, false)
+                    damageInstances.add(swordProjectile)
+                }, 120, 1, {runFuncCD: -2})
+                this.swingSpeed = 1000;
+                break;
+        }
+        this.timeToSwing = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
+    }
+
+    onDamage(damage = 5, knockbackfunc = null){
+        this.color = '#ff0000'
+        this.timeSinceDamage =  document.timeline.currentTime;
+        this.health -= damage
+        hook.dispatch('onEnemyDamage', this.target, this)
+        if(knockbackfunc){
+            knockbackfunc(this)
+        }
+    }
+
+    draw(){
+        if(this.health < 0){
+            entities.remove(this.index)
+            if(this.spawned == false){
+                updateWallet(15, this.target)
+                dropItems(this.drops, this.target)
+            }
+            return;
+        }
+        velocity(this, this.xVelocity, this.yVelocity)
+        if(document.timeline.currentTime > this.timeToSwing){
+            this.swing()
+         }
+        this.pursuit()
+        this.points = getPoints(3, this)
+        if(document.timeline.currentTime - this.timeSinceDamage > 200){
+            this.color = this.defaultColor;
+        }
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    pursuit(){
+        let damageThisTime = false
+        let speedMod = Math.floor(Math.random() * this.speed * 2)
+        if(this.target.x > this.x){
+            moveEntitiy(this, this.speed + speedMod, 0, true)
+        }
+        else{
+            moveEntitiy(this, -(this.speed + speedMod), 0, true)
+        }
+        if(this.target.y > this.y){
+            moveEntitiy(this, 0, this.speed + speedMod, true)
+        }
+        else{
+            moveEntitiy(this, 0, -(this.speed + speedMod), true)
+        }
+        if(this.collision2([this.target]) && !damageThisTime){
+            const knockbackfunc = makeKnockback(this)
+            knockbackfunc(this.target);
+        }
+    }
+
+    collision2(target) {
+        const left = this.x;
+        const right = this.x + this.width;
+        const top = this.y;
+        const bottom = this.y + this.height;
+        
+        for (let i = 0; i < target.length; i++) {
+            if(!(target[i] === this)){
+            const tleft = target[i].x;
+            const tright = target[i].x + target[i].width;
+            const ttop = target[i].y;
+            const tbottom = target[i].y + target[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                return true;
+                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+            }
+        }
+    }
+        return false;
+    }
+
+    swing(){
+        let centerX = this.x + this.width / 2
+        let centerY = this.y + this.height / 2
+        let degrees = findDegrees(this.target.x, this.target.y, centerX, centerY)
+        if(this.melee.animating == false){
+            this.melee.animating = true;
+            this.melee.setValues(degrees, this.target)
+            damageInstances.add(this.melee)
+        }
+        this.timeToSwing = document.timeline.currentTime + this.swingSpeed;
+    }
+}
+
 class skeleton{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5, pSpeed = 8, knockBackResistance = 1){
         this.x = x;
@@ -229,7 +365,6 @@ class skeleton{
             return;
         }
         velocity(this, this.xVelocity, this.yVelocity)
-        this.action()
         if(document.timeline.currentTime > this.timeToProjectile){
            this.fire()
         }
