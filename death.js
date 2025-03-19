@@ -9,6 +9,7 @@ function onDeath(){
     const replay = createElement('div', 'replayText', {textContent: 'Try Again?'}, blackDrop)
     replay.addEventListener("click", ()=>{
         ctx.translate(character.translateX, character.translateY)
+        rooms = rooms0.map((arr)=>{return arr.slice();});
         entitiySpeed = 1;
         zombieHealth = 35;
         skeletonHealth = 35;

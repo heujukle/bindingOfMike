@@ -251,7 +251,7 @@ class Warrior{
         if(document.timeline.currentTime > this.timeToSwing){
             this.swing()
          }
-        this.pursuit()
+        this.action()
         this.points = getPoints(3, this)
         if(document.timeline.currentTime - this.timeSinceDamage > 200){
             this.color = this.defaultColor;
@@ -368,6 +368,7 @@ class skeleton{
         if(document.timeline.currentTime > this.timeToProjectile){
            this.fire()
         }
+        this.action()
         this.points = getPoints(3, this)
         if(document.timeline.currentTime - this.timeSinceDamage > 200){
             this.color = this.defaultColor;

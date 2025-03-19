@@ -30,6 +30,16 @@ class portal{
             itemScale *= 1.5;
             areaCount += 1;
             knockBackResistance = knockBackResistance - 0.2 < 0.1 ? 0.1 : knockBackResistance - 0.2 //keeps enemies taking some knockback
+            switch(areaCount){
+                case 1: 
+                    rooms = rooms.concat(rooms0);
+                    break;
+                case 2:
+                    rooms = rooms.concat(rooms1);
+                    break;
+                case 3:
+                    break;
+            }
             this.target.setArea(new area()) //makes new area
         }
     }
