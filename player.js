@@ -75,6 +75,7 @@ class player {
         this.translateX = 0;
         this.translateY = 0;
         this.timeOfLastShot = 0
+        this.allied = 'player'
     }
     
     hotBarChange(direction){ //changes direction of hotbar
@@ -118,6 +119,7 @@ class player {
     }
     
     draw(){ //draws player
+        hook.dispatch('onPlayerDraw', this)
         staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);

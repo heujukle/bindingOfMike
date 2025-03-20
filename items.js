@@ -137,6 +137,32 @@ const stats = [
 
 const passives = [
 {
+    name: 'auto turret',
+    itemVariables: {timeOfLastActivation: 0},
+    price: 750, //1000
+    hasFunc: {func:(source) => {
+        if(document.timeline.currentTime - source.passiveItems["auto turret"].timeOfLastActivation > 500){
+            source.passiveItems["auto turret"].timeOfLastActivation = document.timeline.currentTime;
+            const target = determineTarget(source);
+            if(target == null) return;
+            else{
+                console.log('FIRE')
+                const degrees = findDegrees(source.x, source.y, target.x + target.width/2, target.y + target.height/2)
+                const velocities = getProjVelocities(degrees, 7);
+                console.log(degrees)
+                console.log(velocities)
+                damageInstances.add(new projectile((source.x + source.width/2), source.y - 50, 15, 15, -velocities.xVelocity, -velocities.yVelocity, source, false, source.room, '#268199', source.stats['pDamage'], source.has('richochet')))
+            }
+        }
+        ctx.beginPath();
+        ctx.rect((source.x + source.width/2) - 10, source.y - 50, 20, 20);
+        ctx.fillStyle = 'grey';
+        ctx.fill();
+        ctx.closePath();
+    }, hook: 'onPlayerDraw'}, //future proofing items
+    type: 'passiveItem'
+},
+{
     name: 'threadling',
     itemVariables: {},
     price: 750, //1000
