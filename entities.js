@@ -219,7 +219,7 @@ class Warrior{
                     const velocities = getProjVelocities(sword.currentAngle, 7);
                     const startX = sword.source.x + sword.source.width/2
                     const startY = sword.source.y + sword.source.height/2
-                    const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, sword.source, false, sword.source.target.room, '#268199', 5, false)
+                    const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, sword.source, false, sword.source.target.room, '#000000', 5, false)
                     damageInstances.add(swordProjectile)
                 }, 120, 1, {runFuncCD: -2})
                 this.swingSpeed = 1000;

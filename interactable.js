@@ -32,10 +32,10 @@ class portal{
             knockBackResistance = knockBackResistance - 0.2 < 0.1 ? 0.1 : knockBackResistance - 0.2 //keeps enemies taking some knockback
             switch(areaCount){
                 case 1: 
-                    rooms = rooms.concat(rooms0);
+                    rooms = rooms.concat(rooms1);
                     break;
                 case 2:
-                    rooms = rooms.concat(rooms1);
+                    rooms = rooms.concat(rooms2);
                     break;
                 case 3:
                     break;
