@@ -9,6 +9,7 @@ class dummy{
         this.defaultColor = "#ab5901"
         this.timeSinceDamage = 0;
         this.behavior = 'static'
+        this.allied = 'enemy'
         console.log(this.points)
     }
 
@@ -52,6 +53,7 @@ class spawner{
                 break;
         }
         this.timeSinceSpawn = 0;
+        this.allied = 'enemy'
     }
 
     onDamage(damage = 5){
@@ -70,6 +72,7 @@ class spawner{
             entities.remove(this.index)
             updateWallet(40, this.target)
             dropItems(this.drops, this.target)
+            hook.dispatch('onEnemyDeath', this)
         }
         if(document.timeline.currentTime - this.timeSinceDamage > 250){
             this.color = this.defaultColor;
@@ -105,6 +108,7 @@ class zombie{
         this.knockBackResistance = knockBackResistance * 0.75
         this.drops = cloth
         this.spawned = spawned;
+        this.allied = 'enemy'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -123,6 +127,7 @@ class zombie{
             if(this.spawned == false){
                 updateWallet(15, this.target)
                 dropItems(this.drops, this.target)
+                hook.dispatch('onEnemyDeath', this)
             }
             return;
         }
@@ -186,7 +191,7 @@ class zombie{
 }
 
 class Warrior{
-    constructor(x, y, width, height, target, speed, health = 25, damage = 0, knockBackResistance = 0.75, type = basic, spawned = false){
+    constructor(x, y, width, height, target, speed, health = 25, damage = 10, knockBackResistance = 0.75, type = basic, spawned = false){
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -212,10 +217,10 @@ class Warrior{
         this.swingSpeed = 500
         switch(this.type){
             case "basic":
-                this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10})
+                this.melee = new melee(this, this.damage, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10})
                 break;
             case "spin projectile":
-                this.melee = new melee(this, 10, 100, 300, 25, 360, 'Projectile Spin Sword', undefined, function(sword){
+                this.melee = new melee(this, this.damage, 100, 300, 25, 360, 'Projectile Spin Sword', undefined, function(sword){
                     const velocities = getProjVelocities(sword.currentAngle, 7);
                     const startX = sword.source.x + sword.source.width/2
                     const startY = sword.source.y + sword.source.height/2
@@ -226,6 +231,7 @@ class Warrior{
                 break;
         }
         this.timeToSwing = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
+        this.allied = 'enemy'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -242,8 +248,9 @@ class Warrior{
         if(this.health < 0){
             entities.remove(this.index)
             if(this.spawned == false){
-                updateWallet(15, this.target)
+                updateWallet(30, this.target)
                 dropItems(this.drops, this.target)
+                hook.dispatch('onEnemyDeath', this)
             }
             return;
         }
@@ -345,6 +352,7 @@ class skeleton{
         this.yVelocity = 0;
         this.knockBackResistance = knockBackResistance
         this.drops = bones
+        this.allied = 'enemy'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -362,6 +370,7 @@ class skeleton{
             entities.remove(this.index)
             updateWallet(20, this.target)
             dropItems(this.drops, this.target)
+            hook.dispatch('onEnemyDeath', this)
             return;
         }
         velocity(this, this.xVelocity, this.yVelocity)
@@ -484,6 +493,7 @@ class evilZombie{
         this.knockback = 15;
         this.knockBackResistance = knockBackResistance * 0.5
         this.drops = evilCloth
+        this.allied = 'enemy'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -501,6 +511,7 @@ class evilZombie{
             entities.remove(this.index)
             updateWallet(30, this.target)
             dropItems(this.drops, this.target)
+            hook.dispatch('onEnemyDeath', this)
             return;
         }
         velocity(this, this.xVelocity, this.yVelocity)
@@ -595,6 +606,7 @@ class boomSkeleton{
             damageInstances.add(new explosion(source, 100, 5 + this.pDamage, 60))
             console.log('WE BRING THE BOOM')
         }
+        this.allied = 'enemy'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -612,6 +624,7 @@ class boomSkeleton{
             entities.remove(this.index)
             updateWallet(35, this.target)
             dropItems(this.drops, this.target)
+            hook.dispatch('onEnemyDeath', this)
             return;
         }
         velocity(this, this.xVelocity, this.yVelocity)
@@ -689,6 +702,93 @@ class boomSkeleton{
     }
 
     collision2(target) { //im leaving the chat gpt commenst for fun
+        const left = this.x;
+        const right = this.x + this.width;
+        const top = this.y;
+        const bottom = this.y + this.height;
+        
+        for (let i = 0; i < target.length; i++) {
+            if(!(target[i] === this)){
+            const tleft = target[i].x;
+            const tright = target[i].x + target[i].width;
+            const ttop = target[i].y;
+            const tbottom = target[i].y + target[i].height;
+            
+            // Check if the rectangles are overlapping
+            if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                // Collision detected
+                return true;
+                // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+            }
+        }
+    }
+        return false;
+    }
+}
+
+class threadling{
+    constructor(x, y, width, height, speed, damage = 5, allied){
+        this.x = x;
+        this.y = y;
+        this.behavior = 'dynamic'
+        this.width = width;
+        this.height = height;
+        this.color = "#182b1d"
+        this.action = this.pursuit
+        this.target = determineTarget(this);
+        console.log(this.target)
+        this.speed = speed
+        this.damage = damage
+        this.index;
+        this.knockback = 10;
+        this.allied = allied;
+    }
+
+    onDamage(){
+        return;
+    }
+
+    draw(){
+        if(this.target == null){
+            entities.remove(this.index)
+            return;
+        }
+        else if(this.target.health < 0){
+            this.target = determineTarget(this);
+        }
+        this.action()
+        this.points = getPoints(3, this)
+        if(document.timeline.currentTime - this.timeSinceDamage > 200){
+            this.color = this.defaultColor;
+        }
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    pursuit(){
+        if(this.target.x > this.x){
+            moveEntitiy(this, this.speed, 0, true)
+        }
+        else{
+            moveEntitiy(this, -(this.speed), 0, true)
+        }
+        if(this.target.y > this.y){
+            moveEntitiy(this, 0, this.speed, true)
+        }
+        else{
+            moveEntitiy(this, 0, -(this.speed), true)
+        }
+        if(this.collision2([this.target])){
+            const knockback = makeKnockback(this)
+            this.target.onDamage(this.damage, knockback)
+            entities.remove(this.index)
+        }
+    }
+
+    collision2(target) {
         const left = this.x;
         const right = this.x + this.width;
         const top = this.y;

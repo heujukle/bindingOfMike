@@ -137,6 +137,15 @@ const stats = [
 
 const passives = [
 {
+    name: 'threadling',
+    itemVariables: {},
+    price: 750, //1000
+    hasFunc: {func:(enemy) => {
+        entities.add(new threadling(enemy.x, enemy.y, 25, 25, 10, 20, 'player'))
+    }, hook: 'onEnemyDeath'}, //future proofing items
+    type: 'passiveItem'
+},
+{
     name: 'richochet',
     itemVariables: {},
     price: 750, //1000
@@ -264,7 +273,7 @@ const meleeItems = [
     name: 'projectile sword',
     sprite: null,
     item:()=>{return new melee(undefined, 7, 50, 100, 15, 40, 'projectile sword', function(sword, e){
-        const degrees = findDegrees(e.x, e.y, sword.source.x, sword.source.y)
+        const degrees = findDegrees(e.x + this.translateX, e.y + this.translateY, sword.source.x, sword.source.y)
         const startX = sword.source.x + sword.source.width/2
         const startY = sword.source.y + sword.source.height/2
         const velocities = getProjVelocities(degrees, 7)

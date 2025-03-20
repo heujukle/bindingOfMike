@@ -10,7 +10,7 @@ canvas.width = window.innerWidth;
 const startingArea = new area()
 
 let character = new player();
-// character.addItem(passives[0])
+character.addItem(passives[0])
 // character.addItem(passives[1])
 // character.addItem(passives[2])
 // character.addItem(passives[3])
