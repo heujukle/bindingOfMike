@@ -120,7 +120,7 @@ class player {
     
     draw(){ //draws player
         hook.dispatch('onPlayerDraw', this)
-        staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;`
+        this.updateStaminaBar()
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         if(this.iFrames > 0 && this.damaged == true){ //sets color based on actions

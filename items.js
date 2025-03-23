@@ -217,7 +217,9 @@ const passives = [
     price: 250, //200
     hasFunc: {func:(character, source) =>{ //future proofing items
         if(Object.keys(character.passiveItems).includes('spikey') && source != null){ //spikey code
-                if(!character.passiveItems["spikey"].hitList.includes(source)){
+                if(!character.passiveItems["spikey"].hitList.includes(source) && !(source.health == undefined)){
+                character.stamina += 2;
+                if(character.stamina > character.stats['maxStamina']) character.stamina = character.stats['maxStamina']
                 source.onDamage(5, function(target){ //special functionality for spiikey
                     const degrees = findDegrees(character.x, character.y, target.x, target.y)
                     const velocities = getProjVelocities(degrees, 10)
