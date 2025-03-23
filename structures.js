@@ -176,19 +176,19 @@ class area{
             /*-------------------------------------------------------------------------------------------------------------------------------*/
             //fills if no room is generated and still a budget it will force a room generation
             if(bottom == false && top == false && left == false && right == false && roomBudget > 5){
-                if(exclusion.indexOf('right') != -1){
+                if(exclusion.indexOf('right') != -1 && !map.has(`${x - 1},${y}`)){
                     left = true;
                     const door = Math.floor(layout.length / 2)
                     layout[door][0] = 0;
                     layout[door -1 ][0] = 0;
                 }
-                else if(exclusion.indexOf('left') != -1){
+                else if(exclusion.indexOf('left') != -1 && !map.has(`${x + 1},${y}`)){
                     right = true;
                     const door = Math.floor(layout.length / 2)
                     layout[door][layout[4].length - 1] = 0;
                     layout[door - 1][layout[4].length - 1] = 0;
                 }
-                else if(exclusion.indexOf('top') != -1){
+                else if(exclusion.indexOf('top') != -1 && !map.has(`${x},${y + 1}`)){
                     bottom = true;
                     const door = Math.floor(layout[0].length / 2)
                     layout[layout.length - 1][door] = 0;

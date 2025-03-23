@@ -269,7 +269,7 @@ class melee{
         for(let i = 0; i < points.length; i++){
             let targetDegrees = findDegrees(points[i].x, points[i].y, this.x, this.y)
             let distance = findDistance(points[i].x, points[i].y, this.x, this.y)
-            if(this.currentAngle >= targetDegrees - this.width/2 && this.currentAngle <= targetDegrees + this.width/2 && distance < this.height){ //checks if the sword is facing the point and reaches the point
+            if(this.currentAngle >= targetDegrees - 5 && this.currentAngle <= targetDegrees + 5 && distance < this.height){ //checks if the sword is facing the point and reaches the point
                 console.log(distance)
                 console.log(targetDegrees)
                 if(this.hitList.indexOf(other) == -1){

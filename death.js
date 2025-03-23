@@ -26,6 +26,9 @@ function onDeath(){
             'onEnemyDamage' : [],
             'onPlayerDamage' : [],
             'playerTouch' : [],
+            'playerProjectileInteract' : [],
+            'onEnemyDeath' : [],
+            'onPlayerDraw' : [],
         }
         character.setArea(new area())
         character.updateHealthBar()
