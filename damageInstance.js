@@ -134,7 +134,7 @@ class projectile{
             const ttop = character.y;
             const tbottom = character.y + character.height;
             if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
-                character.onDamage(this.damage);
+                character.onDamage(this.damage, undefined, this);
                 if(this.collisionFunc !== null)  this.collisionFunc(this) //for entity effects
                 console.log(character.health)
                 return true;

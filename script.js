@@ -10,7 +10,6 @@ canvas.width = window.innerWidth;
 const startingArea = new area()
 
 let character = new player();
-character.addItem(passives[0])
 // character.addItem(passives[1])
 // character.addItem(passives[2])
 // character.addItem(passives[3])
@@ -164,25 +163,25 @@ const doublePressEvent = doublePress(function(e){ //adds function to double pres
         if(e.key == controls.right && !character.directionList.includes('right')){
             character.xVelocity += character.stats['dashSpeed']
             character.stamina -= 25;
-            character.iFrames = character.stats['dashSpeed']
+            character.iFrames = character.stats['dashSpeed'] + 10
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.left && !character.directionList.includes('left')){
             character.xVelocity -= character.stats['dashSpeed']
             character.stamina -= 25;
-            character.iFrames = character.stats['dashSpeed']
+            character.iFrames = character.stats['dashSpeed'] + 10
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.up && !character.directionList.includes('up')){
             character.yVelocity -= character.stats['dashSpeed']
             character.stamina -= 25;
-            character.iFrames = character.stats['dashSpeed']
+            character.iFrames = character.stats['dashSpeed'] + 10
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
         if(e.key == controls.down && !character.directionList.includes('down')){
             character.yVelocity += character.stats['dashSpeed']
             character.stamina -= 25;
-            character.iFrames = character.stats['dashSpeed']
+            character.iFrames = character.stats['dashSpeed'] + 10
             staminaBar.style = `width: ${character.stamina / character.stats['maxStamina'] * 100}%;`
         }
     }

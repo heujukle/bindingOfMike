@@ -769,6 +769,7 @@ class threadling{
     }
 
     pursuit(){
+        if(this.target == null) return;
         if(this.target.x > this.x){
             moveEntitiy(this, this.speed, 0, true)
         }

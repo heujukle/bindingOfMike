@@ -526,3 +526,62 @@ class forge{
                 result.sprite) //makes new melee
         }
     }
+
+    class chest{
+        constructor(x, y, width, height, target){
+            this.index; //index in interactables
+            this.x = x //x
+            this.y = y //y
+            this.target = target
+            this.width = width
+            this.height = height
+            this.type = 'chest' //is shop
+            this.behavior = 'dynamic' //dynamically changes
+            this.opened = false;
+        }
+        
+        
+        draw(){ 
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = "#452d1f";
+            ctx.fill();
+            ctx.fillStyle = "black";
+            if(this.collision2([this.target]) && this.opened == false && itemAvailable(this.target)){ //checks if overlap and player has pressed interact button
+                ctx.fillText(`press ${controls.interact.toUpperCase()} to interact`, this.x - 20, this.y - 20) //shows interact text
+                if(this.target.interact == true){ //if player interacts
+                this.openChest() //loads store
+                }
+            }
+            ctx.closePath();
+        }
+        
+        collision2(target) {
+            const left = this.x;
+            const right = this.x + this.width;
+            const top = this.y;
+            const bottom = this.y + this.height;
+            
+            for (let i = 0; i < target.length; i++) {
+                if(!(target[i] === this)){
+                const tleft = target[i].x;
+                const tright = target[i].x + target[i].width;
+                const ttop = target[i].y;
+                const tbottom = target[i].y + target[i].height;
+                
+                // Check if the rectangles are overlapping
+                if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
+                    // Collision detected
+                    return true;
+                    // You can add further collision handling logic here (e.g., bounce, stop movement, etc.)
+                }
+            }
+        }
+            return false;
+        }
+        
+        openChest(){
+            this.opened = true;
+            dropItems(findItemNotHad(this.target), this.target)
+        }
+            }

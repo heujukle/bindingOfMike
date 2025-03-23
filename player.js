@@ -47,8 +47,8 @@ class player {
             'multishot' : 0,
             'maxHealth' : 100,
             'maxStamina' : 100,
-            'dashSpeed' : 10,
-            'staminaRegen' : 0.1,
+            'dashSpeed' : 20,
+            'staminaRegen' : 0.05,
             'shoot speed' : 425
         }
         this.health = 100;

@@ -41,22 +41,26 @@ const debugmergeRequirements = {
 /* materials */
 const bones = {
     name:"bones",
-    sprite: 'images/items/bones.png'
+    sprite: 'images/items/bones.png',
+    type: "material"
 }
 
 const boomBones = {
     name:"Boom Bones",
-    sprite: 'images/items/bones.png'
+    sprite: 'images/items/bones.png',
+    type: "material"
 }
 
 const cloth = {
     name:"cloth",
-    sprite: null
+    sprite: null,
+    type: "material"
 }
 
 const evilCloth = {
     name:'Evil Cloth',
-    sprite: null
+    sprite: null,
+    type: "material"
 }
 /* */
 const healthInACan = {
@@ -119,13 +123,13 @@ const stats = [
     statName:'dashSpeed',
     increment: 1
 },
-{
-    name:'stamina regeneration',
-    price:45,
-    type:'stat',
-    statName:'staminaRegen',
-    increment: 0.1
-},
+// {
+//     name:'stamina regeneration',
+//     price:45,
+//     type:'stat',
+//     statName:'staminaRegen',
+//     increment: 0.1
+// },
 {
     name:'shoot speed',
     price:50,
@@ -146,11 +150,8 @@ const passives = [
             const target = determineTarget(source);
             if(target == null) return;
             else{
-                console.log('FIRE')
                 const degrees = findDegrees(source.x, source.y, target.x + target.width/2, target.y + target.height/2)
                 const velocities = getProjVelocities(degrees, 7);
-                console.log(degrees)
-                console.log(velocities)
                 damageInstances.add(new projectile((source.x + source.width/2), source.y - 50, 15, 15, -velocities.xVelocity, -velocities.yVelocity, source, false, source.room, '#268199', source.stats['pDamage'], source.has('richochet')))
             }
         }
@@ -236,13 +237,13 @@ const passives = [
     }, hook: 'playerTouch'},
     type: 'passiveItem'
 },
-{
-    name: 'bouncy',
-    itemVariables: {},
-    price: 10000, //100
-    hasFunc: null, //future proofing items
-    type: 'passiveItem'
-},
+// {
+//     name: 'bouncy',
+//     itemVariables: {},
+//     price: 10000, //100
+//     hasFunc: null, //future proofing items
+//     type: 'passiveItem'
+// },
 ]
 
 //constructor(source, damage, width, height, knockback, span, name, clickFunc, runFunc, runFuncCD, tier, increase, sprite) 

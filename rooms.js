@@ -48,6 +48,10 @@ const createForge = (x, y, width, height) => { //function to make dummys
     interactables.add(new forge(x, y, width, height, character))
 }
 
+const createChest = (x, y, width, height) => { //function to make dummys
+    interactables.add(new chest(x, y, width, height, character))
+}
+
 const createZombieSpawner = (x, y, width, height) => { //function to make dummys
     entities.add(new spawner(x, y, width, height, character, 'zombie'))
 }
@@ -68,6 +72,7 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['bs', createBoomSkeleton],
     ['zs', createZombieSpawner],
     ['bw', createBasicWarrior],
-    ['sw', createSpinWarrior]
+    ['sw', createSpinWarrior],
+    ['ch', createChest]
 
 ])

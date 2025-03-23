@@ -528,17 +528,25 @@ function getProjVelocities(degrees, speed){ //returns velocities for projectiles
 function dropItems(item, target){
     const timeBeforeFade = 5000;
     const fadeTime = 0;
-    if(target.materials){ //makes sure target has materials
-        const amount = Math.floor(1 + Math.random() * 5 * itemScale)
+    let spriteImg = "images\Coin.png"
+    let amount = 1;
+    if(target.materials && item.type == "material"){ //makes sure target has materials
+        amount = Math.floor(1 + Math.random() * 5 * itemScale)
+        spriteImg = item.sprite
         if(target.materials[item.name]){
             target.materials[item.name].amount += amount
         }
         else{
             target.materials[item.name] = {amount:amount, sprite: item.sprite != null || item.sprite != undefined ?  item.sprite : "images/Coin.png"}
         }
+    }
+    else if(item.type == "passiveItem"){
+        spriteImg = item.sprite != undefined ? item.sprite : "images/Coin.png";
+        target.addItem(item)
+    }
         const itemDisplay = document.createElement("div")
             const sprite = document.createElement("img")
-                sprite.src =  target.materials[item.name].sprite
+                sprite.src = spriteImg
                 sprite.style.marginRight = '5px'
         itemDisplay.appendChild(sprite)
             const text = document.createElement("div")
@@ -551,7 +559,6 @@ function dropItems(item, target){
             setTimeout(() => {itemDisplay.remove()}, timeBeforeFade + fadeTime)
         }, timeBeforeFade)
     }
-}
 
 function verifyIfPlayer(source){ //returns true if player
     if(source instanceof player){
@@ -569,4 +576,29 @@ function result (target){
     target.yVelocity += -pv.yVelocity
 }
 return result;
+}
+
+function findItemNotHad(target){
+    let result = 0
+    const itemPool = []
+    for(let i =0; i < passives.length; i++){
+        if(target.has(passives[i].name)){
+            console.log('continue', i)
+            continue
+        }
+        else{itemPool.push(passives[i])}
+    }
+    if(itemPool.length == 0){result = -1}
+    else{result = Math.floor(itemPool.length * Math.random())}
+    console.log(itemPool, result)
+    return itemPool[result];
+}
+
+function itemAvailable(target){
+    for(let i =0; i < passives.length; i++){
+        if(!(target.has(passives[i].name))){
+            return true
+        }
+    }
+    return false
 }
