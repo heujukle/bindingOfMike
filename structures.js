@@ -81,7 +81,8 @@ class area{
         document.getElementById('wall').src = determineValueArray((Math.random() + '')[5], wallArt) //randomizes walls for area
         document.getElementById('floor').src = determineValueArray((Math.random() + '')[7], floorArt) //randomizes floor for area
         this.map = new Map() //makes the data structure for the area to be stored in
-        this.generateAreaLayout(Math.random(), this.map) //generates the area
+        this.seed = Math.random();
+        this.generateAreaLayout(this.seed, this.map) //generates the area
     }
 
     generateAreaLayout(seed, map){

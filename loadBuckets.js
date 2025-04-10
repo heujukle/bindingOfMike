@@ -9,6 +9,9 @@ const structures = { //loads structures
     },
     draw: function (){ //draws all items 
         for(let i = 0; i < this.list.length; i++){
+            let xDistance = Math.abs(character.x - this.list[i].x);
+            let yDistance = Math.abs(character.y - this.list[i].y);
+            if(width * 21 < xDistance || height * 11 < yDistance) continue;
             this.list[i].draw();
         }
     },
