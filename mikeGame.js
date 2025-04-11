@@ -602,3 +602,93 @@ function itemAvailable(target){
     }
     return false
 }
+
+function combineSword(swordOne, swordTwo){
+    const result = { //sets all the value for swords
+        source: swordOne.source,
+        name:swordOne.name + ' ' + swordTwo.name,
+        width:swordOne.width,
+        height:swordOne.height,
+        damage:swordOne.damage,
+        sprite:swordOne.sprite,
+        runFuncCD:swordOne.runFuncCD,
+        tier: swordOne.tier + swordTwo.tier,
+        runFunc : null,
+        clickFunc : null,
+        knockback : swordOne.knockback,
+        span : swordOne.span,
+    }
+    const newIncrease = {} //new increase value, will scale based on the mmodifeiers
+    if(swordTwo.increase != null){
+        const keys = Object.keys(swordTwo.increase)
+        for(let i = 0; i < keys.length; i++){
+            result[keys[i]] += swordTwo.increase[keys[i]] //adds the increase value to the new sword
+            newIncrease[keys[i]] = Math.round(swordTwo.increase[keys[i]] * 1) //will add scale the increase value and add it to the new increase
+        }
+    }
+    if(swordOne.increase != null){
+        const keys = Object.keys(swordOne.increase)
+        for(let i = 0; i < keys.length; i++){
+            if(newIncrease[keys[i]] != null && newIncrease[keys[i]] != undefined){ ///if tehre is a key
+                newIncrease[keys[i]] += Math.round(swordOne.increase[keys[i]] * 1) //scales
+            }
+            else{
+                newIncrease[keys[i]] = Math.round(swordOne.increase[keys[i]] * 1) //scales based off of sword one increase
+            }
+        }
+    }
+    // run func
+    if(swordOne.runFunc != null && swordTwo.runFunc != null){ //merges run and click funcs
+        result.runFunc = (sword) => {
+            swordOne.runFunc(sword)
+            setTimeout(()=>{swordTwo.runFunc(sword)}, 20 * (swordOne.tier + 1)) //makes sure the effects doont execute at the same time, makes effects looks cooler
+        }
+    }
+    else if(swordOne.runFunc == null && swordTwo.runFunc != null){
+        result.runFunc = (sword) => {
+            swordTwo.runFunc(sword)
+        }
+    }
+    else if(swordOne.runFunc != null && swordTwo.runFunc == null){
+        result.runFunc = (sword) => {
+            swordOne.runFunc(sword)
+        }
+    }
+    //end run func
+
+    //click func
+    if(swordOne.clickFunc != null && swordTwo.clickFunc != null){
+        result.clickFunc = (sword, event) => {
+            swordOne.clickFunc(sword, event)
+            setTimeout(()=>{swordTwo.clickFunc(sword, event)},50 * (swordOne.tier + 1))
+        }
+    }
+    else if(swordOne.clickFunc == null && swordTwo.clickFunc != null){
+        result.clickFunc = (sword, event) => {
+            swordTwo.clickFunc(sword, event)
+        }
+    }
+    else if(swordOne.clickFunc != null && swordTwo.clickFunc == null){
+        result.clickFunc = (sword, event) => {
+            swordOne.clickFunc(sword, event)
+        }
+    }
+    //end click func
+    const finalSword = new melee(
+        result.source, 
+        result.damage, 
+        result.width, 
+        result.height, 
+        result.knockback, 
+        result.span, 
+        result.name, 
+        result.clickFunc, 
+        result.runFunc,
+        result.runFuncCD,
+        result.tier,
+        newIncrease,
+        result.sprite) //makes new melee
+        finalSword.recipe = swordOne.recipe;
+        finalSword.recipe.concat(swordTwo.recipe);
+        finalSword.recipe.push([swordOne.name, swordTwo.name]);
+}

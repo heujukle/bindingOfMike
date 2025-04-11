@@ -187,6 +187,7 @@ class melee{
         this.runFuncCD = runFuncCD
         this.tier = tier
         this.increase = increase //stats that will be added if this wepaon is used in fusion
+        this.recipe = [] //a documentation of the steps it took to craft this weapon
     }
 
     setValues(mouseAngle, event){ //called on mouse click
