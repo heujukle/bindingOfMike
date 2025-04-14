@@ -1,6 +1,8 @@
 function saveGame(character){
     // The content of the file
     console.log(character)
+    const area = formatArea(character.area);
+    console.log(area);
     const content = {
         areaCount : areaCount,
         character : {
@@ -10,9 +12,13 @@ function saveGame(character){
             items : Object.keys(character.passiveItems),
             equippedMelee : formatMelee(character.melee),
             meleeInventory : formatMeleeInventory(character),
+            area : area,
+            room : character.room.cords,
         }
     };
-            
+    
+    console.log(content);
+
     // Create a Blob object with the content
     const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' });
 
@@ -58,5 +64,71 @@ function formatArea(area){
 
 
 function formatRoom(room){
-    const result = {};
+    const left = room.left !== null ? room.left.cords : null;
+    const right = room.right !== null ? room.right.cords : null;
+    const top = room.top !== null ? room.top.cords : null;
+    const bottom = room.bottom !== null ? room.bottom.cords : null;
+    const result = {
+        layout : room.layout,
+        left : left,
+        right : right,
+        top : top,
+        bottom : bottom,
+        entities : formatEntities(room.savedEntities),
+        interactables : formatInteractables(room.savedInteractables),
+    };
+    return result;
+}
+
+function formatEntities(entities){
+    const result = [];
+    for(let i = 0; i < entities.length; i++){
+        const obj = {
+            instance : entities[i].instance,
+            x : entities[i].x,
+            y : entities[i].y,
+            health : entities[i].health,
+            unique : undefined
+        }
+        switch(entities[i].instance){
+            case "warrior":
+                obj.unique = {
+                    type : entities[i].type
+                }
+                break;
+                case "spawner":
+                    obj.unique = {
+                        type : entities[i].type
+                    }
+                    break;
+        }
+        result.push(obj);
+    }
+    return result;
+}
+
+function formatInteractables(interactables){
+    const result = [];
+    for(let i = 0; i < interactables.length; i++){
+        const obj = {
+            instance : interactables[i].type,
+            x : interactables[i].x,
+            y : interactables[i].y,
+            unique : undefined
+        }
+        switch(interactables[i].instance){
+            case "chest":
+                obj.unique = {
+                    opened : interactables[i].opened,
+                }
+                break;
+                case "store":
+                    obj.unique = {
+                        forSale : interactables[i].forSale,
+                    }
+                    break;
+        }
+        result.push(obj);
+    }
+    return result;
 }

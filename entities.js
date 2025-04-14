@@ -1,5 +1,6 @@
 class dummy{
     constructor(x, y, width, height){
+        this.instance = 'dummy';
         this.x = x;
         this.y = y;
         this.width = width;
@@ -32,6 +33,7 @@ class dummy{
 
 class spawner{
     constructor(x, y, width, height, target, type){
+        this.instance = 'spawner';
         this.x = x;
         this.y = y;
         this.index;
@@ -87,6 +89,7 @@ class spawner{
 
 class zombie{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.75, spawned = false){
+        this.instance = 'zombie';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -192,6 +195,7 @@ class zombie{
 
 class Warrior{
     constructor(x, y, width, height, target, speed, health = 25, damage = 10, knockBackResistance = 0.75, type = basic, spawned = false){
+        this.instance = 'warrior';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -330,6 +334,7 @@ class Warrior{
 
 class skeleton{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5, pSpeed = 8, knockBackResistance = 1){
+        this.instance = 'skeleton';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -473,6 +478,7 @@ class skeleton{
 
 class evilZombie{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.5){
+        this.instance = 'evilzombie';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -580,6 +586,7 @@ class evilZombie{
 
 class boomSkeleton{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5, pSpeed = 8, knockBackResistance = 1){
+        this.instance = 'boomskeleton';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -728,6 +735,7 @@ class boomSkeleton{
 
 class threadling{
     constructor(x, y, width, height, speed, damage = 5, allied){
+        this.instance = 'threadling';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
