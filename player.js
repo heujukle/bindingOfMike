@@ -282,10 +282,12 @@ class player {
         console.log(this.room.cords)
     }
 
-    setArea(area){
+    setArea(area, doFade = true){
+        if(doFade){
         const fade = createElement('div', 'fadeIn', {}, body)
-        if(document.getElementById('cover')) document.getElementById('cover').remove()
         setTimeout(()=>{fade.remove()}, 2900)
+        }
+        if(document.getElementById('cover')) document.getElementById('cover').remove()
         structures.list = []
         entities.list = []
         damageInstances.list = []

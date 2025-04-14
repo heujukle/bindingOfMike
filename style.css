@@ -95,13 +95,14 @@ body{
     margin-bottom: 10%;
 }
 
-#panel div{
+#panel div, input{
     margin: 3%;
     width: 200px;
     height: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     border: 2px solid black;
 }
 

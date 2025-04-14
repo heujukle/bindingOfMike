@@ -11,10 +11,10 @@ const howToPlay =  document.getElementById('How-To-Play')
 const mapElement = document.getElementsByName('map')[0]
 const overlay = document.getElementById('overlay');
 const sideBar = document.getElementById('middleRight')
+const loadGame = document.getElementById('loadGame')
 const body = document.getElementsByTagName('body')[0]
 
 playStart.addEventListener('click', (e) => { //starts games
-    game.src='script.js' //loads script
     menu = false;
     title.textContent = nameInput.value + " Game"
     start.classList.add('invisible')
@@ -400,6 +400,28 @@ howToPlay.addEventListener('click', (e)=>{
     exit.addEventListener('click', (e)=>{
         exit.remove()
         text.remove()
+        panel.style.overflowY = 'hidden'
+        for(let i = 1; i < panel.children.length; i++){ //removes other buttons
+            panel.children[i].classList.remove('invisible')
+        }
+    })
+})
+
+loadGame.addEventListener('click', (e) => {
+    for(let i = 1; i < panel.children.length; i++){ //removes other buttons
+        panel.children[i].classList.add('invisible')
+    }
+
+    const fileDownload = createElement('input', null, {type:'file', accepted:'.json'}, panel)
+    const loadSave = createElement('div', null, {type:'file', accepted:'.json', textContent : 'Load Save'}, panel)
+    loadSave.addEventListener('click', () => {
+        parseSaveFile(fileDownload.files[0]);
+    })
+    const exit = createElement('div', null, {innerHTML: '<h3>Exit</h3>'}, panel)
+    exit.addEventListener('click', (e)=>{
+        exit.remove()
+        fileDownload.remove()
+        loadSave.remove()
         panel.style.overflowY = 'hidden'
         for(let i = 1; i < panel.children.length; i++){ //removes other buttons
             panel.children[i].classList.remove('invisible')

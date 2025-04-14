@@ -12,6 +12,7 @@ function saveGame(character){
             items : Object.keys(character.passiveItems),
             equippedMelee : formatMelee(character.melee),
             meleeInventory : formatMeleeInventory(character),
+            materials : character.materials,
             area : area,
             room : character.room.cords,
         }

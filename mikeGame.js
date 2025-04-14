@@ -691,4 +691,5 @@ function combineSword(swordOne, swordTwo){
         finalSword.recipe = swordOne.recipe;
         finalSword.recipe.concat(swordTwo.recipe);
         finalSword.recipe.push([swordOne.name, swordTwo.name]);
+        return finalSword;
 }

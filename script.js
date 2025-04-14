@@ -10,12 +10,13 @@ canvas.width = window.innerWidth;
 const startingArea = new area()
 
 let character = new player();
+
 // character.addItem(passives[1])
 // character.addItem(passives[2])
 // character.addItem(passives[3])
 //end entities segement
 
-character.setArea(startingArea);
+character.setArea(startingArea, false);
 
 window.requestAnimationFrame(animate);
 
