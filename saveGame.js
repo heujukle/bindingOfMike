@@ -37,10 +37,10 @@ function saveGame(character){
 
 function formatMelee(melee){
     if(melee.recipe.length > 0){
-        return [melee.recipe];
+        return melee.recipe;
     }
     else{
-        return [[melee.name]];
+        return [melee.name];
     }
 }
 
