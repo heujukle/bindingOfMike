@@ -26,18 +26,18 @@ function parseSaveFile(file){
 function parseMelee(recipe){
     console.log(recipe);
     if(recipe == undefined || recipe == null){
-        return new melee(this, 10, 30, 125, 5, 90, 'Error sword', undefined, undefined, undefined, 1, {damage:10, span:10})
+        return meleeItemsSrc['error sword'].item(character);
     }
     const completedSwords = {};
-    console.log(recipe[0][0].length)
-    if(recipe[0].length == 1){
+    if(recipe[0].length === 1){
         console.log('returned bro')
-        return recipe[0][0]
+        console.log(recipe[0][0])
+        return meleeItemsSrc[recipe[0][0]].item(character);
     } 
     for(let i = 0; i < recipe.length; i++){
         console.log('loop')
-        let swordOne = meleeItemsSrc[recipe[i][0]] == undefined ? completedSwords[recipe[i][0]] : swordOne = meleeItemsSrc[recipe[i][0]].item();
-        let swordTwo  = meleeItemsSrc[recipe[i][1]] == undefined ? completedSwords[recipe[i][1]] : swordOne = meleeItemsSrc[recipe[i][1]].item();
+        let swordOne = meleeItemsSrc[recipe[i][0]] == undefined ? completedSwords[recipe[i][0]] : meleeItemsSrc[recipe[i][0]].item(character);
+        let swordTwo = meleeItemsSrc[recipe[i][1]] == undefined ? completedSwords[recipe[i][1]] : meleeItemsSrc[recipe[i][1]].item(character);
         const mergedSword = combineSword(swordOne, swordTwo);
         completedSwords[mergedSword.name] = mergedSword;
         console.log(i, recipe.length - 1)

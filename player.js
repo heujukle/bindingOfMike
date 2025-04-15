@@ -66,7 +66,7 @@ class player {
         this.damaged = false //if the player is going through damage
         this.color = "#0000ff" //player color
         this.sprite = null;
-        this.meleeInventory = [meleeItemsSrc['Super Spin Swords'].item(), meleeItemsSrc['Super Spin Swords'].item(), meleeItemsSrc['Super Spin Swords'].item()]
+        this.meleeInventory = [meleeItemsSrc['Super Spin Swords'].item(this), meleeItemsSrc['Super Spin Swords'].item(this), meleeItemsSrc['Super Spin Swords'].item(this)]
         this.materials = {}
         this.movements = {
             x:0,

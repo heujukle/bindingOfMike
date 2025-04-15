@@ -40,7 +40,7 @@ function formatMelee(melee){
         return melee.recipe;
     }
     else{
-        return [melee.name];
+        return [[melee.name]];
     }
 }
 
