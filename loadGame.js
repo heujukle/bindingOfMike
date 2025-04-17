@@ -11,6 +11,12 @@ function parseSaveFile(file){
             character.materials = saveData.character.materials;
             character.melee = parseMelee(saveData.character.equippedMelee);
             character.meleeInventory = parseMeleeInventory(saveData.character.meleeInventory);
+            character.setArea(new area(saveData.character.area))
+            entities.clear();
+            interactables.clear();
+            character.setRoom(character.area.map.get(saveData.character.room))
+            character.x = saveData.character.x;
+            character.y = saveData.character.y;
 
             //start game
             menu = false;

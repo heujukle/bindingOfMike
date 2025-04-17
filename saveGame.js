@@ -13,6 +13,8 @@ function saveGame(character){
             equippedMelee : formatMelee(character.melee),
             meleeInventory : formatMeleeInventory(character),
             materials : character.materials,
+            x : character.x,
+            y : character.y,
             area : area,
             room : character.room.cords,
         }
@@ -77,6 +79,7 @@ function formatRoom(room){
         bottom : bottom,
         entities : formatEntities(room.savedEntities),
         interactables : formatInteractables(room.savedInteractables),
+        entered : room.entered
     };
     return result;
 }

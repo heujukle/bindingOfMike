@@ -276,6 +276,7 @@ class player {
 
     setRoom(room){
         this.room = room
+        this.room.entered = true;
         this.room.newRoomLoad()
         this.iFrames = 20
         this.map.updateMap(this.room.cords)

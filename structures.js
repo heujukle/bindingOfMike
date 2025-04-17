@@ -77,12 +77,35 @@ class turret{ //creates the turret
 }
 
 class area{
-    constructor(){
+    constructor(loadSave = undefined){
         document.getElementById('wall').src = determineValueArray((Math.random() + '')[5], wallArt) //randomizes walls for area
         document.getElementById('floor').src = determineValueArray((Math.random() + '')[7], floorArt) //randomizes floor for area
         this.map = new Map() //makes the data structure for the area to be stored in
-        this.seed = Math.random();
-        this.generateAreaLayout(this.seed, this.map) //generates the area
+        if(loadSave != undefined){
+            const rooms = [];
+            for(let i = 0; i < Object.keys(loadSave).length; i++){ //loads all the rooms first
+                const cords = Object.keys(loadSave)[i];
+                const roomData = loadSave[cords];
+                const currentRoom = new room(roomData.layout, cords);
+                if(roomData.entered === true){
+                    //code for loading entities and interactables
+                }
+                this.map.set(cords, currentRoom);
+                rooms.push(currentRoom);
+            }
+            for(let i = 0; i < Object.keys(loadSave).length; i++){ //loops back trhough linking them together
+                const cords = Object.keys(loadSave)[i];
+                const roomData = loadSave[cords];
+                if(roomData.left != null) {this.map.get(cords).left = this.map.get(roomData.left)}
+                if(roomData.right != null) {this.map.get(cords).right = this.map.get(roomData.right)}
+                if(roomData.top != null) {this.map.get(cords).top = this.map.get(roomData.top)}
+                if(roomData.bottom != null) {this.map.get(cords).bottom = this.map.get(roomData.bottom)}
+            }
+        }
+        else{
+            this.seed = Math.random();
+            this.generateAreaLayout(this.seed, this.map) //generates the area
+        }
     }
 
     generateAreaLayout(seed, map){
@@ -287,6 +310,7 @@ class room{
         this.savedEntities = []
         this.layout = layout 
         this.mappedLayout = null//converts layout to a map
+        this.entered = false;
 
         //other rooms
         this.left = null;
