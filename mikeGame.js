@@ -673,6 +673,11 @@ function combineSword(swordOne, swordTwo){
             swordOne.clickFunc(sword, event)
         }
     }
+
+    swordOne.recipe = swordOne.recipe.concat(swordTwo.recipe);
+    swordOne.recipe.push([swordOne.name, swordTwo.name]);
+    
+
     //end click func
     const finalSword = new melee(
         result.source, 
@@ -689,7 +694,5 @@ function combineSword(swordOne, swordTwo){
         newIncrease,
         result.sprite) //makes new melee
         finalSword.recipe = swordOne.recipe;
-        finalSword.recipe.concat(swordTwo.recipe);
-        finalSword.recipe.push([swordOne.name, swordTwo.name]);
         return finalSword;
 }

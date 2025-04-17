@@ -10,6 +10,7 @@ function parseSaveFile(file){
             character.stamina = saveData.character.stamina;
             character.materials = saveData.character.materials;
             character.melee = parseMelee(saveData.character.equippedMelee);
+            character.meleeInventory = parseMeleeInventory(saveData.character.meleeInventory);
 
             //start game
             menu = false;
@@ -49,5 +50,9 @@ function parseMelee(recipe){
 }
 
 function parseMeleeInventory(recipes){
-
+    const result = [];
+    for(let i = 0; i < recipes.length; i++){
+        result.push(parseMelee(recipes[i]));
+    }
+    return result;
 }

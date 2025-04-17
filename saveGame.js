@@ -84,6 +84,7 @@ function formatRoom(room){
 function formatEntities(entities){
     const result = [];
     for(let i = 0; i < entities.length; i++){
+        if(entities[i] == null) continue;
         const obj = {
             instance : entities[i].instance,
             x : entities[i].x,

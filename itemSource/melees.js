@@ -85,7 +85,7 @@ const meleeItemsSrc =
 'Super Spin Swords' : {
     name: 'Super Spin Swords',
     sprite: null,
-    item:(target)=>{return new melee(target, 10, 100, 300, 30, 360, 'Super Spin swords', undefined, function(sword){
+    item:(target)=>{return new melee(target, 10, 100, 300, 30, 360, 'Super Spin Swords', undefined, function(sword){
         const spinner = new melee(sword.source, 5, 75, 250, 25, 360)
         spinner.setValues(sword.startingAngle + 180)
         damageInstances.add(spinner)
