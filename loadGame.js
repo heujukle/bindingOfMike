@@ -62,3 +62,44 @@ function parseMeleeInventory(recipes){
     }
     return result;
 }
+
+const saveables ={
+    'zombie' : (x, y, health)=> {
+        const entity = new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage, knockBackResistance);
+        entity.health = health
+        return entity;
+    },
+    'skeleton' : (x, y, health)=> {
+        const entity = new skeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed, knockBackResistance);
+        entity.health = health
+        return entity;
+    },
+    'boomskeleton' : (x, y, health)=> {
+        const entity = new boomSkeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed * 1.5, knockBackResistance);
+        entity.health = health
+        return entity;
+    },
+    'evilzombie' : (x, y, health)=> {
+        const entity = new evilZombie(x, y, 40, 40, character, entitiySpeed * 0.75, zombieHealth, zombieDamage * 1.5, knockBackResistance);
+        entity.health = health
+        return entity;
+    },
+    'warrior' : (x, y, health, type = 'basic')=> {
+        const entity = new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, type);
+        entity.health = health
+        return entity;
+    },
+    'spawner' : (x, y, health, type)=> {
+        const entity = new spawner(x, y, width, height, character, type);
+        entity.health = health
+        return entity;
+    },
+    'dummy' : (x, y)=> {
+        const entity = new dummy(x, y, width, height);
+        return entity;
+    },
+    'threadling' : (x, y, health)=> {
+        const entity = new threadling(x, y, 10, 10, 10, 15, 'player');
+        return entity;
+    },
+}
