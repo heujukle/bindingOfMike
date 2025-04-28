@@ -31,6 +31,7 @@ const entities = { // loads entities
             this.list[this.list.indexOf(null)] = entity;
         }
         else{
+            if(entity == undefined) return
             entity.index = this.list.length;
             this.list.push(entity)
         }

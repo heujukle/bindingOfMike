@@ -63,7 +63,7 @@ function parseMeleeInventory(recipes){
     return result;
 }
 
-const saveables ={
+const saveableEntities ={
     'zombie' : (x, y, health)=> {
         const entity = new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage, knockBackResistance);
         entity.health = health
@@ -102,4 +102,53 @@ const saveables ={
         const entity = new threadling(x, y, 10, 10, 10, 15, 'player');
         return entity;
     },
+}
+
+
+const saveableInteractables = {
+   'portal' : (x, y) =>{
+    const interactable = new portal(x, y, width, height, character);
+    return interactable;
+   },
+   'shop' : (x, y, forSale) => {
+    const interactable = new shop(x, y, width, height, character, forSale);
+    return interactable;
+   },
+   'forge' : (x, y) => {
+    const interactable = new forge(x, y, width, height, character);
+    return interactable;
+   },
+   'chest' : (x, y, opened) => {
+    const interactable = new chest(x, y, width, height, chracater, opened);
+    return interactable;
+   }
+}
+function parseEntities(entities){
+    const result = []
+    for(let i = 0; i < entities.length; i++){
+        const entity = entities[i];
+        if(entity.unqiue !== undefined){
+            const uniqueVals = Object.keys(entity.unqiue);
+            result.push(saveableEntities[entity.instance](entity.x, entity.y, entity.health, uniqueVals[0], uniqueVals[1]))
+        }
+        else{
+            result.push(saveableEntities[entity.instance](entity.x, entity.y, entity.health))
+        }
+    }
+    return result;
+}
+
+function parseInteractables(entities){
+    const result = []
+    for(let i = 0; i < entities.length; i++){
+        const entity = entities[i];
+        if(entity.unqiue !== undefined){
+            const uniqueVals = Object.keys(entity.unqiue);
+            result.push(saveableInteractables[entity.instance](entity.x, entity.y, uniqueVals[0], uniqueVals[1]))
+        }
+        else{
+            result.push(saveableInteractables[entity.instance](entity.x, entity.y))
+        }
+    }
+    return result;
 }

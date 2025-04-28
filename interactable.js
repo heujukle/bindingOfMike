@@ -72,7 +72,7 @@ class portal{
 }
 
 class shop{
-constructor(x, y, width, height, target){
+constructor(x, y, width, height, target, forSale = undefined){
     this.index; //index in interactables
     this.x = x //x
     this.y = y //y
@@ -82,13 +82,13 @@ constructor(x, y, width, height, target){
     this.type = 'shop' //is shop
     this.behavior = 'dynamic' //dynamically changes
     const seed = Math.random() + ''
-    this.forSale = [
+    this.forSale = forSale === undefined ? [
         healthInACan,
         determineValueArray(seed[4], meleeItems),
         determineValueArray(seed[5], stats),
         determineValueArray(seed[7], stats),
         determineValueArray(seed[6], passives),
-    ]
+    ] : forSale;
 }
 
 

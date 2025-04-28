@@ -88,7 +88,8 @@ class area{
                 const roomData = loadSave[cords];
                 const currentRoom = new room(roomData.layout, cords);
                 if(roomData.entered === true){
-                    //code for loading entities and interactables
+                    currentRoom.savedEntities = parseEntities(roomData.entities)
+                    currentRoom.savedInteractables = parseInteractables(roomData.interactables)
                 }
                 this.map.set(cords, currentRoom);
                 rooms.push(currentRoom);
@@ -375,10 +376,16 @@ class room{
             y += height;
         }
         if(this.savedEntities.length > 0){ //if there is any saved data for rooms it will replace readd them instead
-            entities.list = this.savedEntities;
+            entities.clear();
+            for(let i = 0; i < this.savedEntities.length; i++){
+                entities.add(this.savedEntities[i])
+            }
         }
         if(this.savedInteractables.length > 0){
-            interactables.list = this.savedInteractables;
+            interactables.clear();
+            for(let i = 0; i < this.savedInteractables.length; i++){
+                interactables.add(this.savedInteractables[i])
+            }
         }
     }
 }

@@ -77,8 +77,8 @@ function formatRoom(room){
         right : right,
         top : top,
         bottom : bottom,
-        entities : formatEntities(room.savedEntities),
-        interactables : formatInteractables(room.savedInteractables),
+        entities : character.room.cords === room.cords ? formatEntities(entities.list) : formatEntities(room.savedEntities),
+        interactables : character.room.cords === room.cords ? formatInteractables(interactables.list) : formatInteractables(room.savedInteractables),
         entered : room.entered
     };
     return result;
