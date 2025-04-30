@@ -46,6 +46,7 @@ document.addEventListener('keypress', (e) => {
 
 class areaMap {
     constructor(area){
+        let cordList = [];
         this.selected = null
         this.highX = 0
         this.lowX = 0 //functions as offset
@@ -101,7 +102,10 @@ class areaMap {
         }
         this.selected = this.mapLayout[y][x]
         this.selected.id = 'playerMarker'
-        this.mapLayout[y][x].classList.add('visited')
+        if(!this.mapLayout[y][x].classList.has('visited')){
+            cordList.push(cords);
+
+        }
         this.mapLayout[y][x].style = styleString
     }
 
