@@ -17,6 +17,7 @@ function saveGame(character){
             y : character.y,
             area : area,
             room : character.room.cords,
+            map : character.map.cordList,
         }
     };
     

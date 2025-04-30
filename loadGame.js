@@ -17,6 +17,7 @@ function parseSaveFile(file){
             character.setRoom(character.area.map.get(saveData.character.room))
             character.x = saveData.character.x;
             character.y = saveData.character.y;
+            updateMap(character, saveData.character.map);
 
             //start game
             menu = false;
@@ -151,4 +152,10 @@ function parseInteractables(entities){
         }
     }
     return result;
+}
+
+function updateMap(character, cordList){
+    for(let i = 0; i < cordList.length; i++){
+        character.map.updateMap(cordList[i]);
+    }
 }
