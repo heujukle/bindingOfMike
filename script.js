@@ -212,7 +212,6 @@ function resize(){
     character.room.width = character.room.layout[0].length * width
     character.room.height = character.room.layout.length * height
     if(character.room.dynamicCamera === true){
-        character.fixCamera()
         character.lockCameraToPlayer('recenter')
     }
     prevWindowHeight = window.innerHeight;

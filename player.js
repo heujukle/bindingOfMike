@@ -173,6 +173,7 @@ class player {
         }
         if(stopX) this.movements.x = 0
         if(stopY) this.movements.y = 0
+        return {stopX, stopY}
     }
     //should be the first thing to be run when a loading into a new area
     lockCameraToPlayer(side, offset = 0){
@@ -192,9 +193,8 @@ class player {
             case 'bottom': //enter room on top
                 this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset
                 break;
-            case 'recenter':
-                this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset - this.x
-                this.translateY += this.y - window.innerHeight/2 - offset
+            case 'recenter': //never use
+                
                 break;
         }
         console.log(this.translateX)
