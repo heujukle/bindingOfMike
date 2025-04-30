@@ -32,3 +32,17 @@ function determineTarget(source){
     }
     return result;
 }
+
+function handleResize(list){
+    for(let i = 0; i < list.length; i++){
+        if(list[i] === null) continue;
+        const widthRatio = list[i].width / prevWindowWidth;
+        const heightRatio = list[i].height / prevWindowHeight;
+        const xRatio = list[i].x / prevWindowWidth;
+        const yRatio = list[i].y / prevWindowHeight;
+        list[i].width = window.innerWidth * widthRatio;
+        list[i].height = window.innerHeight * heightRatio;
+        list[i].x = window.innerWidth * xRatio;
+        list[i].y = window.innerHeight * yRatio;
+    }
+}

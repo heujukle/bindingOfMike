@@ -298,7 +298,7 @@ class point{
 //the update function
 //zlayer is determined by the order draaws are called in this function. The early the call the lower it is
 function animate() {
-    if (document.timeline.currentTime - lastUpdate > 1000 / fps && !menu) {
+    if (document.timeline.currentTime - lastUpdate > 1000 / fps && !menu && !buffer) {
       lastUpdate = document.timeline.currentTime;
       ctx.clearRect(0, 0, character.room.width, character.room.height);
       const floor = ctx.createPattern(document.getElementById('floor'), "repeat") 

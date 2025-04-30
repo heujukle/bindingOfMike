@@ -375,13 +375,13 @@ class room{
             }
             y += height;
         }
-        if(this.savedEntities.length > 0){ //if there is any saved data for rooms it will replace readd them instead
+        if(this.savedEntities.length > 0 || this.entered == true){ //if there is any saved data for rooms it will replace readd them instead
             entities.clear();
             for(let i = 0; i < this.savedEntities.length; i++){
                 entities.add(this.savedEntities[i])
             }
         }
-        if(this.savedInteractables.length > 0){
+        if(this.savedInteractables.length > 0 || this.entered == true){
             interactables.clear();
             for(let i = 0; i < this.savedInteractables.length; i++){
                 interactables.add(this.savedInteractables[i])

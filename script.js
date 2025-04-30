@@ -1,11 +1,15 @@
-let width = Math.ceil(window.innerWidth / 20);
-let height = Math.ceil(window.innerHeight / 10);
+let width = Math.ceil(1920 / 20);
+let height = Math.ceil(945 / 10);
+let prevWindowWidth = 1920;
+let prevWindowHeight = 945;
 console.log(height)
-
+console.log(window.innerHeight)
+console.log(window.innerWidth)
 let canvas = document.getElementById('screen')
 const ctx = canvas.getContext("2d");
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+canvas.height = window.innerHeight; //default of 945
+canvas.width = window.innerWidth; //default of 1920
+let buffer = false;
 
 const startingArea = new area()
 
@@ -18,6 +22,7 @@ let character = new player();
 
 character.setArea(startingArea, false);
 
+resize()
 window.requestAnimationFrame(animate);
 
 document.addEventListener('keydown', (e) => { //adds action to player
@@ -189,3 +194,31 @@ const doublePressEvent = doublePress(function(e){ //adds function to double pres
 })
 
 document.addEventListener('keyup', doublePressEvent)
+
+window.addEventListener('resize', (e) => {
+    resize(e);
+})
+
+function resize(){
+    buffer = true
+    console.log("resized")
+    width = Math.ceil(window.innerWidth / 20);
+    height = Math.ceil(window.innerHeight / 10);
+    handleResize(structures.list)
+    handleResize([character])
+    handleResize(entities.list);
+    handleResize(interactables.list);
+    handleResize(damageInstances.list);
+    character.room.width = character.room.layout[0].length * width
+    character.room.height = character.room.layout.length * height
+    if(character.room.dynamicCamera === true){
+        character.fixCamera()
+        character.lockCameraToPlayer('recenter')
+    }
+    prevWindowHeight = window.innerHeight;
+    prevWindowWidth = window.innerWidth;
+    canvas.height = window.innerHeight; 
+    canvas.width = window.innerWidth; 
+    setTimeout(()=>{buffer = false}, 1000)
+
+}

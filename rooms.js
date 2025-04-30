@@ -1,4 +1,4 @@
-let rooms = rooms0.map((arr)=>{return arr.slice();});
+let rooms = rooms2.map((arr)=>{return arr.slice();});
 
 const createWall = (x, y, width, height)  => {
     structures.add(new wall(x, y, width, height))

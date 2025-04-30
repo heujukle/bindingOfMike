@@ -175,7 +175,7 @@ class player {
         if(stopY) this.movements.y = 0
     }
     //should be the first thing to be run when a loading into a new area
-    lockCameraToPlayer(side, offset){
+    lockCameraToPlayer(side, offset = 0){
         console.log(side)
         switch(side){
             case 'left': //will enter room on right side
@@ -191,6 +191,10 @@ class player {
                 break;
             case 'bottom': //enter room on top
                 this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset
+                break;
+            case 'recenter':
+                this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset - this.x
+                this.translateY += this.y - window.innerHeight/2 - offset
                 break;
         }
         console.log(this.translateX)
@@ -276,8 +280,10 @@ class player {
 
     setRoom(room){
         this.room = room
-        this.room.entered = true;
         this.room.newRoomLoad()
+        character.room.width = character.room.layout[0].length * width
+        character.room.height = character.room.layout.length * height
+        this.room.entered = true;
         this.iFrames = 20
         this.map.updateMap(this.room.cords)
         console.log(this.room.cords)
