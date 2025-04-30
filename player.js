@@ -140,7 +140,7 @@ class player {
         ctx.closePath();
     }
 
-    dynamicCamera(){
+    dynamicCamera(){ //will update the camera 
             this.verifyCameraBounds()
             this.translateY += this.movements.y
             this.translateX += this.movements.x
@@ -148,7 +148,7 @@ class player {
             // console.log(this.translateY)
     }
 
-    verifyCameraBounds(){
+    verifyCameraBounds(){ //checks if out of bounds, will stop movement if so
         let stopY = false
         let stopX = false
         if(this.movements.y < 0){ // up
@@ -173,7 +173,7 @@ class player {
         }
         if(stopX) this.movements.x = 0
         if(stopY) this.movements.y = 0
-        return {stopX, stopY}
+        return {stopX : stopX, stopY : stopY}
     }
     //should be the first thing to be run when a loading into a new area
     lockCameraToPlayer(side, offset = 0){
@@ -194,20 +194,60 @@ class player {
                 this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset
                 break;
             case 'recenter': //never use
-                
-                break;
+    //              // Calculate target translate values to center the player
+    //             const targetTranslateX = this.x + this.width / 2 - window.innerWidth / 2;
+    //             const targetTranslateY = this.y + this.height / 2 - window.innerHeight / 2;
+
+    //             // Calculate the difference to apply to ctx and update internal tracking
+    //             const deltaX = targetTranslateX - this.translateX;
+    //             const deltaY = targetTranslateY - this.translateY;
+
+    //             ctx.translate(-deltaX, -deltaY);
+
+    //             this.translateX = targetTranslateX;
+    //             this.translateY = targetTranslateY;
+
+    //                 // Calculate how far off the player is from screen center
+    // const desiredX = this.x + this.width / 2 - window.innerWidth / 2;
+    // const desiredY = this.y + this.height / 2 - window.innerHeight / 2;
+
+    // // Compute movement delta
+    // let deltaX = desiredX - this.translateX;
+    // let deltaY = desiredY - this.translateY;
+
+    // // Temporarily apply movement values for bound checking
+    // this.movements.x = deltaX;
+    // this.movements.y = deltaY;
+
+    // const bounds = this.verifyCameraBounds(); // adjust based on limits
+
+    // // Recalculate allowed movement after bounds check
+    // deltaX = this.movements.x;
+    // deltaY = this.movements.y;
+
+    // ctx.translate(-deltaX, -deltaY);
+
+    // // Apply the actual movement to camera state
+    // this.translateX += deltaX;
+    // this.translateY += deltaY;
+
+    // // Reset movements (as done in dynamicCamera)
+    // this.movements.x = 0;
+    // this.movements.y = 0;
+                return;
         }
-        console.log(this.translateX)
-        console.log(this.translateY)
         ctx.translate(-this.translateX, -this.translateY)
+        console.log("translated")
     }
 
-    fixCamera(){
+    fixCamera(){ //returns previous values
+        const result = {prevTX : this.translateX, prevTY : this.translateY}
         if(this.room.dynamicCamera == true){
             ctx.translate(this.translateX, this.translateY)
             this.translateX = 0;
             this.translateY = 0;
         }
+        return result;
     }
     has(item){ //if player has an item
         return Object.keys(this.passiveItems).includes(item)

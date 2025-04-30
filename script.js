@@ -97,21 +97,19 @@ function unstuck(player){
 }
 }
 
-// document.addEventListener('keydown', (e) => {
-//     if(e.key === 'c'){
-//         menu = !menu;
-//         document.getElementById('console').classList.toggle('invisible');
-//         if(menu == true){
-//         println('Player cords:' + character.x + "," + character.y)
-//         println('Structure:' + structures.list.length)
-//         println('entities:' + entities.list.length)
-//         println('damageInstances:' + damageInstances.list.length)
-//         console.log(damageInstances.list)
-//         println('area:' + character.area.map.keys().length)
-//         println('')
-//         }
-//     }
-// })
+document.addEventListener('keydown', (e) => {
+    if(e.key === 'c'){
+        menu = !menu;
+        document.getElementById('console').classList.toggle('invisible');
+        if(menu == true){
+        println("translateX: " + character.translateX)
+        println("translateY: " + character.translateY)
+        println("player X: " + character.x)
+        println("player Y: " + character.y)
+        println('----------------------------------------')
+        }
+    }
+})
 
 document.addEventListener('wheel', (e) => {
     if (e.deltaY > 0) {
