@@ -363,6 +363,8 @@ class room{
     }
 
     newRoomLoad(){
+        this.width = this.layout[0].length * width;
+        this.height = this.layout.length * height;
         let x = 0 //x and y cordninates of spaces
         let y = 0
         for(let i = 0; i < this.layout.length; i++){
@@ -387,5 +389,7 @@ class room{
                 interactables.add(this.savedInteractables[i])
             }
         }
+        adjustSize(entities.list);
+        adjustSize(interactables.list);
     }
 }

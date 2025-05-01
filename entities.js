@@ -3,6 +3,12 @@ class dummy{
         this.instance = 'dummy';
         this.x = x;
         this.y = y;
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
@@ -37,6 +43,12 @@ class spawner{
         this.x = x;
         this.y = y;
         this.index;
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.target = target
@@ -93,6 +105,12 @@ class zombie{
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
@@ -199,6 +217,12 @@ class Warrior{
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
@@ -338,6 +362,12 @@ class skeleton{
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
@@ -482,6 +512,12 @@ class evilZombie{
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
@@ -590,6 +626,12 @@ class boomSkeleton{
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
@@ -739,6 +781,12 @@ class threadling{
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height /945,
+        }
         this.width = width;
         this.height = height;
         this.color = "#182b1d"

@@ -6,6 +6,10 @@ class portal{
         this.target = target
         this.width = width
         this.height = height
+        this.offsets = {
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+        }
         this.type = 'portal'
         this.behavior = 'dynamic'
     }
@@ -79,6 +83,10 @@ constructor(x, y, width, height, target, forSale = undefined){
     this.target = target
     this.width = width
     this.height = height
+    this.offsets = {
+        xOffset : x / character.room.width,
+        yOffset : y / character.room.height,
+    }
     this.type = 'shop' //is shop
     this.behavior = 'dynamic' //dynamically changes
     const seed = Math.random() + ''
@@ -233,6 +241,10 @@ class forge{
             this.y = y //y
             this.target = target
             this.width = width
+            this.offsets = {
+                xOffset : x / character.room.width,
+                yOffset : y / character.room.height,
+            }
             this.height = height
             this.type = 'forge' //is shop
             this.behavior = 'dynamic' //dynamically changes
@@ -450,6 +462,10 @@ class forge{
             this.target = target
             this.width = width
             this.height = height
+            this.offsets = {
+                xOffset : x / character.room.width,
+                yOffset : y / character.room.height,
+            }
             this.type = 'chest' //is shop
             this.behavior = 'dynamic' //dynamically changes
             this.opened = false;

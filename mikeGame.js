@@ -432,13 +432,7 @@ function doorAdjustLR(player){
 //changes room if player is out of bounds
 function roomChange(player){
     if(player.y < 0){ //top
-        player.fixCamera()
-        structures.resetList();
-        player.room.savedEntities = entities.list;
-        entities.clear();
-        player.room.savedInteractables = interactables.list;
-        interactables.clear()
-        damageInstances.clear();
+        roomChangeBody(player)
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.top)
         player.y = player.room.height;
@@ -446,13 +440,7 @@ function roomChange(player){
         if(player.room.dynamicCamera == true) player.lockCameraToPlayer("top", offset)
     }
     else if(player.y > player.room.layout.length * height){
-        player.fixCamera()
-        structures.resetList();
-        player.room.savedEntities = entities.list;
-        entities.clear();
-        player.room.savedInteractables = interactables.list;
-        interactables.clear()
-        damageInstances.clear();
+        roomChangeBody(player)
         const offset = doorAdjustTB(player)
         player.setRoom(player.room.bottom)
         player.y = 0;
@@ -460,13 +448,7 @@ function roomChange(player){
         if(player.room.dynamicCamera == true) player.lockCameraToPlayer("bottom", offset)
     }
     else if(player.x < 0){
-        player.fixCamera()
-        structures.resetList();
-        player.room.savedEntities = entities.list;
-        entities.clear();
-        player.room.savedInteractables = interactables.list;
-        interactables.clear()
-        damageInstances.clear();
+        roomChangeBody(player)
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.left)
         player.x = player.room.width - player.width;
@@ -474,19 +456,31 @@ function roomChange(player){
         if(player.room.dynamicCamera == true) player.lockCameraToPlayer("left", offset)
     }
     else if(player.x+player.width > player.room.layout[0].length * width){
-        player.fixCamera()
-        structures.resetList();
-        player.room.savedEntities = entities.list;
-        entities.clear();
-        player.room.savedInteractables = interactables.list;
-        interactables.clear()
-        damageInstances.clear();
+        roomChangeBody(player)
         const offset = doorAdjustLR(player)
         player.setRoom(player.room.right)
         player.x = 0;
         player.y = (player.room.sideDoor - 1) * height + offset
         if(player.room.dynamicCamera == true) player.lockCameraToPlayer("right", offset)
     }
+}
+
+function roomChangeBody(player){ //resuablebody of room change
+    player.fixCamera()
+    structures.resetList();
+    player.room.savedEntities = entities.list;
+    for(entity of player.room.savedEntities){
+        entity.offsets.xOffset = entity.x / player.room.width
+        entity.offsets.yOffset = entity.y / player.room.height
+    }
+    entities.clear();
+    player.room.savedInteractables = interactables.list;
+    // for(interactable of player.room.savedInteractables){
+    //     interactable.offsets.xOffset = interactable.x / player.room.width
+    //     interactable.offsets.yOffset = interactable.y / player.room.height
+    // }
+    interactables.clear()
+    damageInstances.clear();
 }
 
 function getProjVelocities(degrees, speed){ //returns velocities for projectiles/entities so they travel at a consistent speed

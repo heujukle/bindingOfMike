@@ -17,6 +17,8 @@ function parseSaveFile(file){
             character.setRoom(character.area.map.get(saveData.character.room))
             character.x = saveData.character.x;
             character.y = saveData.character.y;
+            character.offsets = saveData.character.offsets
+            adjustSize([character])
             updateMap(character, saveData.character.map);
 
             //start game
@@ -130,10 +132,14 @@ function parseEntities(entities){
         const entity = entities[i];
         if(entity.unqiue !== undefined){
             const uniqueVals = Object.keys(entity.unqiue);
-            result.push(saveableEntities[entity.instance](entity.x, entity.y, entity.health, uniqueVals[0], uniqueVals[1]))
+            const madeEntity = saveableEntities[entity.instance](entity.x, entity.y, entity.health, uniqueVals[0], uniqueVals[1])
+            madeEntity.offsets = entities[i].offsets;
+            result.push(madeEntity)
         }
         else{
-            result.push(saveableEntities[entity.instance](entity.x, entity.y, entity.health))
+            const madeEntity = saveableEntities[entity.instance](entity.x, entity.y, entity.health)
+            madeEntity.offsets = entities[i].offsets;
+            result.push(madeEntity)
         }
     }
     return result;

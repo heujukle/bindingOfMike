@@ -18,6 +18,7 @@ function saveGame(character){
             area : area,
             room : character.room.cords,
             map : character.map.cordList,
+            offsets : character.offsets
         }
     };
     
@@ -93,6 +94,7 @@ function formatEntities(entities){
             instance : entities[i].instance,
             x : entities[i].x,
             y : entities[i].y,
+            offsets : entities[i].offsets,
             health : entities[i].health,
             unique : undefined
         }

@@ -76,6 +76,12 @@ class player {
         this.translateY = 0;
         this.timeOfLastShot = 0
         this.allied = 'player'
+        this.offsets = { //holds the values of all the ratio of changes
+            xOffset : 1,
+            yOffset : 1,
+            widthOffset : this.width / 1920,
+            heightOffset : this.height /945,
+        }
     }
     
     hotBarChange(direction){ //changes direction of hotbar
@@ -217,7 +223,10 @@ class player {
     recenter(){
         this.translateX = this.x + this.width / 2 - window.innerWidth / 2;
         this.translateY = this.y + this.height / 2 - window.innerHeight / 2;
-
+        this.translateX = this.translateX < 0 ? 0 : this.translateX;
+        this.translateX = this.translateX > this.room.width - window.innerWidth ? this.room.width - window.innerWidth : this.translateX;
+        this.translateY = this.translateY < 0 ? 0 : this.translateY;
+        this.translateY = this.translateY > this.room.height - window.innerHeight ? this.room.height - window.innerHeight : this.translateY;
         // Apply the corrected translation
         ctx.translate(-this.translateX, -this.translateY);
     }
