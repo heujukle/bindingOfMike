@@ -182,72 +182,44 @@ class player {
             case 'left': //will enter room on right side
                 this.translateY += this.y - window.innerHeight/2 - offset
                 this.translateX += this.room.width - window.innerWidth
+                ctx.translate(-this.translateX, -this.translateY)
                 break;
             case 'right':
                 this.translateY += this.y - window.innerHeight/2 - offset;
+                ctx.translate(-this.translateX, -this.translateY)
                 break;
             case 'top': //enter room on bottom
                 this.translateY += this.room.height - window.innerHeight
                 this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset
+                ctx.translate(-this.translateX, -this.translateY)
                 break;
             case 'bottom': //enter room on top
                 this.translateX += this.x + this.width/2 - window.innerWidth/2 - offset
+                ctx.translate(-this.translateX, -this.translateY)
                 break;
             case 'recenter': //never use
-    //              // Calculate target translate values to center the player
-    //             const targetTranslateX = this.x + this.width / 2 - window.innerWidth / 2;
-    //             const targetTranslateY = this.y + this.height / 2 - window.innerHeight / 2;
-
-    //             // Calculate the difference to apply to ctx and update internal tracking
-    //             const deltaX = targetTranslateX - this.translateX;
-    //             const deltaY = targetTranslateY - this.translateY;
-
-    //             ctx.translate(-deltaX, -deltaY);
-
-    //             this.translateX = targetTranslateX;
-    //             this.translateY = targetTranslateY;
-
-    //                 // Calculate how far off the player is from screen center
-    // const desiredX = this.x + this.width / 2 - window.innerWidth / 2;
-    // const desiredY = this.y + this.height / 2 - window.innerHeight / 2;
-
-    // // Compute movement delta
-    // let deltaX = desiredX - this.translateX;
-    // let deltaY = desiredY - this.translateY;
-
-    // // Temporarily apply movement values for bound checking
-    // this.movements.x = deltaX;
-    // this.movements.y = deltaY;
-
-    // const bounds = this.verifyCameraBounds(); // adjust based on limits
-
-    // // Recalculate allowed movement after bounds check
-    // deltaX = this.movements.x;
-    // deltaY = this.movements.y;
-
-    // ctx.translate(-deltaX, -deltaY);
-
-    // // Apply the actual movement to camera state
-    // this.translateX += deltaX;
-    // this.translateY += deltaY;
-
-    // // Reset movements (as done in dynamicCamera)
-    // this.movements.x = 0;
-    // this.movements.y = 0;
-                return;
+                this.fixCamera();
+                break;
         }
-        ctx.translate(-this.translateX, -this.translateY)
         console.log("translated")
     }
 
     fixCamera(){ //returns previous values
         const result = {prevTX : this.translateX, prevTY : this.translateY}
         if(this.room.dynamicCamera == true){
-            ctx.translate(this.translateX, this.translateY)
+            ctx.translate(this.translateX, this.translateY);
             this.translateX = 0;
             this.translateY = 0;
         }
         return result;
+    }
+
+    recenter(){
+        this.translateX = this.x + this.width / 2 - window.innerWidth / 2;
+        this.translateY = this.y + this.height / 2 - window.innerHeight / 2;
+
+        // Apply the corrected translation
+        ctx.translate(-this.translateX, -this.translateY);
     }
     has(item){ //if player has an item
         return Object.keys(this.passiveItems).includes(item)

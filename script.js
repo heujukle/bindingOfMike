@@ -202,20 +202,38 @@ function resize(){
     console.log("resized")
     width = Math.ceil(window.innerWidth / 20);
     height = Math.ceil(window.innerHeight / 10);
+    character.room.width = character.room.layout[0].length * width
+    character.room.height = character.room.layout.length * height
+    if(character.room.dynamicCamera === true){
+        character.fixCamera();
+        queueRecenter();
+    }
     handleResize(structures.list)
     handleResize([character])
     handleResize(entities.list);
     handleResize(interactables.list);
     handleResize(damageInstances.list);
-    character.room.width = character.room.layout[0].length * width
-    character.room.height = character.room.layout.length * height
-    if(character.room.dynamicCamera === true){
-        character.lockCameraToPlayer('recenter')
-    }
     prevWindowHeight = window.innerHeight;
     prevWindowWidth = window.innerWidth;
     canvas.height = window.innerHeight; 
     canvas.width = window.innerWidth; 
     setTimeout(()=>{buffer = false}, 1000)
 
+}
+
+
+let recenterQueue = false;
+function queueRecenter(){
+    if(recenterQueue == false){
+        recenterQueue = true
+        setTimeout(()=>{
+            character.recenter()
+            recenterQueue = false;
+        
+        },
+        750)
+    }
+    else{
+        console.log('overinput')
+    }
 }
