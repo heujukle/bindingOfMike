@@ -326,6 +326,10 @@ class room{
         this.dynamicCamera = (layout.length > 10 || layout[0].length > 20) ? true : false;
         this.width = layout[0].length * width;
         this.height = layout.length * height;
+        this.lastNeteredDimensions = {
+            width : 1920,
+            height : 945
+        }
 
     }
 

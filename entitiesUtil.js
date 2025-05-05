@@ -33,7 +33,7 @@ function determineTarget(source){
     return result;
 }
 
-function handleResize(list){ //will update values to fit new window size works for all objects with a x y width and height
+function handleResize(list, prevWindowWidth = prevWindowWidth, prevWindowHeight = prevWindowHeight){ //will update values to fit new window size works for all objects with a x y width and height
     for(let i = 0; i < list.length; i++){
         if(list[i] === null) continue;
         const widthRatio = list[i].width / prevWindowWidth;
