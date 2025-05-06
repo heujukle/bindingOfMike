@@ -50,7 +50,7 @@ class turret{ //creates the turret
         switch(this.direction){//determines the direction of the turrets
             case "lt":
                 console.log('lt')
-                this.tProjectile = new projectile(this.x - 25, this.y + this.height / 2, 25, 25, -15, 0, this, true, character.room, '#000000') //create turret
+                this.tProjectile = new projectile(-25, 0, 25, 25, -15, 0, this, true, character.room, '#000000') //create turret
                 damageInstances.add(this.tProjectile); //add projectile
                 break;
 
@@ -58,7 +58,7 @@ class turret{ //creates the turret
                 break;
 
             case 'rt':
-                this.tProjectile = new projectile(this.x + this.width + 25, this.y + this.height / 2, 25, 25, 15, 0, this, true, character.room, '#000000')
+                this.tProjectile = new projectile(width, 0, 25, 25, 15, 0, this, true, character.room, '#000000')
                 damageInstances.add(this.tProjectile);
                 break;
 
@@ -125,8 +125,8 @@ class area{
                 layout = [
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'lt', 0, 1], 
+                    [1, 'rt', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 1], 
@@ -326,9 +326,9 @@ class room{
         this.dynamicCamera = (layout.length > 10 || layout[0].length > 20) ? true : false;
         this.width = layout[0].length * width;
         this.height = layout.length * height;
-        this.lastNeteredDimensions = {
-            width : 1920,
-            height : 945
+        this.lastEnteredDimensions = {
+            width : this.width,
+            height : this.height
         }
 
     }
@@ -393,7 +393,8 @@ class room{
                 interactables.add(this.savedInteractables[i])
             }
         }
-        adjustSize(entities.list);
-        adjustSize(interactables.list);
+        
+        adjustSize(entities.list)
+        adjustSize(interactables.list)
     }
 }

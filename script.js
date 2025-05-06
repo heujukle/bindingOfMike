@@ -102,10 +102,11 @@ document.addEventListener('keydown', (e) => {
         menu = !menu;
         document.getElementById('console').classList.toggle('invisible');
         if(menu == true){
-        println("translateX: " + character.translateX)
-        println("translateY: " + character.translateY)
-        println("player X: " + character.x)
-        println("player Y: " + character.y)
+        println("room width: " + character.room.width)
+        println("room height: " + character.room.height)
+        println("stored window size: " + JSON.stringify(character.room.lastEnteredDimensions))
+        println('screen width:' + window.innerWidth)
+        println('screen height:' + window.innerHeight)
         println('----------------------------------------')
         }
     }
@@ -194,11 +195,14 @@ const doublePressEvent = doublePress(function(e){ //adds function to double pres
 document.addEventListener('keyup', doublePressEvent)
 
 window.addEventListener('resize', (e) => {
-    resize(e);
+    resize();
 })
 
-function resize(){
+//default will just resize the window using global previous values, values will use specific pervious values, it will also skip 
+function resize(overrideWidth = null, overrideHieght = null){ 
     buffer = true
+    roomChangeBody(character);
+    character.room.newRoomLoad();
     console.log("resized")
     width = Math.ceil(window.innerWidth / 20);
     height = Math.ceil(window.innerHeight / 10);
@@ -208,17 +212,24 @@ function resize(){
         character.fixCamera();
         queueRecenter();
     }
-    handleResize(structures.list)
-    handleResize([character])
-    handleResize(entities.list);
-    handleResize(interactables.list);
-    handleResize(damageInstances.list);
+    if(overrideWidth === null && overrideHieght === null){
+        handleResize(structures.list)
+        handleResize([character])
+        handleResize(entities.list);
+        handleResize(interactables.list);
+        handleResize(damageInstances.list);
+    }
+    else{
+        handleResize(interactables.list, overrideWidth, overrideHieght);
+        handleResize(entities.list, overrideWidth, overrideHieght);
+    }
+    character.room.lastEnteredDimensions.width = character.room.width;
+    character.room.lastEnteredDimensions.height = character.room.height;
     prevWindowHeight = window.innerHeight;
     prevWindowWidth = window.innerWidth;
     canvas.height = window.innerHeight; 
     canvas.width = window.innerWidth; 
     setTimeout(()=>{buffer = false}, 1000)
-
 }
 
 

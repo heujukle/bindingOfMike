@@ -33,13 +33,15 @@ function determineTarget(source){
     return result;
 }
 
-function handleResize(list, prevWindowWidth = prevWindowWidth, prevWindowHeight = prevWindowHeight){ //will update values to fit new window size works for all objects with a x y width and height
+function handleResize(list, roomPrevWindowWidth = null, roomPrevWindowHeight = null){ //will update values to fit new window size works for all objects with a x y width and height
+    baseWidth = roomPrevWindowWidth == null ? prevWindowWidth : roomPrevWindowWidth
+    baseHeight = roomPrevWindowHeight == null ? prevWindowHeight : roomPrevWindowHeight
     for(let i = 0; i < list.length; i++){
         if(list[i] === null) continue;
-        const widthRatio = list[i].width / prevWindowWidth;
-        const heightRatio = list[i].height / prevWindowHeight;
-        const xRatio = list[i].x / prevWindowWidth;
-        const yRatio = list[i].y / prevWindowHeight;
+        const widthRatio = list[i].width / baseWidth;
+        const heightRatio = list[i].height / baseHeight;
+        const xRatio = list[i].x / baseWidth;
+        const yRatio = list[i].y / baseHeight;
         list[i].width = window.innerWidth * widthRatio;
         list[i].height = window.innerHeight * heightRatio;
         list[i].x = window.innerWidth * xRatio;
@@ -52,8 +54,12 @@ function adjustSize(list){ // a function for resizing normal sized
         if(list[i] === null) continue;
         //these offsets are set upon object creation and dont change
         if(list[i].offsets.widthOffset !== undefined){
-            list[i].width = window.innerWidth * list[i].offsets.widthOffset;
-            list[i].height = window.innerHeight * list[i].offsets.heightOffset;
+            list[i].width = character.room.width * list[i].offsets.widthOffset;
+            list[i].height = character.room.height * list[i].offsets.heightOffset;
+        }
+        else{
+            list[i].width = width;
+            list[i].height = height;
         }
         //these offsets are set upon object saving and do change, implementation can be found in structures.js 
         list[i].x = character.room.width * list[i].offsets.xOffset; 

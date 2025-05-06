@@ -470,6 +470,7 @@ function roomChangeBody(player){ //resuablebody of room change
     structures.resetList();
     player.room.savedEntities = entities.list;
     for(entity of player.room.savedEntities){
+        if(entity == null) continue
         entity.offsets.xOffset = entity.x / player.room.width
         entity.offsets.yOffset = entity.y / player.room.height
     }

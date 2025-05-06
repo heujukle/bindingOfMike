@@ -221,7 +221,7 @@ class Warrior{
             xOffset : x / character.room.width,
             yOffset : y / character.room.height,
             widthOffset : width / 1920,
-            heightOffset : height /945,
+            heightOffset : height / 945,
         }
         this.width = width;
         this.height = height;

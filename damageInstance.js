@@ -6,14 +6,18 @@ class projectile{
         this.index; //index in the damageinstance/interactable array
         this.startX = startX; //saves the start cords for repeating projectiles
         this.startY = startY;
-        this.x = startX; //xcord
-        this.y = startY;//ycord
+        this.source = source; //source
+        this.repeating = repeating; //if the object is repeating
+        this.x = this.repeating ? this.source.x + this.startX : startX; //xcord
+        this.y = this.repeating ? this.source.y + this.startY + this.source.height * 0.3: startY;//ycord
+        console.log(this.source)
+        console.log(this.source.y)
+        console.log(this.x)
+        console.log(this.y)
         this.width = width; //width of projectile
         this.height = height; //height of projectile
         this.xVelocity = xVelocity; //velocity of projectile
         this.yVelocity = yVelocity; //velocity
-        this.source = source; //source, just a unique string per source, doesn't link back to main object
-        this.repeating = repeating; //if the object is repeating
         this.color = color; //color
         this.damage = damage; //how much damage
         this.ricochet = ricochet; //if the projectile richochets
@@ -42,8 +46,8 @@ class projectile{
             this.x += this.xVelocity //readds xvelocity
             if(this.x > this.room.width || this.x < 0 || this.y > this.room.height || this.y < 0 || this.entityCollision()){ //if hits enemeny or oobs the remove or repeat
                 if(this.repeating){//repeats
-                    this.x = this.startX;
-                    this.y = this.startY;
+                    this.x = this.source.x + this.startX;
+                    this.y = this.source.y + this.startY + this.source.height * 0.3 ;
                 }
                 else{ //removes
                     console.log('reset')
@@ -59,8 +63,8 @@ class projectile{
             // checks collisions
                 if(this.x > this.room.width || this.x < 0 || this.y > this.room.height || this.y < 0 || this.collision2(structures.list) || this.entityCollision()){ 
                     if(this.repeating){//repeats projectile
-                        this.x = this.startX; 
-                        this.y = this.startY;
+                        this.x = this.source.x + this.startX;
+                        this.y = this.source.y + this.startY + this.source.height * 0.3 ;
                     }
                     else{ //resets projectile
                         console.log('reset')
