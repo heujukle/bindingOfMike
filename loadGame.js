@@ -18,7 +18,7 @@ function parseSaveFile(file){
             character.x = saveData.character.x;
             character.y = saveData.character.y;
             character.offsets = saveData.character.offsets
-            adjustSize([character])
+            resize()
             updateMap(character, saveData.character.map);
 
             //start game
