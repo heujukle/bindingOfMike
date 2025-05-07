@@ -7,6 +7,8 @@ function onDeath(){
     createElement('div', 'deathText', {textContent: 'You Died'}, blackDrop)
     createElement('div', 'areaText', {textContent: 'Area: ' + areaCount}, blackDrop)
     const replay = createElement('div', 'replayText', {textContent: 'Try Again?'}, blackDrop)
+    updateLeaderBoard();
+
     replay.addEventListener("click", ()=>{
         ctx.translate(character.translateX, character.translateY)
         rooms = rooms0.map((arr)=>{return arr.slice();});
@@ -19,8 +21,8 @@ function onDeath(){
         skeletonDamage = 5; 
         moneyScale = 1;
         knockBackResistance = 1;
-        itemScale = 1
-        areaCount = 0 
+        itemScale = 1 
+        areaCount = 0
         character = new player()
         hook.hooks = {
             'onEnemyDamage' : [],
