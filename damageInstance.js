@@ -14,8 +14,8 @@ class projectile{
         console.log(this.source.y)
         console.log(this.x)
         console.log(this.y)
-        this.width = width; //width of projectile
-        this.height = height; //height of projectile
+        this.width = window.innerWidth * width / window.innerWidth; //width of projectile
+        this.height = window.innerHeight * height / window.innerHeight; //height of projectile
         this.xVelocity = xVelocity; //velocity of projectile
         this.yVelocity = yVelocity; //velocity
         this.color = color; //color
