@@ -2,6 +2,8 @@ function saveGame(character){
     // The content of the file
     console.log(character)
     const area = formatArea(character.area);
+    cordOffsets([character])
+    cordOffsets(entities.list)
     console.log(area);
     const content = {
         areaCount : areaCount,
@@ -122,6 +124,7 @@ function formatInteractables(interactables){
             instance : interactables[i].type,
             x : interactables[i].x,
             y : interactables[i].y,
+            offsets : interactables[i].offsets,
             unique : undefined
         }
         switch(interactables[i].instance){

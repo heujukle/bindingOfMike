@@ -15,8 +15,8 @@ function parseSaveFile(file){
             entities.clear();
             interactables.clear();
             character.setRoom(character.area.map.get(saveData.character.room))
-            character.x = saveData.character.x;
-            character.y = saveData.character.y;
+            character.x = character.room.width * saveData.character.offsets.xOffset;
+            character.y = character.room.height * saveData.character.offsets.yOffset;
             character.offsets = saveData.character.offsets
             resize()
             updateMap(character, saveData.character.map);
@@ -151,10 +151,14 @@ function parseInteractables(entities){
         const entity = entities[i];
         if(entity.unqiue !== undefined){
             const uniqueVals = Object.keys(entity.unqiue);
-            result.push(saveableInteractables[entity.instance](entity.x, entity.y, uniqueVals[0], uniqueVals[1]))
+            const madeEntity = saveableInteractables[entity.instance](entity.x, entity.y, entity.health, uniqueVals[0], uniqueVals[1])
+            madeEntity.offsets = entities[i].offsets;
+            result.push(madeEntity)
         }
         else{
-            result.push(saveableInteractables[entity.instance](entity.x, entity.y))
+            const madeEntity = saveableInteractables[entity.instance](entity.x, entity.y, entity.health)
+            madeEntity.offsets = entities[i].offsets;
+            result.push(madeEntity)
         }
     }
     return result;

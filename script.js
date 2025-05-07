@@ -212,7 +212,7 @@ function resize(overrideWidth = null, overrideHieght = null){
         character.fixCamera();
         queueRecenter();
     }
-    if(overrideWidth === null && overrideHieght === null){
+    if(overrideWidth === null && overrideHieght === null){ //for an default function
         handleResize(structures.list)
         handleResize([character])
         handleResize(entities.list);
@@ -223,6 +223,8 @@ function resize(overrideWidth = null, overrideHieght = null){
         handleResize(interactables.list, overrideWidth, overrideHieght);
         handleResize(entities.list, overrideWidth, overrideHieght);
     }
+    cordOffsets([character]);
+    cordOffsets(entities.list);
     character.room.lastEnteredDimensions.width = character.room.width;
     character.room.lastEnteredDimensions.height = character.room.height;
     prevWindowHeight = window.innerHeight;

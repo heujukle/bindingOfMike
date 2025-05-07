@@ -66,3 +66,11 @@ function adjustSize(list){ // a function for resizing normal sized
         list[i].y = character.room.height * list[i].offsets.yOffset;
     }
 }
+//a function to update cord offsets, allows for relative movement 
+function cordOffsets(list){
+    for(entity of list){
+        if(entity === null) continue;
+        entity.offsets.xOffset = entity.x / character.room.width;
+        entity.offsets.yOffset = entity.y / character.room.height;
+    }
+}
