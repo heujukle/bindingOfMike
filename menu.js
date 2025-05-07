@@ -16,6 +16,7 @@ const body = document.getElementsByTagName('body')[0]
 
 playStart.addEventListener('click', (e) => { //starts games
     menu = false;
+    username = nameInput.value;
     title.textContent = nameInput.value + " Game"
     start.classList.add('invisible')
     topLeft.classList.remove('invisible')

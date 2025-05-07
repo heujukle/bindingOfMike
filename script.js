@@ -10,6 +10,7 @@ const ctx = canvas.getContext("2d");
 canvas.height = window.innerHeight; //default of 945
 canvas.width = window.innerWidth; //default of 1920
 let buffer = false;
+let username = "Unnamed"
 
 const startingArea = new area()
 
