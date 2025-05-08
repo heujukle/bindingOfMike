@@ -7,7 +7,17 @@ function onDeath(){
     createElement('div', 'deathText', {textContent: 'You Died'}, blackDrop)
     createElement('div', 'areaText', {textContent: 'Area: ' + areaCount}, blackDrop)
     const replay = createElement('div', 'replayText', {textContent: 'Try Again?'}, blackDrop)
-    updateLeaderBoard();
+
+    fetch("leaderboard/leaderboard.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({username : username, areaCount : areaCount}), // Send full order data
+    })
+    .then(response => response.json())  // Expect a JSON response
+    .then(data => {
+        console.log(data.status, data.message, data.reset);
+    })
+    .catch(error => console.error("Error:", error));
 
     replay.addEventListener("click", ()=>{
         ctx.translate(character.translateX, character.translateY)

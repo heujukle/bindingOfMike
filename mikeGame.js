@@ -12,7 +12,7 @@ let zombieDamage = 15;
 let skeletonDamage = 5; 
 let moneyScale = 1;
 let knockBackResistance = 1;
-let areaCount = 0 
+let areaCount = 1 
 let itemScale = 1
 
 document.addEventListener('error', (e) => {

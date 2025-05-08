@@ -51,7 +51,7 @@ class player {
             'staminaRegen' : 0.05,
             'shoot speed' : 425
         }
-        this.health = 100;
+        this.health = 5;
         this.stamina = 100;
         this.hotbar = ['shoot', 'melee']
         this.passiveItems = {}
