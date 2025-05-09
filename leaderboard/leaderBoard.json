@@ -8,6 +8,10 @@
             {
                 "username": "unnamed",
                 "score": 0
+            },
+            {
+                "username": "unnamed",
+                "score": 0
             }
         ]
     ],
@@ -22,6 +26,12 @@
             {
                 "username": "unnamed",
                 "score": 210
+            }
+        ],
+        "60": [
+            {
+                "username": "unnamed",
+                "score": 60
             }
         ]
     }
