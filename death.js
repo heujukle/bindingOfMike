@@ -11,7 +11,10 @@ function onDeath(){
     fetch("leaderboard/leaderboard.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({username : username, areaCount : areaCount}), // Send full order data
+        body: JSON.stringify({
+            "Furthest Area" : {username : username, score : areaCount},
+            "Highest score" : {username : username, score : character.score},
+        }), // Send full order data
     })
     .then(response => response.json())  // Expect a JSON response
     .then(data => {
@@ -49,6 +52,7 @@ function onDeath(){
         overlay.innerHTML = ''
         topLeft.classList.remove('invisible')
         overlay.classList.add('invisible')
+        adjustSize([character], true)
         menu = false
     })
 }

@@ -12,7 +12,7 @@ let zombieDamage = 15;
 let skeletonDamage = 5; 
 let moneyScale = 1;
 let knockBackResistance = 1;
-let areaCount = 1 
+let areaCount = 0 
 let itemScale = 1
 
 document.addEventListener('error', (e) => {
@@ -325,8 +325,11 @@ function setFPS(target){
 //target is most likely a player object
 function updateWallet(increase, target){
     if(target.wallet != null){
-        if(increase > 0){target.wallet += increase * moneyScale}
-        else{target.wallet += increase}
+        if(increase > 0){
+            target.wallet += increase * moneyScale
+            target.score += increase
+        }
+        else{target.wallet += increase} //for when purchasing items
         document.getElementById('walletDisplay').textContent = target.wallet;
     }
 }

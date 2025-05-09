@@ -49,21 +49,23 @@ function handleResize(list, roomPrevWindowWidth = null, roomPrevWindowHeight = n
     }
 }
 
-function adjustSize(list){ // a function for resizing normal sized 
+function adjustSize(list, widthOnly = false){ // a function for resizing normal sized 
     for(let i = 0; i < list.length; i++){
         if(list[i] === null) continue;
         //these offsets are set upon object creation and dont change
         if(list[i].offsets.widthOffset !== undefined){
-            list[i].width = character.room.width * list[i].offsets.widthOffset;
-            list[i].height = character.room.height * list[i].offsets.heightOffset;
+            list[i].width = window.innerWidth * list[i].offsets.widthOffset;
+            list[i].height = window.innerHeight * list[i].offsets.heightOffset;
         }
         else{
             list[i].width = width;
             list[i].height = height;
         }
         //these offsets are set upon object saving and do change, implementation can be found in structures.js 
-        list[i].x = character.room.width * list[i].offsets.xOffset; 
-        list[i].y = character.room.height * list[i].offsets.yOffset;
+        if(!widthOnly){
+            list[i].x = character.room.width * list[i].offsets.xOffset; 
+            list[i].y = character.room.height * list[i].offsets.yOffset;
+        }
     }
 }
 //a function to update cord offsets, allows for relative movement 

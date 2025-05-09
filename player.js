@@ -80,8 +80,9 @@ class player {
             xOffset : 1,
             yOffset : 1,
             widthOffset : this.width / 1920,
-            heightOffset : this.height /945,
+            heightOffset : this.height / 945,
         }
+        this.score = 0;
     }
     
     hotBarChange(direction){ //changes direction of hotbar
