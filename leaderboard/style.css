@@ -1,0 +1,73 @@
+header{
+    border: 2px solid black;
+    text-align: center;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#categorySelect{
+    margin: 15px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+}
+
+/* drop down menu button styling */
+#categorySelect span{
+    position: relative;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+
+#categorySelect span:hover{
+   background-color: rgb(184, 179, 179);
+    cursor: pointer;
+}
+
+#dropdownContent{
+    border: 2px solid black;
+    position: absolute;
+    background-color: white;
+    left: 20px;
+    display: none;
+    width: 100px;
+}
+
+#dropdownContent div{
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+#dropdownContent div:hover{
+    background-color: rgb(184, 179, 179);
+    cursor: pointer;
+}
+
+.flex{
+    display: flex !important;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#leaderBoardBody{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#leaderBoardBody div{
+    margin: 5px;
+    width: 100%;
+    text-align:center;
+    border: 2px solid black;
+}

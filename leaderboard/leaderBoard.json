@@ -1,97 +1,27 @@
 {
-    "Furthest Area": {
-        "1": [
+    "Furthest Area": [
+        [
             {
-                "username": "",
-                "score": 1
-            },
-            {
-                "username": "",
-                "score": 1
-            }
-        ],
-        "0": [
-            {
-                "username": "",
+                "username": "unnamed",
                 "score": 0
             },
             {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
+                "username": "unnamed",
                 "score": 0
             }
         ]
-    },
+    ],
     "Highest score": {
         "0": [
             {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
-                "score": 0
-            },
-            {
-                "username": "",
+                "username": "unnamed",
                 "score": 0
             }
         ],
-        "45": [
+        "210": [
             {
-                "username": "",
-                "score": 45
+                "username": "unnamed",
+                "score": 210
             }
         ]
     }

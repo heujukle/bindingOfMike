@@ -31,6 +31,7 @@ foreach($categories as $category){
   }
 
   //will push a new array to the category
+  if($catorgoryData["username"] === '') $catorgoryData["username"] = 'unnamed';
   $currentBoard[$category]["$score"][] = ["username" => $catorgoryData["username"], "score" => $catorgoryData["score"]];
 }
 
