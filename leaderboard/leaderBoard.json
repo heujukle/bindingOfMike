@@ -12,6 +12,14 @@
             {
                 "username": "unnamed",
                 "score": 0
+            },
+            {
+                "username": "john",
+                "score": 0
+            },
+            {
+                "username": "john",
+                "score": 0
             }
         ]
     ],
@@ -19,6 +27,14 @@
         "0": [
             {
                 "username": "unnamed",
+                "score": 0
+            },
+            {
+                "username": "john",
+                "score": 0
+            },
+            {
+                "username": "john",
                 "score": 0
             }
         ],

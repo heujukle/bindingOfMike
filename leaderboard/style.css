@@ -1,5 +1,5 @@
 header{
-    border: 2px solid black;
+    border-bottom: 2px solid black;
     text-align: center;
 }
 
@@ -14,8 +14,10 @@ main{
     margin: 15px;
     padding: 10px;
     display: flex;
+    min-width: 33vw;
     align-items: center;
     border: 2px solid black;
+    justify-content: center;
 }
 
 /* drop down menu button styling */
@@ -63,11 +65,25 @@ main{
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    width: 33vw;
 }
 
 #leaderBoardBody div{
     margin: 5px;
     width: 100%;
+    height: 3vh;
     text-align:center;
     border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#returnToGame{
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
