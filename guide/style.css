@@ -1,0 +1,63 @@
+header{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: 4px solid black;
+    margin-bottom: 15px;
+}
+
+header div {
+    width: 100%;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 4px solid black;
+}
+
+header div h2 {
+    padding: 5px;
+}
+
+.return{
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+main{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.3rem;
+}
+
+.tableOfContents{
+    padding: 5px;
+    width: 20vw;
+    border: 4px solid black;
+}
+
+.verticalFlex{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+ul{
+    margin: 0;
+}
+
+.tableOfContents h3{
+    margin: 0;
+}
