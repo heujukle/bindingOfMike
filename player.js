@@ -57,7 +57,7 @@ class player {
         this.passiveItems = {}
         this.selectedItem = 'shoot'
         this.melee = new melee(this, 10, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10})
-        this.highestTier = 0 //highest tier of sword
+        this.highestTier = 1 //highest tier of sword
         this.iFrames = 0;//amount of immunity frames
         this.map = null; 
         this.wallet = 0; //money
