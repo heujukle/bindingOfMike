@@ -384,6 +384,7 @@ class forge{
                         }
                         if(saveEquppied) forge.target.meleeInventory.push(forge.target.melee)
                         forge.target.melee = newSword;
+                        if(forge.target.melee.tier > forge.target.highestTier) forge.target.highestTier = forge.target.melee.tier;
                         for(let i = 0; i < keys.length; i++){
                             if(requirements[keys[i]] <= 0){
                                 continue;

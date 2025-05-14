@@ -14,6 +14,7 @@ function onDeath(){
         body: JSON.stringify({
             "Furthest Area" : {username : username, score : areaCount},
             "Highest score" : {username : username, score : character.score},
+            "Highest Tier" : {username : username, score : character.highestTier},
         }), // Send full order data
     })
     .then(response => response.json())  // Expect a JSON response
