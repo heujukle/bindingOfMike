@@ -385,6 +385,7 @@ keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code writ
     })
 })
 
+if(howToPlay){
 howToPlay.addEventListener('click', (e)=>{
     panel.style.overflowY = 'scroll'
     for(let i = 1; i < panel.children.length; i++){ //removes other buttons
@@ -411,6 +412,7 @@ howToPlay.addEventListener('click', (e)=>{
         }
     })
 })
+}
 
 loadGame.addEventListener('click', (e) => {
     for(let i = 1; i < panel.children.length; i++){ //removes other buttons
