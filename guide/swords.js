@@ -9,5 +9,5 @@ for(const melee of swordKeys){
     const imageCont = createElement('div', 'imgCont', {}, structure)
     const image = createElement('img', null, {src:sword.sprite === null ? defaultSprite.src : sword.sprite.src}, imageCont)
     const text = createElement('div', "textCont", {}, structure)
-    const name = createElement('h3', "textCont", {textContent:sword.name}, text)
+    const name = createElement('h3', null, {textContent:sword.name}, text)
 }
