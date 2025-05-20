@@ -83,6 +83,7 @@ ul{
     display: flex;
     /* align-items: center; */
     flex-direction: column;
+    margin: 5px;
 }
 
 .imageAndText ul{
@@ -103,4 +104,8 @@ main p{
     width: 75%;
     text-align: center;
     margin: 0;
+}
+
+li{
+    margin:3px;
 }
