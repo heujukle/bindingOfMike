@@ -114,5 +114,5 @@ li{
     border: 2px solid black;
     margin: 5px;
     width: 50vw;
-    height: 20vh;
+    min-height: 20vh;
 }
