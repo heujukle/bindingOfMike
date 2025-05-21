@@ -2,6 +2,7 @@ const passiveItemSrc = {
     "auto turret" : {
     name: 'auto turret',
     desc: 'Creates a turret that targets enemies above the player',
+    sprite: 'images/passives/autoTurret.png',
     itemVariables: {timeOfLastActivation: 0},
     price: 750, //1000
     hasFunc: {func:(source) => {
@@ -25,6 +26,7 @@ const passiveItemSrc = {
 },
 "threadling" : {
     name: 'threadling',
+    sprite: 'images/passives/threadling.png',
     desc: 'On enemy defeat a homing entitiy will be created to seek out another enemy',
     itemVariables: {},
     price: 750, //1000
@@ -35,6 +37,7 @@ const passiveItemSrc = {
 },
 'richochet' : {
     name: 'richochet',
+    sprite: 'images/passives/richochet.png',
     desc: 'Projectiles richochet',
     itemVariables: {},
     price: 750, //1000
@@ -44,6 +47,7 @@ const passiveItemSrc = {
 'vampire' : {
     name: 'vampire',
     desc: 'Hits return health',
+    sprite: 'images/passives/vampire.png',
     itemVariables: {timeOfLastActivation: 0},
     price: 2500, //1000
     hasFunc: {func:(character) =>{  //future proofing items
@@ -58,6 +62,7 @@ const passiveItemSrc = {
 'boom' : {
     name: 'boom',
     desc: 'Projectiles explode',
+    sprite: 'images/passives/boom.png',
     itemVariables: {},
     price: 800, //1000
     hasFunc: {func:(source) =>{  //future proofing items
@@ -69,6 +74,7 @@ const passiveItemSrc = {
 'self boom' : {
     name: 'self boom',
     desc: 'Explode on player damage',
+    sprite: 'images/passives/self.png',
     itemVariables: {hitList : []},
     price: 300, //200
     hasFunc: {func:(character) =>{ //future proofing items
@@ -79,6 +85,7 @@ const passiveItemSrc = {
 'spikey' : {
     name: 'spikey',
     desc: 'Colliding with an enemy will damage the nemey. Dashing into an enemy returns stamina',
+    sprite: 'images/passives/spikey.png',
     itemVariables: {hitList : []},
     price: 250, //200
     hasFunc: {func:(character, source) =>{ //future proofing items
