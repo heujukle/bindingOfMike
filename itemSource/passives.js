@@ -1,6 +1,7 @@
 const passiveItemSrc = {
     "auto turret" : {
     name: 'auto turret',
+    desc: 'Creates a turret that targets enemies above the player',
     itemVariables: {timeOfLastActivation: 0},
     price: 750, //1000
     hasFunc: {func:(source) => {
@@ -15,7 +16,7 @@ const passiveItemSrc = {
             }
         }
         ctx.beginPath();
-        ctx.rect((source.x + source.width/2) - 10, source.y - 50, 20, 20);
+        ctx.rect((source.x + source.width/2) - 10, source.y - 50, source.width/2, source.height/2);
         ctx.fillStyle = 'grey';
         ctx.fill();
         ctx.closePath();
@@ -24,6 +25,7 @@ const passiveItemSrc = {
 },
 "threadling" : {
     name: 'threadling',
+    desc: 'On enemy defeat a homing entitiy will be created to seek out another enemy',
     itemVariables: {},
     price: 750, //1000
     hasFunc: {func:(enemy) => {
@@ -33,6 +35,7 @@ const passiveItemSrc = {
 },
 'richochet' : {
     name: 'richochet',
+    desc: 'Projectiles richochet',
     itemVariables: {},
     price: 750, //1000
     hasFunc: null, //future proofing items
@@ -40,6 +43,7 @@ const passiveItemSrc = {
 },
 'vampire' : {
     name: 'vampire',
+    desc: 'Hits return health',
     itemVariables: {timeOfLastActivation: 0},
     price: 2500, //1000
     hasFunc: {func:(character) =>{  //future proofing items
@@ -53,6 +57,7 @@ const passiveItemSrc = {
 },
 'boom' : {
     name: 'boom',
+    desc: 'Projectiles explode',
     itemVariables: {},
     price: 800, //1000
     hasFunc: {func:(source) =>{  //future proofing items
@@ -63,6 +68,7 @@ const passiveItemSrc = {
 },
 'self boom' : {
     name: 'self boom',
+    desc: 'Explode on player damage',
     itemVariables: {hitList : []},
     price: 300, //200
     hasFunc: {func:(character) =>{ //future proofing items
@@ -72,6 +78,7 @@ const passiveItemSrc = {
 },
 'spikey' : {
     name: 'spikey',
+    desc: 'Colliding with an enemy will damage the nemey. Dashing into an enemy returns stamina',
     itemVariables: {hitList : []},
     price: 250, //200
     hasFunc: {func:(character, source) =>{ //future proofing items
