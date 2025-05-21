@@ -10,6 +10,7 @@ function parseSaveFile(file){
             character.stamina = saveData.character.stamina;
             character.materials = saveData.character.materials;
             character.melee = parseMelee(saveData.character.equippedMelee);
+            document.getElementById('playerSword').src = character.melee.sprite;
             character.meleeInventory = parseMeleeInventory(saveData.character.meleeInventory);
             character.setArea(new area(saveData.character.area))
             entities.clear();

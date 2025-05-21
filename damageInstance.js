@@ -169,7 +169,7 @@ class projectile{
 }
 
 class melee{
-    constructor(source, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, tier = 1, increase = null, sprite = document.getElementById('sword')){
+    constructor(source, damage, width, height, knockback = 5, span = 90, name = 'sword', clickFunc = null, runFunc = null, runFuncCD = 50, tier = 1, increase = null, sprite = "images/sword.png"){
         this.name = name //name of obj
         this.span = span; //how wide the blade spans, degrees aroudn the player
         this.source = source //source, does link back to source
@@ -228,7 +228,7 @@ class melee{
         ctx.translate(this.x, this.y)
         ctx.rotate(((this.currentAngle * Math.PI) / 180) + 90)
         ctx.translate(-this.x, -this.y)
-        ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height)
+        ctx.drawImage(this.source === character ? document.getElementById('playerSword') : document.getElementById('sword'), this.x, this.y, this.width, this.height)
         ctx.restore();
         ctx.closePath()
         ctx.lineWidth = 1;

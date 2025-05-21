@@ -87,7 +87,7 @@ const meleeItemsSrc =
     name: 'Spin sword',
     sprite: null,
     desc: 'A large span',
-    item:(target)=>{return new melee(target, 10, 100, 300, 30, 360, 'Spin sword', undefined, undefined, undefined, 1, {damage:15, width:20, span:30})}, //item itself
+    item:(target)=>{return new melee(target, 10, 100, 300, 30, 360, 'Spin sword', undefined, undefined, 50, 1, {damage:15, width:20, span:30})}, //item itself
     price:200, //price
     type: 'melee' //type
 },
@@ -99,7 +99,7 @@ const meleeItemsSrc =
         const spinner = new melee(sword.source, 5, 75, 250, 25, 360)
         spinner.setValues(sword.startingAngle + 180)
         damageInstances.add(spinner)
-    }, 100)}, //item itself
+    }, 100, 1, undefined, "../images/swords/superspinsword.png")}, //item itself
     price:1000, //price
     type: 'melee' //type
 },

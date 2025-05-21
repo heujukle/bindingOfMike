@@ -413,4 +413,19 @@ class player {
             hook.add(item.hasFunc.hook, item.hasFunc.func) //adds function to event hook
         }        
     }
+
+    equipSword(melee){
+        const currentEquipped = this.melee
+        if(melee != this.melee){ //if a not equipped melee
+            if(this.meleeInventory.indexOf(melee) != -1){ //if in inventory
+                    this.meleeInventory[character.meleeInventory.indexOf(melee)] = currentEquipped //place current sword in new swords inventory space
+                }
+                else{
+                    this.meleeInventory.push(currentEquipped) //if not in inventory (ie buying a buy sword) push to back
+                }
+                document.getElementById('playerSword').src = melee.sprite;
+                this.melee = melee //new melee becomes melee
+            }
+                
+    }
 }

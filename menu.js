@@ -183,7 +183,7 @@ function addHoverFunctionality(element, item){
 
 function createMeleeInv(item, checkEquip = true){ //does the styling for a melee element
     const element = createElement('div', 'inventoryItem')
-    const Img = createElement('img', null, {src:item.sprite.src})
+    const Img = createElement('img', null, {src:item.sprite})
     const itemText = createElement('p', null, {textContent:item.name})
     element.appendChild(Img)
     element.appendChild(itemText)
@@ -268,9 +268,7 @@ function createInventory(){
         const meleeEquipped = character.melee //characters melee on inventory open
     equipped.addEventListener('click', (e) => {
         if(meleeEquipped != character.melee){
-            const currentEquipped = character.melee
-            character.melee = meleeEquipped
-            character.meleeInventory[character.meleeInventory.indexOf(meleeEquipped)] = currentEquipped
+            character.equipSword(meleeEquipped)
             const element = document.getElementById('equippedMelee');
             element.id = '';
             equipped.id = 'equippedMelee';
@@ -285,9 +283,7 @@ function createInventory(){
         addHoverFunctionality(meleeDisplay, melee)
         meleeDisplay.addEventListener('click', (e) => {
             if(melee != character.melee){
-                const currentEquipped = character.melee
-                character.melee = melee
-                character.meleeInventory[character.meleeInventory.indexOf(melee)] = currentEquipped
+                character.equipSword(melee)
                 const element = document.getElementById('equippedMelee');
                 element.id = '';
                 meleeDisplay.id = 'equippedMelee';

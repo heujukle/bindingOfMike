@@ -185,8 +185,7 @@ createItem(item){
         if(this.target.wallet >= item.price){
             updateWallet(-item.price, this.target)
             if(item.type == 'melee'){ //for melees
-                this.target.meleeInventory.push(this.target.melee)
-                this.target.melee = item.item();
+                this.target.equipSword(item.item())
                 this.target.melee.source = this.target
                 console.log(this.target.melee)
                 this.forSale.splice(this.forSale.indexOf(item), 1)
