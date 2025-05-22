@@ -67,7 +67,7 @@ class player {
         this.damaged = false //if the player is going through damage
         this.color = "#0000ff" //player color
         this.sprite = null;
-        this.meleeInventory = [meleeItemsSrc['Super Spin Swords'].item(this), meleeItemsSrc['Super Spin Swords'].item(this), meleeItemsSrc['Super Spin Swords'].item(this)]
+        this.meleeInventory = []
         this.materials = {}
         this.movements = {
             x:0,
@@ -409,6 +409,7 @@ class player {
 
     addItem(item){
         this.passiveItems[item.name] = item.itemVariables; //adds item and item variables
+        this.passiveItems[item.name].sprite = item.sprite;
         if(item.hasFunc != null){
             hook.add(item.hasFunc.hook, item.hasFunc.func) //adds function to event hook
         }        

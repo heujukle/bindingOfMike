@@ -9,6 +9,7 @@ function parseSaveFile(file){
             character.health = saveData.character.health;
             character.stamina = saveData.character.stamina;
             character.materials = saveData.character.materials;
+            parsePassiveItems(saveData)
             character.melee = parseMelee(saveData.character.equippedMelee);
             document.getElementById('playerSword').src = character.melee.sprite;
             character.meleeInventory = parseMeleeInventory(saveData.character.meleeInventory);
@@ -31,6 +32,12 @@ function parseSaveFile(file){
             mapElement.classList.remove('invisible')
         }
         reader.readAsText(file);
+    }
+}
+
+function parsePassiveItems(saveData){
+    for(item of saveData.character.items){
+        character.addItem(passiveItemSrc[item]);
     }
 }
 

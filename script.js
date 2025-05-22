@@ -14,11 +14,22 @@ let username = "Unnamed"
 
 const startingArea = new area()
 
+
 let character = new player();
 
-// character.addItem(passives[1])
-// character.addItem(passives[2])
-// character.addItem(passives[3])
+// all items start
+// for(const item of passives){
+//     character.addItem(item);
+// }
+// for(const melee of meleeItems){
+//     character.meleeInventory.push(melee.item(character))
+//     character.meleeInventory.push(melee.item(character))
+// }
+// dropItems(bones, character)
+// dropItems(cloth, character)
+// dropItems(evilCloth, character)
+//all items end
+
 //end entities segement
 
 character.setArea(startingArea, false);

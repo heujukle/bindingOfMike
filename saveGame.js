@@ -32,7 +32,8 @@ function saveGame(character){
     // Create a download link
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'myfile.json'; // Specify the name of the file to download
+    
+    link.download = document.title + '.json'; // Specify the name of the file to download
     
     // Trigger the download
     link.click();

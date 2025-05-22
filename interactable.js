@@ -163,7 +163,7 @@ createItem(item){
     const frame = document.createElement('div')
     frame.classList.add('frame')
     const sprite = document.createElement('img')
-    sprite.src = item.sprite != null ? item.sprite.src : 'images/Coin.png';
+    sprite.src = item.sprite != null ? item.sprite : 'images/Coin.png';
     frame.appendChild(sprite)
     const name = document.createElement('p')
     name.textContent = item.name;
