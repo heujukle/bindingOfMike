@@ -53,13 +53,13 @@ const boomBones = {
 
 const cloth = {
     name:"cloth",
-    sprite: null,
+    sprite: "images/items/cloth.png",
     type: "material"
 }
 
 const evilCloth = {
     name:'Evil Cloth',
-    sprite: null,
+    sprite: "images/items/evilCloth.png",
     type: "material"
 }
 /* */

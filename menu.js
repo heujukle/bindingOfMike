@@ -160,16 +160,21 @@ function generateItemText(item){
     return result
 }
 
-function addHoverFunctionality(element, item){
+function addHoverFunctionality(element, item, scrollbase = null){
     let popUp = document.getElementById('statPopUp')
     const rect = element.getBoundingClientRect()
     const rectWidth = rect.right - rect.left
     element.addEventListener('mouseover', (e)=>{
         if(!element.classList.contains('hovering')){
+            let scroll = 0;
+            if(scrollbase != null){
+                scroll = scrollbase.scrollTop;
+            }
             element.classList.add('hovering')
             popUp.appendChild(generateItemText(item))
             popUp.style.left = rect.left + 'px'
-            popUp.style.top = (rect.bottom + 5) + 'px'
+            console.log(element.parentElement)
+            popUp.style.top = (rect.bottom + 5 - scroll) + 'px'
             popUp.style.width = rectWidth + 'px'
             popUp.style.display = 'flex'
         }
@@ -274,13 +279,13 @@ function createInventory(){
             equipped.id = 'equippedMelee';
         }
     })
-    addHoverFunctionality(equipped, meleeEquipped)
+    addHoverFunctionality(equipped, meleeEquipped, inventory)
     //melee stuff
     for(let i = 0; i < character.meleeInventory.length; i++){
         const melee = character.meleeInventory[i]
         const meleeDisplay = createMeleeInv(melee)
         meleeSection.appendChild(meleeDisplay)
-        addHoverFunctionality(meleeDisplay, melee)
+        addHoverFunctionality(meleeDisplay, melee, inventory)
         meleeDisplay.addEventListener('click', (e) => {
             if(melee != character.melee){
                 character.equipSword(melee)
