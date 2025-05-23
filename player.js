@@ -41,7 +41,7 @@ class player {
         this.index = 0;
         this.directionList = [];
         this.stats = { //player stats that can increase
-            'speed' : 5,
+            'speed' : 6,
             'pSpeed' : 10,
             'pDamage' : 13,
             'multishot' : 0,

@@ -66,6 +66,7 @@ const evilCloth = {
 const healthInACan = {
     name: 'health in a can',
     price: 20,
+    sprite: 'images/items/healthincan.png',
     type: 'health',
     increment: 25
 }
@@ -81,30 +82,34 @@ const stats = [
 {
     name:'multiShot',
     price:125,
+    sprite: 'images/stats/multishot.png',
     type:'stat',
     statName:'multishot'
 },
-{
-    name:'speed',
-    price:20,
-    type:'stat',
-    statName:'speed'
-},
+// {
+//     name:'speed',
+//     price:20,
+//     type:'stat',
+//     statName:'speed'
+// },
 {
     name:'projectile speed',
     price:25,
+    sprite: 'images/stats/pSpeed.png',
     type:'stat',
     statName:'pSpeed'
 },
 {
     name:'projectile damage',
     price:40,
+    sprite: 'images/stats/pDamage.png',
     type:'stat',
     statName:'pDamage'
 },
 {
     name:'max health',
     price:40,
+    sprite: 'images/stats/maxhealth.png',
     type:'stat',
     statName:'maxHealth',
     increment: 15
@@ -112,6 +117,7 @@ const stats = [
 {
     name:'max stamina',
     price:20,
+    sprite: 'images/stats/maxStamina.png',
     type:'stat',
     statName:'maxStamina',
     increment: 10
@@ -119,6 +125,7 @@ const stats = [
 {
     name:'dash speed',
     price:20,
+    sprite: 'images/stats/dashSpeed.png',
     type:'stat',
     statName:'dashSpeed',
     increment: 1
@@ -133,6 +140,7 @@ const stats = [
 {
     name:'shoot speed',
     price:50,
+    sprite: 'images/stats/shootSpeed.png',
     type:'stat',
     statName:'shoot speed',
     increment: -25
