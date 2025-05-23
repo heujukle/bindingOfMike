@@ -97,6 +97,8 @@ constructor(x, y, width, height, target, forSale = undefined){
         determineValueArray(seed[7], stats),
         determineValueArray(seed[6], passives),
     ] : forSale;
+    this.img = new Image();
+    this.img.src="images/walls/shop.png";
 }
 
 
@@ -105,6 +107,7 @@ draw(){
     ctx.rect(this.x, this.y, this.width, this.height);
     ctx.fillStyle = "yellow";
     ctx.fill();
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     ctx.fillStyle = "black";
     if(this.collision2([this.target])){ //checks if overlap and player has pressed interact button
         ctx.fillText(`press ${controls.interact.toUpperCase()} to interact`, this.x - 20, this.y - 20) //shows interact text

@@ -1,5 +1,5 @@
-const wallArt = ["images/pixil-frame-0.png", "images/greyBrick.png", "images/walls/tile.png"]
-const floorArt = ["images/floor1.png", "images/floors/pleaseBeAGoodFloor.png"]
+const wallArt = ["images/greyBrick.png", "images/walls/tile.png", "images/walls/whitebrick.png"]
+const floorArt = ["images/floor1.png", "images/floors/pleaseBeAGoodFloor.png", "images/floors/borderlessgrass.png", "images/floors/detailedReddish.png"]
 
 class space{ //empty space unused code
     constructor(x, y, width, height){
@@ -65,13 +65,17 @@ class turret{ //creates the turret
             case 'dt':
                 break;
         }
+        this.img = new Image()
+        this.img.src = 'images/walls/turret.png'
     }
 
     draw(){ //draws the turret
         ctx.beginPath();
+        ctx.fill
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "#4d4d4d";
         ctx.fill();
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
         ctx.closePath();
     }
 }
