@@ -333,6 +333,14 @@ const controls = { //holds the controls of the game
     'unstuck' : 'l'
 }
 
+function keyMatch(key, control){ //returns true if the key is used
+    const keys = Object.keys(controls)
+    for(let i = 0; i < keys.length; i++){
+        if(keys[i] === control) continue;
+        else if(controls[keys[i]] === key){return true}
+    }
+}
+
 keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code written at 1 am
     panel.style.overflowY = 'scroll'
     for(let i = 1; i < panel.children.length; i++){ //removes other buttons
@@ -346,13 +354,15 @@ keyBinds.addEventListener('click', (e) => { //resign buttons, terrible code writ
         const input = document.createElement('div')
         input.textContent = controls[Object.keys(controls)[i]]  //displays the current control
         input.addEventListener('click', (e) => { //event listener for input
+            const control = Object.keys(controls)[i]
             input.textContent = 'Press Key to change Bind'
             function changeBind(e){
-                if(e.key == controls.up || e.key == controls.left || e.key == controls.right || e.key == controls.down || e.key == controls.interact){ ///if matches another bind
+                if(keyMatch(e.key, control)){ ///if matches another bind
                     input.textContent = 'Conflict with other binds'
                 }
                 else{
                     input.textContent = e.key //shows the new key
+                    controls[control] = e.key
                 }
                 document.removeEventListener('keydown', changeBind) //removes the keydown event listener
             }
