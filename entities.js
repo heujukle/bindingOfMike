@@ -14,14 +14,14 @@ class dummy{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "#ab5901"
-        this.defaultColor = "#ab5901"
+        this.color = 'rgba(0, 0, 0, 0)'
+        this.defaultColor = 'rgba(0, 0, 0, 0)'
         this.timeSinceDamage = 0;
         this.behavior = 'static'
         this.allied = 'enemy'
         console.log(this.points)
         this.image = new Image()
-        this.image.src = ''
+        this.image.src = 'images/walls/dummy.png'
     }
 
     onDamage(){
@@ -147,7 +147,7 @@ class zombie{
         this.spawned = spawned;
         this.allied = 'enemy'
         this.image = new Image()
-        this.image.src = ''
+        this.image.src = 'images/entities/zombie2.png'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -418,7 +418,7 @@ class skeleton{
         this.drops = bones
         this.allied = 'enemy'
         this.image = new Image()
-        this.image.src = ''
+        this.image.src = 'images/entities/skeleton.png'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
@@ -572,7 +572,7 @@ class evilZombie{
         this.drops = evilCloth
         this.allied = 'enemy'
         this.image = new Image()
-        this.image.src = ''
+        this.image.src = 'images/entities/Evil Zombie.png'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
