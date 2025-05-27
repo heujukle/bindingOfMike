@@ -250,6 +250,8 @@ class forge{
             this.height = height
             this.type = 'forge' //is shop
             this.behavior = 'dynamic' //dynamically changes
+            this.image = new Image()
+            this.image.src = 'images/walls/forge.png'
         }
         
         
@@ -258,6 +260,7 @@ class forge{
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.fillStyle = "brown";
             ctx.fill();
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
             ctx.fillStyle = "black";
             if(this.collision2([this.target])){ //checks if overlap and player has pressed interact button
                 ctx.fillText(`press ${controls.interact.toUpperCase()} to interact`, this.x - 20, this.y - 20) //shows interact text

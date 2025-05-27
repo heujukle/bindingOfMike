@@ -1,4 +1,4 @@
-const wallArt = ["images/greyBrick.png", "images/walls/tile.png", "images/walls/whitebrick.png"]
+const wallArt = ["images/greyBrick.png", "images/walls/tile.png"]
 const floorArt = ["images/floor1.png", "images/floors/pleaseBeAGoodFloor.png", "images/floors/borderlessgrass.png", "images/floors/detailedReddish.png"]
 
 class space{ //empty space unused code

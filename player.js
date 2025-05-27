@@ -66,7 +66,8 @@ class player {
         this.yVelocity = 0;
         this.damaged = false //if the player is going through damage
         this.color = "#0000ff" //player color
-        this.sprite = null;
+        this.sprite = new Image()
+        this.sprite.src = "images/basic player.png";
         this.meleeInventory = []
         this.materials = {}
         this.movements = {
@@ -130,18 +131,19 @@ class player {
         hook.dispatch('onPlayerDraw', this)
         this.updateStaminaBar()
         ctx.beginPath();
+        ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height)
         ctx.rect(this.x, this.y, this.width, this.height);
         if(this.iFrames > 0 && this.damaged == true){ //sets color based on actions
-            ctx.fillStyle = "red";
+            ctx.fillStyle = "rgba(255, 0, 0, 0.8)";
             healthBar.parentElement.style.borderColor = 'white'
         }
         else if(this.iFrames > 0 && this.damaged == false){
-            ctx.fillStyle = "#66ccff";
+            ctx.fillStyle = 'rgba(174, 224, 240, 0.6)';
             healthBar.parentElement.style.borderColor = 'white'
         }
         else{
             healthBar.parentElement.style.borderColor = 'black'
-            ctx.fillStyle = "#0000ff";
+            ctx.fillStyle = 'rgba(0, 0, 0, 0)';
             this.damaged = false;
         }
         ctx.fill();

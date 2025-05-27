@@ -238,10 +238,10 @@ function createInventory(){
         sideBar.classList.add('sideBar')
     const playerImgCont = document.createElement('div')
         playerImgCont.classList.add('playerImgContainer')
-    const playerDisplay = document.createElement('div')
+    const playerDisplay = document.createElement('img')
         playerDisplay.style.width = character.width + 'px'
         playerDisplay.style.height = character.height + 'px'
-        playerDisplay.style.backgroundColor = character.color
+        playerDisplay.src = character.sprite.src;
     const health = document.createElement('div')
         health.textContent = `Health: ${character.health}`
     const stamina = document.createElement('div')

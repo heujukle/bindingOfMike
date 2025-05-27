@@ -1,3 +1,5 @@
+const entityDamage = "rgba(255, 0, 0, 0.8)"
+
 class dummy{
     constructor(x, y, width, height){
         this.instance = 'dummy';
@@ -18,10 +20,12 @@ class dummy{
         this.behavior = 'static'
         this.allied = 'enemy'
         console.log(this.points)
+        this.image = new Image()
+        this.image.src = ''
     }
 
     onDamage(){
-        this.color = '#ff0000'
+        this.color = entityDamage
         this.timeSinceDamage =  document.timeline.currentTime;
     }
 
@@ -30,6 +34,10 @@ class dummy{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "#ab5901";
+        ctx.fill();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -53,8 +61,8 @@ class spawner{
         this.height = height;
         this.target = target
         this.points = getPoints(3, this)
-        this.color = "#3c453e"
-        this.defaultColor = "#3c453e"
+        this.color = "rgba(63, 126, 50, 0.5)"
+        this.defaultColor = "rgba(63, 126, 50, 0.5)"
         this.timeSinceDamage = 0;
         this.health = 100;
         this.behavior = 'static'
@@ -68,11 +76,13 @@ class spawner{
         }
         this.timeSinceSpawn = 0;
         this.allied = 'enemy'
+        this.image = new Image();
+        this.image.src = '';
     }
 
     onDamage(damage = 5){
         this.health -= damage;
-        this.color = '#ff0000'
+        this.color = entityDamage
         this.timeSinceDamage =  document.timeline.currentTime;
     }
 
@@ -92,6 +102,12 @@ class spawner{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
+        if(!this.image.src){
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = '#0000ff';
+            ctx.fill();
+        }
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -114,8 +130,8 @@ class zombie{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "#4b8749"
-        this.defaultColor = "#4b8749"
+        this.color = 'rgba(0, 0, 0, 0)'
+        this.defaultColor = 'rgba(0, 0, 0, 0)'
         this.timeSinceDamage = 0;
         this.action = this.pursuit
         this.target = target
@@ -130,10 +146,12 @@ class zombie{
         this.drops = cloth
         this.spawned = spawned;
         this.allied = 'enemy'
+        this.image = new Image()
+        this.image.src = ''
     }
 
     onDamage(damage = 5, knockbackfunc = null){
-        this.color = '#ff0000'
+        this.color = entityDamage
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
         hook.dispatch('onEnemyDamage', this.target, this)
@@ -159,6 +177,10 @@ class zombie{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "#4b8749";
+        ctx.fill();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -226,8 +248,8 @@ class Warrior{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "#646875"
-        this.defaultColor = "#646875"
+        this.color = 'rgba(0, 0, 0, 0)'
+        this.defaultColor = 'rgba(0, 0, 0, 0)'
         this.timeSinceDamage = 0;
         this.action = this.pursuit
         this.target = target
@@ -243,6 +265,8 @@ class Warrior{
         this.spawned = spawned;
         this.type = type;
         this.swingSpeed = 500
+        this.image = new Image()
+        this.image.src = ''
         switch(this.type){
             case "basic":
                 this.melee = new melee(this, this.damage, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10})
@@ -263,7 +287,7 @@ class Warrior{
     }
 
     onDamage(damage = 5, knockbackfunc = null){
-        this.color = '#ff0000'
+        this.color = entityDamage
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
         hook.dispatch('onEnemyDamage', this.target, this)
@@ -292,6 +316,11 @@ class Warrior{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
+        //in case no image loads a solid rectangle
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "#646875"; 
+        ctx.fill();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -371,8 +400,8 @@ class skeleton{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "grey"
-        this.defaultColor = "grey"
+        this.color = 'rgba(0, 0, 0, 0)'
+        this.defaultColor = 'rgba(0, 0, 0, 0)'
         this.timeSinceDamage = 0;
         this.timeToProjectile = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
         this.action = this.pursuit
@@ -388,10 +417,12 @@ class skeleton{
         this.knockBackResistance = knockBackResistance
         this.drops = bones
         this.allied = 'enemy'
+        this.image = new Image()
+        this.image.src = ''
     }
 
     onDamage(damage = 5, knockbackfunc = null){
-        this.color = '#ff0000'
+        this.color = entityDamage
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
         hook.dispatch('onEnemyDamage', this.target, this)
@@ -418,6 +449,10 @@ class skeleton{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = 'grey';
+        ctx.fill();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -521,8 +556,8 @@ class evilZombie{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "purple"
-        this.defaultColor = "purple"
+        this.color = 'rgba(0, 0, 0, 0)'
+        this.defaultColor = 'rgba(0, 0, 0, 0)'
         this.timeSinceDamage = 0;
         this.action = this.pursuit
         this.target = target
@@ -536,10 +571,12 @@ class evilZombie{
         this.knockBackResistance = knockBackResistance * 0.5
         this.drops = evilCloth
         this.allied = 'enemy'
+        this.image = new Image()
+        this.image.src = ''
     }
 
     onDamage(damage = 5, knockbackfunc = null){
-        this.color = '#ff0000'
+        this.color = entityDamage
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
         hook.dispatch('onEnemyDamage', this.target, this)
@@ -563,6 +600,10 @@ class evilZombie{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = 'purple';
+        ctx.fill();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -635,8 +676,8 @@ class boomSkeleton{
         this.width = width;
         this.height = height;
         this.points = getPoints(3, this)
-        this.color = "#831818"
-        this.defaultColor = "#831818"
+        this.color = "rgba(0, 0, 0, 0)"
+        this.defaultColor = "rgba(0, 0, 0, 0)"
         this.timeSinceDamage = 0;
         this.timeToProjectile = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
         this.action = this.pursuit
@@ -656,10 +697,12 @@ class boomSkeleton{
             console.log('WE BRING THE BOOM')
         }
         this.allied = 'enemy'
+        this.image = new Image()
+        this.image.src = ''
     }
 
     onDamage(damage = 5, knockbackfunc = null){
-        this.color = '#ff0000'
+        this.color = entityDamage
         this.timeSinceDamage =  document.timeline.currentTime;
         this.health -= damage
         hook.dispatch('onEnemyDamage', this.target, this)
@@ -686,6 +729,10 @@ class boomSkeleton{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "#831818";
+        ctx.fill();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
