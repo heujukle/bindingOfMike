@@ -698,7 +698,7 @@ class boomSkeleton{
         }
         this.allied = 'enemy'
         this.image = new Image()
-        this.image.src = ''
+        this.image.src = 'images/entities/boomskeleton.png'
     }
 
     onDamage(damage = 5, knockbackfunc = null){
