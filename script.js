@@ -1,5 +1,7 @@
 let width = Math.ceil(1920 / 20);
 let height = Math.ceil(945 / 10);
+const defaultWidth = Math.ceil(1920 / 20);
+const defaultHeight = Math.ceil(945 / 10);
 let prevWindowWidth = 1920;
 let prevWindowHeight = 945;
 console.log(height)

@@ -118,7 +118,7 @@ class player {
             }
         }
         if(this.stamina < this.stats['maxStamina']) this.stamina += this.stats['staminaRegen'];
-        this.velocity(this.xVelocity, this.yVelocity)
+        if(this.yVelocity !== 0 || this.xVelocity !== 0) this.velocity(this.xVelocity, this.yVelocity)
         this.updateMove()
         if(this.room.dynamicCamera == true){
             this.dynamicCamera()

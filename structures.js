@@ -131,8 +131,8 @@ class area{
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'lt', 0, 1], 
                     [1, 'rt', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'r', 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 'r', 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sh', 1], 
@@ -177,29 +177,33 @@ class area{
             let left = determineValue(seed[3], true, false) && roomBudget > 0 && exclusion.indexOf('left') == -1 ? true : false;
             if(left == true){
                 const door = Math.floor(layout.length / 2)
-                layout[door][0] = 0;
-                layout[door -1 ][0] = 0;
+                const replacement = Math.random() > 0.25 ? 0 : 'r';
+                layout[door][0] = replacement;
+                layout[door -1 ][0] = replacement;
                 roomBudget -= 1
             }
             let right = determineValue(seed[4], true, false) && roomBudget > 0 && exclusion.indexOf('right') == -1? true : false;
             if(right == true){
                 const door = Math.floor(layout.length / 2)
-                layout[door][layout[4].length - 1] = 0;
-                layout[door - 1][layout[4].length - 1] = 0;
+                const replacement = Math.random() > 0.25 ? 0 : 'r';
+                layout[door][layout[4].length - 1] = replacement;
+                layout[door - 1][layout[4].length - 1] = replacement;
                 roomBudget -= 1
             }
             let top = determineValue(seed[5], true, false) && roomBudget > 0 && exclusion.indexOf('top') == -1? true : false;
             if(top == true){
                 const door = Math.floor(layout[0].length / 2)
-                layout[0][door] = 0;
-                layout[0][door - 1] = 0;
+                const replacement = Math.random() > 0.25 ? 0 : 'r';
+                layout[0][door] = replacement;
+                layout[0][door - 1] = replacement;
                 roomBudget -= 1;
             }
             let bottom = determineValue(seed[6], true, false) && roomBudget > 0 && exclusion.indexOf('bottom') == -1? true : false;
             if(bottom == true){
                 const door = Math.floor(layout[0].length / 2)
-                layout[layout.length - 1][door] = 0;
-                layout[layout.length - 1][door - 1] = 0;
+                const replacement = Math.random() > 0.25 ? 0 : 'r';
+                layout[layout.length - 1][door] = replacement;
+                layout[layout.length - 1][door - 1] = replacement;
                 roomBudget -= 1;
             }
             /*-------------------------------------------------------------------------------------------------------------------------------*/

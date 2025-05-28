@@ -336,6 +336,7 @@ function updateWallet(increase, target){
 
 //applies velocity to an entitiy
 function velocity(entity, xVelocity, yVelocity){
+    const static = entities.list.filter((entity) => {if(entity !== null)entity.behavior === 'static'})
     const totalMovement = {
         x: 0,
         y: 0
@@ -371,7 +372,7 @@ function velocity(entity, xVelocity, yVelocity){
     for(let i = 0; i < steps; i++){
         temp.x += xStep
         totalMovement.x += xStep
-        if(collision2(temp, structures)){
+        if(collision2(temp, structures) || collision2(temp, {list:static, check:()=>{return true}})){
             temp.x -= xStep
             totalMovement.x -= yStep
             entity.xVelocity = 0
@@ -381,7 +382,7 @@ function velocity(entity, xVelocity, yVelocity){
     for(let i = 0; i < steps; i++){
         temp.y += yStep
         totalMovement.y += yStep
-        if(collision2(temp, structures)){
+        if(collision2(temp, structures) || collision2(temp, {list:static,check:()=>{return true}})){ //unoptimized, check call is a waste
             temp.y -= yStep
             totalMovement.y -= yStep
             entity.yVelocity = 0

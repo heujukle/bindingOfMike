@@ -9,7 +9,7 @@ const createTurret = (x, y, width, height, key) => {
 }
 
 const createDummy = (x, y, width, height) => { //function to make dummys
-    entities.add(new dummy(x, y, width, height))
+    entities.add(new dummy(x, y, defaultWidth, defaultHeight))
 }
 
 const createZombie = (x, y, width, height) => { //function to make dummys
@@ -55,6 +55,10 @@ const createChest = (x, y, width, height) => { //function to make dummys
 const createZombieSpawner = (x, y, width, height) => { //function to make dummys
     entities.add(new spawner(x, y, width, height, character, 'zombie'))
 }
+
+const createRock = (x, y, width, height) => { //function to make dummys
+    entities.add(new Rock(x, y, defaultWidth, defaultHeight));
+}
 const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
         return;
@@ -73,6 +77,7 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['zs', createZombieSpawner],
     ['bw', createBasicWarrior],
     ['sw', createSpinWarrior],
-    ['ch', createChest]
+    ['ch', createChest],
+    ['r', createRock]
 
 ])
