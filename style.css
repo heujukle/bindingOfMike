@@ -606,3 +606,9 @@ img{
     background-color: rgb(255, 255, 255);
     z-index: 5;
 }
+
+#version{
+    position: absolute;
+    left:0;
+    bottom:0;
+}
