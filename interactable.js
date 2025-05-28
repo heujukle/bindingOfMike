@@ -12,6 +12,8 @@ class portal{
         }
         this.type = 'portal'
         this.behavior = 'dynamic'
+        this.image = new Image();
+        this.image.src = 'images/walls/portal.png';
     }
 
 
@@ -20,6 +22,7 @@ class portal{
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = "purple";
         ctx.fill();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.closePath();
         if(this.collision2([this.target])){ //scales the difficulty
             console.log('portal')
@@ -475,6 +478,8 @@ class forge{
             this.type = 'chest' //is shop
             this.behavior = 'dynamic' //dynamically changes
             this.opened = false;
+            this.image = new Image();
+            this.image.src = 'images/walls/chest.png'
         }
         
         
@@ -483,6 +488,7 @@ class forge{
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.fillStyle = "#452d1f";
             ctx.fill();
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
             ctx.fillStyle = "black";
             if(this.collision2([this.target]) && this.opened == false && itemAvailable(this.target)){ //checks if overlap and player has pressed interact button
                 ctx.fillText(`press ${controls.interact.toUpperCase()} to interact`, this.x - 20, this.y - 20) //shows interact text
@@ -519,6 +525,7 @@ class forge{
         
         openChest(){
             this.opened = true;
+            this.image.src = 'images/walls/open chest.png'
             dropItems(findItemNotHad(this.target), this.target)
         }
             }

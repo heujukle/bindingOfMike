@@ -77,7 +77,7 @@ class spawner{
         this.timeSinceSpawn = 0;
         this.allied = 'enemy'
         this.image = new Image();
-        this.image.src = '';
+        this.image.src = 'images/entities/spawner.png';
     }
 
     onDamage(damage = 5){
@@ -102,7 +102,7 @@ class spawner{
             this.color = this.defaultColor;
         }
         ctx.beginPath();
-        if(!this.image.src){
+        if(this.image.src == ''){
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.fillStyle = '#0000ff';
             ctx.fill();
@@ -266,12 +266,13 @@ class Warrior{
         this.type = type;
         this.swingSpeed = 500
         this.image = new Image()
-        this.image.src = ''
+        this.image.src = 'images/entities/warrior.png'
         switch(this.type){
             case "basic":
                 this.melee = new melee(this, this.damage, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10})
                 break;
             case "spin projectile":
+                this.image.src = 'images/entities/spin warrior.png';
                 this.melee = new melee(this, this.damage, 100, 300, 25, 360, 'Projectile Spin Sword', undefined, function(sword){
                     const velocities = getProjVelocities(sword.currentAngle, 7);
                     const startX = sword.source.x + sword.source.width/2
