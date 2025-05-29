@@ -245,7 +245,9 @@ function resize(overrideWidth = null, overrideHieght = null){
     prevWindowWidth = window.innerWidth;
     canvas.height = window.innerHeight; 
     canvas.width = window.innerWidth; 
-    setTimeout(()=>{buffer = false}, 1000)
+    setTimeout(()=>{
+        adjustSize(entities.list)
+        buffer = false}, 1000)
 }
 
 
