@@ -336,7 +336,9 @@ function updateWallet(increase, target){
 
 //applies velocity to an entitiy
 function velocity(entity, xVelocity, yVelocity){
-    const static = entities.list.filter((entity) => {if(entity !== null)entity.behavior === 'static'})
+    const static = entities.list.filter((entity) => {if(entity !== null){ 
+        if(entity.behavior === 'static') return true;
+    }})
     const totalMovement = {
         x: 0,
         y: 0
