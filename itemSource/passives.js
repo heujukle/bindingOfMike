@@ -1,4 +1,35 @@
 const passiveItemSrc = {
+    "flame turret" : {
+    name: 'flame turret',
+    desc: 'Creates a turret that targets enemies above the player',
+    sprite: 'images/passives/autoTurret.png',
+    itemVariables: {timeOfLastActivation: 0, active: true},
+    price: 1500, //1000
+    hasFunc: {func:(source) => {
+        if(source.passiveItems["flame turret"].active === true){
+            const target = determineTarget(source);
+            if(target == null) return;
+            else{
+                const degrees = findDegrees(source.x, source.y, target.x + target.width/2, target.y + target.height/2)
+                const velocities = getProjVelocities(degrees - 25 + Math.random() * 50, 7);
+                
+                damageInstances.add(new flame((source.x + source.width/2) - 10, source.y + 75, 30, 30, -velocities.xVelocity, -velocities.yVelocity, source, 5, 0.5, 300));
+            }
+            source.passiveItems["flame turret"].timeOfLastActivation -= 20
+        }
+        else source.passiveItems["flame turret"].timeOfLastActivation -= 5
+        if(source.passiveItems["flame turret"].timeOfLastActivation <= 0){
+            source.passiveItems["flame turret"].active = !source.passiveItems["flame turret"].active
+            source.passiveItems["flame turret"].timeOfLastActivation = 300
+        }
+        ctx.beginPath();
+        ctx.rect((source.x + source.width/2) - 10, source.y + 75, source.width/2, source.height/2);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        ctx.closePath();
+    }, hook: 'onPlayerDraw'}, //future proofing items
+    type: 'passiveItem'
+},
     "auto turret" : {
     name: 'auto turret',
     desc: 'Creates a turret that targets enemies above the player',

@@ -18,7 +18,7 @@ const startingArea = new area()
 
 
 let character = new player();
-
+character.addItem(passiveItemSrc['flame turret']);
 // all items start
 // for(const item of passives){
 //     character.addItem(item);
