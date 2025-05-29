@@ -10,10 +10,6 @@ class projectile{
         this.repeating = repeating; //if the object is repeating
         this.x = this.repeating ? this.source.x + this.startX : startX; //xcord
         this.y = this.repeating ? this.source.y + this.startY + this.source.height * 0.3: startY;//ycord
-        console.log(this.source)
-        console.log(this.source.y)
-        console.log(this.x)
-        console.log(this.y)
         this.width = window.innerWidth * width / window.innerWidth; //width of projectile
         this.height = window.innerHeight * height / window.innerHeight; //height of projectile
         this.xVelocity = xVelocity; //velocity of projectile
@@ -347,5 +343,59 @@ class explosion{
         if(this.counter === this.duration){
             damageInstances.remove(this.index)
         }
+    }
+}
+
+class flame{
+    constructor(startX, startY, width, height, xVelocity, yVelocity, source, damage, knockback, range){
+        this.room = room; //what room the projectile occupies
+        this.index; //index in the damageinstance/interactable array
+        this.startX = startX; //saves the start cords for repeating projectiles
+        this.startY = startY;
+        this.source = source; //source
+        if(source.source != undefined || source.source != null){
+            this.superSource = source.source;
+        }
+        this.x = this.startX
+        this.y = this.startY
+        this.width = window.innerWidth * width / window.innerWidth; //width of projectile
+        this.height = window.innerHeight * height / window.innerHeight; //height of projectile
+        this.xVelocity = xVelocity; //velocity of projectile
+        this.yVelocity = yVelocity; //velocity
+        this.damage = damage; //how much damage
+        this.knockback = knockback
+        this.range = range
+        this.trueSource = this.superSource != null ? this.superSource : this.source //grabs the true source to ensure it doesn't interact with wrong entities
+    }
+
+    damageFunc(flame, target){
+        target.onDamage(flame.damage, function(target){
+                const degrees = findDegrees(flame.x + flame.width/2, flame.y + flame.height/2, target.x + target.width/2, target.y + target.height/2)
+                const pv = getProjVelocities(degrees, flame.knockback)
+                target.xVelocity += -pv.xVelocity
+                target.yVelocity += -pv.yVelocity
+            })
+    }
+
+    draw(){
+        this.x += this.xVelocity //adds velocities
+        this.y += this.yVelocity
+        console.log(collision2(this, structures))
+        if(collision2(this, structures) || Math.abs(this.x - this.startX) > this.range || Math.abs(this.y - this.startY) > this.range){
+            damageInstances.remove(this.index);
+            console.log('remove')
+            return;
+        }
+        if(this.trueSource instanceof player){
+            collison3(this, entities, this.damageFunc)
+        }
+        else{
+            collison(this, player, false, this.damageFunc)
+        }
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height)
+        ctx.fillStyle = `rgb(224, 147, 31)`
+        ctx.fill()
+        ctx.closePath();
     }
 }
