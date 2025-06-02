@@ -366,9 +366,14 @@ class flame{
         this.knockback = knockback
         this.range = range
         this.trueSource = this.superSource != null ? this.superSource : this.source //grabs the true source to ensure it doesn't interact with wrong entities
+        this.random = 31 + Math.random() * 150
+        this.targetList = [] //previous targets that were hit
+        this.fcolor = `rgba(224, ${this.random}, 31, 0.75)`
     }
 
     damageFunc(flame, target){
+        if(flame.targetList.indexOf(target) !== -1) return;
+        flame.targetList.push(target)
         target.onDamage(flame.damage, function(target){
                 const degrees = findDegrees(flame.x + flame.width/2, flame.y + flame.height/2, target.x + target.width/2, target.y + target.height/2)
                 const pv = getProjVelocities(degrees, flame.knockback)
@@ -394,8 +399,70 @@ class flame{
         }
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height)
-        ctx.fillStyle = `rgb(224, 147, 31)`
+        ctx.fillStyle = this.fcolor
         ctx.fill()
+        ctx.closePath();
+    }
+}
+
+class laser{
+    constructor(startX, startY, thickness, degrees, source, damage = 5, speed, gradual = false){
+        this.startX = startX
+        this.startY = startY
+        this.thickness = thickness
+        this.degrees = degrees
+        this.source = source
+        this.damage = damage
+        this.speed = speed
+        this.targetDegrees = degrees
+        this.gradual = gradual
+        this.index;
+        this.color = {r:0, g:0, b:0}
+        console.log(this.damage)
+    }
+
+    damageFunc(laser, target){
+            console.log(laser.damage)
+            target.onDamage(laser.damage)
+    }
+
+    draw(){
+        const slope = getProjVelocities(this.degrees, this.thickness);
+        const temp = {
+            x : this.startX,
+            y : this.startY,
+            width : this.thickness + slope.xVelocity,
+            height : this.thickness + slope.yVelocity,
+            damage: this.damage
+        }
+        let count  = 0
+        while(!collision2(temp, structures) && temp.x < character.room.width && temp.x > 0 && temp.y < character.room.height && temp.y > 0){
+            if(this.source instanceof player){
+                collison3(temp, entities, this.damageFunc)
+            }
+            else{
+                collison(temp, player, false, this.damageFunc)
+            }
+            temp.x += temp.width
+            temp.y += temp.height
+            count++
+            ctx.beginPath();
+            ctx.rect(temp.x, temp.y, temp.width, temp.height)
+            ctx.fillStyle = 'blue'
+            ctx.fill()
+            ctx.closePath();
+        }
+        ctx.beginPath();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 1)`
+        ctx.moveTo(this.startX, this.startY);
+        ctx.lineTo(temp.x + temp.width, temp.y + temp.height);
+        ctx.stroke()
+        ctx.strokeStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.5)`
+        ctx.lineWidth = this.thickness;
+        ctx.lineTo(temp.x + temp.width, temp.y + temp.height);
+        ctx.stroke()
+        ctx.lineWidth = 1;
         ctx.closePath();
     }
 }

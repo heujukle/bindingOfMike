@@ -1,4 +1,35 @@
 const passiveItemSrc = {
+"laser turret" : {
+    name: 'laser turret',
+    desc: 'Creates a turret that targets enemies above the player',
+    sprite: 'images/passives/autoTurret.png',
+    itemVariables: {timeOfLastActivation: 0, laser : null},
+    price: 750, //1000
+    hasFunc: {func:(source) => {
+        if(document.timeline.currentTime - source.passiveItems["laser turret"].timeOfLastActivation > 50){
+            source.passiveItems["laser turret"].timeOfLastActivation = document.timeline.currentTime;
+            const target = determineTarget(source);
+            if(target == null) return;
+            else{
+                const degrees = findDegrees(source.x, source.y, target.x + target.width/2, target.y + target.height/2)
+                if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 20)
+                else {
+                    source.passiveItems["laser turret"].laser.degrees = degrees
+                    console.log(degrees)
+                    source.passiveItems["laser turret"].laser.startX = (source.x + source.width/2) - 10
+                    source.passiveItems["laser turret"].laser.startY = source.y - 50
+                    }        
+                if(damageInstances.list.indexOf(source.passiveItems["laser turret"].laser) === -1)damageInstances.add(source.passiveItems["laser turret"].laser)
+            }
+        }
+        ctx.beginPath();
+        ctx.rect((source.x + source.width/2) - 10, source.y - 50, source.width/2, source.height/2);
+        ctx.fillStyle = 'rgba(150, 150, 150, 0.5)';
+        ctx.fill();
+        ctx.closePath();
+    }, hook: 'onPlayerDraw'}, //future proofing items
+    type: 'passiveItem'
+},
     "flame turret" : {
     name: 'flame turret',
     desc: 'Creates a turret that targets enemies above the player',
@@ -13,9 +44,9 @@ const passiveItemSrc = {
                 const degrees = findDegrees(source.x, source.y, target.x + target.width/2, target.y + target.height/2)
                 const velocities = getProjVelocities(degrees - 25 + Math.random() * 50, 7);
                 
-                damageInstances.add(new flame((source.x + source.width/2) - 10, source.y + 75, 30, 30, -velocities.xVelocity, -velocities.yVelocity, source, 5, 0.5, 300));
+                damageInstances.add(new flame((source.x + source.width/2) - 10, source.y - 50, 30, 30, -velocities.xVelocity, -velocities.yVelocity, source, 5, 0.5, 300));
             }
-            source.passiveItems["flame turret"].timeOfLastActivation -= 20
+            source.passiveItems["flame turret"].timeOfLastActivation -= 30
         }
         else source.passiveItems["flame turret"].timeOfLastActivation -= 5
         if(source.passiveItems["flame turret"].timeOfLastActivation <= 0){
@@ -23,8 +54,8 @@ const passiveItemSrc = {
             source.passiveItems["flame turret"].timeOfLastActivation = 300
         }
         ctx.beginPath();
-        ctx.rect((source.x + source.width/2) - 10, source.y + 75, source.width/2, source.height/2);
-        ctx.fillStyle = 'black';
+        ctx.rect((source.x + source.width/2) - 10, source.y - 50, source.width/2, source.height/2);
+        ctx.fillStyle = 'rgba(10, 10, 10, 0.5)';
         ctx.fill();
         ctx.closePath();
     }, hook: 'onPlayerDraw'}, //future proofing items
@@ -49,7 +80,7 @@ const passiveItemSrc = {
         }
         ctx.beginPath();
         ctx.rect((source.x + source.width/2) - 10, source.y - 50, source.width/2, source.height/2);
-        ctx.fillStyle = 'grey';
+        ctx.fillStyle = 'rgba(150, 150, 150, 0.5)';
         ctx.fill();
         ctx.closePath();
     }, hook: 'onPlayerDraw'}, //future proofing items

@@ -253,12 +253,9 @@ function collison3(entitiy, target, func){ //does not return upon collison
     const right = entitiy.x + entitiy.width;
     const top = entitiy.y;
     const bottom = entitiy.y + entitiy.height;
-    console.log(left, right, top, bottom)
     
     for (let i = 0; i < targetList.length; i++) {
-        console.log((targetList[i] !== entitiy) && targetList[i] != null)
         if(((targetList[i] !== entitiy) && target.check(targetList[i], entitiy)) && targetList[i] != null){ //check for entities returns if it is static
-            console.log('trying')
             const tleft = targetList[i].x;
             const tright = targetList[i].x + targetList[i].width;
             const ttop = targetList[i].y;
@@ -275,7 +272,6 @@ function collison3(entitiy, target, func){ //does not return upon collison
                 }
             }
         }
-        console.log(collision)
 }
 
 //used for incrementing with a limit
@@ -499,7 +495,8 @@ function getProjVelocities(degrees, speed){ //returns velocities for projectiles
     }
     const result = {
         xVelocity: 0,
-        yVelocity : 0
+        yVelocity : 0,
+        degrees : degrees
     }
     if(degrees >= 45 && degrees < 135){
         result.xVelocity = ((speed / 45) * degrees) - speed * 2 //((135 - 45) - degrees) / this.pVelocityModifier * -2

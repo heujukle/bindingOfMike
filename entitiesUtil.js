@@ -18,16 +18,13 @@ function summon(source, type){
 
 function determineTarget(source){
     let shortestDistance = -Math.max();
-    console.log(shortestDistance)
     let result = null
     for(let i = 0; i < entities.list.length; i++){
         if(entities.list[i] === source || entities.list[i] === null) continue;
         const distance = Math.sqrt(Math.pow(entities.list[i].x - source.x, 2) + Math.pow(entities.list[i].y - source.y, 2))
-        console.log(distance)
         if (distance < shortestDistance && entities.list[i].allied != source.allied) {
             shortestDistance = distance
             result = entities.list[i]
-            console.log("passed in")
         }
     }
     return result;

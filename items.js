@@ -149,6 +149,7 @@ const stats = [
 
 const passives = [
 passiveItemSrc["auto turret"],
+passiveItemSrc["flame turret"],
 passiveItemSrc["vampire"],
 passiveItemSrc["threadling"],
 passiveItemSrc["spikey"],
