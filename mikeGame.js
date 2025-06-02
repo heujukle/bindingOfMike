@@ -247,7 +247,6 @@ function collision2(entitiy, target, collider, func = false) { //collider return
 }
 
 function collison3(entitiy, target, func){ //does not return upon collison
-    let collision = 'nuh'
     let targetList = target.list
     const left = entitiy.x;
     const right = entitiy.x + entitiy.width;
@@ -265,7 +264,6 @@ function collison3(entitiy, target, func){ //does not return upon collison
             // Check if the rectangles are overlapping
             if (right > tleft && left < tright && bottom > ttop && top < tbottom) {
                 // Collision detected
-                collision = 'yuh'
                 if(func != false){ 
                     func(entitiy, targetList[i])
                 }

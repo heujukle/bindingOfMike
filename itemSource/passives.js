@@ -6,7 +6,7 @@ const passiveItemSrc = {
     itemVariables: {timeOfLastActivation: 0, laser : null},
     price: 750, //1000
     hasFunc: {func:(source) => {
-        if(document.timeline.currentTime - source.passiveItems["laser turret"].timeOfLastActivation > 50){
+        if(document.timeline.currentTime - source.passiveItems["laser turret"].timeOfLastActivation > 0){
             source.passiveItems["laser turret"].timeOfLastActivation = document.timeline.currentTime;
             const target = determineTarget(source);
             if(target == null){
@@ -15,7 +15,7 @@ const passiveItemSrc = {
             }
             else{
                 const degrees = findDegrees((source.x + source.width/2) - 10, source.y - 50, target.x + target.width/2, target.y + target.height/2)
-                if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 0)
+                if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 3)
                 else {
                     source.passiveItems["laser turret"].laser.degrees = degrees + 180
                     console.log(degrees)

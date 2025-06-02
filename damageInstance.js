@@ -395,7 +395,7 @@ class flame{
             collison3(this, entities, this.damageFunc)
         }
         else{
-            collison(this, player, false, this.damageFunc)
+            collison(this, character, false, this.damageFunc)
         }
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height)
@@ -413,42 +413,71 @@ class laser{
         this.degrees = degrees
         this.source = source
         this.damage = damage
-        this.speed = speed
+        this.speed = speed //how fast a gradual laser adjust to new target
         this.targetDegrees = degrees
         this.gradual = gradual
         this.index;
         this.color = {r:0, g:0, b:0}
+        this.targetList = [] //targets that have temporary immunity
         console.log(this.damage)
+        this.refresh = 10 //time before a targetList list reset
+        this.degreeChange = 0; //shows how much the laser needs to change
     }
 
     damageFunc(laser, target){
-            console.log(laser.damage)
+        if(laser.targetList.indexOf(target) != -1) return;
+            laser.targetList.push(target)
             target.onDamage(laser.damage)
     }
 
+    // a function that only works on gradual lasers, moves the laser to a new degree
+    setDegree(newDeg){
+        this.degreeChange = newDeg - this.degreeChange;
+    }
+
+    gradualLaser(){
+        
+    }
+
     draw(){
-        const slope = getProjVelocities(this.degrees, this.thickness);
+        if(this.refresh < 0){
+            console.log('refresh')
+            this.targetList = []
+            this.refresh = 25
+        } 
+        let slope;
+        if(this.gradual === false) slope = getProjVelocities(this.degrees, this.thickness);
+        else{
+            if(this.degreeChange > 0){
+
+            }
+            if(this.degreeChange < 0){
+                
+            }
+        }
         const temp = {
             x : this.startX,
             y : this.startY,
-            width : slope.xVelocity,
-            height : slope.yVelocity,
-            damage: this.damage
+            width : Math.abs(slope.xVelocity),
+            height : Math.abs(slope.yVelocity),
+            damage: this.damage,
+            targetList : this.targetList
         }
         while(!collision2(temp, structures) && temp.x < character.room.width && temp.x > 0 && temp.y < character.room.height && temp.y > 0){
             if(this.source instanceof player){
                 collison3(temp, entities, this.damageFunc)
             }
             else{
-                collison(temp, player, false, this.damageFunc)
+                collison(temp, character, false, this.damageFunc)
             }
+            // ctx.beginPath();
+            // ctx.rect(temp.x, temp.y, temp.width, temp.height)
+            // ctx.fillStyle = 'blue'
+            // ctx.fill()
+            // ctx.closePath();
+            this.targetList = temp.targetList
             temp.x += slope.xVelocity
             temp.y += slope.yVelocity
-            ctx.beginPath();
-            ctx.rect(temp.x, temp.y, temp.width, temp.height)
-            ctx.fillStyle = 'blue'
-            ctx.fill()
-            ctx.closePath();
         }
         ctx.beginPath();
         ctx.lineWidth = 5;
@@ -462,5 +491,6 @@ class laser{
         ctx.stroke()
         ctx.lineWidth = 1;
         ctx.closePath();
+        this.refresh -= 1;
     }
 }
