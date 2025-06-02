@@ -431,11 +431,10 @@ class laser{
         const temp = {
             x : this.startX,
             y : this.startY,
-            width : this.thickness + slope.xVelocity,
-            height : this.thickness + slope.yVelocity,
+            width : slope.xVelocity,
+            height : slope.yVelocity,
             damage: this.damage
         }
-        let count  = 0
         while(!collision2(temp, structures) && temp.x < character.room.width && temp.x > 0 && temp.y < character.room.height && temp.y > 0){
             if(this.source instanceof player){
                 collison3(temp, entities, this.damageFunc)
@@ -443,9 +442,8 @@ class laser{
             else{
                 collison(temp, player, false, this.damageFunc)
             }
-            temp.x += temp.width
-            temp.y += temp.height
-            count++
+            temp.x += slope.xVelocity
+            temp.y += slope.yVelocity
             ctx.beginPath();
             ctx.rect(temp.x, temp.y, temp.width, temp.height)
             ctx.fillStyle = 'blue'

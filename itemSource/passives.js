@@ -9,12 +9,15 @@ const passiveItemSrc = {
         if(document.timeline.currentTime - source.passiveItems["laser turret"].timeOfLastActivation > 50){
             source.passiveItems["laser turret"].timeOfLastActivation = document.timeline.currentTime;
             const target = determineTarget(source);
-            if(target == null) return;
+            if(target == null){
+                damageInstances.remove(source.passiveItems["laser turret"].laser.index)
+                return;
+            }
             else{
-                const degrees = findDegrees(source.x, source.y, target.x + target.width/2, target.y + target.height/2)
-                if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 20)
+                const degrees = findDegrees((source.x + source.width/2) - 10, source.y - 50, target.x + target.width/2, target.y + target.height/2)
+                if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 0)
                 else {
-                    source.passiveItems["laser turret"].laser.degrees = degrees
+                    source.passiveItems["laser turret"].laser.degrees = degrees + 180
                     console.log(degrees)
                     source.passiveItems["laser turret"].laser.startX = (source.x + source.width/2) - 10
                     source.passiveItems["laser turret"].laser.startY = source.y - 50
