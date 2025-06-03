@@ -43,6 +43,7 @@ function handleResize(list, roomPrevWindowWidth = null, roomPrevWindowHeight = n
         list[i].height = window.innerHeight * heightRatio;
         list[i].x = window.innerWidth * xRatio;
         list[i].y = window.innerHeight * yRatio;
+        if(list[i].resizeFunc != undefined && list[i].resizeFunc != null) list[i].resizeFunc()
     }
 }
 
@@ -63,6 +64,7 @@ function adjustSize(list, widthOnly = false){ // a function for resizing normal 
             list[i].x = character.room.width * list[i].offsets.xOffset; 
             list[i].y = character.room.height * list[i].offsets.yOffset;
         }
+        if(list[i].resizeFunc != undefined && list[i].resizeFunc != null) list[i].resizeFunc()
     }
 }
 //a function to update cord offsets, allows for relative movement 

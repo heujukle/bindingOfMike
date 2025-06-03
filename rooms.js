@@ -1,4 +1,4 @@
-let rooms = rooms0.map((arr)=>{return arr.slice();});
+let rooms = rooms01.map((arr)=>{return arr.slice();});
 
 const createWall = (x, y, width, height)  => {
     structures.add(new wall(x, y, width, height))
@@ -59,6 +59,10 @@ const createZombieSpawner = (x, y, width, height) => { //function to make dummys
 const createRock = (x, y, width, height) => { //function to make dummys
     entities.add(new Rock(x, y, defaultWidth, defaultHeight));
 }
+
+const createMotherShip = (x, y, width, height) => { //function to make dummys
+    entities.add(new motherShip(x, y));
+}
 const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
         return;
@@ -78,6 +82,7 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['bw', createBasicWarrior],
     ['sw', createSpinWarrior],
     ['ch', createChest],
-    ['r', createRock]
+    ['r', createRock],
+    ['ms', createMotherShip],
 
 ])
