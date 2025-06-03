@@ -13,16 +13,18 @@ canvas.height = window.innerHeight; //default of 945
 canvas.width = window.innerWidth; //default of 1920
 let buffer = false;
 let username = "Unnamed"
+let mouseX = 0
+let mouseY = 0
 
 const startingArea = new area()
 
 
 let character = new player();
-character.addItem(passiveItemSrc['laser turret'])
+// character.addItem(passiveItemSrc['laser turret'])
 // all items start
-// for(const item of passives){
-//     character.addItem(item);
-// }
+for(const item of passives){
+    character.addItem(item);
+}
 // for(const melee of meleeItems){
 //     character.meleeInventory.push(melee.item(character))
 //     character.meleeInventory.push(melee.item(character))
@@ -38,6 +40,11 @@ character.setArea(startingArea, false);
 
 resize()
 window.requestAnimationFrame(animate);
+
+document.addEventListener('mousemove', (e)=>{
+    mouseX = e.x
+    mouseY = e.y
+})
 
 document.addEventListener('keydown', (e) => { //adds action to player
     switch(e.key){

@@ -11,14 +11,12 @@ const passiveItemSrc = {
             const target = determineTarget(source);
             if(target == null){
                 damageInstances.remove(source.passiveItems["laser turret"].laser.index)
-                return;
             }
             else{
-                const degrees = findDegrees((source.x + source.width/2) - 10, source.y - 50, target.x + target.width/2, target.y + target.height/2)
-                if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 3)
+                const degrees = findDegrees((source.x + source.width/2) - 10, source.y - 50, mouseX, mouseY)
+                if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 3, {color:{r:150, g:70, b:50}})
                 else {
                     source.passiveItems["laser turret"].laser.degrees = degrees + 180
-                    console.log(degrees)
                     source.passiveItems["laser turret"].laser.startX = (source.x + source.width/2) - 10
                     source.passiveItems["laser turret"].laser.startY = source.y - 50
                     }        
@@ -27,7 +25,7 @@ const passiveItemSrc = {
         }
         ctx.beginPath();
         ctx.rect((source.x + source.width/2) - 10, source.y - 50, source.width/2, source.height/2);
-        ctx.fillStyle = 'rgba(150, 150, 150, 0.5)';
+        ctx.fillStyle = 'rgba(230, 73, 73, 0.5)';
         ctx.fill();
         ctx.closePath();
     }, hook: 'onPlayerDraw'}, //future proofing items
@@ -42,14 +40,12 @@ const passiveItemSrc = {
     hasFunc: {func:(source) => {
         if(source.passiveItems["flame turret"].active === true){
             const target = determineTarget(source);
-            if(target == null) return;
-            else{
+            if(target != null){
                 const degrees = findDegrees(source.x, source.y, target.x + target.width/2, target.y + target.height/2)
                 const velocities = getProjVelocities(degrees - 25 + Math.random() * 50, 7);
-                
                 damageInstances.add(new flame((source.x + source.width/2) - 10, source.y - 50, 30, 30, -velocities.xVelocity, -velocities.yVelocity, source, 5, 0.5, 300));
+                source.passiveItems["flame turret"].timeOfLastActivation -= 30
             }
-            source.passiveItems["flame turret"].timeOfLastActivation -= 30
         }
         else source.passiveItems["flame turret"].timeOfLastActivation -= 5
         if(source.passiveItems["flame turret"].timeOfLastActivation <= 0){

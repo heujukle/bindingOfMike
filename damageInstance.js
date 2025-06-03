@@ -406,22 +406,23 @@ class flame{
 }
 
 class laser{
-    constructor(startX, startY, thickness, degrees, source, damage = 5, speed, gradual = false){
+    constructor(startX, startY, thickness, degrees, source, damage = 5, configs = {}){
         this.startX = startX
         this.startY = startY
         this.thickness = thickness
         this.degrees = degrees
         this.source = source
         this.damage = damage
-        this.speed = speed //how fast a gradual laser adjust to new target
+        this.speed = configs.speed //how fast a gradual laser adjust to new target
         this.targetDegrees = degrees
-        this.gradual = gradual
+        this.gradual = configs.gradual
         this.index;
-        this.color = {r:0, g:0, b:0}
+        this.color = configs.color != undefined ? configs.color : {r:0, g:0, b:0}
         this.targetList = [] //targets that have temporary immunity
         console.log(this.damage)
-        this.refresh = 10 //time before a targetList list reset
+        this.refresh = configs.refrsh !== undefined ? configs.refrsh : 10 //time before a targetList list reset
         this.degreeChange = 0; //shows how much the laser needs to change
+        this.target == configs.target
     }
 
     damageFunc(laser, target){
@@ -433,10 +434,32 @@ class laser{
     // a function that only works on gradual lasers, moves the laser to a new degree
     setDegree(newDeg){
         this.degreeChange = newDeg - this.degreeChange;
+        
     }
 
     gradualLaser(){
-        
+        console.log(this.speed)
+        console.log("degreechange: ", this.degreeChange)
+        if(this.degreeChange === 0) return getProjVelocities(this.degrees, this.thickness);
+
+        else if(this.degreeChange < 0){
+            let increment = this.speed
+            if(this.degreeChange + increment > 0) increment = -this.degreeChange
+            this.degreeChange += increment;
+            this.degrees -= increment;
+            const slope = getProjVelocities(this.degrees, this.thickness);
+            this.degrees = slope.degrees;
+            return slope;
+        }
+        else if(this.degreeChange > 0){
+            let increment = -this.speed
+            if(this.degreeChange + increment < 0) increment = -this.degreeChange
+            this.degreeChange += increment;
+            this.degrees -= increment;
+            const slope = getProjVelocities(this.degrees, this.thickness);
+            this.degrees = slope.degrees;
+            return slope;
+        }
     }
 
     draw(){
@@ -447,14 +470,7 @@ class laser{
         } 
         let slope;
         if(this.gradual === false) slope = getProjVelocities(this.degrees, this.thickness);
-        else{
-            if(this.degreeChange > 0){
-
-            }
-            if(this.degreeChange < 0){
-                
-            }
-        }
+        else slope = this.gradualLaser()
         const temp = {
             x : this.startX,
             y : this.startY,
