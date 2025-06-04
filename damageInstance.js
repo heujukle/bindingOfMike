@@ -404,7 +404,13 @@ class flame{
         ctx.closePath();
     }
 }
-
+/*
+Additional config options
+Color {r:0, g:0, b:0}
+gradual: boolean
+refresh: num
+speed: num, how fast beam moves
+*/
 class laser{
     constructor(startX, startY, thickness, degrees, source, damage = 5, configs = {}){
         this.startX = startX
@@ -423,6 +429,7 @@ class laser{
         this.refresh = configs.refrsh !== undefined ? configs.refrsh : 10 //time before a targetList list reset
         this.degreeChange = 0; //shows how much the laser needs to change
         this.target == configs.target
+        this.remove = false;
     }
 
     damageFunc(laser, target){
@@ -432,15 +439,21 @@ class laser{
     }
 
     // a function that only works on gradual lasers, moves the laser to a new degree
-    setDegree(newDeg){
+    setDegree(newDeg, removeAfter = false){
         this.degreeChange = newDeg - this.degreeChange;
+        if(removeAfter == true) this.remove = true;
         
     }
 
     gradualLaser(){
         console.log(this.speed)
         console.log("degreechange: ", this.degreeChange)
-        if(this.degreeChange === 0) return getProjVelocities(this.degrees, this.thickness);
+        if(this.degreeChange === 0){
+            if(this.remove == true){
+                damageInstances.remove(this.index);
+            }
+            return getProjVelocities(this.degrees, this.thickness);
+        } 
 
         else if(this.degreeChange < 0){
             let increment = this.speed

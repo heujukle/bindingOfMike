@@ -13,7 +13,7 @@ const passiveItemSrc = {
                 damageInstances.remove(source.passiveItems["laser turret"].laser.index)
             }
             else{
-                const degrees = findDegrees((source.x + source.width/2) - 10, source.y - 50, mouseX, mouseY)
+                const degrees = findDegrees((source.x + source.width/2) - 10, source.y - 50, mouseX + source.translateX, mouseY + source.translateY)
                 if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 3, {color:{r:150, g:70, b:50}})
                 else {
                     source.passiveItems["laser turret"].laser.degrees = degrees + 180
