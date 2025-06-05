@@ -25,6 +25,7 @@ class portal{
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.closePath();
         if(this.collision2([this.target])){ //scales the difficulty
+            this.target.fixCamera();
             console.log('portal')
             entitiySpeed = entitiySpeed + 1 >= 3 ?  entitiySpeed : entitiySpeed + 0.25; //limits to 3
             zombieHealth *= 1.5;
@@ -529,3 +530,55 @@ class forge{
             dropItems(findItemNotHad(this.target), this.target)
         }
             }
+
+class teleporter{
+    constructor(x, y, width, height, target, func){
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+        this.func = func
+        this.target = target
+        this.offsets = {
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+        }
+        this.index;
+    }
+
+    draw(){
+        collison(this, this.target, false, this.func)
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = "rgb(7, 144, 235)";
+        ctx.fill();
+        ctx.closePath();
+    }
+}
+
+class pressurePlate{
+    constructor(x, y, width, height, target, func){
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+        this.func = func
+        this.target = target
+        this.index;
+        this.offsets = {
+            xOffset : x / character.room.width,
+            yOffset : y / character.room.height,
+            widthOffset : width / 1920,
+            heightOffset : height / 945,
+        }
+    }
+
+    draw(){
+        collison(this, this.target, false, this.func)
+        // ctx.beginPath();
+        // ctx.rect(this.x, this.y, this.width, this.height);
+        // ctx.fillStyle = "rgb(235, 7, 186)";
+        // ctx.fill();
+        // ctx.closePath();
+    }
+}
