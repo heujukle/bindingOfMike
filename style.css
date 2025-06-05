@@ -612,3 +612,20 @@ img{
     left:0;
     bottom:0;
 }
+
+#bossbars{
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    bottom:20px;
+    left: 25vw;
+    width: 50vw;
+}
+
+.bossbar{
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1vh;
+}

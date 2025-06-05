@@ -75,3 +75,7 @@ function cordOffsets(list){
         entity.offsets.yOffset = entity.y / character.room.height;
     }
 }
+
+function bossBar(boss){
+    return createElement('div', "bossbar", {textContent: boss.name, style:'width:100%'}, document.getElementById('bossbars'))
+}

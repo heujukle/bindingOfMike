@@ -29,8 +29,11 @@ class motherShip{
         this.xVelocity = 0
         this.yVelocity = 0
         this.dashPastCords = null //used for tracking where the player was to make dash more fun
-        this.health = 20000
+        this.defaultHealth = 20000
+        this.health = this.defaultHealth
         this.index;
+        this.name = 'Mother Ship'
+        this.healthBar = bossBar(this)
     }
 
     switchAttack(){
@@ -44,12 +47,14 @@ class motherShip{
     onDamage(damage){
         this.timeSinceLastDamage = 200
         this.health -= damage
+        this.healthBar.style = `width:${100 - this.health / this.defaultHealth}%`
     }
 
     onDeath(){
         entities.remove(this.index)
         updateWallet(20, this.target)
         interactables.add(new portal(this.x, this.y, this.width, this.height, this.target))
+        this.healthBar.remove();
     }
 
     dash(){
