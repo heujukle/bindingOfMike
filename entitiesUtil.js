@@ -49,6 +49,7 @@ function handleResize(list, roomPrevWindowWidth = null, roomPrevWindowHeight = n
 
 function adjustSize(list, widthOnly = false){ // a function for resizing normal sized 
     for(let i = 0; i < list.length; i++){
+        console.log(list[i])
         if(list[i] === null) continue;
         //these offsets are set upon object creation and dont change
         if(list[i].offsets.widthOffset !== undefined){

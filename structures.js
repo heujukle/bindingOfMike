@@ -96,7 +96,7 @@ class area{
                     currentRoom.savedEntities = parseEntities(roomData.entities)
                     currentRoom.savedInteractables = parseInteractables(roomData.interactables)
                 }
-                this.currentRoom.saveDisabled = roomData.saveDisabled
+                currentRoom.saveDisabled = roomData.saveDisabled
                 this.map.set(cords, currentRoom);
                 rooms.push(currentRoom);
             }

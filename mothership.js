@@ -33,7 +33,7 @@ class motherShip{
         this.health = this.defaultHealth
         this.index;
         this.name = 'Mother Ship'
-        this.instance = 'mothership'
+        this.instance = 'ms'
         this.healthBar = bossBar(this)
         this.points = getPoints(6, this)
     }

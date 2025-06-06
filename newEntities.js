@@ -1,6 +1,6 @@
 class Rock{
     constructor(x, y, width, height){
-        this.instance = 'Rock';
+        this.instance = 'r';
         this.x = x;
         this.y = y;
         this.offsets = { //holds the values of all the ratio of changes

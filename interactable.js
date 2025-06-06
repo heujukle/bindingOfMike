@@ -10,7 +10,7 @@ class portal{
             xOffset : x / character.room.width,
             yOffset : y / character.room.height,
         }
-        this.type = 'portal'
+        this.type = 'p'
         this.behavior = 'dynamic'
         this.image = new Image();
         this.image.src = 'images/walls/portal.png';
@@ -91,7 +91,7 @@ constructor(x, y, width, height, target, forSale = undefined){
         xOffset : x / character.room.width,
         yOffset : y / character.room.height,
     }
-    this.type = 'shop' //is shop
+    this.type = 'sh' //is shop
     this.behavior = 'dynamic' //dynamically changes
     const seed = Math.random() + ''
     this.forSale = forSale === undefined ? [
@@ -252,7 +252,7 @@ class forge{
                 yOffset : y / character.room.height,
             }
             this.height = height
-            this.type = 'forge' //is shop
+            this.type = 'f' //is shop
             this.behavior = 'dynamic' //dynamically changes
             this.image = new Image()
             this.image.src = 'images/walls/forge.png'
@@ -465,7 +465,7 @@ class forge{
     }
 
     class chest{
-        constructor(x, y, width, height, target){
+        constructor(x, y, width, height, target, opened = false){
             this.index; //index in interactables
             this.x = x //x
             this.y = y //y
@@ -476,9 +476,9 @@ class forge{
                 xOffset : x / character.room.width,
                 yOffset : y / character.room.height,
             }
-            this.type = 'chest' //is shop
+            this.type = 'ch' //is shop
             this.behavior = 'dynamic' //dynamically changes
-            this.opened = false;
+            this.opened = opened;
             this.image = new Image();
             this.image.src = 'images/walls/chest.png'
         }
@@ -544,7 +544,7 @@ class teleporter{
             yOffset : y / character.room.height,
         }
         this.index;
-        this.type = 'btp'
+        this.type = 'bt'
     }
 
     draw(){
@@ -558,7 +558,7 @@ class teleporter{
 }
 
 class pressurePlate{
-    constructor(x, y, width, height, target, func){
+    constructor(x, y, width, height, target, func, type = 'ldms'){
         this.x = x
         this.y = y
         this.width = width
@@ -566,7 +566,7 @@ class pressurePlate{
         this.func = func
         this.target = target
         this.index;
-        this.type = 'pp'
+        this.type = type
         this.offsets = {
             xOffset : x / character.room.width,
             yOffset : y / character.room.height,

@@ -2,7 +2,7 @@ const entityDamage = "rgba(255, 0, 0, 0.8)"
 
 class dummy{
     constructor(x, y, width, height){
-        this.instance = 'dummy';
+        this.instance = 'd';
         this.x = x;
         this.y = y;
         this.offsets = { //holds the values of all the ratio of changes
@@ -47,7 +47,7 @@ class dummy{
 
 class spawner{
     constructor(x, y, width, height, target, type){
-        this.instance = 'spawner';
+        this.instance = 'zs';
         this.x = x;
         this.y = y;
         this.index;
@@ -117,7 +117,7 @@ class spawner{
 
 class zombie{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.75, spawned = false){
-        this.instance = 'zombie';
+        this.instance = 'z';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -235,7 +235,7 @@ class zombie{
 
 class Warrior{
     constructor(x, y, width, height, target, speed, health = 25, damage = 10, knockBackResistance = 0.75, type = basic, spawned = false){
-        this.instance = 'warrior';
+        this.instance = 'bw';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -281,6 +281,7 @@ class Warrior{
                     damageInstances.add(swordProjectile)
                 }, 120, 1, {runFuncCD: -2})
                 this.swingSpeed = 1000;
+                this.instance = 'sw'
                 break;
         }
         this.timeToSwing = document.timeline.currentTime + 1000 + Math.floor((Math.random() * 0))
@@ -388,7 +389,7 @@ class Warrior{
 
 class skeleton{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5, pSpeed = 8, knockBackResistance = 1){
-        this.instance = 'skeleton';
+        this.instance = 's';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -544,7 +545,7 @@ class skeleton{
 
 class evilZombie{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, knockBackResistance = 0.5){
-        this.instance = 'evilzombie';
+        this.instance = 'ez';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -664,7 +665,7 @@ class evilZombie{
 
 class boomSkeleton{
     constructor(x, y, width, height, target, speed, health = 25, damage = 5, pDamage = 5, pSpeed = 8, knockBackResistance = 1){
-        this.instance = 'boomskeleton';
+        this.instance = 'bs';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'
@@ -825,7 +826,7 @@ class boomSkeleton{
 
 class threadling{
     constructor(x, y, width, height, speed, damage = 5, allied){
-        this.instance = 'threadling';
+        this.instance = 'thrd';
         this.x = x;
         this.y = y;
         this.behavior = 'dynamic'

@@ -45,13 +45,18 @@ const createBoomSkeleton = (x, y, width, height) => { //function to make dummys
     return {bucket:entities, Obj:obj}
 }
 
+const createThreadling = (x, y, width, height) => { //function to make dummys
+    const obj = new threadling(x, y, 25, 25)
+    return {bucket:entities, Obj:obj}
+}
+
 const createPortal = (x, y, width, height) => { //function to make dummys
     const obj = new portal(x, y, width, height, character)
     return {bucket:interactables, Obj:obj}
 }
 
-const createShop = (x, y, width, height) => { //function to make dummys
-    const obj = new shop(x, y, width, height, character)
+const createShop = (x, y, width, height, forSale) => { //function to make dummys
+    const obj = new shop(x, y, width, height, character, forSale)
     return {bucket:interactables, Obj:obj}
 }
 
@@ -60,8 +65,8 @@ const createForge = (x, y, width, height) => { //function to make dummys
     return {bucket:interactables, Obj:obj}
 }
 
-const createChest = (x, y, width, height) => { //function to make dummys
-    const obj = new chest(x, y, width, height, character)
+const createChest = (x, y, width, height, opened = false) => { //function to make dummys
+    const obj = new chest(x, y, width, height, character, opened)
     return {bucket:interactables, Obj:obj}
 }
 
@@ -180,7 +185,8 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['r', createRock],
     ['ms', createMotherShip],
     ['bt', createBossTeleporter],
-    ['ldms', createLeftDoorMS]
+    ['ldms', createLeftDoorMS],
+    ['thrd', createThreadling]
 ])
 
 //an array of boss summoning tiles to summon boss

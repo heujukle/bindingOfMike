@@ -74,164 +74,23 @@ function parseMeleeInventory(recipes){
     return result;
 }
 
-const saveableEntities ={
-    'zombie' : (x, y, health)=> {
-        const entity = new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage, knockBackResistance);
-        entity.health = health
-        return entity;
-    },
-    'skeleton' : (x, y, health)=> {
-        const entity = new skeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed, knockBackResistance);
-        entity.health = health
-        return entity;
-    },
-    'boomskeleton' : (x, y, health)=> {
-        const entity = new boomSkeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed * 1.5, knockBackResistance);
-        entity.health = health
-        return entity;
-    },
-    'evilzombie' : (x, y, health)=> {
-        const entity = new evilZombie(x, y, 40, 40, character, entitiySpeed * 0.75, zombieHealth, zombieDamage * 1.5, knockBackResistance);
-        entity.health = health
-        return entity;
-    },
-    'warrior' : (x, y, health, type = 'basic')=> {
-        const entity = new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, type);
-        entity.health = health
-        return entity;
-    },
-    'spawner' : (x, y, health, type)=> {
-        const entity = new spawner(x, y, width, height, character, type);
-        entity.health = health
-        return entity;
-    },
-    'dummy' : (x, y)=> {
-        const entity = new dummy(x, y, width, height);
-        return entity;
-    },
-    'threadling' : (x, y, health)=> {
-        const entity = new threadling(x, y, 10, 10, 10, 15, 'player');
-        return entity;
-    },
-    'mothership' : (x, y, health)=> {
-        const entity = new motherShip(x, y);
-        return entity;
-    },
-    'Rock' : (x, y, health)=> {
-        const entity = new Rock(x, y, width, height);
-        entity.health = health
-        return entity;
-    },
-}
-
-
-const saveableInteractables = {
-   'portal' : (x, y) =>{
-    const interactable = new portal(x, y, width, height, character);
-    return interactable;
-   },
-   'shop' : (x, y, forSale) => {
-    const interactable = new shop(x, y, width, height, character, forSale);
-    return interactable;
-   },
-   'forge' : (x, y) => {
-    const interactable = new forge(x, y, width, height, character);
-    return interactable;
-   },
-   'chest' : (x, y, opened) => {
-    const interactable = new chest(x, y, width, height, chracater, opened);
-    return interactable;
-   },
-   'btp' : (x, y) => {
-    const interactable = new teleporter(x, y, width, height, character, (teleporter, target)=>{  
-        target.setArea(new area(undefined, (map)=>{
-            const startingLayout = [
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'lt', 0, 1], 
-                    [1, 'rt', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'r', 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 'r', 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 1], 
-                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sh', 1], 
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
-            const startingRoom = new room(startingLayout, '0,0')
-            startingRoom.layout[startingRoom.sideDoor][startingLayout[0].length - 1] = 0
-            startingRoom.layout[startingRoom.sideDoor - 1][startingLayout[0].length - 1] = 0
-            map.set('0,0', startingRoom)
-            const bossRoomLayout = 
-            [
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-            const bossRoom = new room(bossRoomLayout, '1,0')
-            bossRoom.layout[bossRoom.sideDoor][0] = 0
-            bossRoom.layout[bossRoom.sideDoor - 1][0] = 0
-            bossRoom.layout[1][2] = bossTile[Math.floor(Math.random() * bossTile.length)]
-            startingRoom.right = bossRoom;
-            bossRoom.left = startingRoom;
-            bossRoom.saveDisabled = true;
-            map.set('1,0', bossRoom)
-        }))
-    })
-    return interactable;
-   },
-   'pp' : (x, y) => {
-    const interactable = new pressurePlate(x, y, width, character.room.height, character, (pressurePlate, target)=>{ 
-        let wallY = target.room.sideDoor * height
-        let wallX = 0
-        structures.add(new wall(wallX, wallY, width, height))
-        wallY = (target.room.sideDoor - 1) * height
-        structures.add(new wall(wallX, wallY, width, height))
-        const bossX = Math.floor(target.room.layout[0].length / 2) * width
-        const bossY = Math.floor(target.room.layout.length / 2) * height
-        entities.add(new motherShip(bossX, bossY));
-        interactables.remove(pressurePlate.index)
-    })
-    return interactable;
-   },
-}
 function parseEntities(entities){
     const result = []
     for(let i = 0; i < entities.length; i++){
         const entity = entities[i];
         if(entity.unqiue !== undefined){
             const uniqueVals = Object.keys(entity.unqiue);
-            const madeEntity = saveableEntities[entity.instance](entity.x, entity.y, entity.health, uniqueVals[0], uniqueVals[1])
-            madeEntity.offsets = entities[i].offsets;
+            const newEntityInfo = tiles.get(entity.instance)(entity.x, entity.y, entity.width, entity.height, uniqueVals[0], uniqueVals[1])
+            const madeEntity = newEntityInfo.Obj
+            madeEntity.health = entity.health
+            madeEntity.offsets = entity.offsets;
             result.push(madeEntity)
         }
         else{
-            const madeEntity = saveableEntities[entity.instance](entity.x, entity.y, entity.health)
-            madeEntity.offsets = entities[i].offsets;
+            const newEntityInfo = tiles.get(entity.instance)(entity.x, entity.y, entity.width, entity.height)
+            const madeEntity = newEntityInfo.Obj
+            madeEntity.health = entity.health
+            madeEntity.offsets = entity.offsets;
             result.push(madeEntity)
         }
     }
@@ -244,14 +103,15 @@ function parseInteractables(entities){
         const entity = entities[i];
         if(entity.unqiue !== undefined){
             const uniqueVals = Object.keys(entity.unqiue);
-            const madeEntity = saveableInteractables[entity.instance](entity.x, entity.y, entity.health, uniqueVals[0], uniqueVals[1])
-            madeEntity.offsets = entities[i].offsets;
+            const newEntityInfo =  tiles.get(entity.instance)(entity.x, entity.y, entity.width, entity.height, uniqueVals[0], uniqueVals[1])
+            const madeEntity = newEntityInfo.Obj
+            madeEntity.offsets = entity.offsets;
             result.push(madeEntity)
         }
         else{
-            console.log(entity)
-            const madeEntity = saveableInteractables[entity.instance](entity.x, entity.y, entity.health)
-            madeEntity.offsets = entities[i].offsets;
+            const newEntityInfo = tiles.get(entity.instance)(entity.x, entity.y, entity.width, entity.height)
+            const madeEntity = newEntityInfo.Obj
+            madeEntity.offsets = entity.offsets;
             result.push(madeEntity)
         }
     }
