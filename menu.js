@@ -332,7 +332,8 @@ const controls = { //holds the controls of the game
     'interact' : 'e',
     'map' : 'm',
     'inventory' : 'q',
-    'unstuck' : 'l'
+    'unstuck' : 'l',
+    'heal' : 'h'
 }
 
 function keyMatch(key, control){ //returns true if the key is used

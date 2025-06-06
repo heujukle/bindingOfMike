@@ -31,6 +31,14 @@ class player {
             ['interact', function(player){
                 player.interact = true;
             }],
+            ['heal', function(player){
+                if(player.health === player.stats['maxHealth']) return
+                if(player.flasks > 0){
+                    player.addHealth(player.stats['flask health'])
+                    player.flasks -= 1;
+                }
+                character.directionList.splice(character.directionList.indexOf('heal'), 1);
+            }],
         ])
         this.width = 50
         this.height = 50
@@ -49,7 +57,8 @@ class player {
             'maxStamina' : 100,
             'dashSpeed' : 20,
             'staminaRegen' : 0.05,
-            'shoot speed' : 425
+            'shoot speed' : 425,
+            'flask health' : 20
         }
         this.health = 100;
         this.stamina = 100;
@@ -85,6 +94,8 @@ class player {
             heightOffset : this.height / 945,
         }
         this.score = 0;
+        this.flasks = 5;
+        this.actionables = []
     }
     
     hotBarChange(direction){ //changes direction of hotbar
@@ -120,6 +131,7 @@ class player {
         if(this.stamina < this.stats['maxStamina']) this.stamina += this.stats['staminaRegen'];
         if(this.yVelocity !== 0 || this.xVelocity !== 0) this.velocity(this.xVelocity, this.yVelocity)
         this.updateMove()
+        this.updateActionables()
         if(this.room.dynamicCamera == true){
             this.dynamicCamera()
             this.movements.x = 0
@@ -285,6 +297,13 @@ class player {
         for(let i = 0; i < this.directionList.length; i++){
             this.actions.get(this.directionList[i])(this)
         }
+    }
+
+    updateActionables(){
+        for(let i = 0; i < this.actionables.length; i++){
+            this.actions.get(this.actionables[i])(this)
+        }
+        this.actionables = []
     }
 
         //finish writing section detection algorithm

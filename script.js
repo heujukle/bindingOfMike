@@ -73,6 +73,11 @@ document.addEventListener('keydown', (e) => { //adds action to player
                             character.directionList.push('interact')
                             }
                         break;
+                        case controls.heal:
+                            if(character.actionables.indexOf('heal') == -1){
+                                character.actionables.push('heal')
+                            }
+                            break;
     }
 })
 
@@ -96,6 +101,9 @@ document.addEventListener('keyup', (e) => { //removes action
                             case controls.unstuck:
                                 unstuck(character)
                                 break;
+                                //  case controls.heal:
+                                //     character.directionList.splice(character.directionList.indexOf('heal'), 1);
+                                //     break;
     }
 })
 
