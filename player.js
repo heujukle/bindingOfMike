@@ -37,7 +37,6 @@ class player {
                     player.addHealth(player.stats['flask health'])
                     player.flasks -= 1;
                 }
-                character.directionList.splice(character.directionList.indexOf('heal'), 1);
             }],
         ])
         this.width = 50
@@ -294,6 +293,7 @@ class player {
     }
 
     updateMove(){
+        console.log(this.directionList)
         for(let i = 0; i < this.directionList.length; i++){
             this.actions.get(this.directionList[i])(this)
         }
