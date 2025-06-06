@@ -159,7 +159,7 @@ class area{
             else if(roomBudget < 10 && end == false){//will generate the end when less than 5 rooms are left
                 end = true;
                 console.log('end made')
-                if(areaCount % 5 == 0){ //will update in future to make == 5, will need a new system to have randomized bosses after the end
+                if(areaCount === 5){ //will update in future to make == 5, will need a new system to have randomized bosses after the end
                     layout = [
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
