@@ -1,59 +1,72 @@
 let rooms = rooms0.map((arr)=>{return arr.slice();});
 
 const createWall = (x, y, width, height)  => {
-    structures.add(new wall(x, y, width, height))
+    const obj = new wall(x, y, width, height)
+    return {bucket:structures, Obj:obj}
 }
 
 const createTurret = (x, y, width, height, key) => {
-    structures.add(new turret(x, y, width, height, key))
+    const obj = new turret(x, y, width, height, key)
+    return {bucket:structures, Obj:obj}
 }
 
 const createDummy = (x, y, width, height) => { //function to make dummys
-    entities.add(new dummy(x, y, defaultWidth, defaultHeight))
+    const obj = new dummy(x, y, defaultWidth, defaultHeight)
+    return {bucket:entities, Obj:obj}
 }
 
 const createZombie = (x, y, width, height) => { //function to make dummys
-    entities.add(new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage, knockBackResistance))
+    const obj = new zombie(x, y, 30, 30, character, entitiySpeed, zombieHealth, zombieDamage, knockBackResistance)
+    return {bucket:entities, Obj:obj}
 }
 
 const createBasicWarrior = (x, y, width, height) => { //function to make dummys
-    entities.add(new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, 'basic'))
+    const obj = new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, 'basic')
+    return {bucket:entities, Obj:obj}
 }
 
 const createSpinWarrior = (x, y, width, height) => { //function to make dummys
-    entities.add(new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, 'spin projectile'))
+    const obj = new Warrior(x, y, 50, 50, character, entitiySpeed, zombieHealth * 2, zombieDamage, knockBackResistance, 'spin projectile')
+    return {bucket:entities, Obj:obj}
 }
 
 const createEvilZombie = (x, y, width, height) => { //function to make dummys
-    entities.add(new evilZombie(x, y, 40, 40, character, entitiySpeed * 0.75, zombieHealth, zombieDamage * 1.5, knockBackResistance))
+    const obj = new evilZombie(x, y, 40, 40, character, entitiySpeed * 0.75, zombieHealth, zombieDamage * 1.5, knockBackResistance)
+    return {bucket:entities, Obj:obj}
 }
 
 const createSkeleton = (x, y, width, height) => { //function to make dummys
-    entities.add(new skeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed, knockBackResistance))
+    const obj = new skeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed, knockBackResistance)
+    return {bucket:entities, Obj:obj}
 }
 
 const createBoomSkeleton = (x, y, width, height) => { //function to make dummys
-    entities.add(new boomSkeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed * 1.5, knockBackResistance))
+    const obj = new boomSkeleton(x, y, 30, 30, character, entitiySpeed/2, skeletonHealth, skeletonDamage, skeletonPdamage, skeletonPspeed * 1.5, knockBackResistance)
+    return {bucket:entities, Obj:obj}
 }
 
 const createPortal = (x, y, width, height) => { //function to make dummys
-    interactables.add(new portal(x, y, width, height, character))
+    const obj = new portal(x, y, width, height, character)
+    return {bucket:interactables, Obj:obj}
 }
 
 const createShop = (x, y, width, height) => { //function to make dummys
-    interactables.add(new shop(x, y, width, height, character))
+    const obj = new shop(x, y, width, height, character)
+    return {bucket:interactables, Obj:obj}
 }
 
 const createForge = (x, y, width, height) => { //function to make dummys
-    interactables.add(new forge(x, y, width, height, character))
+    const obj = new forge(x, y, width, height, character)
+    return {bucket:interactables, Obj:obj}
 }
 
 const createChest = (x, y, width, height) => { //function to make dummys
-    interactables.add(new chest(x, y, width, height, character))
+    const obj = new chest(x, y, width, height, character)
+    return {bucket:interactables, Obj:obj}
 }
 
 const createBossTeleporter = (x, y, width, height) => { //function to make dummys
-    interactables.add(new teleporter(x, y, width, height, character, (teleporter, target)=>{  
+    const obj = new teleporter(x, y, width, height, character, (teleporter, target)=>{  
         target.setArea(new area(undefined, (map)=>{
             const startingLayout = [
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
@@ -111,23 +124,28 @@ const createBossTeleporter = (x, y, width, height) => { //function to make dummy
             bossRoom.saveDisabled = true;
             map.set('1,0', bossRoom)
         }))
-    }))
+    })
+    return {bucket:interactables, Obj:obj}
 }
 
 const createZombieSpawner = (x, y, width, height) => { //function to make dummys
-    entities.add(new spawner(x, y, width, height, character, 'zombie'))
+    const obj = new spawner(x, y, width, height, character, 'zombie')
+    return {bucket:entities, Obj:obj}
 }
 
 const createRock = (x, y, width, height) => { //function to make dummys
-    entities.add(new Rock(x, y, defaultWidth, defaultHeight));
+    const obj = new Rock(x, y, defaultWidth, defaultHeight);
+    return {bucket:entities, Obj:obj}
 }
 
+
 const createMotherShip = (x, y, width, height) => { //function to make dummys
-    entities.add(new motherShip(x, y));
+    const obj = new motherShip(x, y);
+    return {bucket:entities, Obj:obj}
 }
 
 const createLeftDoorMS = (x, y, pwidth, pheight) => { //function to make dummys
-    interactables.add(new pressurePlate(x, y, pwidth, character.room.height, character, (pressurePlate, target)=>{ 
+    const obj = new pressurePlate(x, y, pwidth, character.room.height, character, (pressurePlate, target)=>{ 
         let wallY = target.room.sideDoor * height
         let wallX = 0
         structures.add(new wall(wallX, wallY, width, height))
@@ -137,7 +155,8 @@ const createLeftDoorMS = (x, y, pwidth, pheight) => { //function to make dummys
         const bossY = Math.floor(target.room.layout.length / 2) * height
         entities.add(new motherShip(bossX, bossY));
         interactables.remove(pressurePlate.index)
-    }))
+    })
+    return {bucket:interactables, Obj:obj}
 }
 const tiles = new Map([ //holds all the possible tiles and functions to build them
     [0, function(){
