@@ -5,8 +5,13 @@ const createWall = (x, y, width, height)  => {
     return {bucket:structures, Obj:obj}
 }
 
-const createTurret = (x, y, width, height, key) => {
-    const obj = new turret(x, y, width, height, key)
+const createLeftTurret = (x, y, width, height) => {
+    const obj = new turret(x, y, width, height, 'lt')
+    return {bucket:structures, Obj:obj}
+}
+
+const createRightTurret = (x, y, width, height) => {
+    const obj = new turret(x, y, width, height, 'rt')
     return {bucket:structures, Obj:obj}
 }
 
@@ -56,6 +61,7 @@ const createPortal = (x, y, width, height) => { //function to make dummys
 }
 
 const createShop = (x, y, width, height, forSale) => { //function to make dummys
+    console.log(forSale)
     const obj = new shop(x, y, width, height, character, forSale)
     return {bucket:interactables, Obj:obj}
 }
@@ -173,10 +179,10 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
         return;
     }],
     [1, createWall],
-    ['lt', createTurret],
+    ['lt', createLeftTurret],
     ['d', createDummy],
     ['z', createZombie],
-    ['rt', createTurret],
+    ['rt', createRightTurret],
     ['s', createSkeleton],
     ['p', createPortal],
     ['sh', createShop],

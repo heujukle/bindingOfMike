@@ -401,7 +401,7 @@ class room{
             x = 0
             for(let j = 0; j < this.layout[0].length; j++){
                 if(tiles.has(this.layout[i][j])){
-                    const objInfo = tiles.get(this.layout[i][j])(x, y, width, height, this.layout[i][j])
+                    const objInfo = tiles.get(this.layout[i][j])(x, y, width, height)
                     if(objInfo != null) objInfo.bucket.add(objInfo.Obj)
                 }
                 x += width
