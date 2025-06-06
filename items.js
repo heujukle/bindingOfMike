@@ -78,6 +78,14 @@ const markedUpHealthInCan = {
     increment: 25
 }
 
+const Fullheal = {
+    name: 'Good Luck!',
+    price: 0,
+    sprite: 'images/items/healthincan.png',
+    type: 'health',
+    increment: 100000
+}
+
 const stats = [
 {
     name:'multiShot',

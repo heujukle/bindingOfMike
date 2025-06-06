@@ -35,7 +35,8 @@ class motherShip{
         this.name = 'Mother Ship'
         this.instance = 'ms'
         this.healthBar = bossBar(this)
-        this.points = getPoints(6, this)
+        this.points = getPoints(12, this)
+        this.knockBackResistance = 0;
     }
 
     switchAttack(){
@@ -44,6 +45,7 @@ class motherShip{
         const choice = this.attacks[Math.floor(Math.random() * this.attacks.length)]
         this.attack = choice.func
         this.attackColor = choice.color
+        this.healthBar.container.style.backgroundColor = this.attackColor
     }
 
     onDamage(damage){
@@ -137,6 +139,7 @@ class motherShip{
 
     draw(){
         if(this.health < 0) this.onDeath()
+        this.points = getPoints(12, this)
         const turrets = [
             {x: this.x + 30, y: this.y + 30},
             {x: this.x + this.width - 30, y: this.y + 30},
@@ -169,6 +172,7 @@ class motherShip{
         if(this.timer % 500 == 0){
             this.speed = 3;
             this.attackColor = "rgba(0, 0, 0, 0.5)"
+            this.healthBar.container.style.backgroundColor = this.attackColor
             this.attack = () => {return}
         }
         else if(this.timer % 600 == 0){

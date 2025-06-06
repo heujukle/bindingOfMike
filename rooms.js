@@ -60,6 +60,11 @@ const createShop = (x, y, width, height, forSale) => { //function to make dummys
     return {bucket:interactables, Obj:obj}
 }
 
+const createBossShop = (x, y, width, height) => { //function to make dummys
+    const obj = new shop(x, y, width, height, character, [Fullheal])
+    return {bucket:interactables, Obj:obj}
+}
+
 const createForge = (x, y, width, height) => { //function to make dummys
     const obj = new forge(x, y, width, height, character)
     return {bucket:interactables, Obj:obj}
@@ -75,14 +80,14 @@ const createBossTeleporter = (x, y, width, height) => { //function to make dummy
         target.setArea(new area(undefined, (map)=>{
             const startingLayout = [
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+                    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1], 
+                    [1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1], 
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'lt', 0, 1], 
-                    [1, 'rt', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'r', 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 'r', 0, 0, 0, 0, 0, 0, 0, 1], 
-                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 1], 
-                    [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sh', 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'bsh', 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 0, 0, 0, 1], 
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+                    [1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1], 
+                    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             const startingRoom = new room(startingLayout, '0,0')
             startingRoom.layout[startingRoom.sideDoor][startingLayout[0].length - 1] = 0
@@ -186,7 +191,8 @@ const tiles = new Map([ //holds all the possible tiles and functions to build th
     ['ms', createMotherShip],
     ['bt', createBossTeleporter],
     ['ldms', createLeftDoorMS],
-    ['thrd', createThreadling]
+    ['thrd', createThreadling],
+    ['bsh', createBossShop]
 ])
 
 //an array of boss summoning tiles to summon boss

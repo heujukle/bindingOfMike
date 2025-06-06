@@ -22,9 +22,9 @@ const startingArea = new area()
 let character = new player();
 // character.addItem(passiveItemSrc['laser turret'])
 // all items start
-for(const item of passives){
-    character.addItem(item);
-}
+// for(const item of passives){
+//     character.addItem(item);
+// }
 // for(const melee of meleeItems){
 //     character.meleeInventory.push(melee.item(character))
 //     character.meleeInventory.push(melee.item(character))
