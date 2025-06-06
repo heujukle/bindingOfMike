@@ -278,6 +278,15 @@ img{
     margin:5px;
 }
 
+#flasks{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: antiquewhite;
+    font-size: 30px;
+    margin:5px;
+}
+
 .buyButton{
     border: 2px solid black;
     margin: 3px;
@@ -320,6 +329,12 @@ img{
 }
 
 #Coin{
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+#flasks{
     margin: 5px;
     width: 30px;
     height: 30px;
