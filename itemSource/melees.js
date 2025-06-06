@@ -73,7 +73,7 @@ const meleeItemsSrc =
     sprite: "./images/swords/projectile sword.png",
     desc: 'This sword shoots a projectile',
     item:function (target) {return new melee(target, 7, 50, 100, 15, 40, 'projectile sword', function(sword, e){
-        const degrees = findDegrees(e.x + target.translateX, e.y + target.translateY, sword.source.x, sword.source.y)
+        const degrees = findDegrees(e.x + sword.source.translateX, e.y + sword.source.translateY, sword.source.x, sword.source.y)
         const startX = sword.source.x + sword.source.width/2
         const startY = sword.source.y + sword.source.height/2
         const velocities = getProjVelocities(degrees, 7)
