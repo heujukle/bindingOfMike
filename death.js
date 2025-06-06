@@ -1,6 +1,7 @@
 function onDeath(){
     menu = true
     overlay.innerHTML = ''
+    document.getElementById('bossbars').innerHTML = ''
     topLeft.classList.add('invisible')
     overlay.classList.remove('invisible')
     const blackDrop = createElement('div', 'blackGround', {}, overlay)

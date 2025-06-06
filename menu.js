@@ -255,8 +255,10 @@ function createInventory(){
     playerImgCont.appendChild(health)
     playerImgCont.appendChild(stamina)
     playerImgCont.innerHTML += `<div id="wallet"><img src="images/Coin.png" id="Coin">$<div id="walletDisplay">${character.wallet}</div></div>`
+    if(character.room.saveDisabled === false){
     const saveButton = createElement('div', null, {textContent: "Save Game"}, playerImgCont);
     saveButton.addEventListener('click', ()=>{saveGame(character)});
+    }
     for(let i = 0; i < Object.keys(character.stats).length; i++){ //stats
        const statDisplay = document.createElement('div')
        statDisplay.textContent = `${Object.keys(character.stats)[i]} : ${character.stats[Object.keys(character.stats)[i]]}`

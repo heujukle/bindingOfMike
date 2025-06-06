@@ -629,3 +629,14 @@ img{
     justify-content: center;
     height: 1vh;
 }
+
+.bossbarCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    font-size: 2rem;
+}

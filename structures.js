@@ -96,6 +96,7 @@ class area{
                     currentRoom.savedEntities = parseEntities(roomData.entities)
                     currentRoom.savedInteractables = parseInteractables(roomData.interactables)
                 }
+                this.currentRoom.saveDisabled = roomData.saveDisabled
                 this.map.set(cords, currentRoom);
                 rooms.push(currentRoom);
             }
@@ -344,7 +345,7 @@ class room{
         this.top = null;
         this.bottom = null;
         //-----------------
-
+        this.saveDisabled = false;
         this.cords = cords; //cords: "x,y"
         this.sideDoor = Math.floor(layout.length / 2)
         this.topDoor = Math.floor(layout[0].length / 2)

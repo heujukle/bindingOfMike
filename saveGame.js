@@ -84,7 +84,8 @@ function formatRoom(room){
         bottom : bottom,
         entities : character.room.cords === room.cords ? formatEntities(entities.list) : formatEntities(room.savedEntities),
         interactables : character.room.cords === room.cords ? formatInteractables(interactables.list) : formatInteractables(room.savedInteractables),
-        entered : room.entered
+        entered : room.entered,
+        saveDisabled : room.saveDisabled
     };
     return result;
 }
@@ -121,6 +122,7 @@ function formatEntities(entities){
 function formatInteractables(interactables){
     const result = [];
     for(let i = 0; i < interactables.length; i++){
+        if(interactables[i] == null) continue
         const obj = {
             instance : interactables[i].type,
             x : interactables[i].x,

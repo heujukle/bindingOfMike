@@ -544,6 +544,7 @@ class teleporter{
             yOffset : y / character.room.height,
         }
         this.index;
+        this.type = 'btp'
     }
 
     draw(){
@@ -565,6 +566,7 @@ class pressurePlate{
         this.func = func
         this.target = target
         this.index;
+        this.type = 'pp'
         this.offsets = {
             xOffset : x / character.room.width,
             yOffset : y / character.room.height,

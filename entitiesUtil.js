@@ -77,5 +77,8 @@ function cordOffsets(list){
 }
 
 function bossBar(boss){
-    return createElement('div', "bossbar", {textContent: boss.name, style:'width:100%'}, document.getElementById('bossbars'))
+    const container = createElement('div', "bossbarCont", {}, document.getElementById('bossbars'))
+    const text = createElement('div', null, {textContent : boss.name}, container)
+    const healthBar = createElement('div', "bossbar", {style:'width:100%'}, container)
+    return {healthBar : healthBar, container : container, text : text}
 }

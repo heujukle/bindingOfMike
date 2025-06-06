@@ -33,7 +33,9 @@ class motherShip{
         this.health = this.defaultHealth
         this.index;
         this.name = 'Mother Ship'
+        this.instance = 'mothership'
         this.healthBar = bossBar(this)
+        this.points = getPoints(6, this)
     }
 
     switchAttack(){
@@ -47,14 +49,14 @@ class motherShip{
     onDamage(damage){
         this.timeSinceLastDamage = 200
         this.health -= damage
-        this.healthBar.style = `width:${100 - this.health / this.defaultHealth}%`
+        this.healthBar.healthBar.style = `width:${100 * this.health / this.defaultHealth}%`
     }
 
     onDeath(){
         entities.remove(this.index)
         updateWallet(20, this.target)
         interactables.add(new portal(this.x, this.y, this.width, this.height, this.target))
-        this.healthBar.remove();
+        this.healthBar.container.remove();
     }
 
     dash(){

@@ -1,4 +1,4 @@
-let rooms = rooms01.map((arr)=>{return arr.slice();});
+let rooms = rooms0.map((arr)=>{return arr.slice();});
 
 const createWall = (x, y, width, height)  => {
     structures.add(new wall(x, y, width, height))
@@ -108,7 +108,8 @@ const createBossTeleporter = (x, y, width, height) => { //function to make dummy
             bossRoom.layout[1][2] = bossTile[Math.floor(Math.random() * bossTile.length)]
             startingRoom.right = bossRoom;
             bossRoom.left = startingRoom;
-            map.set('1,0', startingRoom)
+            bossRoom.saveDisabled = true;
+            map.set('1,0', bossRoom)
         }))
     }))
 }
