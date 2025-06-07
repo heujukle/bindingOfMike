@@ -8,11 +8,6 @@ const passiveItemSrc = {
     hasFunc: {func:(source) => {
         if(document.timeline.currentTime - source.passiveItems["laser turret"].timeOfLastActivation > 0){
             source.passiveItems["laser turret"].timeOfLastActivation = document.timeline.currentTime;
-            const target = determineTarget(source);
-            if(target == null && source.passiveItems["laser turret"].laser !== null){
-                damageInstances.remove(source.passiveItems["laser turret"].laser.index)
-            }
-            else{
                 const degrees = findDegrees((source.x + source.width/2) - 10, source.y - 50, mouseX + source.translateX, mouseY + source.translateY)
                 if(source.passiveItems["laser turret"].laser === null) source.passiveItems["laser turret"].laser = new laser((source.x + source.width/2) - 10, source.y - 50, 30, 0, source, 3, {color:{r:150, g:70, b:50}})
                 else {
@@ -21,7 +16,6 @@ const passiveItemSrc = {
                     source.passiveItems["laser turret"].laser.startY = source.y - 50
                     }        
                 if(damageInstances.list.indexOf(source.passiveItems["laser turret"].laser) === -1)damageInstances.add(source.passiveItems["laser turret"].laser)
-            }
         }
         ctx.beginPath();
         ctx.rect((source.x + source.width/2) - 10, source.y - 50, source.width/2, source.height/2);

@@ -101,6 +101,7 @@ constructor(x, y, width, height, target, forSale = undefined){
         determineValueArray(seed[4], meleeItems),
         determineValueArray(seed[5], stats),
         determineValueArray(seed[7], stats),
+        determineValueArray(seed[9], stats),
         determineValueArray(seed[6], passives),
     ] : forSale;
     this.img = new Image();
