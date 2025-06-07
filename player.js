@@ -1,5 +1,6 @@
 const healthBar = document.getElementById('healthBar')
 const staminaBar = document.getElementById('stamina')
+const flasksGUI = document.getElementById('flaskDisplay')
 
 class player {
     constructor(){
@@ -36,6 +37,7 @@ class player {
                 if(player.flasks > 0){
                     player.addHealth(player.stats['flask health'])
                     player.flasks -= 1;
+                    flasksGUI.innerText = player.flasks
                 }
             }],
         ])
@@ -94,6 +96,7 @@ class player {
         }
         this.score = 0;
         this.flasks = 5;
+        flasksGUI.textContent = this.flasks
         this.actionables = []
     }
     
@@ -293,7 +296,6 @@ class player {
     }
 
     updateMove(){
-        console.log(this.directionList)
         for(let i = 0; i < this.directionList.length; i++){
             this.actions.get(this.directionList[i])(this)
         }

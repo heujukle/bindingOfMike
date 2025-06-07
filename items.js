@@ -152,7 +152,15 @@ const stats = [
     type:'stat',
     statName:'shoot speed',
     increment: -25
-}
+},
+{
+    name:'flask health',
+    price:100,
+    sprite: 'images/items/healthincan.png',
+    type:'stat',
+    statName:'flask health',
+    increment: 5
+},
 ]
 
 const passives = [

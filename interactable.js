@@ -26,6 +26,8 @@ class portal{
         ctx.closePath();
         if(this.collision2([this.target])){ //scales the difficulty
             this.target.fixCamera();
+            this.target.flasks += 5
+            flasksGUI.textContent = this.target.flasks
             console.log('portal')
             entitiySpeed = entitiySpeed + 1 >= 3 ?  entitiySpeed : entitiySpeed + 0.25; //limits to 3
             zombieHealth *= 1.5;

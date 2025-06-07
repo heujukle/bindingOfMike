@@ -9,7 +9,7 @@ const passiveItemSrc = {
         if(document.timeline.currentTime - source.passiveItems["laser turret"].timeOfLastActivation > 0){
             source.passiveItems["laser turret"].timeOfLastActivation = document.timeline.currentTime;
             const target = determineTarget(source);
-            if(target == null){
+            if(target == null && source.passiveItems["laser turret"].laser !== null){
                 damageInstances.remove(source.passiveItems["laser turret"].laser.index)
             }
             else{
