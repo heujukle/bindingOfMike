@@ -142,7 +142,6 @@ class player {
     }
     
     draw(){ //draws player
-        hook.dispatch('onPlayerDraw', this)
         this.updateStaminaBar()
         ctx.beginPath();
         ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height)
@@ -162,6 +161,7 @@ class player {
         }
         ctx.fill();
         ctx.closePath();
+        hook.dispatch('onPlayerDraw', this)
     }
 
     dynamicCamera(){ //will update the camera 
