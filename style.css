@@ -640,9 +640,10 @@ img{
 .bossbar{
     background-color: red;
     display: flex;
+    font-size: 1rem;
     align-items: center;
     justify-content: center;
-    height: 1vh;
+    height: 2vh;
 }
 
 .bossbarCont {

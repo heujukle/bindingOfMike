@@ -81,5 +81,6 @@ function bossBar(boss){
     const container = createElement('div', "bossbarCont", {}, document.getElementById('bossbars'))
     const text = createElement('div', null, {textContent : boss.name}, container)
     const healthBar = createElement('div', "bossbar", {style:'width:100%'}, container)
-    return {healthBar : healthBar, container : container, text : text}
+    const healthLevel = createElement('div', null, {textContent: boss.health + "/" + boss.defaultHealth}, healthBar)
+    return {healthBar : healthBar, healthLevel : healthLevel, container : container, text : text}
 }

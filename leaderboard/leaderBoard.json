@@ -33,6 +33,12 @@
                 "username": "unnamed",
                 "score": 3
             }
+        ],
+        "2": [
+            {
+                "username": "unnamed",
+                "score": 2
+            }
         ]
     },
     "Highest score": {
@@ -73,6 +79,12 @@
                 "username": "unnamed",
                 "score": 2615
             }
+        ],
+        "3410": [
+            {
+                "username": "unnamed",
+                "score": 3410
+            }
         ]
     },
     "Highest Tier": {
@@ -83,6 +95,10 @@
             }
         ],
         "4": [
+            {
+                "username": "unnamed",
+                "score": 4
+            },
             {
                 "username": "unnamed",
                 "score": 4

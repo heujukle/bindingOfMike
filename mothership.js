@@ -52,6 +52,7 @@ class motherShip{
         this.timeSinceLastDamage = 200
         this.health -= damage
         this.healthBar.healthBar.style = `width:${100 * this.health / this.defaultHealth}%`
+        this.healthBar.healthLevel.textContent = this.health + '/' + this.defaultHealth
     }
 
     onDeath(){
