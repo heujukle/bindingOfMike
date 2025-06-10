@@ -78,6 +78,14 @@ document.addEventListener('keydown', (e) => { //adds action to player
                                 character.actionables.push('heal')
                             }
                             break;
+                            case controls.dash:
+                                if(character.actionables.indexOf('dash') == -1){
+                                    character.actionables.push('dash')
+                                }
+                                break;
+                                default:
+                                    character.directionList = []
+                                    break;
     }
 })
 
@@ -221,7 +229,7 @@ const doublePressEvent = doublePress(function(e){ //adds function to double pres
     }
 })
 
-document.addEventListener('keyup', doublePressEvent)
+// document.addEventListener('keyup', doublePressEvent)
 
 window.addEventListener('resize', (e) => {
     resize();

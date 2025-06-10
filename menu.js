@@ -333,7 +333,8 @@ const controls = { //holds the controls of the game
     'map' : 'm',
     'inventory' : 'q',
     'unstuck' : 'l',
-    'heal' : 'h'
+    'heal' : 'h',
+    'dash' : 'Shift'
 }
 
 function keyMatch(key, control){ //returns true if the key is used

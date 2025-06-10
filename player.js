@@ -1,6 +1,7 @@
 const healthBar = document.getElementById('healthBar')
 const staminaBar = document.getElementById('stamina')
 const flasksGUI = document.getElementById('flaskDisplay')
+const staminaLine = document.getElementById('determine-line')
 
 class player {
     constructor(){
@@ -40,6 +41,38 @@ class player {
                     flasksGUI.innerText = player.flasks
                 }
             }],
+            ['dash', function(player){
+               if(player.stamina >= 25){
+                    let dash = false
+                    if(player.directionList.includes('right')){
+                        player.xVelocity += player.stats['dashSpeed']
+                        player.iFrames = player.stats['dashSpeed'] + 10
+                        dash = true
+                        staminaBar.style = `width: ${player.stamina / player.stats['maxStamina'] * 100}%;`
+                    }
+                    if(player.directionList.includes('left')){
+                        player.xVelocity -= player.stats['dashSpeed']
+                        player.iFrames = player.stats['dashSpeed'] + 10
+                        dash = true
+                        staminaBar.style = `width: ${player.stamina / player.stats['maxStamina'] * 100}%;`
+                    }
+                    if(player.directionList.includes('up')){
+                        player.yVelocity -= player.stats['dashSpeed']
+                        player.iFrames = player.stats['dashSpeed'] + 10
+                        dash = true
+                        staminaBar.style = `width: ${player.stamina / player.stats['maxStamina'] * 100}%;`
+                    }
+                    if(player.directionList.includes('down')){
+                        player.yVelocity += player.stats['dashSpeed']
+                        player.iFrames = player.stats['dashSpeed'] + 10
+                        dash = true
+                        staminaBar.style = `width: ${player.stamina / player.stats['maxStamina'] * 100}%;`
+                    }
+                    if(dash) {
+                        player.stamina -= 25;
+                    }
+                }
+            }],
         ])
         this.width = 50
         this.height = 50
@@ -48,7 +81,7 @@ class player {
         this.room = 'spawn'
         this.area = 'spawn'
         this.index = 0;
-        this.directionList = [];
+        this.directionList = []; //direction of player movement
         this.stats = { //player stats that can increase
             'speed' : 6,
             'pSpeed' : 10,
@@ -97,7 +130,7 @@ class player {
         this.score = 0;
         this.flasks = 5;
         flasksGUI.textContent = this.flasks
-        this.actionables = []
+        this.actionables = []; //list of player actions
     }
     
     hotBarChange(direction){ //changes direction of hotbar
@@ -285,6 +318,7 @@ class player {
 
     updateStaminaBar(){
         staminaBar.style = `width: ${this.stamina / this.stats['maxStamina'] * 100}%;` //converts the perent of stamina into the health bar
+        staminaLine.style = `left: ${25 / this.stats['maxStamina'] * 100}%;`
     }
 
     addHealth(increase){

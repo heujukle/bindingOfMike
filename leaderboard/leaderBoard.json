@@ -20,9 +20,17 @@
             {
                 "username": "john",
                 "score": 0
+            },
+            {
+                "username": "unnamed",
+                "score": 0
             }
         ],
         "1": [
+            {
+                "username": "unnamed",
+                "score": 1
+            },
             {
                 "username": "unnamed",
                 "score": 1
@@ -85,10 +93,30 @@
                 "username": "unnamed",
                 "score": 3410
             }
+        ],
+        "355": [
+            {
+                "username": "unnamed",
+                "score": 355
+            }
+        ],
+        "1275": [
+            {
+                "username": "unnamed",
+                "score": 1275
+            }
         ]
     },
     "Highest Tier": {
         "1": [
+            {
+                "username": "unnamed",
+                "score": 1
+            },
+            {
+                "username": "unnamed",
+                "score": 1
+            },
             {
                 "username": "unnamed",
                 "score": 1
