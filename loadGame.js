@@ -9,6 +9,10 @@ function parseSaveFile(file){
             character.health = saveData.character.health;
             character.stamina = saveData.character.stamina;
             character.materials = saveData.character.materials;
+            character.wallet = saveData.character.wallet;
+            character.flasks = saveData.character.flasks;
+            username = saveData.username
+            document.title = username
             parsePassiveItems(saveData)
             character.melee = parseMelee(saveData.character.equippedMelee);
             document.getElementById('playerSword').src = character.melee.sprite;

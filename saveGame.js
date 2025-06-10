@@ -7,6 +7,7 @@ function saveGame(character){
     console.log(area);
     const content = {
         areaCount : areaCount,
+        username : username,
         character : {
             stats : character.stats,
             health : character.health,
@@ -20,7 +21,9 @@ function saveGame(character){
             area : area,
             room : character.room.cords,
             map : character.map.cordList,
-            offsets : character.offsets
+            offsets : character.offsets,
+            wallet : character.wallet,
+            flasks : character.flasks
         }
     };
     
