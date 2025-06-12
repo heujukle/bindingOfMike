@@ -43,7 +43,7 @@ const meleeItemsSrc =
             const swordProjectile = new projectile(startX, startY, 15, 15, velocities.xVelocity, velocities.yVelocity, sword.source, false, sword.source.room, '#268199', 5, sword.source.has('richochet'))
             damageInstances.add(swordProjectile)
         }, 40, 1, {runFuncCD: -2}, this.sprite)}, //item itself
-        price:700, //price
+        price:450, //price
         type: 'melee' //type
     }, 
     'Big sword' : { 
@@ -65,7 +65,7 @@ const meleeItemsSrc =
             damageInstances.add(newSword)
         }
     }, undefined, undefined, 1, {damage: 10, height:20, width:20, knockback: 10}, this.sprite)}, //item itself
-    price:700, //price
+    price:300, //price
     type: 'melee' //type
 }, 
 'projectile sword' : { 
@@ -102,7 +102,7 @@ const meleeItemsSrc =
         spinner.setValues(sword.startingAngle + 180)
         damageInstances.add(spinner)
     }, 100, 1, undefined, this.sprite)}, //item itself
-    price:1000, //price
+    price:750, //price
     type: 'melee' //type
 },
 }

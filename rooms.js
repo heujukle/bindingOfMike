@@ -84,6 +84,8 @@ const createChest = (x, y, width, height, opened = false) => { //function to mak
 const createBossTeleporter = (x, y, width, height) => { //function to make dummys
     const obj = new teleporter(x, y, width, height, character, (teleporter, target)=>{  
         target.setArea(new area(undefined, (map)=>{
+            document.getElementById('wall').src = "images/walls/cyberpunk.png" //randomizes walls for area
+            document.getElementById('floor').src = "images/floors/bossfloor.png" //randomizes floor for area
             const startingLayout = [
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
                     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1], 

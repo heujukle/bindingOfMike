@@ -1,5 +1,5 @@
-const wallArt = ["images/greyBrick.png", "images/walls/tile.png"]
-const floorArt = ["images/floor1.png", "images/floors/pleaseBeAGoodFloor.png", "images/floors/borderlessgrass.png", "images/floors/detailedReddish.png"]
+const wallArt = ["images/walls/wood wall.png", "images/greyBrick.png", "images/walls/tile.png"]
+const floorArt = ["images/floors/borderlessgrass.png", "images/floors/pleaseBeAGoodFloor.png", "images/floor1.png", "images/floors/detailedReddish.png"]
 
 class space{ //empty space unused code
     constructor(x, y, width, height){
@@ -83,8 +83,14 @@ class turret{ //creates the turret
 class area{
     //force func will all
     constructor(loadSave = undefined, forceFunc = undefined){
+        if(areaCount > 2){
         document.getElementById('wall').src = determineValueArray((Math.random() + '')[5], wallArt) //randomizes walls for area
         document.getElementById('floor').src = determineValueArray((Math.random() + '')[7], floorArt) //randomizes floor for area
+        }
+        else{
+            document.getElementById('wall').src = wallArt[areaCount] //randomizes walls for area
+            document.getElementById('floor').src = floorArt[areaCount] //randomizes floor for area
+        }
         this.map = new Map() //makes the data structure for the area to be stored in
         if(loadSave != undefined){
             const rooms = [];
@@ -138,7 +144,7 @@ class area{
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'f', 1], 
                     [1, 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1], 
-                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sh', 1], 
+                    [1, 'bt', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'sh', 1], 
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
             }
             else if(roomBudget < 15 && chest == false){
