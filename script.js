@@ -16,6 +16,69 @@ let username = "Unnamed"
 let mouseX = 0
 let mouseY = 0
 
+//images that are preloaded
+const commonImages = 
+{
+    dashSpeed : "images/stats/dashSpeed.png",
+    maxhealth : "images/stats/maxhealth.png",
+    maxStamina : "images/stats/maxStamina.png",
+    multishot : "images/stats/multishot.png",
+    pDamage : "images/stats/pDamage.png",
+    pSpeed : "images/stats/pSpeed.png",
+    shootSpeed : "images/stats/shootSpeed.png",
+    storeTile : "images/storeTile.png",
+    zombie2 : "images/entities/zombie2.png",
+    skeleton : "images/entities/skeleton.png",
+    evilZombie : "images/entities/Evil Zombie.png",
+    warrior : "images/entities/warrior.png",
+    spinWarrior : "images/entities/spin warrior.png",
+    bigSword : "images/swords/big sword.png",
+    pSword : "images/swords/projectile sword.png",
+    pSpinSword : "images/swords/psss.png",
+    superSpinSword : "images/swords/superspinsword.png",
+    autoTurret : "images/passives/autoTurret.png",
+    boom : "images/passives/boom.png",
+    richochet : "images/passives/richochet.png",
+    selfBoom : "images/passives/self.png",
+    spikey : "images/passives/spikey.png",
+    threadling : "images/passives/threadling.png",
+    vampire : "images/passives/vampire.png"
+}
+
+function preloadImages(imagePaths) {
+  const images = {};
+  const promises = [];
+
+  for (const key in imagePaths) {
+    const img = new Image();
+    const promise = new Promise((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = reject;
+      img.src = imagePaths[key];
+    });
+    images[key] = img;
+    promises.push(promise);
+  }
+
+  return Promise.all(promises).then(() => images);
+}
+
+preloadImages(commonImages).then(() => {
+
+console.log('loading images')
+playStart.addEventListener('click', (e) => { //starts games
+    menu = false;
+    username = nameInput.value;
+    title.textContent = nameInput.value + " Game"
+    start.classList.add('invisible')
+    topLeft.classList.remove('invisible')
+    topRight.classList.remove('invisible')
+    mapElement.classList.remove('invisible')
+})
+
+playStart.classList.remove('disabled')
+})
+
 const startingArea = new area()
 
 

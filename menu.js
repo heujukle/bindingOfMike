@@ -14,16 +14,6 @@ const sideBar = document.getElementById('middleRight')
 const loadGame = document.getElementById('loadGame')
 const body = document.getElementsByTagName('body')[0]
 
-playStart.addEventListener('click', (e) => { //starts games
-    menu = false;
-    username = nameInput.value;
-    title.textContent = nameInput.value + " Game"
-    start.classList.add('invisible')
-    topLeft.classList.remove('invisible')
-    topRight.classList.remove('invisible')
-    mapElement.classList.remove('invisible')
-})
-
 let mapPosIDs = ['mapAbsolute', 'mapNone', 'mapMini']
 let mapType = 2;
 document.addEventListener('keypress', (e) => {

@@ -666,3 +666,7 @@ img{
     z-index: 99;
     top: 0;
 }
+
+.disabled{
+    background-color: rgba(169, 169, 169, 0.473);
+}
