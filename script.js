@@ -79,6 +79,11 @@ playStart.addEventListener('click', (e) => { //starts games
 playStart.classList.remove('disabled')
 })
 
+
+window.onload = function () {
+    body.classList.remove('invisible')
+}
+
 const startingArea = new area()
 
 
