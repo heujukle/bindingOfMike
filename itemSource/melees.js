@@ -1,8 +1,9 @@
+
 const meleeItemsSrc = 
 {
     'sword' : { 
         name: 'sword',
-        sprite: "../images/sword.png",
+        sprite: "/images/sword.png",
         desc: 'Basic starting sword, as generic as it gets.',
         item:function (target) {return new melee(target, 10, 30, 125, 5, 90, 'sword', undefined, undefined, undefined, 1, {damage:10, span:10}, this.sprite)}, //item itself
         price:150, //price
@@ -10,7 +11,7 @@ const meleeItemsSrc =
     }, 
     'error sword' : { 
         name: 'error sword',
-        sprite: "../images/sword.png",
+        sprite: "/images/sword.png",
         desc: 'Your save file messed up, error sword as stand in',
         item:function (target) {return new melee(target, 1, 1, 1, 1, 1, 'error sword', undefined, undefined, undefined, 1, {damage:10, span:10}, this.sprite)}, //item itself
         price:150, //price
@@ -18,7 +19,7 @@ const meleeItemsSrc =
     }, 
     'Medium Sword' : { 
         name: 'Medium Sword',
-        sprite: "../images/sword.png",
+        sprite: "/images/sword.png",
         desc: 'A medium sized sword',
         item:function (target) {return new melee(target, 10, 150, 175, 10, 80, 'Medium Sword', undefined, undefined, undefined, 1, {damage: 15, height:5, width:5}, this.sprite)}, //item itself
         price:150, //price
@@ -26,7 +27,7 @@ const meleeItemsSrc =
     }, 
     'Small sword' : { 
         name: 'Small sword',
-        sprite: "../images/sword.png",
+        sprite: "/images/sword.png",
         desc: 'A small but deadly sword',
         item:function (target) {return new melee(target, 40, 25, 50, 25, 30, 'Small sword', undefined, undefined, undefined, 1, {damage: 20}, this.sprite)}, //item itself
         price:100, //price
@@ -34,7 +35,7 @@ const meleeItemsSrc =
     }, 
     'Projectile Spin Sword' : { 
         name: 'Projectile Spin Sword',
-        sprite: "../images/swords/psss.png",
+        sprite: "/images/swords/psss.png",
         desc: 'A wide span which fires projectiles in all directions',
         item:function (target) {return new melee(target, 10, 100, 300, 25, 360, 'Projectile Spin Sword', undefined, function(sword){
             const velocities = getProjVelocities(sword.currentAngle, 7);
@@ -48,7 +49,7 @@ const meleeItemsSrc =
     }, 
     'Big sword' : { 
         name: 'Big sword',
-        sprite: "../images/swords/big sword.png",
+        sprite: "/images/swords/big sword.png",
         desc: 'A very large sword, with a lot of knockback',
         item:function (target) {return new melee(target, 10, 100, 300, 25, 100, 'Big sword', undefined, undefined, undefined, 1, {damage: 10, height:20, width:20, knockback: 10}, this.sprite)}, //item itself
         price:250, //price
@@ -56,7 +57,7 @@ const meleeItemsSrc =
     }, 
 'TWO Swords' : { 
     name: 'TWO Swords',
-    sprite: "../images/sword.png",
+    sprite: "/images/sword.png",
     desc: 'Two small swords orbit the player',
     item:function (target) {return new melee(target, 20, 100, 100, 15, 180, 'TWO Swords', function(sword, e){
         if(sword.name != 'second'){
@@ -70,7 +71,7 @@ const meleeItemsSrc =
 }, 
 'projectile sword' : { 
     name: 'projectile sword',
-    sprite: "./images/swords/projectile sword.png",
+    sprite: "/images/swords/projectile sword.png",
     desc: 'This sword shoots a projectile',
     item:function (target) {return new melee(target, 7, 50, 100, 15, 40, 'projectile sword', function(sword, e){
         const degrees = findDegrees(e.x + sword.source.translateX, e.y + sword.source.translateY, sword.source.x, sword.source.y)
@@ -85,7 +86,7 @@ const meleeItemsSrc =
 },
 'Spin sword' : {
     name: 'Spin sword',
-    sprite: "../images/sword.png",
+    sprite: "/images/sword.png",
     desc: 'A large span',
     item:function (target) {return new melee(target, 10, 100, 300, 30, 360, 'Spin sword', undefined, undefined, 50, 1, {damage:15, width:20, span:30}, this.sprite)}, //item itself
     price:200, //price
@@ -93,7 +94,7 @@ const meleeItemsSrc =
 },
 'Super Spin Swords' : {
     name: 'Super Spin Swords',
-    sprite: "../images/swords/superspinsword.png",
+    sprite: "/images/swords/superspinsword.png",
     desc: 'A sword which makes smaller swords',
     item:function (target) {
         console.log(this.sprite)

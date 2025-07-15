@@ -16,6 +16,8 @@ let username = "Unnamed"
 let mouseX = 0
 let mouseY = 0
 
+
+
 //images that are preloaded
 const commonImages = 
 {
