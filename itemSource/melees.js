@@ -1,3 +1,11 @@
+//spagethi fix
+pagesTestImage = new Image()
+pagesTestImage.onerror = () => {
+    for (const key in meleeItemsSrc){
+        meleeItemsSrc[key].sprite = "bindingOfMike" + meleeItemsSrc[key].sprite
+    }
+}
+pagesTestImage.src = '/images/sword.png'
 
 const meleeItemsSrc = 
 {
