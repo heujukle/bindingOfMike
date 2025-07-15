@@ -1,6 +1,7 @@
 //spagethi fix
-pagesTestImage = new Image()
+let pagesTestImage = new Image()
 pagesTestImage.onerror = () => {
+    console.log('error on image')
     for (const key in meleeItemsSrc){
         meleeItemsSrc[key].sprite = "bindingOfMike" + meleeItemsSrc[key].sprite
     }
