@@ -324,7 +324,9 @@ const controls = { //holds the controls of the game
     'inventory' : 'q',
     'unstuck' : 'l',
     'heal' : 'h',
-    'dash' : 'Shift'
+    'dash' : 'Shift',
+    'hotbar1' : '1',
+    'hotbar2' : '2',
 }
 
 function keyMatch(key, control){ //returns true if the key is used

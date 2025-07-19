@@ -151,6 +151,15 @@ class player {
         }
     }
 
+    setHotBar(slot){
+        const hotbar = document.getElementById('hotbar')
+        let index = this.hotbar.indexOf(this.selectedItem);
+        hotbar.children[index].classList.remove('selected')
+        hotbar.children[slot].classList.add("selected")
+        this.selectedItem = this.hotbar[slot]
+
+    }
+
     preDraw(){ //completes the player actions before drawing
         if(this.health <= 0){ //causes the game to end when health reaches 0
             onDeath()

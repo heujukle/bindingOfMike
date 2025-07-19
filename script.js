@@ -117,6 +117,7 @@ document.addEventListener('mousemove', (e)=>{
 })
 
 document.addEventListener('keydown', (e) => { //adds action to player
+    console.log(e)
     switch(e.key){
         case controls.up:
             if(character.directionList.indexOf('up') == -1){
@@ -156,6 +157,13 @@ document.addEventListener('keydown', (e) => { //adds action to player
                                 default:
                                     character.directionList = []
                                     break;
+                                    case controls.hotbar1:
+                                        console.log('1')
+                                        character.setHotBar(0)
+                                        break;
+                                        case controls.hotbar2:
+                                            character.setHotBar(1)
+                                            break;
     }
 })
 
