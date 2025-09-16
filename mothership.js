@@ -150,7 +150,7 @@ class motherShip{
         if(this.pausedMovement === false) this.pursuit()
         velocity(this, this.xVelocity, this.yVelocity)
         collison(this, this.target, false, (mothership, target) => {
-            const knockbackfunc = makeKnockback(mothership)
+            const knockbackfunc = makeKnockback(mothership, this.knockback)
             target.onDamage(mothership.damage, knockbackfunc, mothership)
         })
         this.attack(turrets)
@@ -178,7 +178,7 @@ class motherShip{
         }
         else if(this.timer % 600 == 0){
             this.switchAttack()
-            this.timer = 0;
+            this.timer = 1;
         }
     }
 }

@@ -397,7 +397,7 @@ class player {
         console.log(this.area.map)
     }
 
-    shoot(degrees, speed = this.stats["pSpeed"]){
+    shootOLD(degrees, speed = this.stats["pSpeed"]){
         let centerX = character.x + character.width / 2
         let centerY = character.y + character.height / 2
         let richochet = Object.keys(this.passiveItems).includes('richochet')
@@ -444,9 +444,17 @@ class player {
                 this.xVelocity = xVelocity * -1
                 this.yVelocity = yVelocity * -1
             }
-            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, null, undefined, '#268199', this.stats["pDamage"], richochet))
+            damageInstances.add(new projectile(centerX, centerY, 20, 20, xVelocity, yVelocity, this, null, undefined, '#994c26ff', this.stats["pDamage"], richochet))
         }
     }
+
+    shoot(degrees, speed = this.stats['pSpeed']){
+        let centerX = character.x + character.width / 2
+        let centerY = character.y + character.height / 2
+        let richochet = Object.keys(this.passiveItems).includes('richochet')
+        const velocities = getProjVelocities(degrees, speed);
+        damageInstances.add(new projectile(centerX, centerY, 20, 20, velocities.xVelocity, velocities.yVelocity, this, null, undefined, '#268199', this.stats["pDamage"], richochet))
+        }
 
     sendProjectile = (e) =>{
         if(document.timeline.currentTime - this.timeOfLastShot < this.stats['shoot speed']) return //early return

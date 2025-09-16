@@ -485,7 +485,7 @@ function roomChangeBody(player){ //resuablebody of room change
     damageInstances.clear();
 }
 
-function getProjVelocities(degrees, speed){ //returns velocities for projectiles/entities so they travel at a consistent speed
+function getProjVelocities2(degrees, speed){ //returns velocities for projectiles/entities so they travel at a consistent speed
     if(degrees > 360){
         degrees -= 360
     }
@@ -516,6 +516,23 @@ function getProjVelocities(degrees, speed){ //returns velocities for projectiles
         result.yVelocity = -(((speed / 45) * (degrees - 270)) - speed * 2)//(circularSub((405 - 45), degrees)) / this.pVelocityModifier * 2
         result.xVelocity = speed * -1
     }
+    return result;
+}
+
+function getProjVelocities(degrees, speed){
+
+    if(degrees > 360){degrees -= 360}
+    else if(degrees < 0){degrees += 360}
+
+    const radians = degrees * (Math.PI / 180);
+    const result = {
+        xVelocity: 0,
+        yVelocity : 0,
+        degrees : degrees,
+        radians: radians
+    }
+    result.yVelocity = Math.sin(radians) * -speed;
+    result.xVelocity = Math.cos(radians) * -speed;
     return result;
 }
 
@@ -564,10 +581,10 @@ function verifyIfPlayer(source){ //returns true if player
     return false;
 }
 
-function makeKnockback(source){ //returns a default knockback function
+function makeKnockback(source, amount = 15){ //returns a default knockback function
 function result (target){
     const degrees = findDegrees(source.x + source.width/2, source.y + source.height/2, target.x + target.width/2, target.y + target.height/2)
-    const pv = getProjVelocities(degrees, 15)
+    const pv = getProjVelocities(degrees, amount)
     console.log(degrees, pv)
     target.xVelocity += -pv.xVelocity
     target.yVelocity += -pv.yVelocity
